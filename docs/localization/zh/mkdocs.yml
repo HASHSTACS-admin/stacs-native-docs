@@ -1,6 +1,6 @@
 site_name: STACS-NATIVE
-repo_name: 'Aurorasic/stacs-native'
-repo_url: 'https://github.com/Aurorasic/stacs-native'
+#repo_name: 'Aurorasic/stacs-native'
+#repo_url: 'https://github.com/Aurorasic/stacs-native'
 docs_dir: docs
 site_dir: ../build
 
