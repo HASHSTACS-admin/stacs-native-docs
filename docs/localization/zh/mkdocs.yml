@@ -48,7 +48,7 @@ nav:
     - Debug: dev-manual/debug.md
   - 工具:
     - CLI: tools/cli.md
-    - 集群配置生成工具: tools/generator.md
+    - 集群配置生成: tools/generator.md
   - 接口文档:
     - CRS接口文档: api/crs-api.md
     - DRS接口服务: api/drs-api.md
