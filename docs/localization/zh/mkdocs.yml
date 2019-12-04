@@ -1,0 +1,68 @@
+site_name: STACS-NATIVE
+repo_name: 'Aurorasic/stacs-native'
+repo_url: 'https://github.com/Aurorasic/stacs-native'
+docs_dir: docs
+site_dir: ../build
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - 主页: index.md
+  - 快速开始: GettingStarted.md
+  - Stacs-Native设计:
+    - 架构设计: design/arch-design.md
+    - BD : design/bd.md
+    - DAPP: design/dapp.md
+    - Domain & RS: design/domain&RS.md
+    - Policy: design/policy.md
+    - private data: design/private-data.md
+    - Identity: design/identity.md
+    - Permission: design/permission.md
+    - CA: design/ca.md
+    - 交易流程: design/transaction-process.md
+    - 账务模型: design/assets.md
+    - 业务master: design/master.md
+    - 节点管理: design/node-management.md
+    - failover: design/failover.md
+  - 共识协议: consensus.md
+  - 智能合约: smart-contract.md
+  - DAPP开发手册:
+      - 快速开始: dev-manual/quick-start.md
+      - Maven 插件: dev-manual/maven-plugin.md
+      - 参数配置: dev-manualcustom-params.md.md
+      - Debug: dev-manual/debug.md
+  - 工具:
+      - CLI: cli.md
+  - 接口文档:
+      - CRS接口文档: api/crs-api.md
+      - DRS接口服务: api/drs-api.md
+  - 关于: about.md
+theme:
+  language: 'zh'
+  name: 'material'
+  custom_dir: 'theme'
+  favicon: 'images/favicon.ico'
+  logo: 'images/logo.png'
+  font:
+#    text: 'Noto Serif SC'
+    text: 'Noto Sans SC'
+#    code: 'Source Sans Pro'
+
+# Copyright
+copyright: 'Copyright &copy; 2019 - 2020 STACS'
+extra_css:
+  - 'stylesheets/extra.css'
+extra:
+  search:
+    language: 'jp'

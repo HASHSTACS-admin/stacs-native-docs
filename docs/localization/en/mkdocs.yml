@@ -1,0 +1,65 @@
+site_name: STACS-NATIVE
+repo_name: 'Aurorasic/stacs-native'
+repo_url: 'https://github.com/Aurorasic/stacs-native'
+docs_dir: docs
+site_dir: ../build/en
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - Index: index.md
+  - Getting Started: GettingStarted.md
+  - Stacs-Native Design:
+    - Arch Design: design/arch-design.md
+    - BD : design/bd.md
+    - DAPP: design/dapp.md
+    - Domain & RS: design/domain&RS.md
+    - Policy: design/policy.md
+    - private data: design/private-data.md
+    - Identity: design/identity.md
+    - Permission: design/permission.md
+    - CA: design/ca.md
+    - Transaction Process: design/transaction-process.md
+    - Assets: design/assets.md
+    - Business Master: design/master.md
+    - Node Management: design/node-management.md
+    - failover: design/failover.md
+  - Consensus: consensus.md
+  - Smart Contract: smart-contract.md
+  - DAPP Development: dapp-dev.md
+  - Tools:
+      - CLI: cli.md
+  - Docs:
+      - CRS Api: api/crs-api.md
+      - DRS Api: api/drs-api.md
+  - about: about.md
+theme:
+  language: 'en'
+  name: material
+  custom_dir: 'theme'
+  favicon: 'images/favicon.ico'
+  logo: 'images/logo.png'
+  font:
+#    text: 'Noto Serif SC'
+    text: 'Noto Sans SC'
+#    code: 'Source Sans Pro'
+
+# Copyright
+copyright: 'Copyright &copy; 2019 - 2020 STACS'
+extra_css:
+  - 'stylesheets/extra.css'
+extra:
+  search:
+    language: 'en'
+
