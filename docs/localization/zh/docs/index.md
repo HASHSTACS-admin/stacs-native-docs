@@ -34,5 +34,5 @@ Stacs-Native是一个开源的拜占庭容错的分布式区块链系统。为�
 [7]: smart-contract.md
 [8]: design/master.md
 [9]: design/arch-design.md
-[10]: GettingStarted.md
+[10]: started/GettingStarted.md
 [11]: dapp-dev.md

@@ -26,7 +26,7 @@ git clone https://github.com/Aurorasic/stacs-native.git
 
 + 运行`example` 的`Application` 启动类，并配置该类的为`active profiles` 为`solo` ，并启动
 
-![application-config](images/design/get-start/application-config.png)
+![application-config](../images/design/get-start/application-config.png)
 
 
 
@@ -42,7 +42,7 @@ ssh user@localhost -p2000
 
   
 
-![pwd](images/design/get-start/pwd.png)
+![pwd](../images/design/get-start/pwd.png)
 
 + 输入密码 
 
@@ -56,7 +56,7 @@ pwd
 node info
 ~~~
 
-![node-info](images/design/get-start/node-info.png)
+![node-info](../images/design/get-start/node-info.png)
 
 #### 运行多节点
 
@@ -74,17 +74,17 @@ node info
 
 + 项目所在根目录创建`app-data` 文件夹用于存储节点数据和日志
 
-![image-20191115112557022](images/design/get-start/cluster-config-a.png)
+![image-20191115112557022](../images/design/get-start/cluster-config-a.png)
 
 
 
-![image-20191115112650860](images/design/get-start/cluster-config-b.png)
+![image-20191115112650860](../images/design/get-start/cluster-config-b.png)
 
-![image-20191115112742790](images/design/get-start/cluster-config-c.png)
+![image-20191115112742790](../images/design/get-start/cluster-config-c.png)
 
 
 
-![image-20191115112814431](images/design/get-start/cluster-config-d.png)
+![image-20191115112814431](../images/design/get-start/cluster-config-d.png)
 
 
 
@@ -94,7 +94,7 @@ node info
 
 + 同时启动4个节点，节点启动完成时，进入`STACS-A` 节点查看节点状态为`running` ,表示节点启动正常
 
-![image-20191115111240332](images/design/get-start/cluster-run.png)
+![image-20191115111240332](../images/design/get-start/cluster-run.png)
 
 
 

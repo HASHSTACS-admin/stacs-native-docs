@@ -19,7 +19,11 @@ markdown_extensions:
 
 nav:
   - 主页: index.md
-  - 快速开始: GettingStarted.md
+  - 快速开始:
+    - 开发者模式: started/GettingStarted.md
+    - 单机模式: started/started-solo.md
+    - 集群模式: started/started-cluster.md
+    - DRS部署: started/started-drs.md
   - Stacs-Native设计:
     - 架构设计: design/arch-design.md
     - BD: design/bd.md
@@ -43,7 +47,8 @@ nav:
     - 参数配置: dev-manual/custom-params.md
     - Debug: dev-manual/debug.md
   - 工具:
-    - CLI: cli.md
+    - CLI: tools/cli.md
+    - 集群配置生成工具: tools/generator.md
   - 接口文档:
     - CRS接口文档: api/crs-api.md
     - DRS接口服务: api/drs-api.md
