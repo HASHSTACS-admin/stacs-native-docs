@@ -1,8 +1,11 @@
 # 环境准备
-+ docker环境
+1. docker环境
+2. 安装docker。
+3. 安装docker-compose。
+4. 拉取镜像文件:`$ sudo docker pull stacs-native-dapp/drs-boot`
+5. 创建docker-compose.yml文件，并执行：`sudo docker-compose up –d`
 
-# 下载
-[下载DRS镜像包][1]
+
 # 配置
 
 ## 可配置参数
@@ -21,8 +24,6 @@
 + 数据库链接地址：`spring.datasource.druid.url=`
 + Mysql数据库用户名：`spring.datasource.druid.username=`
 + Mysql数据库密码：`spring.datasource.druid.password=`
-
-[1]: https://github.com/Aurorasic/stacs-native-dapp/tree/dev/dapp-sample
 
 
 
