@@ -22,7 +22,7 @@ nav:
   - 快速开始: GettingStarted.md
   - Stacs-Native设计:
     - 架构设计: design/arch-design.md
-    - BD : design/bd.md
+    - BD: design/bd.md
     - DAPP: design/dapp.md
     - Domain & RS: design/domain&RS.md
     - Policy: design/policy.md
@@ -38,24 +38,24 @@ nav:
   - 共识协议: consensus.md
   - 智能合约: smart-contract.md
   - DAPP开发手册:
-      - 快速开始: dev-manual/quick-start.md
-      - Maven 插件: dev-manual/maven-plugin.md
-      - 参数配置: dev-manualcustom-params.md.md
-      - Debug: dev-manual/debug.md
+    - 快速开始: dev-manual/quick-start.md
+    - Maven 插件: dev-manual/maven-plugin.md
+    - 参数配置: dev-manual/custom-params.md
+    - Debug: dev-manual/debug.md
   - 工具:
-      - CLI: cli.md
+    - CLI: cli.md
   - 接口文档:
-      - CRS接口文档: api/crs-api.md
-      - DRS接口服务: api/drs-api.md
+    - CRS接口文档: api/crs-api.md
+    - DRS接口服务: api/drs-api.md
   - 关于: about.md
 theme:
   language: 'zh'
   name: 'material'
-  custom_dir: 'theme'
+  #custom_dir: 'theme'
   favicon: 'images/favicon.ico'
   logo: 'images/logo.png'
   font:
-#    text: 'Noto Serif SC'
+    #    text: 'Noto Serif SC'
     text: 'Noto Sans SC'
 #    code: 'Source Sans Pro'
 
