@@ -16,7 +16,11 @@
 + 区块链接口层私钥：`drs.domain.merchantPriKey=`
 + 区块链接口层加密串：`drs.domain.aesKey=`
 + 区块链接口层商户id：`drs.domain.merchantId=`
-+ 区块链回调当前DRS的接口地址：`drs.domain.callbackUrl=http://localhost:8080/drs/callback`
++ 区块链回调地址：`drs.domain.callbackUrl=`
++ 数据库数据源驱动：`spring.datasource.DruidDataSourceFactory.driver-class-name=`
++ 数据库链接地址：`spring.datasource.druid.url=`
++ Mysql数据库用户名：`spring.datasource.druid.username=`
++ Mysql数据库密码：`spring.datasource.druid.password=`
 
 [1]: https://github.com/Aurorasic/stacs-native-dapp/tree/dev/dapp-sample
 
