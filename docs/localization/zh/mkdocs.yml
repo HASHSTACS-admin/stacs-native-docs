@@ -56,7 +56,7 @@ nav:
 theme:
   language: 'zh'
   name: 'material'
-  #custom_dir: 'theme'
+  custom_dir: 'theme'
   favicon: 'images/favicon.ico'
   logo: 'images/logo.png'
   font:
