@@ -63,7 +63,7 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 >   *   `drs-boot`配置文件名称必须为：`boot.properties`
 >   *   完整参数请见[2]
 
-## 开始示例
+## 开发示例
 
 ### DRS API 调用示例
 
@@ -108,9 +108,26 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 
 >   *   回调处理器需要实现`ITxCallbackHandler`
 
-
-
 1.  开发时应用的spring规则（静态页面）
+
+## 开发运行/调试示例
+
+### IDEA 配置
+
+![image-20191204180459598](../images/dev-manual/quick-start/IDEA-run-config.png)
+
+如图所示
+
+1.  创建一个新的`Run/Debug Configuration`，选择`JAR Application`
+2.  `Path to Jar`选择 *DApp* `debug包`所在路径（需要先执行**打包流程**）
+3.  点击`OK`即可
+
+### Eclipse 配置
+
+![image-20191204183041710](../images/dev-manual/quick-start/Eclipse-run-config.png)
+
+1.  在`Run > External Tools > External tools Configurations`选择`External Tool`
+2.  如上图创建一个运行设置，配置`debug包`文件路径即可。
 
 
 
