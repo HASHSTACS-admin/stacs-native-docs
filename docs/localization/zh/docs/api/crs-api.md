@@ -27,23 +27,23 @@
   
 - 安全性
    
-   所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
+    所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
 
     - 请求数据格式
     
 |     属性      | 类型     |  说明                                                         |
 | :-----------: | -------- | ------------------------------------------------------------ |
-|     requestParam      | `string` |  请求数据，将原始请求数据采用${merchantAesKey}加密后使用BASE64编码/        
-|     signature      | `string` |  商户签名，将原始请求数据采用${merchantPriKey}签名后的HEX格式数据/ 
+|     requestParam      | `string` |  请求数据，将原始请求数据采用${merchantAesKey}加密后使用BASE64编码 |
+|     signature      | `string` |  商户签名，将原始请求数据采用${merchantPriKey}签名后的HEX格式数据 |
 
     - 响应数据格式
         
 |     属性      | 类型     |  说明                                                         |
 | :-----------: | -------- | ------------------------------------------------------------ |
-|     respCode      | `string` |  返回状态码，000000为成功，其他为失败/  
-|     msg      | `string` |  返回状态描述 /   
-|     data      | `string` |  响应数据，将原始响应数据采用${merchantAesKey}加密后使用BASE64编码 /   
-|     signature      | `string` |  CRS签名，将原始响应数据采用${crsPriKey}签名后的HEX格式数据 /   
+|     respCode      | `string` |  返回状态码，000000为成功，其他为失败 |
+|     msg      | `string` |  返回状态描述 |
+|     data      | `string` |  响应数据，将原始响应数据采用${merchantAesKey}加密后使用BASE64编码 | 
+|     signature      | `string` |  CRS签名，将原始响应数据采用${crsPriKey}签名后的HEX格式数据 | 
             
 ```json tab="请求实例"
 {
