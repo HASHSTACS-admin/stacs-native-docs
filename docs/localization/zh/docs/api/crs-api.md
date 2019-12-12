@@ -1,29 +1,66 @@
 # CRS接口文档
 
-> 区分系统级和非系统级接口
+> 接口分为区分系统级和非系统级接口， 系统级接口仅供内部RS节点调用，对外接口均为非系统级接口。
+> 非系统级接口又分为查询类接口和交易类接口，查询类接口采用GET请求，接口无安全性设计考虑；交易类接口采用POST请求，
+> 请求数据采用AES256加密，并会将加密数据采用ECC签名，具体参见接口规范
 
-## 通用请求
+## 术语
+- `merchantId`: 商户Id, 用于区分不同的接入方
+- `merchantPriKey`: 商户ECC私钥，用于签名请求数据
+- `merchantPubKey`: 商户ECC公钥，用于CRS验证商户请求签名
+- `merchantAesKey`: 商户AES256格式密钥，用于加密请求数据或响应数据
+- `crsPubKey`: CRS公钥，用户商户验证响应数据签名
+- `crsPriKey`: CRS公钥，用于CRS签名响应数据
 
-### 请求头
+## 接口规范
 
-*   `GET`：**无额外参数**
-*   `POST`:`Content-Type: application/json`
+- HTTP请求头
 
-## 通用响应
+    *   `GET`：**无额外参数**
+    
+    *   `POST`:         
+        `Content-Type: application/json`  
+        `merchantId:${merchantId}`: CRS分配的
+        
+    
+- Http响应状态码 200
+  
+- 安全性
+   
+   所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
 
-### 200
+    - 请求数据格式
+    
+        |     属性      | 类型     |  说明                                                         |
+        | :-----------: | -------- | ------------------------------------------------------------ |
+        |     requestParam      | `string` |  请求数据，将原始请求数据采用${merchantAesKey}加密后使用BASE64编码/                                           |
+        |     signature      | `string` |  商户签名，将原始请求数据采用${merchantPriKey}签名后的HEX格式数据/                                           |
 
-请求提交成功，可能执行成功，也可能执行失败。具体需要根据响应内容来确定
-
-#### 成功示例
-
-```json
+     - 响应数据格式
+        
+            |     属性      | 类型     |  说明                                                         |
+            | :-----------: | -------- | ------------------------------------------------------------ |
+            |     respCode      | `string` |  返回状态码，000000为成功，其他为失败/                                           |
+            |     msg      | `string` |  返回状态描述/   
+            |     data      | `string` |  响应数据，将原始响应数据采用${merchantAesKey}加密后使用BASE64编码/   
+            |     signature      | `string` |  CRS签名，将原始响应数据采用${crsPriKey}签名后的HEX格式数据/   
+            
+```json tab="请求实例"
 {
-  "respCode": "000000", // 操作成功的返回代码
-  "msg":"Success",		  // 操作成功
-  "data":{...},				  // 请求实际响应 
+	"requestParam": "qxZrjKc4aV/57vHBAh9yLUC40ez4XsE7OJgHFM4Uy2BrmE3mwkzcVdR20QIEHhcWvyeSVy4mQIu5pG7HhpS+AvBdH33f/r+4YSXmtKo1/vOkLsU5h/t1Z23sD/gRRMB1K5zqH7PK+Ij0//zLuLavg0+UZgFT8m3fW5egy9ULTuRPYQgmU627hrJZU72qP+EoEOKR06+RRQDflz0gkA9SSVpz9MgAZCnYFe8sFtMSqAjeRWTspaP9qXXcX4OafMYm4GlrNkyWUYwcl9A8G2NLOViGuPuDC8tFKShN+9mt4uPwsvj6um7eGwlBBL8FtqrWcX2HZMFTdHCD1rNipi+lbDta5j54p6y5wpLHoR9AOxiOuWXOiGDhzE/HiXae7DRiaPI/AHmVu5p8KPTiKIVSphpbl0kK5vv+lunvmokn1DOlRMs6CvFRIKnqbRwJrEvpaPZkXXqerYbIevtQ9e8ZtRxpdgms5bWGIAijlrOzxsKxmzCrvuMAWt9tHUz2LpCyJCG+woEnbD4p/mJ0u+68kE7P6bztLanWJ31X8DnZlRKs88S3WgYlq3WJrnuQ+qQqRbf5f6+hqPGogxVOZ3AOC3uAVTE4fkcyPTLCOuMDXp5B9hPioXHyMPVMZyGkc1IFx84XRa++uJKGQ7Ja1E/MDANTFxu4CQ/szvHuvVP+Gl3Fk50rKMY0/QiH155xgSq7pnwy2ItCYiTXXc09D2jiahEcXOLGqCuHLh/7YY3zH8hV6dxhB9/66HLaF4p5jGiXyUvbZRhcQE2gu+jW43EETLq+t29z122NQm75M+Q60toy7UrIr+brOrAfMYGpE527vNZAmaEWFJd2i8lDDXoaGMd8l8OiHqnMbxjWQsU4VkGHz0+3jpZpJY5fraq+EgATXfG9IyiNM+yrNL+kwcEmnH3WOdcve+P8keocey2SPu5LgQ10XUvN6qVsi+m6qXy6TsjAWq3Zq5u8beIY9zFBWxScaXlV9c4XLJkXM7tfz04wD7/hGM/S4Il8awRYHAJkUEF2GR1zYNzDFeHWq/mE2x3HWogdKAjwwkPdw8ZEjN9BIVDKVmH1Q/12nUgfr1w9",
+	"signature": "017236d91c3fa2560a5c5fdee1e4a7a55397d146213153d09cea97b1d1949596e2636cf6081bf1a0695811556e9f41918924c41a58149e994ab4132eb54279345d"
 }
 ```
+
+```json tab="响应实例"
+{
+	"data": "LxLoZ460dSIcnN2jZWvDfEwUsg8B2cEwgnb5olJp6jbrOYSIAryN+27QpLLRLNeIGqwSHgTRr93mtpJlqA0wCPS9iLt/vLY3hS4fQjtF4Rs=",
+	"msg": "Success", // 操作成功
+	"respCode": "000000", // 返回代码， 000000为成功
+	"signature": "012db52119a153606a362ff78e197e27cbf1fbff8e04d138cfe0e858ab701741ae1556e0667a145a50004504771297e48815ef31a9f5028b9132da0f70ded82075"
+}
+```
+
 
 ## 系统级接口
 
