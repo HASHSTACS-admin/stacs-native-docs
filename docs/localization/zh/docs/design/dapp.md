@@ -105,7 +105,8 @@ Dapp可以是普通java工程，也可以是spring-boot工程，只需要使用 
 - outputDirectory  
    打包文件的输出目录。
 - webContextPath   
-   若是web项目，需指定其自己的contextPath，注意：安装时该取值如果跟已有的重名，则会导致启动失败。
+   若是web项目，该项配置会被默认替换为dapp的name,不支持自定义
+- dapp spring-boot Application类需配置包扫描路径：io.stacs.nav.dapp"
 
 ### Sample
 
