@@ -242,35 +242,95 @@
 
 ##### Identity权限查询
 
-`GET`：`/identity/permission/query`
-
 - [x] 开放
+- 接口描述：  查询Identity用户所拥有的permission权限
+- 请求地址：`GET`:`/identity/permission/query?address={address}`
+- 请求参数： 
 
->   查询用户所有的权限
->
->   注：如果用户不存在或传入`address`为空,则返回空的权限列表
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| address | `string` | 40     | Y    | Y        | 用户地址                     |
 
-|  属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                      |
-| :-----: | -------- | -------- | ---- | -------- | ------------------------- |
-| address | `string` | 40       | Y    | N        | 需要查询的identityAddress |
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| permissionIndex | `int` | 64     | Y    | Y        | 权限编号                      |
+| permissionName | `string` | 64     | Y    | Y        | 权限名称                      |
+- 实例：
+
+``` tab="请求实例"
+
+```
+
+```json tab="响应实例"
+{
+    "data":[
+        {
+            "permissionIndex":22,
+            "permissionName":"CONTRACT_INVOKE"
+        },
+        {
+            "permissionIndex":0,
+            "permissionName":"DEFAULT"
+        },
+        {
+            "permissionIndex":21,
+            "permissionName":"CONTRACT_ISSUE"
+        }
+    ],
+    "msg":"Success",
+    "respCode":"000000",
+    "success":true
+}
+```
 
 
 
 ##### Identity鉴权
-
 - [x] 开放
+- 接口描述：  检查用户是否有鉴别的权限
+- 请求地址：`POST`：`identity/checkPermission`
+- 请求参数： 
 
-`POST`：`identity/checkPermission`
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| address | `string` | 40     | Y    | N        | 用户地址                     |
+| permissionNames | `<string[]>` | 40     | N    | Y        | 需要检查的权限，数组                     |
 
->   验证identity是否有对应Permission列表的权限：
->
->   1.  如果用户不存在，返回`false`
->   2.  如果`permissionNames`为空，返回`true`
+- 响应参数：
 
-|      属性       | 类型           | 最大长度 | 必填 | 是否签名 | 说明                           |
-| :-------------: | -------------- | -------- | ---- | -------- | ------------------------------ |
-|     address     | `string`       | 40       | Y    | N        | 需要查询的identityAddress      |
-| permissionNames | `list<string>` |          | N    | N        | 需要鉴权的`permissionName`列表 |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| data | `boolean` | 64     | Y    | Y        | 检查结果，成功返回true,失败返回false                      |
+                  |
+- 实例：
+
+``` tab="请求实例"
+{
+	"address":"b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9",
+	"baseSignValue":"nullnullnullnullnull",
+	"bdCode":null,
+	"execPolicyId":null,
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":null,
+	"permissionNames":[
+		"CONTRACT_INVOKE"
+	],
+	"submitter":null,
+	"submitterSign":null,
+	"txId":null
+} 
+```
+
+```json tab="响应实例"
+{
+    "data":"true",
+    "msg":"Success",
+    "respCode":"000000"
+}
+```
 
 
 
@@ -279,18 +339,57 @@
 ##### BD查询
 
 - [x] 开放
+- 接口描述：  按db查询db详情
+- 请求地址：`GET`:`/bd/query?bdCode={bdCode}`
+- 请求参数： 
 
-`GET`:`/bd/query`
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| bdCode          | `string`     | 40     | N    | N        | 查询的BD                     |
+                    |
 
->   查询所有BD,或是基于给定的BD`code`查询对应BD。
->
->   如果参数`bdCode`为空，返回系统所有BD列表
+- 响应参数：
 
-|  属性  | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-| :----: | -------- | -------- | ---- | -------- | ---------------- |
-| bdCode | `string` | 64       | N    | N        | 需要查询的BDCode |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| bdType | `string` | 64     | Y    | Y        | bd类型(system/contract/asserts)                      |
+| code | `string` | 64     | Y    | Y        | BD的code，唯一                     |
+| desc | `string` | 64     | Y    | Y        | 描述                     |
+| functions | `JSONArray` | 4082     | Y    | Y        | bd定义的支持的function申明|
+| initPermission | `string` | 64     | Y    | Y        | 发布BD时，发布者需要具备的权限                      |
+| initPolicy | `string` | 64     | Y    | Y        | 发布BD时，发布执行的policy策略    |
+| name | `string` | 64     | Y    | Y        | BD名称                      |
+| bdVersion | `string` | 64     | Y    | Y        | BD版本号                     |                  
+- 实例：
+
+``` tab="请求实例"
+/bd/query?bdCode=
+```
+
+```json tab="响应实例"
+{
+	"data":[
+		{
+			"bdType":"asserts",
+			"bdVersion":"1.0",
+			"code":"CBD_SC_87716",
+			"createTime":1576152885920,
+			"desc":null,
+			"functions":"[{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"transfer(address,uint256)\",\"name\":\"transfer\",\"signValue\":\"transferContracttransfer(address,uint256)CONTRACT_INVOKECONTRACT_INVOKE\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"transferToContract(uint256,uint256,address,string)\",\"name\":\"transferToContract\",\"signValue\":\"transferToContractContracttransferToContract(uint256,uint256,address,string)CONTRACT_INVOKECONTRACT_INVOKE\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"balanceOf(address)\",\"name\":\"balanceOf\",\"signValue\":\"balanceOfContractbalanceOf(address)CONTRACT_INVOKECONTRACT_INVOKE\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"additionalIssue(uint256)\",\"name\":\"additionalIssue\",\"signValue\":\"additionalIssueContractadditionalIssue(uint256)CONTRACT_INVOKECONTRACT_INVOKE\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"buybackPay(address[],uint256[])\",\"name\":\"buybackPay\",\"signValue\":\"buybackPayContractbuybackPay(address[],uint256[])CONTRACT_INVOKECONTRACT_INVOKE\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"settlPay(address[],uint256[])\",\"name\":\"settlPay\",\"signValue\":\"settlPayContractsettlPay(address[],uint256[])CONTRACT_INVOKECONTRACT_INVOKE\",\"type\":\"Contract\"}]",
+			"id":null,
+			"initPermission":"DEFAULT",
+			"initPolicy":"CONTRACT_ISSUE",
+			"name":"CBD_SC_87716",
+			"updateTime":null
+		}
+	],
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 #### 存证
+
 
 ##### 存证查询
 
