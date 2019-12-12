@@ -2,9 +2,10 @@
 #### BD发布
      
 #### Policy注册
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.registerPolicy(RegisterPolicyVO vo)
-RegisterPolicyVO属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.registerPolicy(RegisterPolicyVO vo)`
+- 接口参数：
+    - `RegisterPolicyVO`属性描述:
 
 | 属性            | 类型            | 最大长度 | 必填 | 说明                           |
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
@@ -22,7 +23,9 @@ RegisterPolicyVO属性描述:
 | domainIds      | `List<String>`  |          | Y    | 参与投票的domainId列表                        
 | requireAuthIds | `List<String>`  |          | Y    | 需要通过该集合对应的rs授权才能修改当前policy     
 | assigMeta      | `AssigMeta`     |          | N    | 指定数量类型时的规则信息                       
-#### AssigMeta类型
+
+- `AssigMeta`类型
+    
 | 属性          | 类型          | 最大长度 | 必填 | 说明                           |
 | ------------- | ------------- | -------- | ---- | ------------------------------ |
 | verifyNum     | `int`         |          | N    | 需要投票的domain数量             

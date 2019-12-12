@@ -36,6 +36,7 @@
 |     requestParam      | `string` |  请求数据，将原始请求数据采用${merchantAesKey}加密后使用BASE64编码 |
 |     signature      | `string` |  商户签名，将原始请求数据采用${merchantPriKey}签名后的HEX格式数据 |
 
+
     - 响应数据格式
         
 |     属性      | 类型     |  说明                                                         |
