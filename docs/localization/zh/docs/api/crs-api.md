@@ -580,10 +580,9 @@
 #### 存证
 
 - [x] 开放
-
-`POST`:`/attestation/save`
-
->   保存存证信息入链
+- 接口描述：  保存存证信息入链
+- 请求地址：`POST`:`/attestation/save`
+- 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -591,6 +590,36 @@
 |   version   | `string` | 20       | Y    | Y        | 存证版本                      |
 |   remark    | `string` | 1024     | N    | Y        | 备注                          |
 |  objective  | `string` | 40       | N    | Y        | 目标地址，默认使用`submitter` |
+
+- 响应参数：
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 4096     | Y    | Y        | 存证内容                      |
+
+- 实例：
+``` json tab="请求实例"
+    {
+        attestation: "我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
+        attestationVersion: "1.0",
+        baseSignValue: "71a29ad1d5968081bfc911b07066a2e953ebe5451b1f1779a9ff54f580170914SystemBDSAVE_ATTESTATIONnullnull",
+        bdCode: "SystemBD",
+        execPolicyId: "SAVE_ATTESTATION",
+        feeCurrency: null,
+        feeMaxAmount: null,
+        functionName: "SAVE_ATTESTATION",
+        objective: "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+        remark: "markmarkmarkmarkmark",
+        submitter: "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+        submitterSign: "00053bf0571664f5de53b3afd7d18e32eaf8ce6afe3a2352e3bdf90d4ff748a2b66977d3b2d5c8a1f88867109bfde3c1eba25910fcc64649f2e41e39946f71dada",
+        txId: "71a29ad1d5968081bfc911b07066a2e953ebe5451b1f1779a9ff54f580170914"
+    }
+```
+``` json tab="响应实例"
+{
+   txId: "71a29ad1d5968081bfc911b07066a2e953ebe5451b1f1779a9ff54f580170914"
+}
+```
+
 
 
 
