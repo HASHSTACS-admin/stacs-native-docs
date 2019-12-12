@@ -388,20 +388,9 @@
 } 
 ```
 
-#### 存证
 
 
-##### 存证查询
 
-- [x] 开放
-
-`GET`:`/attestation/query`
-
->   根据交易Id查询对应的存证信息，需要查询存证已存在。
-
-| 属性 | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-| :--: | -------- | -------- | ---- | -------- | ---------------- |
-| txId | `string` | 64       | Y    | N        | 需要查询的交易id |
 
 #### 快照
 
@@ -575,40 +564,105 @@
 ##### 新增Permission
 
 - [x] 开放
+- 接口描述：  添加permission,Identity被授予permission后才能执行该permission所定义交易
+- 请求地址：`POST`:`/permission/register`
+- 请求参数： 
 
-`POST`:`/permission/register`
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| permissionName       | `string` | 64        | Y    | Y        | permission名称       |
 
->   注册新的权限，用于新的业务权限管理
+- 响应参数：
 
-|      属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明         |
-| :------------: | -------- | -------- | ---- | -------- | ------------ |
-| permissionName | `string` | 64       | Y    | Y        | 新增权限名称 |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| data       | `string` | 64        | Y    | Y        | 返回交易ID       |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"execPolicyId":"PERMISSION_REGISTER",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"PERMISSION_REGISTER",
+	"permissionName":"permission_97251",
+	"signValue":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7SystemBDPERMISSION_REGISTERnullnullpermission_97251PERMISSION_REGISTER",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"0146a281667fea21a7f3fa5910689b3a0ea33a84f6d87885584237cd0306cc05715cdc6a527c9564c58a05e801b117ae2cf43869656fd4bb4aa8eee7e2bb355763",
+	"txId":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7"
+} 
+```
+
+```json tab="响应实例"
+
+	"data":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 #### Identity
 
 ##### Identity设置
 
 - [x] 开放
+- 接口描述：  设置Identity(此接口不能设置KYC信息)
+- 请求地址：`POST`:`/identity/setting`
+- 请求参数： 
 
-`POST`:`/identity/setting`
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
+| address      | `string` | 64     | Y    | Y        | Identity地址                      |
+| hidden       | `int`    | 1      | Y    | Y        | 是否隐藏                      |
+| identityType | `string` | 64     | Y    | Y        |  1. user 2. domain 3. node       |
 
->   新增`identity`或修改对应地址的`identity`属性设置
+
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| identityType | `string` |          | Y    | Y        | 1. user（DApp） 2. domain（机构） 3. node（节点） |
-|   property   | `string` | 1024     | N    | Y        | 用户自定义属性，Json类型                          |
-|   address    | `string` | 40       | Y    | Y        | 新增identity地址                                  |
+| txId | `string` |          | Y    | Y        | 交易id |                           |
 
+- 实例：
 
+```json tab="请求实例"
+{
+	"address":"4a02aa7f84d01b63b28c81c096f8c2e3feda7df9",
+	"bdCode":"SystemBD",
+	"currentBlockHeight":null,
+	"execPolicyId":"IDENTITY_SETTING",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"froze":null,
+	"functionName":"IDENTITY_SETTING",
+	"hidden":0,
+	"identityType":"user",
+	"kYC":null,
+	"permissions":null,
+	"preBlockHeight":null,
+	"property":"{}",
+	"signValue":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6SystemBDIDENTITY_SETTINGnullnulluser{}4a02aa7f84d01b63b28c81c096f8c2e3feda7df9IDENTITY_SETTING",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"0126dd3b87c68bd0977c9dd952f3695dc6ecb7f9b85125918a8834991d16547e3f71380e4ed9bf1cc9b3cc3b47d8ad90208bff8f2f15cc0991dc8fe0dcbeeda7f0",
+	"txId":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ##### Identity授权
 
 - [x] 开放
-
-`POST`:`/permission/authorize`
-
->   向地址对应的`identity`赋予权限列表对应的权限，如果`identity`不存在，则自动新增。
+- 接口描述：  给Identity赋予已入链的permission
+- 请求地址：`POST`:`/permission/authorize`
+- 请求参数
 
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
@@ -616,30 +670,86 @@
 | permissionNames | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组 |
 |  identityType   | `string`   |          | Y    | Y        | 1. user 2. domain 3. node          |
 
-> 如果`address`中对应的`identity`不存在，则会自动新增`identity`，因此`identityType`也是必填字段
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| data | `string` | 64     | Y    | Y        | txId                      |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"execPolicyId":"AUTHORIZE_PERMISSION",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"AUTHORIZE_PERMISSION",
+	"identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
+	"identityType":"user",
+	"permissionNames":["permission_97251"],
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"00b7dbeccdc06a57dd3ed5028d329c7ff9ae0c392967e4bb12220818ef9f0c26be4674102cb12036243c19ccce10f5beb89b4ce4b290d19ede1ff2227502daf7ff",
+	"txId":"c03ba6d1fe11c941b110a3064ce675e52c74be56c9dae4beaccbe287ce4f86e1"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"c03ba6d1fe11c941b110a3064ce675e52c74be56c9dae4beaccbe287ce4f86e1",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ##### identity撤销权限
 
 - [x] 开放
-
-`POST`:`/permission/cancel`
-
->   向地址对应的`identity`撤销权限列表对应的权限。
->
->   同授权，不同的是，撤销授权时，如果`identityAddress`没有对应的`identity`则会执行失败。
+- 接口描述：  撤销Identity已被授权的permission
+- 请求地址：`POST`:`/permission/cancel`
+- 请求参数： 
 
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
 | identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
-| permissionNames | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组 |
+| permissionNames | `string[]` |          | Y    | Y        | 给Identity撤销授权的PermissionName数组 |
 
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | txId                      |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"execPolicyId":"CANCEL_PERMISSION",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"CANCEL_PERMISSION",
+	"identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
+	"permissionNames":["permission_97251"],
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"01d28a6d7d7ed2b68bc7b0b63e1089a4d6c1f91dc5ffa22a99d508f744fc29aa554369f96c27594e3956aede9dbb8aa143cbedcd49850198b5391be958e160b9b6",
+	"txId":"49046127ec22fd91e95ed7339bfbc051d1141869bb6abdae0699503e3255e8dc"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"49046127ec22fd91e95ed7339bfbc051d1141869bb6abdae0699503e3255e8dc",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 ##### Identity冻结/解冻
 
 - [x] 开放
-
-`POST`:`/identity/bdManage`
-
->   对`identity`冻结/解冻相应`BD`，如果`identity`被冻结，则该`identity`不能执行所有关联冻结`BD`的合约
+- 接口描述：  
+- 请求地址：`POST`:`/identity/bdManage`
+- 请求参数： 
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
@@ -647,7 +757,145 @@
 |    BDCodes    | `string[]` |          | Y    | Y        |                               |
 |  actionType   | `string`   |          | Y    | Y        | 操作类型：1. froze 2. unfroze |
 
+- 响应参数：
 
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | txId                      |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"actionType":"froze",
+	"bDCodes":["CBD_SC_97251"],
+	"bdCode":"SystemBD",
+	"execPolicyId":"IDENTITY_BD_MANAGE",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"IDENTITY_BD_MANAGE",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"01355fe479c900c5bd3ec52c01aa3543f271b4ba6b0963adc31cc4b7baa1ccace17e1dd22c93a3ff9e7d35ad80e6a6e2028a38854583778a424a0c6ac143bb3975",
+	"targetAddress":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"txId":"9e93ae8071511828c2879206a1a6c50f3d292f5790e3d8f0379a0b3b5f98b67c"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"9e93ae8071511828c2879206a1a6c50f3d292f5790e3d8f0379a0b3b5f98b67c",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
+
+##### 查询Identity
+
+- [x] 开放
+- 接口描述：  
+- 请求地址：`GET`:`identity/query?userAddress=${userAddress}`
+- 请求参数： 
+
+|     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
+| userAddress | `string`   | 40       | Y    | Y        | identity地址              |
+
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | txId                      |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"actionType":"froze",
+	"bDCodes":["CBD_SC_97251"],
+	"bdCode":"SystemBD",
+	"execPolicyId":"IDENTITY_BD_MANAGE",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"IDENTITY_BD_MANAGE",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"01355fe479c900c5bd3ec52c01aa3543f271b4ba6b0963adc31cc4b7baa1ccace17e1dd22c93a3ff9e7d35ad80e6a6e2028a38854583778a424a0c6ac143bb3975",
+	"targetAddress":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"txId":"9e93ae8071511828c2879206a1a6c50f3d292f5790e3d8f0379a0b3b5f98b67c"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"9e93ae8071511828c2879206a1a6c50f3d292f5790e3d8f0379a0b3b5f98b67c",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
+##### 查询permission
+- [x] 开放
+- 接口描述：  
+- 请求地址：`GET`:`/permission/queryAll`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
+
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| permissionIndex | `int` | 64     | Y    | Y        | permission编号                      |
+| permissionName  | `string` | 64     | Y    | Y        | permission名称                      |
+
+- 实例：
+
+```json tab="请求实例"
+
+```
+
+```json tab="响应实例"
+
+	"data":[
+		{
+			"permissionIndex":34,
+			"permissionName":"permission_98731"
+		},
+		{
+			"permissionIndex":45,
+			"permissionName":"permission_97251"
+		},
+		{
+			"permissionIndex":1,
+			"permissionName":"RS"
+		},
+		{
+			"permissionIndex":0,
+			"permissionName":"DEFAULT"
+		},
+		{
+			"permissionIndex":21,
+			"permissionName":"CONTRACT_ISSUE2"
+		},
+		{
+			"permissionIndex":1,
+			"permissionName":"CONTRACT_ISSUE"
+		},
+		{
+			"permissionIndex":22,
+			"permissionName":"CONTRACT_INVOKE2"
+		},
+		{
+			"permissionIndex":2,
+			"permissionName":"CONTRACT_INVOKE"
+		}
+	],
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ##### KYC设置
 
@@ -760,7 +1008,39 @@
 }
 ```
 
+##### 存证查询
+- [x] 开放
+- 接口描述：  查询入链存证信息
+- 请求地址：`GET`:`/attestation/query?txId={txId}`
+- 请求参数： 
 
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | 存证交易id                      |
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | txId                      |
+
+- 实例：
+
+```json tab="请求实例"
+/attestation/query?txId={txId}
+```
+
+```json tab="响应实例"
+{
+	"data":{
+		"attestation":"我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
+		"attestationVersion":"1.0",
+		"remark":"markmarkmarkmarkmark"
+	},
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 
 ### 普通接口
