@@ -2,6 +2,67 @@
 
 ### 请求参数签名
 
+- 通过私钥签名：在有私钥的情况下，可直接通过私钥签名，实例如下：
+```java
+
+@Service @Slf4j public class SampleService {
+
+    @ArkInject ISubmitterService dappService;
+    @ArkInject ISignatureService signatureService;
+
+    public RespData<?> authPermission(AuthPermissionVO vo) {
+        try {
+            StacsECKey ecKey = StacsECKey.fromPrivate(Hex.decode("${user privateKey}"));
+            String signValue = signatureService.generateSignature(vo);
+            vo.setSubmitter(ecKey.getHexAddress());
+            vo.setSubmitterSign(ecKey.signMessage(signValue));
+            dappService.authPermission(vo);
+            return success();
+        } catch (DappException e) {
+            log.error("has error", e);
+            return fail(e);
+        }
+    }
+}
+
+```
+
+- 通过钱包： 在没有私钥，或是通过钱包管理私钥的情况下，可以通过如下方式生成签名数据
+```java
+
+@Service @Slf4j public class SampleService {
+
+    @ArkInject ISignatureService signatureService;
+
+    public String getSignature(AuthPermissionVO vo) {
+        return  signatureService.generateSignature(vo);
+    }
+}
+
+```
+
+将签名数据复制然后在钱包进行签名，拿到签名结果后，在将签名值输入并提交
+
+```java
+@Service @Slf4j public class SampleService {
+
+    @ArkInject ISubmitterService dappService;
+
+    public RespData<?> authPermission(AuthPermissionVO vo,String addr, String sign) {
+        try {
+            vo.setSubmitter(addr);
+            vo.setSubmitterSign(sign);
+            dappService.authPermission(vo);
+            return success();
+        } catch (DappException e) {
+            log.error("has error", e);
+            return fail(e);
+        }
+    }
+}
+```
+
+
 #### BD发布
      
 #### Policy注册
