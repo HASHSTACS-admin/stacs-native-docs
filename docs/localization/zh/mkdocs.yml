@@ -16,6 +16,7 @@ markdown_extensions:
       permalink: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.superfences
 
 nav:
   - 主页: index.md
