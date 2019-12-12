@@ -1,4 +1,7 @@
 ## 交易类接口
+
+### 请求参数签名
+
 #### BD发布
      
 #### Policy注册
@@ -32,11 +35,17 @@
 | mustDomainIds | `List<String` |          | N    | 必须参与投票的domainId列表        
 | expression    | `String`      |          | N    | 投票规则表达式，example: n/2+1   
 
+- 调用实例
+```java
+
+```
 
 #### Policy更新
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.modifyPolicy(ModifyPolicyVO vo)
-ModifyPolicyVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.modifyPolicy(ModifyPolicyVO vo)`
+- 接口参数：
+
+    - `ModifyPolicyVO`属性描述:
 
 | 属性            | 类型            | 最大长度 | 必填 | 说明                           |
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
@@ -54,7 +63,9 @@ ModifyPolicyVO 属性描述:
 | domainIds      | `List<String>`  |          | Y    | 参与投票的domainId列表                   
 | requireAuthIds | `List<String>`  |          | Y    | 需要通过该集合对应的rs授权才能修改当前policy 
 | assigMeta      | `AssigMeta`     |          | N    | 指定数量类型时的规则信息                    
-#### AssigMeta类型
+
+- `AssigMeta`类型
+
 | 属性          | 类型          | 最大长度 | 必填 | 说明                           |
 | ------------- | ------------- | -------- | ---- | ------------------------------ |
 | verifyNum     | `int`         |          | N    | 需要投票的domain数量            
@@ -63,9 +74,11 @@ ModifyPolicyVO 属性描述:
 
 
 #### Identity创建
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.identitySetting(IdentitySettingVO vo)
-IdentitySettingVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.identitySetting(IdentitySettingVO vo)`
+- 接口参数：
+    
+    - `IdentitySettingVO` 属性描述:
 
 |     属性     | 类型     | 最大长度 | 必填 | 说明                                              |
 | :----------: | -------- | -------- | ---- | ------------------------------------------------- |
@@ -80,9 +93,11 @@ IdentitySettingVO 属性描述:
 
 
 #### Identity修改
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.identityManager(IdentityBDManageVO vo)
-IdentityBDManageVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.identityManager(IdentityBDManageVO vo)`
+- 接口参数：
+    
+    - `IdentityBDManageVO` 属性描述:
 
 |     属性     | 类型     | 最大长度 | 必填 | 说明                                              |
 | :----------: | -------- | -------- | ---- | ------------------------------------------------- |
@@ -97,9 +112,11 @@ IdentityBDManageVO 属性描述:
 
 
 #### Permission注册
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.registerPermission(RegisterPermissionVO vo)
-RegisterPermissionVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.registerPermission(RegisterPermissionVO vo)`
+- 接口参数：
+
+    - `RegisterPermissionVO`属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
@@ -112,9 +129,11 @@ RegisterPermissionVO 属性描述:
 | permissionNames | `String[]`     |          | Y    | PermissionName数组 
 
 #### 用户Permission授权
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.authPermission(AuthPermissionVO vo)
-AuthPermissionVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.authPermission(AuthPermissionVO vo)`
+- 接口参数：
+
+    - `AuthPermissionVO` 属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
@@ -130,9 +149,11 @@ AuthPermissionVO 属性描述:
  
 
 #### 用户Permission撤销
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.cancelPermission(CancelPermissionVO vo)
-CancelPermissionVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.cancelPermission(CancelPermissionVO vo)`
+- 接口参数：
+
+    - `CancelPermissionVO`属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
@@ -146,9 +167,11 @@ CancelPermissionVO 属性描述:
 | permissionNames | `String[]`     |          | Y    | 给Identity授权的PermissionName数组 
 
 #### KYC注册
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.settingKYC(KYCSettingVO vo)
-KYCSettingVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.settingKYC(KYCSettingVO vo)`
+- 接口参数：
+
+    - `KYCSettingVO`属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
@@ -163,9 +186,11 @@ KYCSettingVO 属性描述:
 
 
 #### 合约发布
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.contractPublish(ContractCreateVO vo) 
-ContractCreateVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.contractPublish(ContractCreateVO vo)`
+- 接口参数：
+
+    -`ContractCreateVO`属性描述:
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                           
@@ -181,9 +206,11 @@ ContractCreateVO 属性描述:
 
 
 #### 合约执行
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.contractInvoke(ContractInvokeVO vo) 
-ContractInvokeVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.contractInvoke(ContractInvokeVO vo) `
+- 接口参数：
+
+    - `ContractInvokeVO`属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
@@ -198,9 +225,11 @@ ContractInvokeVO 属性描述:
 | bizData        | `JsonObject`    |          | N    | 业务数据json    
 
 #### 存证交易
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.saveAttestation(SaveAttestationVO vo) 
-SaveAttestationVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.saveAttestation(SaveAttestationVO vo) `
+- 接口参数：
+
+    -`SaveAttestationVO`属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
@@ -213,9 +242,11 @@ SaveAttestationVO 属性描述:
 | attestation    | `String`        | 4096     | Y    | 存证内容 
 
 #### 快照交易
-API接口：
-io.stacs.nav.drs.api.ISubmitterService.buildSnapshot(BuildSnapshotVO vo) 
-BuildSnapshotVO 属性描述:
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.buildSnapshot(BuildSnapshotVO vo) `
+- 接口参数：
+    
+    - `BuildSnapshotVO`属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- | 
@@ -228,11 +259,18 @@ BuildSnapshotVO 属性描述:
 
 ## 查询类接口
 #### BD查询
-API接口：
-io.stacs.nav.drs.api.IQueryService.queryBDByCode(String bdCode);
-请求参数：
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.IQueryService.queryBDByCode(String bdCode)`
+- 接口参数：
+
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- | 
 | bdCode           | `String`        | 64       | Y    | bdCode                          
   
-返回值：io.stacs.nav.drs.api.model.bd.BusinessDefine 
+返回参数：`io.stacs.nav.drs.api.model.bd.BusinessDefine`
+
+|      属性       | 类型       | 说明                               |
+| :-------------: | ---------- | ---------------------------------- | 
+||||
+
+
