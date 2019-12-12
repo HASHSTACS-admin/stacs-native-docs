@@ -2,12 +2,14 @@
 #### BD发布
      
 #### Policy注册
-##### 参数列表
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.registerPolicy(RegisterPolicyVO vo)
+RegisterPolicyVO属性描述:
 
 | 属性            | 类型            | 最大长度 | 必填 | 说明                           |
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                                     
-| userAddress    | `String`        | 40       | Y    | 用户地址                                    
+| subbmiter    | `String`        | 40       | Y    | 用户地址                                    
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                                   
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费                              
 | sign           | `String`        | 64       | Y    | 签名                                        
@@ -29,11 +31,14 @@
 
 
 #### Policy更新
-##### 参数列表
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.modifyPolicy(ModifyPolicyVO vo)
+ModifyPolicyVO 属性描述:
+
 | 属性            | 类型            | 最大长度 | 必填 | 说明                           |
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                             
-| userAddress    | `String`        | 40       | Y    | 用户地址                            
+| subbmiter    | `String`        | 40       | Y    | 用户地址                            
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                           
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费                      
 | sign           | `String`        | 64       | Y    | 签名                                
@@ -55,12 +60,14 @@
 
 
 #### Identity创建
-##### 参数列表
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.identitySetting(IdentitySettingVO vo)
+IdentitySettingVO 属性描述:
 
 |     属性     | 类型     | 最大长度 | 必填 | 说明                                              |
 | :----------: | -------- | -------- | ---- | ------------------------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                           
-| userAddress    | `String`        | 40       | Y    | 用户地址                          
+| subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                              
@@ -70,12 +77,14 @@
 
 
 #### Identity修改
-##### 参数列表
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.identityManager(IdentityBDManageVO vo)
+IdentityBDManageVO 属性描述:
 
 |     属性     | 类型     | 最大长度 | 必填 | 说明                                              |
 | :----------: | -------- | -------- | ---- | ------------------------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                             
-| userAddress    | `String`        | 40       | Y    | 用户地址                            
+| subbmiter    | `String`        | 40       | Y    | 用户地址                            
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                           
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                                
@@ -85,12 +94,14 @@
 
 
 #### Permission注册
-##### 接口参数
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.registerPermission(RegisterPermissionVO vo)
+RegisterPermissionVO 属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                         
-| userAddress    | `String`        | 40       | Y    | 用户地址                        
+| subbmiter    | `String`        | 40       | Y    | 用户地址                        
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                       
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                            
@@ -98,12 +109,14 @@
 | permissionNames | `String[]`     |          | Y    | PermissionName数组 
 
 #### 用户Permission授权
-##### 接口参数
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.authPermission(AuthPermissionVO vo)
+AuthPermissionVO 属性描述:
 
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                         
-| userAddress    | `String`        | 40       | Y    | 用户地址                        
+| subbmiter    | `String`        | 40       | Y    | 用户地址                        
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                       
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                            
@@ -114,11 +127,14 @@
  
 
 #### 用户Permission撤销
-##### 接口参数
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.cancelPermission(CancelPermissionVO vo)
+CancelPermissionVO 属性描述:
+
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                           
-| userAddress    | `String`        | 40       | Y    | 用户地址                          
+| subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                              
@@ -127,11 +143,14 @@
 | permissionNames | `String[]`     |          | Y    | 给Identity授权的PermissionName数组 
 
 #### KYC注册
-##### 接口参数
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.settingKYC(KYCSettingVO vo)
+KYCSettingVO 属性描述:
+
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                           
-| userAddress    | `String`        | 40       | Y    | 用户地址                          
+| subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                              
@@ -141,11 +160,13 @@
 
 
 #### 合约发布
-##### 接口参数
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.contractPublish(ContractCreateVO vo) 
+ContractCreateVO 属性描述:
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                           
-| userAddress    | `String`        | 40       | Y    | 用户地址                          
+| subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                              
@@ -157,11 +178,14 @@
 
 
 #### 合约执行
-##### 接口参数
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.contractInvoke(ContractInvokeVO vo) 
+ContractInvokeVO 属性描述:
+
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                           
-| userAddress    | `String`        | 40       | Y    | 用户地址                          
+| subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                              
@@ -171,11 +195,14 @@
 | bizData        | `JsonObject`    |          | N    | 业务数据json    
 
 #### 存证交易
-##### 接口参数
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.saveAttestation(SaveAttestationVO vo) 
+SaveAttestationVO 属性描述:
+
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                           
-| userAddress    | `String`        | 40       | Y    | 用户地址                          
+| subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                              
@@ -183,16 +210,26 @@
 | attestation    | `String`        | 4096     | Y    | 存证内容 
 
 #### 快照交易
-##### 接口参数
+API接口：
+io.stacs.nav.drs.api.ISubmitterService.buildSnapshot(BuildSnapshotVO vo) 
+BuildSnapshotVO 属性描述:
+
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- | 
 | txId           | `String`        | 64       | Y    | 交易ID                           
-| userAddress    | `String`        | 40       | Y    | 用户地址                          
+| subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                              
 
 
 ## 查询类接口
-
 #### BD查询
+API接口：
+io.stacs.nav.drs.api.IQueryService.queryBDByCode(String bdCode);
+请求参数：
+|      属性       | 类型       | 最大长度 | 必填 | 说明                               |
+| :-------------: | ---------- | -------- | ---- | ---------------------------------- | 
+| bdCode           | `String`        | 64       | Y    | bdCode                          
+  
+返回值：io.stacs.nav.drs.api.model.bd.BusinessDefine 
