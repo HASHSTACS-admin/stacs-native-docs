@@ -65,6 +65,7 @@
 - 接口描述：
 - 接口地址：`io.stacs.nav.drs.api.ISubmitterService.publishBD(BusinessDefine bd)`
 - 接口参数：
+
     - `BusinessDefine`属性描述:
     
 | 属性            | 类型            | 最大长度 | 必填 | 说明                               |
@@ -78,7 +79,8 @@
 | functions      | `FunctionDefine`| 32       | Y    | 方法数组                               
 | bdVersion      | `String`        | 64       | Y    | 版本号    
                              
-     - `FunctionDefine`属性描述:
+  - `FunctionDefine`属性描述:
+     
 | 属性            | 类型            | 最大长度 | 必填 | 说明                               |
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
 | name           | `String`        | 40       | Y    | name                                    
