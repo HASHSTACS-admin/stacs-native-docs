@@ -172,13 +172,13 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                              
+| submitterSign  | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | property       | `String`        | 1024     | N    | 用户自定义属性，Json类型                          
 | address        | `String`        | 40       | Y    | 新增identity地址                                 
 
 
-#### Identity修改
+#### Identity冻结/解冻
 - 接口描述：
 - 接口地址：`io.stacs.nav.drs.api.ISubmitterService.identityManager(IdentityBDManageVO vo)`
 - 接口参数：
@@ -188,13 +188,14 @@
 |     属性     | 类型     | 最大长度 | 必填 | 说明                                              |
 | :----------: | -------- | -------- | ---- | ------------------------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                             
-| subbmiter    | `String`        | 40       | Y    | 用户地址                            
+| subbmiter      | `String`        | 40       | Y    | 用户地址                            
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                           
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                                
-| bdCode         | `String`        |          | Y    | BD code                      
-| property       | `String`        | 1024     | N    | 用户自定义属性，Json类型                         
-| address        | `String`        | 40       | Y    | 要修改的identity地址                               
+| submitterSign  | `String`        | 64       | Y    | 签名                                
+| bdCode         | `String`        | 64       | Y    | BD code                      
+| targetAddress  | `String`        | 64       | N    | 地址                        
+| BDCodes        | `[]`            | 40       | Y    | 数组                               
+| actionType     | `String`        | 40       | Y    | froze / unfroze                               
 
 
 #### Permission注册
