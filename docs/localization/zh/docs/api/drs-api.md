@@ -66,6 +66,7 @@
 - 接口地址：`io.stacs.nav.drs.api.ISubmitterService.publishBD(BusinessDefine bd)`
 - 接口参数：
     - `BusinessDefine`属性描述:
+    
 | 属性            | 类型            | 最大长度 | 必填 | 说明                               |
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
 | code           | `String`        | 64       | Y    | bd code                                     
@@ -96,7 +97,7 @@
 | 属性            | 类型            | 最大长度 | 必填 | 说明                           |
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                                     
-| subbmiter    | `String`        | 40       | Y    | 用户地址                                    
+| subbmiter      | `String`        | 40       | Y    | 用户地址                                    
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                                   
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费                              
 | sign           | `String`        | 64       | Y    | 签名                                        
