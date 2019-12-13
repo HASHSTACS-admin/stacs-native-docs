@@ -295,7 +295,6 @@
 ``` tab="请求实例"
 {
 	"address":"b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9",
-	"baseSignValue":"nullnullnullnullnull",
 	"bdCode":null,
 	"execPolicyId":null,
 	"feeCurrency":null,
@@ -517,7 +516,6 @@ function定义
 	"feeCurrency":null,
 	"feeMaxAmount":null,
 	"functionName":"SAVE_ATTESTATION",
-	"signValue":"77ba0c8d3759fb3a3aa886d5f3083012f4850463d7400d1e23fb709b0914de82SystemBDSAVE_ATTESTATIONnullnull96839SAVE_ATTESTATION",
 	"snapshotId":"96839",
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"018fec08c850da8fef29e296f6ab1a171c1ad6b7a0357c4050512e2e99ad958a0464751aa16549044ea14ebfacd7a9f766b07c7e8089d66224e92cb7aef760b385",
@@ -752,7 +750,6 @@ function定义
 	"feeMaxAmount":null,
 	"functionName":"PERMISSION_REGISTER",
 	"permissionName":"permission_97251",
-	"signValue":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7SystemBDPERMISSION_REGISTERnullnullpermission_97251PERMISSION_REGISTER",
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"0146a281667fea21a7f3fa5910689b3a0ea33a84f6d87885584237cd0306cc05715cdc6a527c9564c58a05e801b117ae2cf43869656fd4bb4aa8eee7e2bb355763",
 	"txId":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7"
@@ -806,7 +803,6 @@ function定义
 	"permissions":null,
 	"preBlockHeight":null,
 	"property":"{}",
-	"signValue":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6SystemBDIDENTITY_SETTINGnullnulluser{}4a02aa7f84d01b63b28c81c096f8c2e3feda7df9IDENTITY_SETTING",
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"0126dd3b87c68bd0977c9dd952f3695dc6ecb7f9b85125918a8834991d16547e3f71380e4ed9bf1cc9b3cc3b47d8ad90208bff8f2f15cc0991dc8fe0dcbeeda7f0",
 	"txId":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6"
@@ -1152,7 +1148,6 @@ function定义
 {
     attestation: "我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
     attestationVersion: "1.0",
-    baseSignValue: "71a29ad1d5968081bfc911b07066a2e953ebe5451b1f1779a9ff54f580170914SystemBDSAVE_ATTESTATIONnullnull",
     bdCode: "SystemBD",
     execPolicyId: "SAVE_ATTESTATION",
     feeCurrency: null,
