@@ -46,7 +46,6 @@ nav:
     - 快速开始: dev-manual/quick-start.md
     - Maven 插件: dev-manual/maven-plugin.md
     - 参数配置: dev-manual/custom-params.md
-    - Debug: dev-manual/debug.md
   - 工具:
     - CLI: tools/cli.md
     - 集群配置生成: tools/generator.md

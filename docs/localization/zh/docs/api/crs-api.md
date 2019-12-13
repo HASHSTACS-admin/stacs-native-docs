@@ -1060,67 +1060,46 @@ function定义
 ##### KYC设置
 
 - [x] 开放
-
-`POST`:`/kyc/setting`
-
->   设置`identity`的*KYC*属性，如果`identityAddress`不存在对应的`identity`，则该会新增该`identity`，类型默认为`user`
-
+- 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息
+- 请求地址：`POST`:`/kyc/setting`
+- 请求参数：
 |      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                            |
 | :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
 | identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
-|       KYC       | `string` | 1024     | Y    | Y        | KYC属性                         |
+|       KYC       | `string` | 1024     | Y    | Y        | KYC属性（json字符串）                         |
 |  identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node |
 
+- 响应参数：
 
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | txId                      |
 
-#### 手续费
+- 实例：
 
- 手续费收取规则配置
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"execPolicyId":"KYC_SETTING",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"KYC_SETTING",
+	"identityAddress":"7cc176180280d46bc15d871e02475ae47a4255f2",
+	"identityType":"user",
+	"kYC":"{\"aaa\":111,\"bbb\":222}",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"016f1536b7a6f1df12fe8b7a165d9c646028fb127c4d74e5f991aa05c234ad6d77656cc83a206334ae83f44cfbf3ad11078ac004825da67b48e47b6e51a8941ee9",
+	"txId":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5"
+} 
+```
 
-- [x] 开放
-
-`POST`:`/fee/setRule`
-
->   配置多个`policy`每笔交易收取的手续费金额
-
-`FeeTxRuleVO`：
-
-|   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                     |
-| :------: | -------- | -------- | ---- | -------- | ------------------------ |
-| policyId | `string` | 32       | Y    | Y        | 交易对应的policyId       |
-|  amount  | `string` | 18       | Y    | Y        | 每笔交易收取的手续费金额 |
-
->   接口参数类型：`list<FeeTxRuleVO>`
-
-#### 系统配置
-
-- [x] 开放
-
-`POST`:`/systemProperty/config`
-
->   配置区块链系统参数，如果不存在则新增，反之则更新。
-
-
-
-| 属性  | 类型     | 最大长度 | 必填 | 是否签名 | 说明      |
-| :---: | -------- | -------- | ---- | -------- | --------- |
-|  key  | `string` | 190      | Y    | Y        | 属性key   |
-| value | `string` | 1024     | Y    | Y        | 属性value |
-| desc  | `string` |          | Y    | Y        | 属性描述  |
-
-#### 快照
-
--   [x] 开放
-
-`POST`:`/snapshot/build`
-
->   创建区块链当前最高区块的快照
-
-|    属性    | 类型     | 最大长度 | 必填 | 是否签名 | 说明     |
-| :--------: | -------- | -------- | ---- | -------- | -------- |
-| snapshotId | `string` | 64       | Y    | Y        | 请求标识 |
-
-
+```json tab="响应实例"
+{
+	"data":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 #### 存证
 
