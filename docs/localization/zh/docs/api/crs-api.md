@@ -489,18 +489,86 @@ function定义
 
 
 #### 快照
+##### 快照发布
+
+- [x] 开放
+- 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
+（快照发布使用的是存证的execPolicyId和functionName）
+- 请求地址：`GET`:`/snapshot/build`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| snapshotId | `string` | 64     | Y    | Y        | 快照id                      |
+
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` |      | Y    | Y        | 交易id                      |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"execPolicyId":"SAVE_ATTESTATION",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"SAVE_ATTESTATION",
+	"signValue":"77ba0c8d3759fb3a3aa886d5f3083012f4850463d7400d1e23fb709b0914de82SystemBDSAVE_ATTESTATIONnullnull96839SAVE_ATTESTATION",
+	"snapshotId":"96839",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"018fec08c850da8fef29e296f6ab1a171c1ad6b7a0357c4050512e2e99ad958a0464751aa16549044ea14ebfacd7a9f766b07c7e8089d66224e92cb7aef760b385",
+	"txId":"77ba0c8d3759fb3a3aa886d5f3083012f4850463d7400d1e23fb709b0914de82"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"77ba0c8d3759fb3a3aa886d5f3083012f4850463d7400d1e23fb709b0914de82",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ##### 快照查询
 
 - [x] 开放
+- 接口描述：  
+- 请求地址：`GET`:`/snapshot/query?txId=${txId}`
+- 请求参数： 
 
-`GET`:`/snapshot/query`
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | 交易id                      |
 
->   根据交易Id查询对应的快照信息，需要该快照对应的`打快照`操作已经执行完成。
 
-| 属性 | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-| :--: | -------- | -------- | ---- | -------- | ---------------- |
-| txId | `string` | 64       | Y    | N        | 需要查询的交易id |
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| blockHeight | `int` |      | Y    | Y        | 区块高度                      |
+| snapshotId | `string` |      | Y    | Y        | 快照id                      |
+
+- 实例：
+
+```json tab="请求实例"
+
+```
+
+```json tab="响应实例"
+{
+    "data":{
+        "blockHeight":926,
+        "snapshotId":"68240"
+    },
+    "msg":"Success",
+    "respCode":"000000",
+    "success":true
+}
+```
 
 #### 合约
 
