@@ -33,7 +33,7 @@ nav:
       - 共识协议: consensus.md
       - 智能合约: smart-contract.md
   - STACSDApp: design/dapp.md
-  - DApp开发手册: dev-manual/quick-start.md
+  - DApp开发手册:
       - 快速开始: dev-manual/quick-start.md
       - Maven插件: dev-manual/maven-plugin.md
       - 参数配置: dev-manual/custom-params.md
