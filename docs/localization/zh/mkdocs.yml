@@ -21,7 +21,7 @@ markdown_extensions:
 nav:
   - 简介: index.md
   - 文档版本: release-notes.md
-  - STACS-Native架构设计: design/arch-design.md
+  - 架构设计: design/arch-design.md
   - 基本概念:
     - BD（业务定义）: design/bd.md
     - Domain（领域）: design/domain&RS.md
@@ -60,3 +60,4 @@ extra_css:
 extra:
   search:
     language: 'jp'
+ 
