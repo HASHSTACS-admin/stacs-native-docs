@@ -1,4 +1,4 @@
-## **BD(Business Define) 业务定义**
+## BD(Business Define) 业务定义
 BD是定义一整套完整的包含所有业务相关功能的业务规范，它定义了初始化所需[Permission][1]、[Policy][2]，以及每个业务功能的类型、方法签名、执行Permission以及执行所需的Policy策略等约束。
 可以有一个或多个DApp协作执行整套业务。
 
