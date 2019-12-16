@@ -46,7 +46,6 @@ STACS区块链创造性的设计了双层区块链共识机制 - 业务共识和
 
 通过POW的方式进行算力投票：很明显，在现实世界中，我们不能以算力强弱作为业务投票权的选择。想象一下Domain在STACS-Native中多个机构之间，一个Domain可以拥有一个或多个节点。STACS-Native中大多数的投票都是Domain为单位，采用一票通过的设计原则，即在Domain中，只要有一个节点背书投票，则认为Domain背书投票。可以在一个金融机构拥有节点投票比重较大时，保护机构间的公正性，避免节点竞争，从而保证去中心化的信任基础；同时可以解决外部请求的单节点故障问题。
 
- 
 
 ## DRS平台
 
@@ -55,7 +54,6 @@ STACS-Native独有的DRS平台，方便开发者开发、上传DApp应用。同�
 - 标准设计规范和API接口：标准的设计规范允许开发者在DRS平台上进行无缝应用开发。
 - 完整生命周期管理：为金融DApp应用提供标准运行环境以及DApp完整生命周期的管理。用户可在DRS上的一键完成DApp安装，部署变得容易。
 - 稳定的操作环境：DRS集成了运行DApp匹配的插件和文件，DRS内可以运行一个或是多个DApp，DRS中运行的每个DApp都相互隔离。同时DRS还封装了与CRS（Common runtime sandbox）的通信过程，简化DApp的接入流程。DRS通过某一Domain的Load-balance(LB)连接到Domain所属的任一节点。通过这种方式实现了DRS与Domain通信的高可用与稳定性。
-
  
 
 ## STACSDApp
@@ -97,7 +95,6 @@ STACS-Native支持UTXO和余额模型两种**账务模型**：
 - 余额模型：余额模型采用复式记账法中的借贷记账法，即以“借”、“贷”为记账符号的一种复式记账法。
 
  
-
 ## BD（业务定义）
 
 BD（Business definition，业务定义）是指定义一整套完整的包含所有业务相关功能的业务规范，可以有一个或多个DApp协作执行整套业务。BD定义了初始化所需Permission和Policy，并指定每个功能的类型、方法签名、执行Permission以及执行所需的Policy策略。
@@ -123,5 +120,4 @@ BD（Business definition，业务定义）是指定义一整套完整的包含�
 [9]: design/arch-design.md
 [10]: started/GettingStarted.md
 [11]: quick-start.md
-
 
