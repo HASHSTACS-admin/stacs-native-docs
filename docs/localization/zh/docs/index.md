@@ -107,7 +107,7 @@ BD（Business definition，业务定义）是指定义一整套完整的包含�
 
 如果你想更加详细的了解系统的设计？ 可以参考[架构设计][9]
 
-如果你想了解如何开发DAPP? 可以参考[DApp开发手册][11]
+
 
 [1]: design/domain&RS.md
 [2]: design/policy.md
