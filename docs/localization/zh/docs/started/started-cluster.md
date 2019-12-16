@@ -1,17 +1,17 @@
 
 # 环境准备
 
-+ docker
-+ apollo
-+ rancher
-+ java8
++ Docker
++ Apollo
++ Rancher
++ Java8
 
 
 # Domain基本组件
 
 ## Zuul网关负载
 
-zuul承担Domain网关角色，
+Zuul承担Domain网关角色，
 
 ## re
 

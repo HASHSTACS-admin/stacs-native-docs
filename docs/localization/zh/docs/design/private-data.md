@@ -55,27 +55,27 @@ endorsorPolicy:and(P,W), #执行私有数据签名策略，P和W必须签名
 
 ### PDC1流程
 
-1. 定义PDC
+1. 定义PDC；
 
 2. P或W发送private交易，交易包含私业务的合约和PDC定义；
 
-3. 被授权节点收到该交易会对该交易进行收集签名，执行结果会临时存放到temp state库中，storePolicy的domain必须全部签名投票（同步异步待定），全票通过后RS再封装预执行的结果（hash，上一个版本hash，PDC），再提交master节点
+3. 被授权节点收到该交易会对该交易进行收集签名，执行结果会临时存放到Temp state库中，storePolicy的Domain必须全部签名投票（同步异步待定），全票通过后RS再封装预执行的结果（hash，上一个版本hash，PDC），再提交Master节点；
 
-4. master验证该交易为私有，会验提交的签名集为授权节点所有投票通过，master提交package并分发到所有slave节点。
+4. Master验证该交易为私有，会验提交的签名集为授权节点所有投票通过，Master提交Package并分发到所有Slave节点；
 
-5. 各节点收到packge中包含private tx时，会检查发布交易预执行的签名集合满足policy定义的授权节点，并检查上一个版本hash是否和当前节点库维护的上一个版本hash相等（所有节点会为维护私有交易hash历史）
+5. 各节点收到package中包含private tx时，会检查发布交易预执行的签名集合满足Policy定义的授权节点，并检查上一个版本hash是否和当前节点库维护的上一个版本hash相等（所有节点会为维护私有交易hash历史）；
 
-​        验证成功：2个条件都验证成功，交易执行状态为成功，并维护预执行结果hash
+​       验证成功：2个条件都验证成功，交易执行状态为成功，并维护预执行结果hash；
 
-​       验证失败：交易执行状态为失败（不更新预执行结果hash树）
+​       验证失败：交易执行状态为失败（不更新预执行结果hash树）；
 
-​       授权节点：(P机构和W机构将temp state 更新到 private state)
+​       授权节点：(P机构和W机构将temp state 更新到 private state)；
 
-6. 节点共识，出块，交易上链
+6. 节点共识，出块，交易上链；
 
-7. 当批发商执行buy方法，私有交易预执行只能在PW上执行，其他流程和上面发布一致
+7. 当批发商执行buy方法，私有交易预执行只能在PW上执行，其他流程和上面发布一致；
 
-8. 零售商合约节点可以发起向P或W查询getAbliveNum来获取可进货的数量
+8. 零售商合约节点可以发起向P或W查询getAbliveNum来获取可进货的数量。
 
    ***PDC1预执行流程图***
 
@@ -95,10 +95,4 @@ endorsorPolicy:and(P,W), #执行私有数据签名策略，P和W必须签名
 
 ![pdc-pre-flow](../images/design/private-data/pdc-12-state.png)
 
-+ PDC2执行后生产商拥有PDC1的私有数据，零售商拥有PDC2的私有数据，而批发商同时拥有PDC1和PDC2的私有数据
-
-
-
-### 私有数据一致性
-
-
++ PDC2执行后生产商拥有PDC1的私有数据，零售商拥有PDC2的私有数据，而批发商同时拥有PDC1和PDC2的私有数据。

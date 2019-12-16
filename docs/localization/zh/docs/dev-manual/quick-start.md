@@ -4,7 +4,7 @@
 
 ## 基础准备
 
-### maven 依赖
+### Maven 依赖
 
 开发`DApp`只需要引入`drs-api`依赖，包含`DRS`接口、错误类、事件、参数VO等基础模块。
 
@@ -16,7 +16,7 @@
 </dependency>
 ```
 
-### maven 打包插件
+### Maven 打包插件
 
 ```xml
 <build>
@@ -108,7 +108,7 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 
 >   *   回调处理器需要实现`ITxCallbackHandler`
 
-1.  开发时应用的spring规则（静态页面）
+开发时应用的spring规则（静态页面）
 
 ## 开发运行/调试示例
 
