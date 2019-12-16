@@ -122,4 +122,4 @@ BD（Business definition，业务定义）是指定义一整套完整的包含�
 [8]: design/master.md
 [9]: design/arch-design.md
 [10]: started/GettingStarted.md
-[11]: dapp-dev.md
+[11]: quick-start.md
