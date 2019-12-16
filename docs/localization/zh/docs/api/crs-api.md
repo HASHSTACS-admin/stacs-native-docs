@@ -338,6 +338,7 @@
 | initPolicy | `string` | 64     | Y    | Y        | 初始化BD的业务需要policy策略                     |
 
 function定义
+
 | desc | `string` | 64     | Y    | Y        | function描述                     |
 | execPermission | `string` | 64     | Y    | Y        | 执行function权限                      |
 | execPolicy | `string` | 64     | Y    | Y        | 执行function policy                      |
