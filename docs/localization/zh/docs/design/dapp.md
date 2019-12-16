@@ -22,7 +22,7 @@ DApp(Decentralized Application)：去中心化的应用程序。目前传统的�
 
 ### 各组件关系图
 
- ![DApp](../images/dapp/DApp.png)
+ ![DApp](../images/dapp/Dapp.png)
 
 ### 如何使用
 
