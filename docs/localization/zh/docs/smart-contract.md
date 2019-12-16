@@ -1,25 +1,26 @@
 ## 定义
-  智能合约(smart contract)是一种旨在以信息化方式传播、验证或执行合同的计算机协议。智能合约允许在没有第三方的情况下进行可信交易，这些交易可追踪且不可逆转。智能合约概念于1995年由Nick Szabo首次提出
+智能合约(Smart Contract)是一种旨在以信息化方式传播、验证或执行合同的计算机协议。智能合约允许在没有第三方的情况下进行可信交易，这些交易可追踪且不可逆转。智能合约概念于1995年由Nick Szabo首次提出
 ## 介绍
-native的智能合约基于以太坊EVM模块开发，并对其做了升级优化
+Native的智能合约基于以太坊EVM模块开发，并对其做了升级优化
 
 ## 合约安全规范
 
-+ permission
++ Permission
 
   
 
-+ kyc
++ KYC
   
+
 在native链中，我们对参与者都进行了身份认证的抽象，那么在合约中可以支持身份认证的验证，如你可以发行某种债券，但因政策法律的原因，你可能不希望某个国家的用户来购买债券；
-  
+
   + eq 等于表达式，当表达式为"eq(countries,'AUSTRALIA')" ,KYC:{"countries":"AUSTRALIA"}验证成功；
   + not 不等于表达式 当表达式为"not(countries,'AUSTRALIA')" ,KYC:{"countries":"AUSTRALIA"}验证失败；
   + || 表达式连接符，表示或关系"eq(countries,'AUSTRALIA') || eq(countries,'CHAIN')" ,KYC:{"countries":"AUSTRALIA"}验证成功
   + && 表达式连接符，表示且关系多个条件必须满足"eq(countries,'AUSTRALIA') && eq(age,'10')" ,KYC:{"countries":"AUSTRALIA"}验证失败
-  
+
   ···
-  
+
   ```
   // 合约定义KYC的countries属性必须为AUSTRALIA，如果userAddress的identity中kyc的countries为AUSTRALIA则验证成功返回true，否则返回false
   string kyc_expression = "eq(countries,'AUSTRALIA')";
@@ -49,7 +50,7 @@ native的智能合约基于以太坊EVM模块开发，并对其做了升级优�
   
       }
   ```
-  
+
 + 合约调用合约方法参数定义安全规范
 
   如何合约A中的sayHello调用合约getResult(bool result)方法，那么合约A的sayHello方法的参数列表开始必须满足从合约B的参数列表

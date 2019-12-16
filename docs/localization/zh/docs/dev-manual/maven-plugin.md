@@ -29,22 +29,22 @@
 
 ## 插件参数
 
-| 参数               | 备注                                                         | 类型           | 默认值                     | 必填 |
-| ------------------ | ------------------------------------------------------------ | -------------- | -------------------------- | ---- |
-| appName            | app名称，每个DRS内的app名称需要是唯一的                      | `string`       | ${artifactId}              |      |
-| outputDirectory    | 打包输出路径                                                 | `string`       | ${project.build.directory} |      |
-| debugClassifier    | debug包对应classifier                                        | `string`       | debug                      |      |
-| dappClassifier     | dapp包对应classifier                                         | `string`       | dapp                       |      |
-| priority           | 优先级                                                       | `int`          | 100                        |      |
-| skip               | 跳过插件打包流程（插件不做任何操作）                         | `boolean`      | false                      |      |
-| skipBuildDebug     | 跳过构建debug包                                              | `boolean`      | false                      |      |
-| attach             | 更新maven仓库依赖                                            | `boolean`      | true                       |      |
-| excludes           | 剔除的依赖列表，格式：`groupId:artifactId[:classifier]`，多个使用逗号(`,`)隔开 | `list<string>` |                            |      |
-| excludeGroupIds    | 剔除`groupId`依赖的列表，格式：`groupId`，多个使用逗号(`,`)隔开 | `list<string>` |                            |      |
-| excludeArtifactIds | 剔除`artifactsId`依赖的列表，格式：`artifactId`，多个使用逗号(`,`)隔开 | `list<string>` |                            |      |
-| webContextPath     | web资源目录                                                  | `string`       | /                          |      |
-| packageProvided    | 是否将`provided`类型的打包                                   | `boolean`      | false                      |      |
-| mainClass          | 指定启动类                                                   | `string`       |                            |      |
+| 参数               | 备注                                                         | 类型           | 默认值                     |
+| ------------------ | ------------------------------------------------------------ | -------------- | -------------------------- |
+| appName            | app名称，每个DRS内的app名称需要是唯一的                      | `string`       | ${artifactId}              |
+| outputDirectory    | 打包输出路径                                                 | `string`       | ${project.build.directory} |
+| debugClassifier    | debug包对应classifier                                        | `string`       | debug                      |
+| dappClassifier     | dapp包对应classifier                                         | `string`       | dapp                       |
+| priority           | 优先级                                                       | `int`          | 100                        |
+| skip               | 跳过插件打包流程（插件不做任何操作）                         | `boolean`      | false                      |
+| skipBuildDebug     | 跳过构建debug包                                              | `boolean`      | false                      |
+| attach             | 更新maven仓库依赖                                            | `boolean`      | true                       |
+| excludes           | 剔除的依赖列表，格式：`groupId:artifactId[:classifier]`，多个使用逗号(`,`)隔开 | `list<string>` |                            |
+| excludeGroupIds    | 剔除`groupId`依赖的列表，格式：`groupId`，多个使用逗号(`,`)隔开 | `list<string>` |                            |
+| excludeArtifactIds | 剔除`artifactsId`依赖的列表，格式：`artifactId`，多个使用逗号(`,`)隔开 | `list<string>` |                            |
+| webContextPath     | web资源目录                                                  | `string`       | /                          |
+| packageProvided    | 是否将`provided`类型的打包                                   | `boolean`      | false                      |
+| mainClass          | 指定启动类                                                   | `string`       |                            |
 
 >   注意：
 >

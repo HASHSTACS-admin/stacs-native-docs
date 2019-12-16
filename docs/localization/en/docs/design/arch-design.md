@@ -1,7 +1,9 @@
 ## **概述**
+Stacs-Native的设计目标是为用户提供可靠、稳定、灵活的可支撑复杂业务的区块链系统。其整体架构如下图所示：
+
 ![架构图](../images/design/overall-structure.png)
 <font size="2"><center>Stacs-Native整体架构图</center></font>
-Stacs-Native的设计目标是为用户提供可靠、稳定、灵活的可支撑复杂业务的区块链系统。其整体架构如上图所示，DRS为DAPP提供标准运行环境以及DAPP完整生命周期的管理，DRS内可以运行一个或是多个DAPP。
+DRS为DAPP提供标准运行环境以及DAPP完整生命周期的管理，DRS内可以运行一个或是多个DAPP。
 同时DRS还封装了与CRS的通信过程，简化DAPP的接入流程。DRS通过某一Domain的LoadBalance(LB)连接到Domain所属的任一节点。通过这种方式实现了DRS与Domain通信的高可用与稳定性。
 
 CRS与Slave一起构成了底层的区块链网络。CRS负责接收交易，并依据交易Policy所定义的背书投票规则，寻找Domain各节点完成投票、交易封装以及交易提交Slave。
@@ -31,7 +33,7 @@ DRS为Dapp提供可靠的接口服务，Dapp交易提交后，会有DSR负责可
       - AppStore: 配置AppStore地址，默认为官方AppStore,用户可以使用自己或第三方AppStore。
       - 区块链连接配置：配置DRS连接区块链的节点地址，公私钥等配置。
       - 回调地址：区块链底层交易处理完成之后通知DRS时所需要的地址。
-      
+  
 - ### DAPP生命周期管理
 DRS另一个比较重要的功能就是Dapp生命周期管理，他负责Dapp的下载、配置、安装、卸载、更新。
 

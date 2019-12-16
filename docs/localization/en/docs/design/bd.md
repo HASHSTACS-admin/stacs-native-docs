@@ -1,4 +1,4 @@
-## **BD(Business Define) 业务定义**
+## BD(Business Define) 业务定义
 BD是定义一整套完整的包含所有业务相关功能的业务规范，它定义了初始化所需[Permission][1]、[policy][2]，以及每个业务功能的类型、方法签名、执行Permission以及执行所需的policy策略等约束。
 可以有一个或多个DAPP协作执行整套业务。
 
@@ -23,7 +23,7 @@ functions: # 功能列表
     BD定义发布时所需要的[Permission][1]、[Policy][2]需要在BD发布前注册定义, BD的发布为系统功能，采用异步全domain投票的policy。
 
 - **业务类型/业务代码：** 业务类型与业务代码一一对应，业务代码是用于区分在链上发布的合约的业务属性。DAPP可以根据具体的业务代码，获取其关联业务的合约，以便执行具体的业务功能。
-    
+  
     * `system`: 系统BD类型，不需要初始化，所包含的功能列表全部为系统功能，不包含合约方法 
     * 自定义：合约类BD, 需要初始化，也即发布合约。可以包含系统功能，如kyc设置、打开快照等
 
@@ -45,6 +45,7 @@ functions: # 功能列表
         - `SAVE_ATTESTATION` : 存证，保存存证数据
         - `BUILD_SNAPSHOT` : 打快照
         
+
 Stacs智能合约通过BD定义的Permission和Policy约束规则，可以将合约的不同功能分配给不同permission和policy, 每个[Identity][3]可以授予不同的permission,
 通过这种方式，合约的不同功能就会授权由特定permission的identity执行，从而达到金融业务分权执行合约功能的目的。
 

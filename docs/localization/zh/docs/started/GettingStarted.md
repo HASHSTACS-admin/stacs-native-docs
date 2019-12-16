@@ -4,11 +4,11 @@
 
 # 安装
 
-#### 环境依赖及工具(windows为例)
+#### 环境依赖及工具（Windows为例）
 
-+ jdk8
-+ idea
-+ maven
++ JDK8
++ Idea
++ Maven
 
 #### 获取源码
 
@@ -32,7 +32,7 @@ git clone https://github.com/Aurorasic/stacs-native.git
 
 
 
-+ 启动完成后，通过`cli`  客户端验证启动， 进入`cmd` ，运行命令后提示输入`pass word` 
++ 启动完成后，通过`cli`  客户端验证启动， 进入`cmd` ，运行命令后提示输入`password` 
 
   
 

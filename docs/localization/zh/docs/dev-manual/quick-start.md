@@ -4,7 +4,7 @@
 
 ## 基础准备
 
-### maven 依赖
+### Maven 依赖
 
 开发`DApp`只需要引入`drs-api`依赖，包含`DRS`接口、错误类、事件、参数VO等基础模块。
 
@@ -16,7 +16,7 @@
 </dependency>
 ```
 
-### maven 打包插件
+### Maven 打包插件
 
 ```xml
 <build>
@@ -90,6 +90,23 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 >   *   *DRS*提供的服务，在*DApp*中需要通过`@ArkInject`注解来获取
 >   *   DRS 更多接口请参考[3]
 
+### 回调示例
+
+```
+@Component @Slf4j public class CallbackProcessor implements ITxCallbackHandler {
+
+    @Override public void handle(String txId) {
+        log.info("CallbackProcessor is handle txId:{},threadName:{}", 
+        txId, 
+        Thread.currentThread().getName());
+        // handle with txId
+    }
+}
+```
+
+>   *   回调处理器需要实现`ITxCallbackHandler`
+
+开发时应用的spring规则（静态页面）
 
 ## 开发运行/调试示例
 
