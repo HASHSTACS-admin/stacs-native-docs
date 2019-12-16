@@ -337,8 +337,10 @@
 | initPermission | `string` | 64     | Y    | Y        | 初始化BD的业务需要permission                      |
 | initPolicy | `string` | 64     | Y    | Y        | 初始化BD的业务需要policy策略                     |
 
-function定义
+function定义:
 
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | desc | `string` | 64     | Y    | Y        | function描述                     |
 | execPermission | `string` | 64     | Y    | Y        | 执行function权限                      |
 | execPolicy | `string` | 64     | Y    | Y        | 执行function policy                      |
