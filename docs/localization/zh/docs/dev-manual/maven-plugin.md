@@ -148,8 +148,7 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar
 
 若需要修改启动、运行参数，请参考[自定义参数]
 
-[详细Debug流程]
+
 
 [DApp介绍]: ../design/dapp.md	"什么是DApp"
 [自定义参数]: custom-params.md	"自定义参数"
-[详细Debug流程]: debug.md	"Debug"

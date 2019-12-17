@@ -62,7 +62,34 @@
 
 ## 交易类接口
 #### BD发布
+- 接口描述：
+- 接口地址：`io.stacs.nav.drs.api.ISubmitterService.publishBD(BusinessDefine bd)`
+- 接口参数：
+
+    - `BusinessDefine`属性描述:
+    
+| 属性            | 类型            | 最大长度 | 必填 | 说明                               |
+| -------------  | -------------   | -------- | ---- | -------------------------------- |
+| code           | `String`        | 64       | Y    | bd code                                     
+| name           | `String`        | 40       | Y    | bd name                                    
+| bdType         | `String`        | 32       | N    | 类型                                   
+| desc           | `String`        | 18       | N    | 描述                              
+| initPermission | `String`        | 64       | Y    | 权限                                        
+| initPolicy     | `String`        |          | Y    | policy                                
+| functions      | `FunctionDefine`| 32       | Y    | 方法数组                               
+| bdVersion      | `String`        | 64       | Y    | 版本号    
+                             
+  - `FunctionDefine`属性描述:
      
+| 属性            | 类型            | 最大长度 | 必填 | 说明                               |
+| -------------  | -------------   | -------- | ---- | -------------------------------- |
+| name           | `String`        | 40       | Y    | name                                    
+| type           | `String`        | 32       | N    | 类型                                   
+| desc           | `String`        | 18       | N    | 描述                              
+| methodSign     | `String`        | 64       | Y    | 方法名                                        
+| execPermission | `String`        | 64       | Y    | 权限                                
+| execPolicy     | `String`        | 32       | Y    | policy                               
+             
 #### Policy注册
 - 接口描述：
 - 接口地址：`io.stacs.nav.drs.api.ISubmitterService.registerPolicy(RegisterPolicyVO vo)`
@@ -72,7 +99,7 @@
 | 属性            | 类型            | 最大长度 | 必填 | 说明                           |
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                                     
-| subbmiter    | `String`        | 40       | Y    | 用户地址                                    
+| subbmiter      | `String`        | 40       | Y    | 用户地址                                    
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                                   
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费                              
 | sign           | `String`        | 64       | Y    | 签名                                        
@@ -145,13 +172,13 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                              
+| submitterSign  | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | property       | `String`        | 1024     | N    | 用户自定义属性，Json类型                          
 | address        | `String`        | 40       | Y    | 新增identity地址                                 
 
 
-#### Identity修改
+#### Identity冻结/解冻
 - 接口描述：
 - 接口地址：`io.stacs.nav.drs.api.ISubmitterService.identityManager(IdentityBDManageVO vo)`
 - 接口参数：
@@ -161,13 +188,14 @@
 |     属性     | 类型     | 最大长度 | 必填 | 说明                                              |
 | :----------: | -------- | -------- | ---- | ------------------------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                             
-| subbmiter    | `String`        | 40       | Y    | 用户地址                            
+| subbmiter      | `String`        | 40       | Y    | 用户地址                            
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                           
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                                
-| bdCode         | `String`        |          | Y    | BD code                      
-| property       | `String`        | 1024     | N    | 用户自定义属性，Json类型                         
-| address        | `String`        | 40       | Y    | 要修改的identity地址                               
+| submitterSign  | `String`        | 64       | Y    | 签名                                
+| bdCode         | `String`        | 64       | Y    | BD code                      
+| targetAddress  | `String`        | 64       | N    | 地址                        
+| BDCodes        | `[]`            | 40       | Y    | 数组                               
+| actionType     | `String`        | 40       | Y    | froze / unfroze                               
 
 
 #### Permission注册
@@ -249,11 +277,12 @@
 - 接口地址：`io.stacs.nav.drs.api.ISubmitterService.contractPublish(ContractCreateVO vo)`
 - 接口参数：
 
-    -`ContractCreateVO`属性描述:
+   -`ContractCreateVO` 属性描述:
+   
 |      属性       | 类型       | 最大长度 | 必填 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | ---------------------------------- |
 | txId           | `String`        | 64       | Y    | 交易ID                           
-| subbmiter    | `String`        | 40       | Y    | 用户地址                          
+| subbmiter      | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
 | sign           | `String`        | 64       | Y    | 签名                              

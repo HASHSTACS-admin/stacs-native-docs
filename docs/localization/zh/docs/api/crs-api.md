@@ -289,13 +289,12 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | data | `boolean` | 64     | Y    | Y        | 检查结果，成功返回true,失败返回false                      |
-                  |
+                  
 - 实例：
 
 ``` tab="请求实例"
 {
 	"address":"b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9",
-	"baseSignValue":"nullnullnullnullnull",
 	"bdCode":null,
 	"execPolicyId":null,
 	"feeCurrency":null,
@@ -324,14 +323,30 @@
 
 ##### BD发布
 - [x] 开放
-- 接口描述：  
-- 请求地址：`POST`:`/attestation/save`
+- 接口描述：  发布自定义BD
+- 请求地址：`POST`:`/bd/publish`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
+| code      | `string` | 64     | Y    | Y        | BD编号（唯一）                      |
+| name      | `string` | 64     | Y    | Y        | BD名称                      |
+| bdType    | `string` | 64     | Y    | Y        | BD类型（/system/contract/asserts）                      |
+| desc      | `string` | 64     | Y    | Y        | 描述                      |
+| functions | `json[]` | 64     | Y    | Y        | functions                      |
+| initPermission | `string` | 64     | Y    | Y        | 初始化BD的业务需要permission                      |
+| initPolicy | `string` | 64     | Y    | Y        | 初始化BD的业务需要policy策略                     |
 
+function定义:
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| desc | `string` | 64     | Y    | Y        | function描述                     |
+| execPermission | `string` | 64     | Y    | Y        | 执行function权限                      |
+| execPolicy | `string` | 64     | Y    | Y        | 执行function policy                      |
+| methodSign | `string` | 64     | Y    | Y        | 如果dbType类型为(contract/asserts),则为方法签名                      |
+| name | `string` | 64     | Y    | Y        | function名称                      |
+| type | `string` | 64     | Y    | Y        |     (SystemAction/Contract)                  |
 
 - 响应参数：
 
@@ -342,11 +357,81 @@
 - 实例：
 
 ```json tab="请求实例"
-
+{
+	"bdCode":"SystemBD",
+	"bdType":"asserts",
+	"bdVersion":"1.0",
+	"code":"CBD_SC_61418",
+	"desc":null,
+	"execPolicyId":"BD_PUBLISH",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"BD_PUBLISH",
+	"functions":[
+		{
+			"desc":"",
+			"execPermission":"CONTRACT_INVOKE",
+			"execPolicy":"CONTRACT_INVOKE",
+			"methodSign":"transfer(address,uint256)",
+			"name":"transfer",
+			"type":"Contract"
+		},
+		{
+			"desc":"",
+			"execPermission":"CONTRACT_INVOKE",
+			"execPolicy":"CONTRACT_INVOKE",
+			"methodSign":"transferToContract(uint256,uint256,address,string)",
+			"name":"transferToContract",
+			"type":"Contract"
+		},
+		{
+			"desc":"",
+			"execPermission":"CONTRACT_INVOKE",
+			"execPolicy":"CONTRACT_INVOKE",
+			"methodSign":"balanceOf(address)",
+			"name":"balanceOf",
+			"type":"Contract"
+		},
+		{
+			"desc":"",
+			"execPermission":"CONTRACT_INVOKE",
+			"execPolicy":"CONTRACT_INVOKE",
+			"methodSign":"additionalIssue(uint256)",
+			"name":"additionalIssue",
+			"type":"Contract"
+		},
+		{
+			"desc":"",
+			"execPermission":"CONTRACT_INVOKE",
+			"execPolicy":"CONTRACT_INVOKE",
+			"methodSign":"buybackPay(address[],uint256[])",
+			"name":"buybackPay",
+			"type":"Contract"
+		},
+		{
+			"desc":"",
+			"execPermission":"CONTRACT_INVOKE",
+			"execPolicy":"CONTRACT_INVOKE",
+			"methodSign":"settlPay(address[],uint256[])",
+			"name":"settlPay",
+			"type":"Contract"
+		}
+	],
+	"initPermission":"DEFAULT",
+	"initPolicy":"CONTRACT_ISSUE",
+	"name":"CBD_SC_61418",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"00597f7f51767ed748cfe83d54b117a6a6f7af5556b051c0cff82708dff13892736ff022fddd9a0dbcfaeafe8df2b1c211dcb1b666b3d64859f0e331f4bd7d7dac",
+	"txId":"0f2222f69027942c341b0e1296256b2b8acd3135bc448b3e6bea106d22e362a3"
+} 
 ```
 
 ```json tab="响应实例"
-
+{
+	"data":"0f2222f69027942c341b0e1296256b2b8acd3135bc448b3e6bea106d22e362a3",
+	"msg":"Success",
+	"respCode":"000000"
+} 
 ```
 
 ##### BD查询
@@ -406,18 +491,85 @@
 
 
 #### 快照
+##### 快照发布
+
+- [x] 开放
+- 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
+（快照发布使用的是存证的execPolicyId和functionName）
+- 请求地址：`GET`:`/snapshot/build`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| snapshotId | `string` | 64     | Y    | Y        | 快照id                      |
+
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` |      | Y    | Y        | 交易id                      |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"execPolicyId":"SAVE_ATTESTATION",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"SAVE_ATTESTATION",
+	"snapshotId":"96839",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"018fec08c850da8fef29e296f6ab1a171c1ad6b7a0357c4050512e2e99ad958a0464751aa16549044ea14ebfacd7a9f766b07c7e8089d66224e92cb7aef760b385",
+	"txId":"77ba0c8d3759fb3a3aa886d5f3083012f4850463d7400d1e23fb709b0914de82"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"77ba0c8d3759fb3a3aa886d5f3083012f4850463d7400d1e23fb709b0914de82",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ##### 快照查询
 
 - [x] 开放
+- 接口描述：  
+- 请求地址：`GET`:`/snapshot/query?txId=${txId}`
+- 请求参数： 
 
-`GET`:`/snapshot/query`
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | 交易id                      |
 
->   根据交易Id查询对应的快照信息，需要该快照对应的`打快照`操作已经执行完成。
 
-| 属性 | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-| :--: | -------- | -------- | ---- | -------- | ---------------- |
-| txId | `string` | 64       | Y    | N        | 需要查询的交易id |
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| blockHeight | `int` |      | Y    | Y        | 区块高度                      |
+| snapshotId | `string` |      | Y    | Y        | 快照id                      |
+
+- 实例：
+
+```json tab="请求实例"
+
+```
+
+```json tab="响应实例"
+{
+    "data":{
+        "blockHeight":926,
+        "snapshotId":"68240"
+    },
+    "msg":"Success",
+    "respCode":"000000",
+    "success":true
+}
+```
 
 #### 合约
 
@@ -601,7 +753,6 @@
 	"feeMaxAmount":null,
 	"functionName":"PERMISSION_REGISTER",
 	"permissionName":"permission_97251",
-	"signValue":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7SystemBDPERMISSION_REGISTERnullnullpermission_97251PERMISSION_REGISTER",
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"0146a281667fea21a7f3fa5910689b3a0ea33a84f6d87885584237cd0306cc05715cdc6a527c9564c58a05e801b117ae2cf43869656fd4bb4aa8eee7e2bb355763",
 	"txId":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7"
@@ -655,7 +806,6 @@
 	"permissions":null,
 	"preBlockHeight":null,
 	"property":"{}",
-	"signValue":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6SystemBDIDENTITY_SETTINGnullnulluser{}4a02aa7f84d01b63b28c81c096f8c2e3feda7df9IDENTITY_SETTING",
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"0126dd3b87c68bd0977c9dd952f3695dc6ecb7f9b85125918a8834991d16547e3f71380e4ed9bf1cc9b3cc3b47d8ad90208bff8f2f15cc0991dc8fe0dcbeeda7f0",
 	"txId":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6"
@@ -913,67 +1063,47 @@
 ##### KYC设置
 
 - [x] 开放
-
-`POST`:`/kyc/setting`
-
->   设置`identity`的*KYC*属性，如果`identityAddress`不存在对应的`identity`，则该会新增该`identity`，类型默认为`user`
+- 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息
+- 请求地址：`POST`:`/kyc/setting`
+- 请求参数：
 
 |      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                            |
 | :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
 | identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
-|       KYC       | `string` | 1024     | Y    | Y        | KYC属性                         |
+|       KYC       | `string` | 1024     | Y    | Y        | KYC属性（json字符串）                         |
 |  identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node |
 
+- 响应参数：
 
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | txId                      |
 
-#### 手续费
+- 实例：
 
- 手续费收取规则配置
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"execPolicyId":"KYC_SETTING",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"KYC_SETTING",
+	"identityAddress":"7cc176180280d46bc15d871e02475ae47a4255f2",
+	"identityType":"user",
+	"kYC":"{\"aaa\":111,\"bbb\":222}",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"016f1536b7a6f1df12fe8b7a165d9c646028fb127c4d74e5f991aa05c234ad6d77656cc83a206334ae83f44cfbf3ad11078ac004825da67b48e47b6e51a8941ee9",
+	"txId":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5"
+} 
+```
 
-- [x] 开放
-
-`POST`:`/fee/setRule`
-
->   配置多个`policy`每笔交易收取的手续费金额
-
-`FeeTxRuleVO`：
-
-|   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                     |
-| :------: | -------- | -------- | ---- | -------- | ------------------------ |
-| policyId | `string` | 32       | Y    | Y        | 交易对应的policyId       |
-|  amount  | `string` | 18       | Y    | Y        | 每笔交易收取的手续费金额 |
-
->   接口参数类型：`list<FeeTxRuleVO>`
-
-#### 系统配置
-
-- [x] 开放
-
-`POST`:`/systemProperty/config`
-
->   配置区块链系统参数，如果不存在则新增，反之则更新。
-
-
-
-| 属性  | 类型     | 最大长度 | 必填 | 是否签名 | 说明      |
-| :---: | -------- | -------- | ---- | -------- | --------- |
-|  key  | `string` | 190      | Y    | Y        | 属性key   |
-| value | `string` | 1024     | Y    | Y        | 属性value |
-| desc  | `string` |          | Y    | Y        | 属性描述  |
-
-#### 快照
-
--   [x] 开放
-
-`POST`:`/snapshot/build`
-
->   创建区块链当前最高区块的快照
-
-|    属性    | 类型     | 最大长度 | 必填 | 是否签名 | 说明     |
-| :--------: | -------- | -------- | ---- | -------- | -------- |
-| snapshotId | `string` | 64       | Y    | Y        | 请求标识 |
-
-
+```json tab="响应实例"
+{
+	"data":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 #### 存证
 
@@ -1001,7 +1131,6 @@
 {
     attestation: "我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
     attestationVersion: "1.0",
-    baseSignValue: "71a29ad1d5968081bfc911b07066a2e953ebe5451b1f1779a9ff54f580170914SystemBDSAVE_ATTESTATIONnullnull",
     bdCode: "SystemBD",
     execPolicyId: "SAVE_ATTESTATION",
     feeCurrency: null,

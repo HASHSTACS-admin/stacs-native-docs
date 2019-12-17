@@ -92,8 +92,6 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 
 ### 回调示例
 
-**回调尚未完成，待完成后补充**
-
 ```
 @Component @Slf4j public class CallbackProcessor implements ITxCallbackHandler {
 
