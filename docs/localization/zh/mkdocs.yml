@@ -41,6 +41,7 @@ nav:
   - CRS参考:
       - CRS命令参考: tools/cli.md
       - CRS接口参考: api/crs-api.md
+  - 术语库: glossary.md
   - 联系我们: about.md
 theme:
   language: 'zh'
