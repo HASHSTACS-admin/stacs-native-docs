@@ -31,20 +31,22 @@
 
     - 请求数据格式
     
-|     属性      | 类型     |  说明                                                         |
-| :-----------: | -------- | ------------------------------------------------------------ |
-|     requestParam      | `string` |  请求数据，将原始请求数据采用${merchantAesKey}加密后使用BASE64编码 |
-|     signature      | `string` |  商户签名，将原始请求数据采用${merchantPriKey}签名后的HEX格式数据 |
-
-
+      |     属性     | 类型     | 说明                                                         |
+      | :----------: | -------- | ------------------------------------------------------------ |
+      | requestParam | `string` | 请求数据，将原始请求数据采用${merchantAesKey}加密后使用BASE64编码 |
+      |  signature   | `string` | 商户签名，将原始请求数据采用${merchantPriKey}签名后的HEX格式数据 |
+    
     - 响应数据格式
+    
+      |   属性    | 类型     | 说明                                                         |
+      | :-------: | -------- | ------------------------------------------------------------ |
+      | respCode  | `string` | 返回状态码，000000为成功，其他为失败                         |
+      |    msg    | `string` | 返回状态描述                                                 |
+      |   data    | `string` | 响应数据，将原始响应数据采用${merchantAesKey}加密后使用BASE64编码 |
+      | signature | `string` | CRS签名，将原始响应数据采用${crsPriKey}签名后的HEX格式数据   |
+    
 
-|     属性      | 类型     |  说明                                                         |
-| :-----------: | -------- | ------------------------------------------------------------ |
-|     respCode      | `string` |  返回状态码，000000为成功，其他为失败 |
-|     msg      | `string` |  返回状态描述 |
-|     data      | `string` |  响应数据，将原始响应数据采用${merchantAesKey}加密后使用BASE64编码 |
-|     signature      | `string` |  CRS签名，将原始响应数据采用${crsPriKey}签名后的HEX格式数据 |
+
 
 ```json tab="请求实例"
 {
@@ -158,17 +160,16 @@
   | :----: | ------------ | -------- | ---- | -------- | ---- |
   | caList | `list<CaVO>` |          | Y    | Y        |      |
 
-  - CaVO：
+- CaVO：
 
-    |   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                 |
-    | :------: | -------- | -------- | ---- | -------- | -------------------- |
-    |  period  | `date`   |          | Y    | Y        | ca生效时间(暂时无用) |
-    |  pubKey  | `string` |          | Y    | Y        | ca公钥               |
-    |   user   | `string` |          | Y    | Y        |                      |
-    | domainId | `string` |          | Y    | Y        | 生效的domainId       |
-    |  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus  |
+  |   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                 |
+  | :------: | -------- | -------- | ---- | -------- | -------------------- |
+  |  period  | `date`   |          | Y    | Y        | ca生效时间(暂时无用) |
+  |  pubKey  | `string` |          | Y    | Y        | ca公钥               |
+  |   user   | `string` |          | Y    | Y        |                      |
+  | domainId | `string` |          | Y    | Y        | 生效的domainId       |
+  |  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus  |
 
-    
 
 - 响应参数：
 
