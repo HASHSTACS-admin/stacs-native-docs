@@ -26,7 +26,7 @@
 - Http响应状态码 200
   
 - 安全性
-   
+  
     所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
 
     - 请求数据格式
@@ -38,14 +38,14 @@
 
 
     - 响应数据格式
-        
+
 |     属性      | 类型     |  说明                                                         |
 | :-----------: | -------- | ------------------------------------------------------------ |
 |     respCode      | `string` |  返回状态码，000000为成功，其他为失败 |
 |     msg      | `string` |  返回状态描述 |
-|     data      | `string` |  响应数据，将原始响应数据采用${merchantAesKey}加密后使用BASE64编码 | 
-|     signature      | `string` |  CRS签名，将原始响应数据采用${crsPriKey}签名后的HEX格式数据 | 
-            
+|     data      | `string` |  响应数据，将原始响应数据采用${merchantAesKey}加密后使用BASE64编码 |
+|     signature      | `string` |  CRS签名，将原始响应数据采用${crsPriKey}签名后的HEX格式数据 |
+
 ```json tab="请求实例"
 {
 	"requestParam": "qxZrjKc4aV/57vHBAh9yLUC40ez4XsE7OJgHFM4Uy2BrmE3mwkzcVdR20QIEHhcWvyeSVy4mQIu5pG7HhpS+AvBdH33f/r+4YSXmtKo1/vOkLsU5h/t1Z23sD/gRRMB1K5zqH7PK+Ij0//zLuLavg0+UZgFT8m3fW5egy9ULTuRPYQgmU627hrJZU72qP+EoEOKR06+RRQDflz0gkA9SSVpz9MgAZCnYFe8sFtMSqAjeRWTspaP9qXXcX4OafMYm4GlrNkyWUYwcl9A8G2NLOViGuPuDC8tFKShN+9mt4uPwsvj6um7eGwlBBL8FtqrWcX2HZMFTdHCD1rNipi+lbDta5j54p6y5wpLHoR9AOxiOuWXOiGDhzE/HiXae7DRiaPI/AHmVu5p8KPTiKIVSphpbl0kK5vv+lunvmokn1DOlRMs6CvFRIKnqbRwJrEvpaPZkXXqerYbIevtQ9e8ZtRxpdgms5bWGIAijlrOzxsKxmzCrvuMAWt9tHUz2LpCyJCG+woEnbD4p/mJ0u+68kE7P6bztLanWJ31X8DnZlRKs88S3WgYlq3WJrnuQ+qQqRbf5f6+hqPGogxVOZ3AOC3uAVTE4fkcyPTLCOuMDXp5B9hPioXHyMPVMZyGkc1IFx84XRa++uJKGQ7Ja1E/MDANTFxu4CQ/szvHuvVP+Gl3Fk50rKMY0/QiH155xgSq7pnwy2ItCYiTXXc09D2jiahEcXOLGqCuHLh/7YY3zH8hV6dxhB9/66HLaF4p5jGiXyUvbZRhcQE2gu+jW43EETLq+t29z122NQm75M+Q60toy7UrIr+brOrAfMYGpE527vNZAmaEWFJd2i8lDDXoaGMd8l8OiHqnMbxjWQsU4VkGHz0+3jpZpJY5fraq+EgATXfG9IyiNM+yrNL+kwcEmnH3WOdcve+P8keocey2SPu5LgQ10XUvN6qVsi+m6qXy6TsjAWq3Zq5u8beIY9zFBWxScaXlV9c4XLJkXM7tfz04wD7/hGM/S4Il8awRYHAJkUEF2GR1zYNzDFeHWq/mE2x3HWogdKAjwwkPdw8ZEjN9BIVDKVmH1Q/12nUgfr1w9",
@@ -88,17 +88,28 @@
 
 #### 注册RS
 
-`POST`：`/rs/register` 
+- - [ ] 开放
 
-- [ ] 开放
+- 接口描述： RS 注册
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-| :---------: | -------- | -------- | ---- | :------: | ---------------- |
-|    rsId     | `string` | 32       | Y    |    Y     |                  |
-|    desc     | `string` | 128      | Y    |    Y     |                  |
-|  domainId   | `string` | 16       | Y    |    Y     |                  |
-| maxNodeSize | `int`    |          | N    |    Y     | 最大节点允许数量 |
-| domainDesc  | `string` |          | N    |    Y     |                  |
+- 请求地址：`POST`：`/rs/register` 
+
+- 请求参数： 
+
+  |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
+  | :---------: | -------- | -------- | ---- | :------: | ---------------- |
+  |    rsId     | `string` | 32       | Y    |    Y     | RS id            |
+  |    desc     | `string` | 128      | Y    |    Y     | RS 节点描述      |
+  |  domainId   | `string` | 16       | Y    |    Y     | Domain ID        |
+  | maxNodeSize | `int`    |          | N    |    Y     | 最大节点允许数量 |
+  | domainDesc  | `string` |          | N    |    Y     | domain 描述      |
+  
+- 响应参数：
+
+  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | ---- | -------- | ---- | -------- | ---- |
+  |  无  |      |          |      |          |      |
+
 
 ##### 示例
 
@@ -110,13 +121,24 @@
 
 #### 移除RS
 
-`POST`：`/rs/cancel`
+- - [ ] 开放
 
-- [ ] 开放
+- 接口描述：  移除已注册的 RS
 
-| 属性 | 类型     | 最大长度 | 必填 | 是否签名 | 说明 |
-| :--: | -------- | -------- | ---- | -------- | ---- |
-| rsId | `string` | 32       | Y    | Y        |      |
+- 请求地址：`POST`：`/rs/cancel`
+
+- 请求参数： 
+
+  | 属性 | 类型     | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | -------- | -------- | ---- | -------- | ---- |
+  | rsId | `string` | 32       | Y    | Y        |      |
+  
+- 响应参数：
+
+  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | ---- | -------- | ---- | -------- | ---- |
+  |  无  |      |          |      |          |      |
+
 
 ### CA
 
@@ -124,52 +146,84 @@
 
 #### CA注册
 
-`POST`：`/ca/auth`
+- - [ ] 开放
 
-- [ ] 开放
+- 接口描述：  注册 CA 信息
 
-|  属性  | 类型         | 最大长度 | 必填 | 是否签名 | 说明 |
-| :----: | ------------ | -------- | ---- | -------- | ---- |
-| caList | `list<CaVO>` |          | Y    | Y        |      |
+- 请求地址：`POST`：`/ca/auth`
 
-**CaVO：**
+- 请求参数： 
 
-|   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                 |
-| :------: | -------- | -------- | ---- | -------- | -------------------- |
-|  period  | `date`   |          | Y    | Y        | ca生效时间(暂时无用) |
-|  pubKey  | `string` |          | Y    | Y        | ca公钥               |
-|   user   | `string` |          | Y    | Y        |                      |
-| domainId | `string` |          | Y    | Y        | 生效的domainId       |
-|  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus  |
+  |  属性  | 类型         | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :----: | ------------ | -------- | ---- | -------- | ---- |
+  | caList | `list<CaVO>` |          | Y    | Y        |      |
 
+  - CaVO：
 
+    |   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                 |
+    | :------: | -------- | -------- | ---- | -------- | -------------------- |
+    |  period  | `date`   |          | Y    | Y        | ca生效时间(暂时无用) |
+    |  pubKey  | `string` |          | Y    | Y        | ca公钥               |
+    |   user   | `string` |          | Y    | Y        |                      |
+    | domainId | `string` |          | Y    | Y        | 生效的domainId       |
+    |  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus  |
+
+    
+
+- 响应参数：
+
+  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | ---- | -------- | ---- | -------- | ---- |
+  |  无  |      |          |      |          |      |
 
 #### CA更新
 
-`POST`：`/ca/update`
+- - [ ] 开放
 
-- [ ] 开放
+- 接口描述：  更新 CA 信息
 
-|   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                 |
-| :------: | -------- | -------- | ---- | -------- | -------------------- |
-|  period  | `date`   |          | Y    | Y        | ca生效时间(暂时无用) |
-|  pubKey  | `string` |          | Y    | Y        | ca公钥               |
-|   user   | `string` |          | Y    | Y        |                      |
-| domainId | `string` |          | Y    | Y        | 生效的domainId       |
-|  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus  |
+- 请求地址：`POST`：`/ca/update`
+
+- 请求参数：
+
+  |   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                 |
+  | :------: | -------- | -------- | ---- | -------- | -------------------- |
+  |  period  | `date`   |          | Y    | Y        | ca生效时间(暂时无用) |
+  |  pubKey  | `string` |          | Y    | Y        | ca公钥               |
+  |   user   | `string` |          | Y    | Y        |                      |
+  | domainId | `string` |          | Y    | Y        | 生效的domainId       |
+  |  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus  |
+
+- 响应参数：
+
+  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | ---- | -------- | ---- | -------- | ---- |
+  |  无  |      |          |      |          |      |
+
+
 
 #### CA撤销
 
-`POST`：`/ca/cancel`
+- - [ ] 开放
 
-- [ ] 开放
+- 接口描述：  撤销授权后的 CA
 
-|   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                |
-| :------: | -------- | -------- | ---- | -------- | ------------------- |
-|  pubKey  | `string` |          | Y    | Y        |                     |
-|   user   | `string` |          | Y    | Y        |                     |
-| domainId | `string` |          | Y    | Y        |                     |
-|  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus |
+- 请求地址：`POST`:`/ca/cancel`
+
+- 请求参数： 
+
+  |   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                |
+  | :------: | -------- | -------- | ---- | -------- | ------------------- |
+  |  pubKey  | `string` |          | Y    | Y        |                     |
+  |   user   | `string` |          | Y    | Y        |                     |
+  | domainId | `string` |          | Y    | Y        |                     |
+  |  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus |
+
+- 响应参数：
+
+  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | ---- | -------- | ---- | -------- | ---- |
+  |  无  |      |          |      |          |      |
 
 > 相比**统一参数**，缺少了`period`字段
 
@@ -177,50 +231,80 @@
 
 #### 节点加入
 
-- [ ] 开放
+- - [ ] 开放
 
-`POST`：`/node/join`
+- 接口描述：  节点加入共识网络
 
->   节点加入共识网络
+- 请求地址：`POST`：`/node/join`
 
-|   属性    | 类型     | 最大长度 | 必填 | 是否签名 | 说明           |
-| :-------: | -------- | -------- | ---- | -------- | -------------- |
-| nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
-| domainId  | `string` |          | Y    | Y        |                |
-| signValue | `string` |          | Y    | Y        |                |
-|  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+- 请求参数： 
+
+  |   属性    | 类型     | 最大长度 | 必填 | 是否签名 | 说明           |
+  | :-------: | -------- | -------- | ---- | -------- | -------------- |
+  | nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
+  | domainId  | `string` |          | Y    | Y        |                |
+  | signValue | `string` |          | Y    | Y        |                |
+  |  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+
+- 响应参数：
+
+  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | ---- | -------- | ---- | -------- | ---- |
+  |  无  |      |          |      |          |      |
+
+
 
 
 
 #### 节点离开
 
-- [ ] 开放
+- - [ ] 开放
 
-`POST`：`/node/leave`
+- 接口描述： 节点离开共识网络
 
->   节点离开共识网络
+- 请求地址：`POST`：`/node/leave`
 
-|   属性    | 类型     | 最大长度 | 必填 | 是否签名 | 说明           |
-| :-------: | -------- | -------- | ---- | -------- | -------------- |
-| nodeName  | `string` | 32       | Y    | Y        | 离开的节点名称 |
-| domainId  | `string` | 16       | Y    | Y        |                |
-| signValue | `string` |          | Y    | Y        |                |
-|  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+- 请求参数： 
+
+  |   属性    | 类型     | 最大长度 | 必填 | 是否签名 | 说明           |
+  | :-------: | -------- | -------- | ---- | -------- | -------------- |
+  | nodeName  | `string` | 32       | Y    | Y        | 离开的节点名称 |
+  | domainId  | `string` | 16       | Y    | Y        |                |
+  | signValue | `string` |          | Y    | Y        |                |
+  |  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+
+- 响应参数：
+
+  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | ---- | -------- | ---- | -------- | ---- |
+  |  无  |      |          |      |          |      |
+
+
 
 ### 手续费
 
 #### 手续费地址合约配置
 
-`POST`：`/fee/setConfig`
+- - [ ] 开放
 
-- [ ] 开放
+- 接口描述：  配置手续费收取货币所在合约地址，以及收取手续费后，转入手续费的账户地址。
 
->   配置手续费收取货币所在合约地址，以及收取手续费后，转入手续费的账户地址。
+- 请求地址：`POST`：`/fee/setConfig`
 
-|      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                       |
-| :-------------: | -------- | -------- | ---- | -------- | -------------------------- |
-| contractAddress | `string` | 32       | Y    | Y        | 手续费收取货币所在合约地址 |
-|   receiveAddr   | `string` | 40       | Y    | Y        | 手续费收费地址             |
+- 请求参数： 
+
+  |      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                       |
+  | :-------------: | -------- | -------- | ---- | -------- | -------------------------- |
+  | contractAddress | `string` | 32       | Y    | Y        | 手续费收取货币所在合约地址 |
+  |   receiveAddr   | `string` | 40       | Y    | Y        | 手续费收费地址             |
+
+- 响应参数：
+
+  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+  | :--: | ---- | -------- | ---- | -------- | ---- |
+  |  无  |      |          |      |          |      |
+
+
 
 ## 非系统级接口
 
@@ -289,7 +373,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | data | `boolean` | 64     | Y    | Y        | 检查结果，成功返回true,失败返回false                      |
-                  
+
 - 实例：
 
 ``` tab="请求实例"
@@ -457,7 +541,7 @@ function定义:
 | initPermission | `string` | 64     | Y    | Y        | 发布BD时，发布者需要具备的权限                      |
 | initPolicy | `string` | 64     | Y    | Y        | 发布BD时，发布执行的policy策略    |
 | name | `string` | 64     | Y    | Y        | BD名称                      |
-| bdVersion | `string` | 64     | Y    | Y        | BD版本号                     |                  
+| bdVersion | `string` | 64     | Y    | Y        | BD版本号                     |
 - 实例：
 
 ``` tab="请求实例"
