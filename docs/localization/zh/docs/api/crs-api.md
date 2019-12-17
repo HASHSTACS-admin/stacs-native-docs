@@ -331,7 +331,7 @@
 - 实例：
 
 ``` tab="请求实例"
-
+/identity/permission/query?address=b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9
 ```
 
 ```json tab="响应实例"
