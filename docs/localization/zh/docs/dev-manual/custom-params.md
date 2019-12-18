@@ -1,16 +1,10 @@
+配置文件怎么配置（针对开发）
 
+# **开发调试**
 
+## **开发运行/调试示例**
 
-
-
-
-1.  配置文件怎么配置（针对开发）
-
-# 开发调试
-
-## 开发运行/调试示例
-
-### IDEA 配置
+### **IDEA 配置**
 
 ![image-20191204180459598](../images/dev-manual/quick-start/IDEA-run-config.png)
 
@@ -20,21 +14,21 @@
 2.  `Path to Jar`选择 *DApp* `debug包`所在路径（需要先执行**打包流程**）
 3.  点击`OK`即可
 
-### Eclipse 配置
+### **Eclipse 配置**
 
 ![image-20191204183041710](../images/dev-manual/quick-start/Eclipse-run-config.png)
 
 1.  在`Run > External Tools > External tools Configurations`选择`External Tool`
 2.  如上图创建一个运行设置，配置`debug包`文件路径即可。
 
-## DRS 配置修改
+## **DRS 配置修改**
 
 >   如果需要修改 *DRS*配置请参考以下配置项
 
 !!! warning "注意"
     *DRS* 配置文件名称必须为`boot`，例如：`boot.properties`、`boot-dev.yml`。
 
-### DRS 通用配置
+### **DRS 通用配置**
 
 ```properties
 spring.jmx.default-domain=DRS
@@ -72,7 +66,7 @@ mybatis.configLocation = classpath:mybatis-config.xml
 mybatis.mapper-locations = classpath*:mybatis/**/*Mapper.xml
 ```
 
-#### H2 配置
+#### **H2 配置**
 
 ```properties
 # H2
@@ -89,7 +83,7 @@ spring.datasource.DruidDataSourceFactory.driver-class-name=org.h2.Driver
 spring.datasource.schema=classpath:h2/schema.sql
 ```
 
-#### MySQL 配置
+#### **MySQL 配置**
 
 ```properties
 # MySQL
@@ -101,7 +95,7 @@ spring.datasource.druid.password=root
 spring.datasource.DruidDataSourceFactory.driver-class-name=com.mysql.jdbc.Driver
 ```
 
-##### MySQL 初始化 SQL
+##### **MySQL 初始化 SQL**
 
 ```mysql
 -- init 1.0.0

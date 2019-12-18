@@ -1,13 +1,13 @@
-# 下载工具
+# **下载工具**
 
 下载路径： stacs-native-deploy-generator
 
-## 生成公私钥及地址
+## **生成公私钥及地址**
 ```shell
 $ java -jar stacs-native-deploy-generator*.jar
 ```
 
-### 输出示例
+### **输出示例**
 
 ```shell
 Generated ecc keys: = = = = =
@@ -16,14 +16,14 @@ privateKey： 901ab43101bf2f2de6202870b10f56c266526e968ba330598bfb8e4cdfed6166
 address:     766fa5e5b8cb1ce447e22888d53ef6ae20f5b3d9
 ```
 
-## 私钥生成地址及公钥
+## **私钥生成地址及公钥**
 
 ```shell
 $ java -jar stacs-native-deploy-generator*.jar ${privateKey}
 ```
 - `privateKey`: 私钥
 
-### 输出示例
+### **输出示例**
 
 ```shell
 publicKey：  043d96f05bcc8743139e00a56e3cd985a4f41306a199036647a0ae3017e1e1333dd2ee97a77e64768a74df955d0f983fe86a89aa21ff50b28eb9b744ca3a8ed679
@@ -31,7 +31,7 @@ privateKey： 78637c920bc993f50c038fa146b917fc625793e59f677cdbfbbe1c46b7fd407a
 address:     54bd202186dd2de178ea220a875136a9dea736c
 ```
 
-## 生成配置文件
+## **生成配置文件**
 
 ```shell
 $ java -jar stacs-native-deploy-generator*.jar ${define.yml} ${output-path}
@@ -92,9 +92,9 @@ domains:
 
 ```
 
-### 结果示例
+### **结果示例**
 
-#### 创世块
+#### **创世块**
 
 ```yaml
 !!com.hashstacs.deploy.generator.genius.GeniusBlockConfig
@@ -129,7 +129,7 @@ startTime: '2019-12-10 02:47:03'
 
 ```
 
-#### zuul 
+#### **ZUUL**
 
 ```properties
 #common properties
@@ -155,7 +155,7 @@ server.port=7070
 
 
 
-#### 注册中心
+#### **注册中心**
 
 - A 中心
 
@@ -179,7 +179,7 @@ eureka.client.serviceUrl.defaultZone=http://registry-a:8761/eureka/,http://regis
 
 ```
 
-#### 节点
+#### **节点**
 
 - 节点 A
 

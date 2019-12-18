@@ -1,4 +1,4 @@
-### 什么是STACSDApp
+### **什么是STACSDApp**
 
 DApp(Decentralized Application)：去中心化的应用程序。目前传统的区块链DApp是以智能合约为基础，在其之上实现一整套的业务逻辑及数据处理。 而STACSDApp是以BD为基础，实现BD的部分或全部业务功能，不同DApp各自执行BD的一个或多个业务功能，多个STACSDApp相互协助执行BD，从而解决在金融业务执行过程中的分权问题。
 
@@ -20,33 +20,33 @@ DApp(Decentralized Application)：去中心化的应用程序。目前传统的�
 
 - STACSDApp采用Java语言编写，平台源代码均开源，我们拥有活跃的社区、丰富的文档，能够帮助开发者快速搭建自己的DApp。
 
-### 各组件关系图
+### **各组件关系图**
 
  ![DApp](../images/dapp/Dapp.png)
 
-### 如何使用
+### **如何使用**
 
 每一个DApp都运行在DRS中，所以首先需要下载并安装DApp的运行环境：DRS
 
-#### DRS安装
+#### **DRS安装**
 - 下载DRS镜像包
 - 执行java命令启动： ` java -jar stacs-drs-executable-1.0.jar `
 
-#### DRS配置
+#### **DRS配置**
 - 在浏览器上输入当前节点的IP地址，端口号默认8080,例如：` http://127.0.0.1:8080/drs/index.html `
-- 找到`系统配置`选项，根据需要可以配置：`app-store地址`、`domain地址`、`回调地址`、`dapp下载目录`、`dapp配置文件目录`
+- 找到`系统配置`选项，根据需要可以配置：`App-store地址`、`Domain地址`、`回调地址`、`DApp下载目录`、`DApp配置文件目录`
 
-#### DApp安装
+#### **DApp安装**
 - 打开 `app-store` 页签选择要安装的DApp
 - 点击 `下载` 即可自动下载该DApp到配置的目录下
 - 点击 `配置` 按钮，配置该DApp需要的相关配置项 
 - 配置完成后，点击`安装`按钮即可安装
 - 安装完成后，点击`打开`按钮即可访问该DApp
 
-### DApp 依赖&打包
+### **DApp 依赖&打包**
 
-#### 依赖
-STACSDApp 需要使用Maven来管理依赖，需要添加 `parent` maven坐标：
+#### **依赖**
+STACSDApp 需要使用Maven来管理依赖，需要添加 `parent` Maven坐标：
 ``` 
 <parent>
     <artifactId>stacs-native-dapp</artifactId>
@@ -54,7 +54,7 @@ STACSDApp 需要使用Maven来管理依赖，需要添加 `parent` maven坐标�
     <version>1.0.0-SNAPSHOT</version>
 </parent>
 ```
-##### 包结构管理
+##### **包结构管理**
 ```
     <dependency>
         <groupId>com.alipay.sofa</groupId>
@@ -65,7 +65,7 @@ STACSDApp 需要使用Maven来管理依赖，需要添加 `parent` maven坐标�
         <artifactId>sofa-ark-springboot-starter</artifactId>
     </dependency>
 ```
-##### DRS-API
+##### **DRS-API**
 ```
     <dependency>
         <groupId>io.stacs.nav</groupId>
@@ -76,7 +76,7 @@ STACSDApp 需要使用Maven来管理依赖，需要添加 `parent` maven坐标�
         <artifactId>dapp-core</artifactId>
     </dependency>
 ```
-#### 打包
+#### **打包**
 DApp可以是普通Java工程，也可以是Spring-boot工程，只需要使用 Maven 插件 `sofa-ark-maven-plugin` 打包生成即可：
 ```
 <build>
@@ -101,11 +101,11 @@ DApp可以是普通Java工程，也可以是Spring-boot工程，只需要使用 
 </build>
 
 ```
-##### 配置说明：
+##### **配置说明**
 - outputDirectory  
    打包文件的输出目录。
 - webContextPath   
-   若是web项目，该项配置会被默认替换为dapp的name,不支持自定义
+   若是Web项目，该项配置会被默认替换为DApp的Name，不支持自定义
 - dapp spring-boot Application类需配置包扫描路径：io.stacs.nav.dapp"
 
 

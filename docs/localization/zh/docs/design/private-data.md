@@ -1,4 +1,4 @@
-## 业务场景
+## **业务场景**
 + 在整个链上机构组之间存在私密的业务，那么整个业务的定义元数据和执行只在授权的机构间传递和执行，对第三方不可见，定义私有数据有(storePolicy,
 readPolicy,endorsorPolicy)需要定义私有数据存储策略，读取策略，签名背书策略
 + 真实的私有数据：真实的私有数据会在storePolicy定义授权的节点存储并可见，这个数据会存储在授权节点的私有数据库中(也可以叫旁库)，
@@ -12,16 +12,16 @@ readPolicy,endorsorPolicy)需要定义私有数据存储策略，读取策略，
 +  P：生产商
 +  W：批发商
 ![private-data-pdc](../images/design/private-data/private-data-pdc.png)
-## 如何实现私有数据
-### 私有数据定义
-+ private data collection(PDC)
+## **如何实现私有数据**
+### **私有数据定义**
++ Private Data Collection（PDC）
 + code：合约地址
 + storePolicy：授权存储和执行私有数据的机构，支持or(...,...)语法；
 + readPolicy: or(P,W,R) 支持可读取私有数据的机构，支持or(...,...)语法，如果readMethod未定义，表示除storePolicy授权机构外无任何机构
 可访问；
 + readMethod：授权哪些合约方法被用于可读取支持or(...,...)语法；
 +endorsorPolicy: 在预执行时，授权机构对交易签名投票；
-### 私有数据发布流程
+### **私有数据发布流程**
 + 编写合约
 ~~~
 pragma solidity ^0.4.24;
@@ -51,9 +51,9 @@ readPolicy: or(P,W,R), #零售商可以查询有哪些商品
 readMethod：or(getAbliveNum), #查询批发商的数量
 endorsorPolicy:and(P,W), #执行私有数据签名策略，P和W必须签名
 }
-### 私有数据执行流程
+### **私有数据执行流程**
 
-### PDC1流程
+### **PDC1流程**
 
 1. 定义PDC；
 
@@ -77,21 +77,21 @@ endorsorPolicy:and(P,W), #执行私有数据签名策略，P和W必须签名
 
 8. 零售商合约节点可以发起向P或W查询getAbliveNum来获取可进货的数量。
 
-   ***PDC1预执行流程图***
+   **PDC1预执行流程图**
 
    ![pdc1-exe-flow](../images/design/private-data/pdc-pre-flow.png)
 
-   ***PDC1预执行结果上链流程图***
+   **PDC1预执行结果上链流程图**
 
    
 
    ![pdc-pre-flow](../images/design/private-data/pdc1-exe-flow.png)
 
-   ***PDC1执行后状态***
+   **PDC1执行后状态**
 
    ![pdc-pre-flow](../images/design/private-data/pdc1-state.png)
 
-***PDC2执行后各节点private state状态***
+**PDC2执行后各节点Private state状态**
 
 ![pdc-pre-flow](../images/design/private-data/pdc-12-state.png)
 

@@ -1,14 +1,18 @@
-# 常用命令 
-##consensus
+# **常用命令** 
+
+## consensus
+
 用于节点处理共识协议：加入共识协议，退出共识协议等
+
 <pre><code>
 usage: consensus [-h | --help] COMMAND [ARGS] <br>
 The most commonly used consensus commands are:
    leaveConsensus   leave a consensus cluster
    joinConsensus    join a consensus cluster
 <br></code></pre>
-   
-## term
+
+## **term**
+
 用于管理集群选主
 <pre><code>
 usage: term [-h | --help] COMMAND [ARGS] <br>
@@ -19,7 +23,7 @@ The most commonly used term commands are:
    endTerm          end the master term
 <br></code></pre>
 
-## failover
+## **failover**
 用于恢复故障节点
 <pre><code>
 usage: failover [-h | --help] COMMAND [ARGS] <br>
@@ -31,7 +35,7 @@ The most commonly used failover commands are:
    genesis          sync the genesis block
 <br></code></pre>
 
-## bizType
+## **bizType**
 用于管理业务类型
 <pre><code>
 usage: bizType [-h | --help] COMMAND [ARGS] <br>
@@ -41,7 +45,7 @@ The most commonly used bizType commands are:
    update           update biz type
 <br></code></pre>   
 
-## ca
+## **ca**
 用于管理CA
 <pre><code>
 usage: ca [-h | --help] COMMAND [ARGS] <br>
@@ -52,7 +56,7 @@ The most commonly used ca commands are:
    acquireCA        query CA
 <br></code></pre> 
 
-## cluster
+## **cluster**
 用于管理集群：加入共识，退出共识等
 <pre><code>
 usage: cluster [-h | --help] COMMAND [ARGS] <br>
@@ -62,7 +66,7 @@ The most commonly used cluster commands are:
    joinConsensus    join consensus layer
 <br></code></pre> 
 
-## rocksdb
+## **rocksdb**
 用于对rocksdb进行增删改查
 <pre><code>
 usage: rocksdb [-h | --help] COMMAND [ARGS] <br>
@@ -77,7 +81,7 @@ The most commonly used rocksdb commands are:
    clearAll         clear all tables allow ignored
 <br></code></pre>
 
-## tx
+## **tx**
 用于获取交易信息
 <pre><code>
 usage: tx [-h | --help] COMMAND [ARGS] <br>
@@ -85,7 +89,7 @@ The most commonly used tx commands are:
    info             get the tx info
 <br></code></pre>
 
-## vote
+## **vote**
 用于获取接收到的投票信息和处理投票
 <pre><code>
 usage: vote [-h | --help] COMMAND [ARGS] <br>
@@ -94,7 +98,7 @@ The most commonly used vote commands are:
    receipt          receipt for vote
 <br></code></pre>
 
-## block
+## **block**
 用于查看某个指定节点上的区块信息
 <pre><code>
 usage: block [-h | --help] COMMAND [ARGS] <br>
@@ -103,7 +107,7 @@ The most commonly used block commands are:
    height           get the current block height
 <br></code></pre>
 
-## node
+## **node**
 用于查看和管理节点信息
 <pre>
 <code>
@@ -121,7 +125,7 @@ The most commonly used node commands are:
 </code>
 </pre>
 
-## property
+## **property**
 用于查看和更新系统属性
 <pre><code>
 usage: property [-h | --help] COMMAND [ARGS] <br>

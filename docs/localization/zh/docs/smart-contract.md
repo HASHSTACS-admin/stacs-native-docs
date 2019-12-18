@@ -1,18 +1,16 @@
-## 定义
+## **定义**
 智能合约(Smart Contract)是一种旨在以信息化方式传播、验证或执行合同的计算机协议。智能合约允许在没有第三方的情况下进行可信交易，这些交易可追踪且不可逆转。智能合约概念于1995年由Nick Szabo首次提出
-## 介绍
+## **介绍**
 Native的智能合约基于以太坊EVM模块开发，并对其做了升级优化
 
-## 合约安全规范
+## **合约安全规范**
 
 + Permission
-
-  
 
 + KYC
   
 
-在native链中，我们对参与者都进行了身份认证的抽象，那么在合约中可以支持身份认证的验证，如你可以发行某种债券，但因政策法律的原因，你可能不希望某个国家的用户来购买债券；
+在Native链中，我们对参与者都进行了身份认证的抽象，那么在合约中可以支持身份认证的验证，如你可以发行某种债券，但因政策法律的原因，你可能不希望某个国家的用户来购买债券；
 
   + eq 等于表达式，当表达式为"eq(countries,'AUSTRALIA')" ,KYC:{"countries":"AUSTRALIA"}验证成功；
   + not 不等于表达式 当表达式为"not(countries,'AUSTRALIA')" ,KYC:{"countries":"AUSTRALIA"}验证失败；
@@ -164,9 +162,9 @@ contract A{
 
 
 
-## 合约实现
+## **合约实现**
 
-### MPT 
+### **MPT** 
 
 MPT（Merkle Patricia Tree），MPT树中的节点包括空节点、叶子节点、扩展节点和分支节点:
 空节点，简单的表示空，在代码中是一个空串。叶子节点（leaf），表示为[key,value]的一个键值对，其中key是key的一种特殊十六进制编码，value是value的RLP编码。
@@ -177,7 +175,8 @@ MPT树中另外一个重要的概念是一个特殊的十六进制前缀(hex-pre
 HP编码很简单。一个nibble被加到key前（下图中的prefix），对终止符的状态和奇偶性进行编码。最低位表示奇偶性，第二低位编码终止符状态。如果key是偶数长度，那么加上另外一个nibble，值为0来保持整体的偶特性。
 ![alt](images/design/contract/mpt.png)
 
-###快照(CACHE)
+### **快照(CACHE)**
+
 * 虚拟机执行时会创建三个级别的快照，分别是区块级别的快照，交易级别的快照，合约级别的快照。如果合约执行失败那么合约级别的快照不会提交到它的父快照（即交易快照
 ，这样就可以不需要再处理交易快照的事务，最终这次合约执行的事务也不会提交到数据库。快照包含了3个缓存：
 + 账户缓存 accountStateCache,key为地址，value为账户，账户包含了
@@ -188,8 +187,9 @@ HP编码很简单。一个nibble被加到key前（下图中的prefix），对终
     storageRoot：存储状态树根hash
 + 代码缓存 codeCache,key:代码hash+地址，value：部署的合约代码元数据
 + 存储缓存storageCache，key：地址，value：状态Map，该Map分别以合约字段和值为键值对，在合约执行过程中填充和修改
-![alt](images/design/contract/state.png)
-###指令(Opcode)
+  ![alt](images/design/contract/state.png)
+
+  ### **指令(Opcode)**
 * 指令由256bit位组成，重要指令功能说明，EVM基于栈的操作，从栈PULL指令并执行，将指令执行的结果再PUSH到栈顶或其他操作
 + mload：花费32gas*数据大小，用途：取出栈顶的元素作为key，从memory中取出该key对应的value，存入initpoll中最新元素，并且把该值压入栈中。
 + mstore：取出栈上的最新的两个数据，一个作为key，一个作为value，写入memory，并且存入initpoll中。initpoll也是一个栈的结构
@@ -205,14 +205,14 @@ HP编码很简单。一个nibble被加到key前（下图中的prefix），对终
 + callcode：callcode指令实现的是一个合约调用其他合约，最终将会调用callcode方法，和call方法最大不同的是执行合约的上下文是调用者，而不是将要执行的合约
 + return：return指令实现的是：从内存中，以栈顶的前两个元素作为偏移量和size，取出相应的数据放入intpool中，并返回数据
 
-### 栈(Stack)  
+### **栈(Stack)**  
 + EVM指令的执行都是基于栈的操作，虚拟机分为两种：基于栈的虚拟机和基于寄存器的虚拟机。基于栈的虚拟机有几个重要的特性：实现简单、可移植，这也
 是为什么以太坊选择了基于栈的虚拟机。在基于栈的虚拟机中，有个重要的概念：操作数栈，数据存取为先进先出。所有的操作都是直接与操作数栈直接交互,
 例如：取数据、存数据、执行操作等。这样有一个好处：可以无视具体的物理机器架构，特别是寄存器，但是缺点也很明显，速度慢，无论什么操作都需要经过
 操作数栈。
 ![alt](images/design/contract/stack.png)
 
-### 临时存储模型(Memory)
+### **临时存储模型(Memory)**
 + VM中执行的Memory为临时存储，因为stack每一项限制为32字节，所以当操作大数据时，需要将数据临时存放到memory中，memory底层为byte[]集合，
 byte[]长度为1024，装载了32个DataWord(32位byte)，每次扩容都以1024为一个单位进行扩容
 ![alt](images/design/contract/memory.png)
