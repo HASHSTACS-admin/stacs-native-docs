@@ -6,13 +6,29 @@
 
 ### Maven 依赖
 
-开发`DApp`只需要引入`drs-api`依赖，包含`DRS`接口、错误类、事件、参数VO等基础模块。
+开发`DApp` 需要引入`drs-api`、`drs-core`依赖，包含了`DRS`接口、错误类、事件回调、参数VO等基础模块。
 
 ```xml
 <dependency>
   <groupId>io.stacs.nav</groupId>
   <artifactId>drs-api</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+  <groupId>io.stacs.nav</groupId>
+  <artifactId>drs-core</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+</dependency>
+
+<dependency>
+    <groupId>com.alipay.sofa</groupId>
+    <artifactId>web-ark-plugin</artifactId>
+    <version>1.0.0</version>
+</dependency>
+<dependency>
+    <groupId>com.alipay.sofa</groupId>
+    <artifactId>sofa-ark-springboot-starter</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
