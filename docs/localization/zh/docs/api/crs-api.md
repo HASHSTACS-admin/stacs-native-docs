@@ -623,7 +623,8 @@
 - [x] 开放
 - 接口描述：  设置Identity(此接口不能设置KYC信息)
 - 请求地址：`POST`:`/identity/setting`
-- 请求参数： 
+- 请求参数：
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount + identityType + property + address + functionName  
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -643,7 +644,6 @@
 {
 	"address":"4a02aa7f84d01b63b28c81c096f8c2e3feda7df9",
 	"bdCode":"SystemBD",
-	"currentBlockHeight":null,
 	"execPolicyId":"IDENTITY_SETTING",
 	"feeCurrency":null,
 	"feeMaxAmount":null,
@@ -651,9 +651,6 @@
 	"functionName":"IDENTITY_SETTING",
 	"hidden":0,
 	"identityType":"user",
-	"kYC":null,
-	"permissions":null,
-	"preBlockHeight":null,
 	"property":"{}",
 	"signValue":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6SystemBDIDENTITY_SETTINGnullnulluser{}4a02aa7f84d01b63b28c81c096f8c2e3feda7df9IDENTITY_SETTING",
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
