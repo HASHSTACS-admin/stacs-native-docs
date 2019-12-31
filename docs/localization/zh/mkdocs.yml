@@ -23,24 +23,27 @@ nav:
   - 文档版本: release-notes.md
   - 架构设计: design/arch-design.md
   - 基本概念:
-      - BD（业务定义）: design/bd.md
-      - Domain（领域）: design/domain&RS.md
-      - Policy（业务策略）: design/policy.md
-      - Private Data（私有数据）: design/private-data.md
-      - Identity: design/identity.md
-      - Permission: design/permission.md
-      - 交易流程: design/transaction-process.md
-      - 共识协议: consensus.md
-      - 智能合约: smart-contract.md
-  - STACSDApp: design/dapp.md
-  - DApp开发手册:
-      - 快速开始: dev-manual/quick-start.md
-      - Maven插件: dev-manual/maven-plugin.md
-      - 参数配置: dev-manual/custom-params.md
-      - DRS接口服务: api/drs-api.md
+    - BD（业务定义）: design/bd.md
+    - Domain（领域）: design/domain&RS.md
+    - Policy（业务策略）: design/policy.md
+    - Private Data（私有数据）: design/private-data.md
+    - Identity: design/identity.md
+    - Permission: design/permission.md
+    - 交易流程: design/transaction-process.md
+    - 共识协议: consensus.md
+    - 智能合约: smart-contract.md
+  - STACSDApp: design/dapp.md    
+  - DApp开发手册: 
+    - 快速开始: dev-manual/quick-start.md
+    - Maven插件: dev-manual/maven-plugin.md
+    - 参数配置: dev-manual/custom-params.md
+    - DRS接口服务: api/drs-api.md
   - CRS参考:
       - CRS命令参考: tools/cli.md
       - CRS接口参考: api/crs-api.md
+  - 工具: 
+      - 秘钥工具: tools/generator.md   
+  - 术语库: glossary.md
   - 联系我们: about.md
 theme:
   language: 'zh'

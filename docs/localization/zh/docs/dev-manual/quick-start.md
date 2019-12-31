@@ -1,10 +1,10 @@
-# DApp 开发手册
+# **DApp 开发手册**
 
 [DApp示例工程](https://github.com/Aurorasic/stacs-native-dapp/tree/dev_1.0.0/dapp-sample)
 
-## 基础准备
+## **基础准备**
 
-### Maven 依赖
+### **Maven 依赖**
 
 开发`DApp` 需要引入`drs-api`、`drs-core`依赖，包含了`DRS`接口、错误类、事件回调、参数VO等基础模块。
 
@@ -32,7 +32,7 @@
 </dependency>
 ```
 
-### Maven 打包插件
+### **Maven 打包插件**
 
 ```xml
 <build>
@@ -65,7 +65,7 @@
 >   *   `debug`：开发使用，自带对应`drs-api`版本的运行环境，可以通过jar包直接运行
 >   *   更多参数配置详见[1]
 
-### DRS内部配置自定义
+### **DRS内部配置自定义**
 
 用户可以通过运行`debug`时，传入`spring.config.location`参数，指定配置文件所在**目录**。
 
@@ -79,9 +79,9 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 >   *   `drs-boot`配置文件名称必须为：`boot.properties`
 >   *   完整参数请见[2]
 
-## 开发示例
+## **开发示例**
 
-### DRS API 调用示例
+### **DRS API 调用示例**
 
 ```java
 @Service @Slf4j public class SampleService {
@@ -106,7 +106,7 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 >   *   *DRS*提供的服务，在*DApp*中需要通过`@ArkInject`注解来获取
 >   *   DRS 更多接口请参考[3]
 
-### 回调示例
+### **回调示例**
 
 ```
 @Component @Slf4j public class CallbackProcessor implements ITxCallbackHandler {
@@ -124,9 +124,9 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 
 开发时应用的spring规则（静态页面）
 
-## 开发运行/调试示例
+## **开发运行/调试示例**
 
-### IDEA 配置
+### **IDEA 配置**
 
 ![image-20191204180459598](../images/dev-manual/quick-start/IDEA-run-config.png)
 
@@ -136,7 +136,7 @@ $ java -jar dapp-sample-1.0.0-SNAPSHOT-debug.jar \
 2.  `Path to Jar`选择 *DApp* `debug包`所在路径（需要先执行**打包流程**）
 3.  点击`OK`即可
 
-### Eclipse 配置
+### **Eclipse 配置**
 
 ![image-20191204183041710](../images/dev-manual/quick-start/Eclipse-run-config.png)
 
