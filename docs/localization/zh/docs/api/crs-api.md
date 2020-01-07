@@ -307,6 +307,49 @@
 
 
 
+####policy注册
+- [x] 开放
+- 接口描述：  查询Identity用户所拥有的permission权限
+- 请求地址：`POST`:`/policy/register`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| address | `string` | 40     | Y    | Y        | 用户地址                     |
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| permissionIndex | `int` | 64     | Y    | Y        | 权限编号                      |
+| permissionName | `string` | 64     | Y    | Y        | 权限名称                      |
+- 实例：
+
+``` tab="请求实例"
+/identity/permission/query?address=b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9
+```
+
+```json tab="响应实例"
+{
+    "data":[
+        {
+            "permissionIndex":22,
+            "permissionName":"CONTRACT_INVOKE"
+        },
+        {
+            "permissionIndex":0,
+            "permissionName":"DEFAULT"
+        },
+        {
+            "permissionIndex":21,
+            "permissionName":"CONTRACT_ISSUE"
+        }
+    ],
+    "msg":"Success",
+    "respCode":"000000",
+    "success":true
+}
+```
 ## 非系统级接口
 
 #### 权限
@@ -860,12 +903,14 @@ function定义:
 - 接口描述：  设置Identity(此接口不能设置KYC信息)
 - 请求地址：`POST`:`/identity/setting`
 - 请求参数： 
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount + identityType + property + address + functionName
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
 | address      | `string` | 64     | Y    | Y        | Identity地址                      |
 | hidden       | `int`    | 1      | Y    | Y        | 是否隐藏                      |
 | identityType | `string` | 64     | Y    | Y        |  1. user 2. domain 3. node       |
+| property     | `string` | 1024   | Y    | Y      |  属性json格式       |
 
 
 
@@ -879,17 +924,12 @@ function定义:
 {
 	"address":"4a02aa7f84d01b63b28c81c096f8c2e3feda7df9",
 	"bdCode":"SystemBD",
-	"currentBlockHeight":null,
 	"execPolicyId":"IDENTITY_SETTING",
 	"feeCurrency":null,
 	"feeMaxAmount":null,
 	"froze":null,
 	"functionName":"IDENTITY_SETTING",
-	"hidden":0,
 	"identityType":"user",
-	"kYC":null,
-	"permissions":null,
-	"preBlockHeight":null,
 	"property":"{}",
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"0126dd3b87c68bd0977c9dd952f3695dc6ecb7f9b85125918a8834991d16547e3f71380e4ed9bf1cc9b3cc3b47d8ad90208bff8f2f15cc0991dc8fe0dcbeeda7f0",
@@ -911,11 +951,12 @@ function定义:
 - 接口描述：  给Identity赋予已入链的permission
 - 请求地址：`POST`:`/permission/authorize`
 - 请求参数
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount + identityType + permissionNames + functionName
 
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
 | identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
-| permissionNames | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组 |
+| permissionNames | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组(签名拼接时，需要使用逗号进行分割拼接成字符串) |
 |  identityType   | `string`   |          | Y    | Y        | 1. user 2. domain 3. node          |
 
 - 响应参数：
@@ -956,11 +997,12 @@ function定义:
 - 接口描述：  撤销Identity已被授权的permission
 - 请求地址：`POST`:`/permission/cancel`
 - 请求参数： 
-
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
++ identityAddress + permissionNames + functionName
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
 | identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
-| permissionNames | `string[]` |          | Y    | Y        | 给Identity撤销授权的PermissionName数组 |
+| permissionNames | `string[]` |          | Y    | Y        | 给Identity撤销授权的PermissionName数组(签名拼接时，需要使用逗号进行分割拼接成字符串) |
 
 - 响应参数：
 
@@ -995,15 +1037,16 @@ function定义:
 ##### Identity冻结/解冻
 
 - [x] 开放
-- 接口描述：  
+- 接口描述：冻结某个bdCode，冻结成功后identity无法执行该bdCode的所有function 
 - 请求地址：`POST`:`/identity/bdManage`
 - 请求参数： 
-
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
++ targetAddress + actionType +BDCodes+ functionName
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
 | targetAddress | `string`   | 40       | Y    | Y        | 目标identity地址              |
-|    BDCodes    | `string[]` |          | Y    | Y        |                               |
-|  actionType   | `string`   |          | Y    | Y        | 操作类型：1. froze 2. unfroze |
+|    BDCodes    | `string[]` |          | Y    | Y        | 冻结的bd数组，冻结成功后，identity无法操作冻结bd的所有交易(签名拼接时，需要使用逗号进行分割拼接成字符串)|
+|  actionType   | `string`   |          | Y    | Y        | 操作类型： froze:冻结  unfroze:解冻 |
 
 - 响应参数：
 
@@ -1040,7 +1083,7 @@ function定义:
 ##### 查询Identity
 
 - [x] 开放
-- 接口描述：  
+- 接口描述：查询Identity的详细信息  
 - 请求地址：`GET`:`identity/query?userAddress=${userAddress}`
 - 请求参数： 
 
@@ -1080,6 +1123,54 @@ function定义:
 	"respCode":"000000"
 } 
 ```
+
+##### KYC设置
+
+- [x] 开放
+- 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息
+- 请求地址：`POST`:`/kyc/setting`
+- 请求参数：
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
++ identityAddress + KYC +identityType+ functionName
+
+|      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                            |
+| :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
+| identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
+| KYC       | `string` | 1024     | Y    | Y        | KYC属性（json字符串，合约目前支持kyc验证）                         |
+| identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node |
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 64     | Y    | Y        | txId                      |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"execPolicyId":"KYC_SETTING",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"KYC_SETTING",
+	"identityAddress":"7cc176180280d46bc15d871e02475ae47a4255f2",
+	"identityType":"user",
+	"kYC":"{\"aaa\":111,\"bbb\":222}",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"016f1536b7a6f1df12fe8b7a165d9c646028fb127c4d74e5f991aa05c234ad6d77656cc83a206334ae83f44cfbf3ad11078ac004825da67b48e47b6e51a8941ee9",
+	"txId":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
+
 ##### 查询permission
 - [x] 开放
 - 接口描述：  
@@ -1145,50 +1236,7 @@ function定义:
 } 
 ```
 
-##### KYC设置
 
-- [x] 开放
-- 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息
-- 请求地址：`POST`:`/kyc/setting`
-- 请求参数：
-
-|      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                            |
-| :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
-| identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
-|       KYC       | `string` | 1024     | Y    | Y        | KYC属性（json字符串）                         |
-|  identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | txId                      |
-
-- 实例：
-
-```json tab="请求实例"
-{
-	"bdCode":"SystemBD",
-	"execPolicyId":"KYC_SETTING",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"KYC_SETTING",
-	"identityAddress":"7cc176180280d46bc15d871e02475ae47a4255f2",
-	"identityType":"user",
-	"kYC":"{\"aaa\":111,\"bbb\":222}",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"016f1536b7a6f1df12fe8b7a165d9c646028fb127c4d74e5f991aa05c234ad6d77656cc83a206334ae83f44cfbf3ad11078ac004825da67b48e47b6e51a8941ee9",
-	"txId":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5"
-} 
-```
-
-```json tab="响应实例"
-{
-	"data":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5",
-	"msg":"Success",
-	"respCode":"000000"
-} 
-```
 
 #### 存证
 
