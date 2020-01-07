@@ -389,6 +389,7 @@
 | functions | `json[]` | 64     | Y    | Y        | bd定义function (字符串拆分逗号分隔拼接)                     |
 | initPermission | `string` | 64     | Y    | Y        | 初始化BD的业务需要permission                      |
 | initPolicy | `string` | 64     | Y    | Y        | 初始化BD的业务需要policy策略                     |
+| bdVersion | `string` | 64     | Y    | Y        | bd版本                     |
 
 function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(address)和(uint256) balanceOf(address)
 
