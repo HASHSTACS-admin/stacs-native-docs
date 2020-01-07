@@ -357,10 +357,19 @@
 
 ## 非系统级接口
 
+### 交易类接口
 
+#### 交易类接口通用参数列表
 
-
-
+|     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
+| :-----------: | -------- | -------- | ---- | -------- | ---------------- |
+|     txId      | `string` | 64       | Y    | Y        | 请求Id           |
+|   submitter   | `string` | 40       | Y    | Y        | 操作提交者地址   |
+| execPolicyId  | `string` | 32       | Y    | Y        | 执行policyId     |
+| submitterSign | `string` | 64       | Y    | Y        | 提交者签名       |
+| bdCode | `string` | 64       | Y    | Y        |        |
+|  feeCurrency  | `string` | 32       | N    | Y        | 手续费币种       |
+| feeMaxAmount  | `string` | 18       | N    | Y        | 最大允许的手续费 |
 #### BD
 
 ##### BD发布
@@ -611,39 +620,6 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
     "success":true
 }
 ```
-
-#### 合约
-
-##### 查询
-
-- [x] 开放
-`POST`:`/contract/query`
-
->   基于BD `code`查询对应业务类型合约列表。
-
-|      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                                   |
-| :-------------: | ---------- | -------- | ---- | -------- | -------------------------------------- |
-|     address     | `string`   | 40       | Y    | N        | 合约地址                               |
-| methodSignature | `string`   |          | Y    | N        | 方法签名，eg：`(uint256) get(uint256)` |
-|   blockHeight   | `long`     |          | N    | N        | 块高度                                 |
-|   parameters    | `object[]` |          | N    | N        | 方法参数                               |
-
-### 交易类接口
-
-#### 交易类接口通用参数列表
-
-|     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-| :-----------: | -------- | -------- | ---- | -------- | ---------------- |
-|     txId      | `string` | 64       | Y    | Y        | 请求Id           |
-|   submitter   | `string` | 40       | Y    | Y        | 操作提交者地址   |
-| execPolicyId  | `string` | 32       | Y    | Y        | 执行policyId     |
-| submitterSign | `string` | 64       | Y    | Y        | 提交者签名       |
-| bdCode | `string` | 64       | Y    | Y        |        |
-|  feeCurrency  | `string` | 32       | N    | Y        | 手续费币种       |
-| feeMaxAmount  | `string` | 18       | N    | Y        | 最大允许的手续费 |
-
-
-
        
 #### 智能合约
 
@@ -760,6 +736,47 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 } 
 ```
 
+##### 查询
+- [x] 开放
+- 接口描述： 链支持可直接调用合约查询方法(不执行交易流程)
+- 请求地址：`POST`:`/contract/query`
+- 请求参数： （无）
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+|     address     | `string`   | 40       | Y    | N        | 合约地址                               |
+| methodSignature | `string`   |          | Y    | N        | 方法签名，eg：`(uint256) get(uint256)` |
+|   blockHeight   | `long`     |          | N    | N        | 块高度，高度为null，默认查节点的最高链的最高度                                 |
+|   parameters    | `object[]` |          | N    | N        | 方法参数                               |
+
+
+- 响应参数：响应参数返回类型为对象数组，数组中的参与取决与合约发放返回定义，该例balanceOf方法返回的是uint256类型的值，该值为方法定义方法的余额
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"address":"7fc61ef682d44bb74f6a9cce6e423f0277cb1b6c",
+	"blockHeight":null,
+	"methodSignature":"(uint256) balanceOf(address)",
+	"parameters":[
+		"f6ff9c931b453543c1514030dfdba444f7f81e64"
+	]
+}
+```
+
+```json tab="响应实例"
+{
+	"data":[
+		0
+	],
+	"msg":"Success",
+	"respCode":"000000"
+}  
+```
+
 #### Permission
 
 ##### 新增Permission
@@ -798,6 +815,69 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 ```json tab="响应实例"
 
 	"data":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
+
+##### 查询permission
+- [x] 开放
+- 接口描述：  
+- 请求地址：`GET`:`/permission/queryAll`
+- 请求参数： 
+- 签名原值拼接排序（无需签名）
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| permissionIndex | `int` | 64     | Y    | Y        | permission编号                  |
+| permissionName  | `string` | 64     | Y    | Y        | permission名称               |
+
+- 实例：
+
+```json tab="请求实例"
+
+```
+
+```json tab="响应实例"
+
+	"data":[
+		{
+			"permissionIndex":34,
+			"permissionName":"permission_98731"
+		},
+		{
+			"permissionIndex":45,
+			"permissionName":"permission_97251"
+		},
+		{
+			"permissionIndex":1,
+			"permissionName":"RS"
+		},
+		{
+			"permissionIndex":0,
+			"permissionName":"DEFAULT"
+		},
+		{
+			"permissionIndex":21,
+			"permissionName":"CONTRACT_ISSUE2"
+		},
+		{
+			"permissionIndex":1,
+			"permissionName":"CONTRACT_ISSUE"
+		},
+		{
+			"permissionIndex":22,
+			"permissionName":"CONTRACT_INVOKE2"
+		},
+		{
+			"permissionIndex":2,
+			"permissionName":"CONTRACT_INVOKE"
+		}
+	],
 	"msg":"Success",
 	"respCode":"000000"
 } 
@@ -1076,7 +1156,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - [x] 开放
 - 接口描述：查询Identity的详细信息  
 - 请求地址：`GET`:`identity/query?userAddress=${userAddress}`
-- 请求参数： 
+- 请求参数： （无需签名）
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
@@ -1087,29 +1167,33 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | txId                      |
+| address | `string` | 64     | Y    | Y        | user identity 地址                      |
+| currentTxId | `string` | 64     | Y    | Y        |    user identity 改修改时的txId                   |
+| froze | `string` | 64     | Y    | Y        | 用户冻结的bd                      |
+| hidden | `string` | 64     | Y    | Y        | 1：显示，0：隐藏                      |
+| identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
+| kYC | `string` | 64     | Y    | Y        | identity认证信息                      |
+| permissions | `string` | 64     | Y    | Y        | 权限编号(32进制)                      |
+| preTxId | `string` | 64     | Y    | Y        |  上次identity被修改时交易id                   |
+| property | `string` | 64     | Y    | Y        |  扩展属性                   |
 
 - 实例：
 
-```json tab="请求实例"
-{
-	"actionType":"froze",
-	"bDCodes":["CBD_SC_97251"],
-	"bdCode":"SystemBD",
-	"execPolicyId":"IDENTITY_BD_MANAGE",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"IDENTITY_BD_MANAGE",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"01355fe479c900c5bd3ec52c01aa3543f271b4ba6b0963adc31cc4b7baa1ccace17e1dd22c93a3ff9e7d35ad80e6a6e2028a38854583778a424a0c6ac143bb3975",
-	"targetAddress":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"txId":"9e93ae8071511828c2879206a1a6c50f3d292f5790e3d8f0379a0b3b5f98b67c"
-} 
 ```
 
 ```json tab="响应实例"
 {
-	"data":"9e93ae8071511828c2879206a1a6c50f3d292f5790e3d8f0379a0b3b5f98b67c",
+"data":{
+		"address":"f6ff9c931b453543c1514030dfdba444f7f81e64",
+		"currentTxId":"92264f3552f54d1db0bded08b943004692aefd2033ad7b43876251cee8187967",
+		"froze":null,
+		"hidden":1,
+		"identityType":"user",
+		"kYC":"{\"aaa\":111,\"bbb\":222}",
+		"permissions":"1",
+		"preTxId":"92264f3552f54d1db0bded08b943004692aefd2033ad7b43876251cee8187967",
+		"property":null
+	},
 	"msg":"Success",
 	"respCode":"000000"
 } 
@@ -1157,69 +1241,6 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 ```json tab="响应实例"
 {
 	"data":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5",
-	"msg":"Success",
-	"respCode":"000000"
-} 
-```
-
-##### 查询permission
-- [x] 开放
-- 接口描述：  
-- 请求地址：`GET`:`/permission/queryAll`
-- 请求参数： 
-- 签名原值拼接排序（无需签名）
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| permissionIndex | `int` | 64     | Y    | Y        | permission编号                  |
-| permissionName  | `string` | 64     | Y    | Y        | permission名称               |
-
-- 实例：
-
-```json tab="请求实例"
-
-```
-
-```json tab="响应实例"
-
-	"data":[
-		{
-			"permissionIndex":34,
-			"permissionName":"permission_98731"
-		},
-		{
-			"permissionIndex":45,
-			"permissionName":"permission_97251"
-		},
-		{
-			"permissionIndex":1,
-			"permissionName":"RS"
-		},
-		{
-			"permissionIndex":0,
-			"permissionName":"DEFAULT"
-		},
-		{
-			"permissionIndex":21,
-			"permissionName":"CONTRACT_ISSUE2"
-		},
-		{
-			"permissionIndex":1,
-			"permissionName":"CONTRACT_ISSUE"
-		},
-		{
-			"permissionIndex":22,
-			"permissionName":"CONTRACT_INVOKE2"
-		},
-		{
-			"permissionIndex":2,
-			"permissionName":"CONTRACT_INVOKE"
-		}
-	],
 	"msg":"Success",
 	"respCode":"000000"
 } 
