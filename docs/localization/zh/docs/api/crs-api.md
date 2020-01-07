@@ -308,48 +308,53 @@
 
 
 ####policy注册
-- [x] 开放
-- 接口描述：  查询Identity用户所拥有的permission权限
-- 请求地址：`POST`:`/policy/register`
-- 请求参数： 
+#### Policy
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| address | `string` | 40     | Y    | Y        | 用户地址                     |
+##### AssigMeta类型
 
-- 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| permissionIndex | `int` | 64     | Y    | Y        | 权限编号                      |
-| permissionName | `string` | 64     | Y    | Y        | 权限名称                      |
-- 实例：
+| 属性          | 类型          | 最大长度 | 必填 | 是否签名 | 说明                           |
+| ------------- | ------------- | -------- | ---- | -------- | ------------------------------ |
+| verifyNum     | `int`         |          | N    | Y        | 需要投票的domain数量           |
+| mustDomainIds | `list<string` |          | N    | Y        | 必须参与投票的domainId列表     |
+| expression    | `string`      |          | N    | Y        | 投票规则表达式，example: n/2+1 |
 
-``` tab="请求实例"
-/identity/permission/query?address=b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9
-```
+##### Policy注册
 
-```json tab="响应实例"
-{
-    "data":[
-        {
-            "permissionIndex":22,
-            "permissionName":"CONTRACT_INVOKE"
-        },
-        {
-            "permissionIndex":0,
-            "permissionName":"DEFAULT"
-        },
-        {
-            "permissionIndex":21,
-            "permissionName":"CONTRACT_ISSUE"
-        }
-    ],
-    "msg":"Success",
-    "respCode":"000000",
-    "success":true
-}
-```
+- [ ] 开放
+
+`POST`:`/policy/register`
+
+>   创建新的投票策略
+
+| 属性           | 类型           | 最大长度 | 必填 | 是否签名 | 说明                                         |
+| -------------- | -------------- | -------- | ---- | -------- | -------------------------------------------- |
+| policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
+| policyName     | `string`       | 64       | Y    | Y        |                                              |
+| votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
+| callbackType   | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
+| decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
+| domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
+| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
+
+##### Policy更新
+
+- [ ] 开放
+
+`POST`:`/policy/modify`
+
+>   更新旧的投票策略
+
+|      属性      | 类型           | 最大长度 | 必填 | 是否签名 | 说明                                         |
+| :------------: | -------------- | -------- | ---- | -------- | -------------------------------------------- |
+|    policyId    | `string`       | 32       | Y    | Y        | 注册的policyId                               |
+|   policyName   | `string`       | 64       | Y    | Y        |                                              |
+|  votePattern   | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
+|  callbackType  | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
+|  decisionType  | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
+|   domainIds    | `list<string>` |          | Y    | Y        | domainId列表                                 |
+| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
+
 ## 非系统级接口
 
 #### 权限
@@ -359,11 +364,11 @@
 - [x] 开放
 - 接口描述：  查询Identity用户所拥有的permission权限
 - 请求地址：`GET`:`/identity/permission/query?address={address}`
-- 请求参数： 
+- 请求参数：接口无需签名 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| address | `string` | 40     | Y    | Y        | 用户地址                     |
+| address | `string` | 40     | Y    | N        | 用户地址                     |
 
 - 响应参数：
 
@@ -405,7 +410,7 @@
 - [x] 开放
 - 接口描述：  检查用户是否有鉴别的权限
 - 请求地址：`POST`：`identity/checkPermission`
-- 请求参数： 
+- 请求参数：(无签名) 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -423,17 +428,9 @@
 ``` tab="请求实例"
 {
 	"address":"b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9",
-	"bdCode":null,
-	"execPolicyId":null,
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":null,
 	"permissionNames":[
 		"CONTRACT_INVOKE"
-	],
-	"submitter":null,
-	"submitterSign":null,
-	"txId":null
+	]
 } 
 ```
 
@@ -454,6 +451,8 @@
 - 接口描述：  发布自定义BD
 - 请求地址：`POST`:`/bd/publish`
 - 请求参数： 
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +code+name+bdType+desc+initPermission + initPolicy + bdVersion + functions + functionName 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -461,20 +460,20 @@
 | name      | `string` | 64     | Y    | Y        | BD名称                      |
 | bdType    | `string` | 64     | Y    | Y        | BD类型（/system/contract/asserts）                      |
 | desc      | `string` | 64     | Y    | Y        | 描述                      |
-| functions | `json[]` | 64     | Y    | Y        | functions                      |
+| functions | `json[]` | 64     | Y    | Y        | bd定义function (字符串拆分逗号分隔拼接)                     |
 | initPermission | `string` | 64     | Y    | Y        | 初始化BD的业务需要permission                      |
 | initPolicy | `string` | 64     | Y    | Y        | 初始化BD的业务需要policy策略                     |
 
-function定义:
+function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(address)和(uint256) balanceOf(address)
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| desc | `string` | 64     | Y    | Y        | function描述                     |
-| execPermission | `string` | 64     | Y    | Y        | 执行function权限                      |
-| execPolicy | `string` | 64     | Y    | Y        | 执行function policy                      |
-| methodSign | `string` | 64     | Y    | Y        | 如果dbType类型为(contract/asserts),则为方法签名                      |
-| name | `string` | 64     | Y    | Y        | function名称                      |
-| type | `string` | 64     | Y    | Y        |     (SystemAction/Contract)                  |
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
+| desc           | `string` | 64     | Y    | Y        | function描述                     |
+| execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该function已经存在于链上                      |
+| execPolicy     | `string` | 64     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
+| methodSign     | `string` | 64     | Y    | Y        | 如果dbType类型为(contract/asserts),则为方法签名                      |
+| name           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
+| type           | `string` | 64     | Y    | Y        | (SystemAction/Contract/ContractQuery)             |
 
 - 响应参数：
 
@@ -567,12 +566,11 @@ function定义:
 - [x] 开放
 - 接口描述：  按db查询db详情
 - 请求地址：`GET`:`/bd/query?bdCode={bdCode}`
-- 请求参数： 
+- 请求参数： （无需签名）
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | bdCode          | `string`     | 40     | N    | N        | 查询的BD                     |
-                    |
 
 - 响应参数：
 
@@ -614,10 +612,6 @@ function定义:
 } 
 ```
 
-
-
-
-
 #### 快照
 ##### 快照发布
 
@@ -626,7 +620,8 @@ function定义:
 （快照发布使用的是存证的execPolicyId和functionName）
 - 请求地址：`GET`:`/snapshot/build`
 - 请求参数： 
-
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ + snapshotId + functionName 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | snapshotId | `string` | 64     | Y    | Y        | 快照id                      |
@@ -641,22 +636,23 @@ function定义:
 - 实例：
 
 ```json tab="请求实例"
-{
+
 	"bdCode":"SystemBD",
-	"execPolicyId":"SAVE_ATTESTATION",
+	"execPolicyId":"BUILD_SNAPSHOT",
 	"feeCurrency":null,
 	"feeMaxAmount":null,
-	"functionName":"SAVE_ATTESTATION",
-	"snapshotId":"96839",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"018fec08c850da8fef29e296f6ab1a171c1ad6b7a0357c4050512e2e99ad958a0464751aa16549044ea14ebfacd7a9f766b07c7e8089d66224e92cb7aef760b385",
-	"txId":"77ba0c8d3759fb3a3aa886d5f3083012f4850463d7400d1e23fb709b0914de82"
+	"functionName":"BUILD_SNAPSHOT",
+	"signValue":"541dadd6cb406a8206c6e3ea5979a52a30786ccf7480f5ec598c452e0a23c549SystemBDBUILD_SNAPSHOT28829BUILD_SNAPSHOT",
+	"snapshotId":"28829",
+	"submitter":"323c1e309841d2feb683b1227658de77d90406bf",
+	"submitterSign":"00c2fff5aeeb03cf0d77badbf71841169540856f387fb31f6797021ea78961e4de505cb1269626568f62f876861de7e99494be704961153dae2ba6012934246abd",
+	"txId":"541dadd6cb406a8206c6e3ea5979a52a30786ccf7480f5ec598c452e0a23c549"
 } 
 ```
 
 ```json tab="响应实例"
 {
-	"data":"77ba0c8d3759fb3a3aa886d5f3083012f4850463d7400d1e23fb709b0914de82",
+	"data":"\"541dadd6cb406a8206c6e3ea5979a52a30786ccf7480f5ec598c452e0a23c549\"",
 	"msg":"Success",
 	"respCode":"000000"
 } 
@@ -732,40 +728,7 @@ function定义:
 
 
 
-#### BD(Business Define)
-
-##### BD发布
-
-- [x] 开放
-
-`POST`:`/bd/publish`
-
->   在整个区块链上发布新的业务定义(`BD`)
-
-| 属性           | 类型                   | 最大长度 | 必填 | 是否签名 | 说明                                                         |
-| -------------- | ---------------------- | -------- | ---- | -------- | ------------------------------------------------------------ |
-| code           | `string`               | 32       | Y    | Y        | BD code，唯一且只能使用大小写字母与数字的组合                |
-| name           | `string`               | 64       | N    | Y        | 必须参与投票的domainId列表                                   |
-| bdType         | `string`               | 32       | N    | Y        | BD类型：`system`、`contract`，如果值为`system`表示系统类型，`initPermission`&`initPolicy`可为**空** |
-| desc           | `string`               | 1024     | N    | Y        | BD描述                                                       |
-| initPermission | `string`               | 64       | Y    | Y        | BD执行`initPolicy`时所需的`PermissionName`                   |
-| initPolicy     | `string`               | 32       | Y    | Y        | 创建`BD`关联的合约时所需`policy`的id                         |
-| functions      | `list<FunctionDefine>` |          | Y    | Y        | BD中定义的`function`列表                                     |
-| bdVersion      | `string`               | 4        | Y    | Y        | BD 版本号                                                    |
-
-**FuncitonDefine参数**
-
->   BD中定义的各类业务方法以及它们关联的执行权限、执行策略(Policy)
-
-| 属性           | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                       |
-| -------------- | -------- | -------- | ---- | -------- | ------------------------------------------ |
-| name           | `string` | 64       | Y    | Y        | function name                              |
-| type           | `string` |          | Y    | Y        | 1. contract 2. systemAction                |
-| desc           | `string` | 256      | N    | Y        | BD function文字描述                        |
-| methodSign     | `string` | 256      | Y    | Y        | 方法签名，eg：`(bool) buybackFrozen(bool)` |
-| initPermission | `string` | 64       | N    | Y        | BD执行`initPolicy`时所需的`PermissionName` |
-| execPolicy     | `string` | 32       | N    | Y        | 执行`function`时所需`policy`Id             |
-
+       
 #### 智能合约
 
 ##### 部署
@@ -805,52 +768,7 @@ function定义:
 | value           | `BigDecimal` |          | N    | Y        | (如果是转账方法)转账金额                                     |
 | functionName    | `string`     |          | Y    | Y        | BD的functionName，如果是BD的初始化或者合约的发布：`CREATE_CONTRACT` |
 
-#### Policy
 
-##### AssigMeta类型
-
-
-| 属性          | 类型          | 最大长度 | 必填 | 是否签名 | 说明                           |
-| ------------- | ------------- | -------- | ---- | -------- | ------------------------------ |
-| verifyNum     | `int`         |          | N    | Y        | 需要投票的domain数量           |
-| mustDomainIds | `list<string` |          | N    | Y        | 必须参与投票的domainId列表     |
-| expression    | `string`      |          | N    | Y        | 投票规则表达式，example: n/2+1 |
-
-##### Policy注册
-
-- [ ] 开放
-
-`POST`:`/policy/register`
-
->   创建新的投票策略
-
-| 属性           | 类型           | 最大长度 | 必填 | 是否签名 | 说明                                         |
-| -------------- | -------------- | -------- | ---- | -------- | -------------------------------------------- |
-| policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
-| policyName     | `string`       | 64       | Y    | Y        |                                              |
-| votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
-| callbackType   | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
-| decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-| domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
-| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
-
-##### Policy更新
-
-- [ ] 开放
-
-`POST`:`/policy/modify`
-
->   更新旧的投票策略
-
-|      属性      | 类型           | 最大长度 | 必填 | 是否签名 | 说明                                         |
-| :------------: | -------------- | -------- | ---- | -------- | -------------------------------------------- |
-|    policyId    | `string`       | 32       | Y    | Y        | 注册的policyId                               |
-|   policyName   | `string`       | 64       | Y    | Y        |                                              |
-|  votePattern   | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
-|  callbackType  | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
-|  decisionType  | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-|   domainIds    | `list<string>` |          | Y    | Y        | domainId列表                                 |
-| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
 
 #### Permission
 
@@ -1127,7 +1045,7 @@ function定义:
 ##### KYC设置
 
 - [x] 开放
-- 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息
+- 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息;identityType会覆盖之前identityType
 - 请求地址：`POST`:`/kyc/setting`
 - 请求参数：
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
@@ -1176,18 +1094,16 @@ function定义:
 - 接口描述：  
 - 请求地址：`GET`:`/permission/queryAll`
 - 请求参数： 
-
+- 签名原值拼接排序（无需签名）
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
-
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| permissionIndex | `int` | 64     | Y    | Y        | permission编号                      |
-| permissionName  | `string` | 64     | Y    | Y        | permission名称                      |
+| permissionIndex | `int` | 64     | Y    | Y        | permission编号                  |
+| permissionName  | `string` | 64     | Y    | Y        | permission名称               |
 
 - 实例：
 
@@ -1236,21 +1152,20 @@ function定义:
 } 
 ```
 
-
-
 #### 存证
 
 - [x] 开放
 - 接口描述：  保存存证信息入链
 - 请求地址：`POST`:`/attestation/save`
 - 请求参数： 
-
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
++attestation+functionName
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
-|   version   | `string` | 20       | Y    | Y        | 存证版本                      |
-|   remark    | `string` | 1024     | N    | Y        | 备注                          |
-|  objective  | `string` | 40       | N    | Y        | 目标地址，默认使用`submitter` |
+|   version   | `string` | 20       | Y    | N        | 存证版本                      |
+|   remark    | `string` | 1024     | N    | N        | 备注                          |
+|  objective  | `string` | 40       | N    | N        | 目标地址，默认使用`submitter` |
 
 - 响应参数：
 
@@ -1288,6 +1203,7 @@ function定义:
 - 接口描述：  查询入链存证信息
 - 请求地址：`GET`:`/attestation/query?txId={txId}`
 - 请求参数： 
+- 签名原值拼接排序(无需签名)
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
