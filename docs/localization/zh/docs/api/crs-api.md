@@ -545,10 +545,11 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - [x] 开放
 - 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
 （快照发布使用的是存证的execPolicyId和functionName）
-- 请求地址：`GET`:`/snapshot/build`
+- 请求地址：`POST`:`/snapshot/build`
 - 请求参数： 
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
  + snapshotId + functionName 
+ 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | snapshotId | `string` | 64     | Y    | Y        | 快照id                      |
