@@ -357,90 +357,7 @@
 
 ## 非系统级接口
 
-#### 权限
 
-##### Identity权限查询
-
-- [x] 开放
-- 接口描述：  查询Identity用户所拥有的permission权限
-- 请求地址：`GET`:`/identity/permission/query?address={address}`
-- 请求参数：接口无需签名 
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| address | `string` | 40     | Y    | N        | 用户地址                     |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| permissionIndex | `int` | 64     | Y    | Y        | 权限编号                      |
-| permissionName | `string` | 64     | Y    | Y        | 权限名称                      |
-- 实例：
-
-``` tab="请求实例"
-/identity/permission/query?address=b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9
-```
-
-```json tab="响应实例"
-{
-    "data":[
-        {
-            "permissionIndex":22,
-            "permissionName":"CONTRACT_INVOKE"
-        },
-        {
-            "permissionIndex":0,
-            "permissionName":"DEFAULT"
-        },
-        {
-            "permissionIndex":21,
-            "permissionName":"CONTRACT_ISSUE"
-        }
-    ],
-    "msg":"Success",
-    "respCode":"000000",
-    "success":true
-}
-```
-
-
-
-##### Identity鉴权
-- [x] 开放
-- 接口描述：  检查用户是否有鉴别的权限
-- 请求地址：`POST`：`identity/checkPermission`
-- 请求参数：(无签名) 
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| address | `string` | 40     | Y    | N        | 用户地址                     |
-| permissionNames | `<string[]>` | 40     | N    | Y        | 需要检查的权限，数组                     |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| data | `boolean` | 64     | Y    | Y        | 检查结果，成功返回true,失败返回false                      |
-
-- 实例：
-
-``` tab="请求实例"
-{
-	"address":"b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9",
-	"permissionNames":[
-		"CONTRACT_INVOKE"
-	]
-} 
-```
-
-```json tab="响应实例"
-{
-    "data":"true",
-    "msg":"Success",
-    "respCode":"000000"
-}
-```
 
 
 
@@ -700,7 +617,6 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 ##### 查询
 
 - [x] 开放
-
 `POST`:`/contract/query`
 
 >   基于BD `code`查询对应业务类型合约列表。
@@ -734,10 +650,11 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 ##### 部署
 
 - [x] 开放
-
-`POST`:`/contract/deploy`
-
->   创建一个关联对应`bdCode`的**合约**，`initArgs`将传入对应BD的初始化方法。
+- 接口描述：用户发布自定义合约实现业务
+- 请求地址：`POST`:`/contract/deploy`
+- 请求参数：
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ + fromAddr + contractAddress +  name + symbol + extension + functionName
 
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
@@ -745,30 +662,103 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | contractAddress | `string`   | 40       | N    | Y        | 必须参与投票的domainId列表 |
 | name            | `string`   | 64       | Y    | Y        | 合约名称                   |
 | extension       | `string`   | 1024     | N    | Y        | 扩展属性                   |
-| contractor      | `string`   |          | Y    | Y        | 合约构造器(函数)名         |
-| sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
-| initArgs        | `object[]` |          | Y    | Y        | 合约构造入参               |
+| contractor      | `string`   |          | Y    | N        | 合约构造器(函数)名         |
+| sourceCode      | `string`   |          | Y    | N        | 合约代码                   |
+| initArgs        | `object[]` |          | Y    | N        | 合约构造入参               |
 
+- 响应参数：
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` |      | Y    | Y        | 交易id                      |
 
+- 实例：
+```json tab="请求实例"
+{
+	"bdCode":"CBD_SC_50954",
+	"contractAddress":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb",
+	"contractor":"StandardCurrency(address,string,string,uint,uint8,string)",
+	"execPolicyId":"CONTRACT_ISSUE",
+	"extension":"{\"a\":1}",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"fromAddr":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
+	"functionName":"CREATE_CONTRACT",
+	"initArgs":[
+		"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
+		"S_50954",
+		"S_50954_Name",
+		100000000000000,
+		8,
+		"00000000000000000000000000000000000000000000000000000074785f6964"
+	],
+	"name":"StandardCurrency",
+	"sourceCode":"pragma solidity ^0.4.24;\n\n\n//This smart contact is generated for  #name#\ncontract Common {\n    bytes32 constant STACS_ADDR = bytes32(0x5354414353000000000000000000000000000000000000000000000000000001);\n    bytes32 constant  POLICY_ID = bytes32(0x0000000000000000000000000000000000000000000000706f6c6963795f6964);\n    bytes32 constant TX_ID = bytes32(0x00000000000000000000000000000000000000000000000000000074785f6964);\n    bytes32 constant MSG_SENDER = bytes32(0x000000000000000000000000000000000000000000004d53475f53454e444552);\n    event Bytes32(bytes32);\n    event UintLog(uint, uint);\n    event Bytes(bytes);\n    event Address(address);\n    event String(string);\n\n    bytes32 policyId;\n\n    function updatePolicyId(string newPolicyIdStr) public returns (bool success);\n\n    function getPolicyId() public view returns (bytes32){\n        return policyId;\n    }\n\n    function recovery(bytes sig, bytes32 hash) public pure returns (address) {\n        bytes32 r;\n        bytes32 s;\n        uint8 v;\n        //Check the signature length\n        require(sig.length == 65, \"signature length not match\");\n\n        // Divide the signature in r, s and v variables\n        assembly {\n            r := mload(add(sig, 32))\n            s := mload(add(sig, 64))\n            v := byte(0, mload(add(sig, 96)))\n        }\n        // Version of signature should be 27 or 28\n        if (v < 27) {\n            v += 27;\n        }\n        //check version\n        if (v != 27 && v != 28) {\n            return address(0);\n        }\n        return ecrecover(hash, v, r, s);\n    }\n\n    function hexStr2bytes(string data) public pure returns (bytes){\n        bytes memory a = bytes(data);\n        require(a.length > 0, \"hex string to bytes error, hex string is empty\");\n        uint[] memory b = new uint[](a.length);\n\n        for (uint i = 0; i < a.length; i++) {\n            uint _a = uint(a[i]);\n\n            if (_a > 96) {\n                b[i] = _a - 97 + 10;\n            }\n            else if (_a > 66) {\n                b[i] = _a - 65 + 10;\n            }\n            else {\n                b[i] = _a - 48;\n            }\n        }\n\n        bytes memory c = new bytes(b.length / 2);\n        for (uint _i = 0; _i < b.length; _i += 2) {\n            c[_i / 2] = byte(b[_i] * 16 + b[_i + 1]);\n        }\n        return c;\n    }\n\n    function getContextIdByKey(bytes32 key) internal returns (bytes32 contextPolicyId){\n        emit Bytes32(key);\n        bytes32 output = getContextParam(key, 32, STACS_ADDR);\n        require(output.length > 0, \"output is empty\");\n        return output;\n    }\n\n    function getContextParam(bytes32 input, uint outputSize, bytes32 precompliedContractAddr) internal returns (bytes32){\n        bytes32[1] memory inputs;\n        inputs[0] = input;\n        bytes32 stacs_addr = precompliedContractAddr;\n        bytes32[1] memory output;\n        assembly{\n            let success := call(//This is the critical change (Pop the top stack value)\n            0, //5k gas\n            stacs_addr, //To addr\n            0, //No value\n            inputs,\n            32,\n            output,\n            outputSize)\n        }\n        emit Bytes32(output[0]);\n        return output[0];\n    }\n\n    function stringToBytes32(string memory source) public pure returns (bytes32 result) {\n        bytes memory tempEmptyStringTest = bytes(source);\n        if (tempEmptyStringTest.length == 0) {\n            return 0x0;\n        }\n        assembly {\n            result := mload(add(source, 32))\n        }\n    }\n\n    function splitBytes(bytes strBytes, uint start, uint length) public pure returns (bytes){\n        require(strBytes.length > 0, \"input bytes length is 0\");\n        bytes memory b = new bytes(length);\n        for (uint i = 0; i < length; i++) {\n            b[i] = strBytes[start + i];\n        }\n        return b;\n    }\n\n    function bytesToAddress(bytes bys) internal pure returns (address addr) {\n        require(bys.length == 20, \"bytes to address error. input bytes length is not 20\");\n        assembly {\n            addr := mload(add(bys, 20))\n        }\n    }\n\n    function bytesToBytes32(bytes bytes_32) public pure returns (bytes32 result){\n        require(bytes_32.length == 32, \"input bytes length must is 32\");\n        assembly {\n            result := mload(add(bytes_32, 32))\n        }\n    }\n\n    function hexStringToBytes32(string hexString) public pure returns (bytes32 result){\n        bytes memory hexStringBytes = bytes(hexString);\n        require(hexStringBytes.length == 64, \"hex String length must is 64\");\n        return bytesToBytes32(hexStr2bytes(hexString));\n    }\n\n    function verifyPolicyId() internal returns (bool){\n        bytes32 contextPolicyId = getContextIdByKey(POLICY_ID);\n        emit Bytes32(contextPolicyId);\n        emit Bytes32(policyId);\n        require(contextPolicyId == policyId, \"policyId failed validation\");\n        return true;\n    }\n\n    //assemble the given address bytecode. If bytecode exists then the _addr is a contract.\n    function isContract(address _addr) public view returns (bool is_contract) {\n        uint length;\n        assembly {\n        //retrieve the size of the code on target address, this needs assembly\n            length := extcodesize(_addr)\n        }\n        return (length > 0);\n    }\n\n    function getContextParam2(bytes32 input, uint outputSize, bytes32 precompliedContractAddr) internal returns (bytes32){\n        bytes32[1] memory inputs;\n        inputs[0] = input;\n        bytes32 stacs_addr = precompliedContractAddr;\n        bytes32[1] memory output;\n        assembly{\n            let success := call(\n            0,\n            stacs_addr,\n            0,\n            inputs,\n            32,\n            output,\n            outputSize)\n        }\n        return output[0];\n    }\n\n    //get context sender\n    function getContextSender() internal returns (address){\n        //通过使用增强的预编译合约验证，originalAddress是否是最原始交易的sender\n        bytes32 output = getContextParam2(MSG_SENDER, 32, STACS_ADDR);\n        return address(output);\n    }\n}\n\n\n//This smart contact is generated for  #name#\ncontract StandardToken is Common {\n    address issuerAddress;\n    address ownerAddress;\n    string tokenName;\n    string tokenSymbol;\n    uint totalSupplyAmount;\n    uint8 decimalsDigit;\n\n\n    function issuerAddr() public view returns (address){\n        return issuerAddress;\n    }\n\n    function ownerAddr() public view returns (address){\n        return ownerAddress;\n    }\n\n    function name() public view returns (string){\n        return tokenName;\n    }\n\n    function symbol() public view returns (string){\n        return tokenSymbol;\n    }\n\n    function decimals() public view returns (uint8){\n        return decimalsDigit;\n    }\n\n    function totalSupply() public view returns (uint256){\n        return totalSupplyAmount;\n    }\n\n\n\n    function transfer(address _to, uint256 _value) public payable returns (bool success);\n\n    function transferFrom(address _from, address _to, uint256 _value) internal returns (bool);\n\n    function recoverToken(address _from, address _to, uint256 _value) public payable returns (bool success);\n\n    function additionalIssue(uint num) public returns (bool success);\n\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n    function updatePolicyId(string newPolicyIdStr) public returns (bool success){\n        require(verifyPolicyId());\n        //update policyId\n        bytes32 newPolicyId = hexStringToBytes32(newPolicyIdStr);\n        policyId = newPolicyId;\n        return true;\n    }\n\n    function settlPay(address[] _addrs, uint256[] _values) public returns (bool success){\n        require(_addrs.length == _values.length);\n        require(_addrs.length > 0, \"address array length is 0\");\n\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            transferFrom(msg.sender, _addrs[i], _values[i]);\n        }\n        return true;\n    }\n\n    function buybackPay( address[] _addrs, uint256[] _payValues)public returns (bool success){\n        require(_addrs.length == _payValues.length,\"addr length not eq value length\");\n\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            transferFrom(getContextSender(), _addrs[i], _payValues[i]);\n        }\n        return true;\n    }\n}\n\n\n//This smart contact is generated for  #name#\ninterface TokenReceiver {\n    /// @param _payment stable token payment of subscribe token\n    /// @param _amount The amount of token to be transferred\n    /// @return success whether the contract method invoke is successful\n    function receiveToken(uint256 _payment, uint256 _amount) external returns (bool success);\n\n    ///@return offerAddress the address of contract offer\n    function tokenOwnerAddress() external view returns (address offerAddress);\n\n    function symbol() external view returns (string);\n}\n\n\n//This smart contact is generated for  #name#\ncontract StandardCurrency is StandardToken {\n\n    constructor (\n        address _ownerAddr,\n        string _tokenName,\n        string _tokenSymbol,\n        uint _totalSupply,\n        uint8 _decimals,\n        string _policyId\n    ) public {\n        ownerAddress = _ownerAddr;\n        issuerAddress = msg.sender;\n        tokenName = _tokenName;\n        tokenSymbol = _tokenSymbol;\n        decimalsDigit = _decimals;\n        totalSupplyAmount = _totalSupply;\n        balance[ownerAddress] = totalSupplyAmount;\n        policyId = hexStringToBytes32(_policyId);\n        emit Bytes32(policyId);\n    }\n\n    mapping(address => uint) balance;\n\n    function balanceOf(address _owner) public view returns (uint256 balanceAmount){\n        balanceAmount = balance[_owner];\n        return (balanceAmount);\n    }\n\n    function getBalance(address _owner) internal view returns (uint){\n        return balance[_owner];\n    }\n\n    function additionalIssue(uint num) public returns (bool){\n        require(false, \"standard currency temporarily do not support additional issuance\");\n        //        require(verifyPolicyId());\n        //        bytes32 txId = getContextIdByKey(TX_ID);\n        //        bytes32 sourceHash = getAdditionalIssueSourceHashInner(txId, msg.sender, num);\n        //        require(verifySpecifiedAddressSig(issuerAddress,sourceHash, signature));\n        //        totalSupplyAmount += num;\n        //        balance[ownerAddress] += num;\n        return false;\n    }\n\n    function transfer(address _to, uint256 _value) public payable returns (bool success){\n        require(msg.sender != 0x0, \"from address is 0x0\");\n        return transferFrom(msg.sender, _to, _value);\n    }\n\n    function batchTransfer(address[] _addrs, uint256[] _values) public returns (bool success){\n        require(_addrs.length == _values.length);\n        require(_addrs.length > 0, \"address array length is 0\");\n\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            transferFrom(msg.sender, _addrs[i], _values[i]);\n        }\n        return true;\n    }\n    function recoverToken(address _from, address _to, uint256 _value) public payable returns (bool success){\n        require(msg.sender != 0x0, \"msg.sender address is 0x0\");\n        return transferFrom(_from, _to, _value);\n    }\n\n    function transferFrom(address _from, address _to, uint256 _value) internal returns (bool){\n        require(_to != 0x0, \"to address is 0x0\");\n        require(_value > 0, \"the value must be that is greater than zero.\");\n        require(balance[_from]  >= _value, \"balance not enough\");\n        require(balance[_to] + _value >= balance[_to], \"to address balance overflow\");\n        uint previousBalance = balance[_from] + balance[_to];\n        balance[_from] -= _value;\n        balance[_to] += _value;\n        emit Transfer(_from, _to, _value);\n        assert(balance[_from] + balance[_to] == previousBalance);\n\n        return true;\n    }\n\n    /// @param _to The address of the contract\n    /// @param token use verify sign\n    /// @param _payment cost of stable token to subscribe\n    /// @param _amount The amount of token to be transferred/// @param _amount The amount of token to be transferred\n    /// @return Whether the subscribe is successful or not\n    function transferToContract(uint256 _payment, uint256 _amount,address _to, string token ) public returns (bool success) {\n        emit UintLog(_payment,getBalance(msg.sender));\n        require(_payment <= getBalance(msg.sender), \"standard currency balance not enough\");\n        require(_to != address(0), \"to address illegal\");\n        require(isContract(_to), \"unstable currency contract address does not exist\");\n\n        TokenReceiver tokenReceiver = TokenReceiver(_to);\n        require(keccak256(tokenReceiver.symbol()) == keccak256(token), \"the token symbol not equals\");\n\n        address contractOfferAddress = tokenReceiver.tokenOwnerAddress();\n        success = transferFrom(msg.sender, contractOfferAddress, _payment);\n        if (success) {\n            success = tokenReceiver.receiveToken(_payment, _amount);\n            emit RechangeSuccess(msg.sender, success);\n            if (!success) {\n                rollbackTransfer(msg.sender, contractOfferAddress, _payment);\n            }\n        }\n        return success;\n    }\n\n    // rollback of transfer when failure\n    function rollbackTransfer(address _from, address _to, uint _value) private {\n        balance[_to] -= _value;\n        balance[_from] += _value;\n        emit RollbackTransfer(_to, _from, _value);\n    }\n\n\n    event RechangeSuccess(address indexed _to, bool success);\n    event RollbackTransfer(address indexed _from, address indexed _to, uint256 _value);\n}",
+	"submitter":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
+	"submitterSign":"01b8c3509b70758de076bc3850d4ae00f77a4ed5d37ce7e639a8a98aaf4b5c194841f2131d3063328310ee9498086baeb8dcfcd22187cc3fc5746c6fd5eb6b7ecf",
+	"symbol":"S_50954",
+	"txId":"4a7bc3a9b86583818b94a5de346fce29047f88a07e773a47c70701f5bb2f7f32"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"\"4a7bc3a9b86583818b94a5de346fce29047f88a07e773a47c70701f5bb2f7f32\"",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ##### 执行
-
 - [x] 开放
+- 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
+- 请求地址：`POST`:`/contract/invoke`
+- 请求参数： 
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ + methodSignature + from +  to + args + functionName
 
-`POST`:`/contract/invoke`
+|    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:    | --------     | -------- | ---- | -------- | :---------------------------- |
+| value          | `bigDecimal` |      | Y    | Y        | 转入合约金额(为null)                      |
+| methodSignature| `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
+| args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接）       |
+| from           | `string`     |      | Y    | Y        | 同交易提交地址                     |
+| to             | `string`     |      | Y    | Y        | 执行的合约地址                     |
 
->   传入参数`args`，执行合约对应的方法。
+- 响应参数：
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` |      | Y    | Y        | 交易id                      |
 
-| 属性            | 类型         | 最大长度 | 必填 | 是否签名 | 说明                                                         |
-| --------------- | ------------ | -------- | ---- | -------- | ------------------------------------------------------------ |
-| methodSignature | `string`     |          | Y    | Y        | 方法签名                                                     |
-| args            | `object[]`   |          | N    | Y        | 合约方法入参                                                 |
-| from            | `string`     | 40       | Y    | Y        | 交易提交地址                                                 |
-| to              | `string`     | 40       | Y    | Y        | 合约地址                                                     |
-| value           | `BigDecimal` |          | N    | Y        | (如果是转账方法)转账金额                                     |
-| functionName    | `string`     |          | Y    | Y        | BD的functionName，如果是BD的初始化或者合约的发布：`CREATE_CONTRACT` |
+- 实例：
 
+```json tab="请求实例"
+{
+	"args":[
+		"e966fe88795f4ff5b772475efea405631e644f59",
+		20
+	],
+	"bdCode":"CBD_SC_50954",
+	"execPolicyId":"CONTRACT_INVOKE",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"from":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
+	"functionName":"transfer",
+	"methodSignature":"(bool) transfer(address,uint256)",
+	"submitter":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
+	"submitterSign":"0161df9af5b9998a8e3bb8b49882d1fc2ba7f32681ed99e74978f4b6c9fa1a5ba77b03f0a5d2314cbeb795ebd4c0e91de5625c130bd204f3246a53102621628cf1",
+	"to":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb",
+	"txId":"9584564d326e9cd0a1fe161257c49d2edc973feb43335de54a7ae198d42602a4",
+	"value":null
+} 
+```
 
+```json tab="响应实例"
+{
+	"data":"\"9584564d326e9cd0a1fe161257c49d2edc973feb43335de54a7ae198d42602a4\"",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 #### Permission
 
@@ -996,6 +986,89 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 	"msg":"Success",
 	"respCode":"000000"
 } 
+```
+
+##### Identity权限查询
+
+- [x] 开放
+- 接口描述：  查询Identity用户所拥有的permission权限
+- 请求地址：`GET`:`/identity/permission/query?address={address}`
+- 请求参数：接口无需签名 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| address | `string` | 40     | Y    | N        | 用户地址                     |
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| permissionIndex | `int` | 64     | Y    | Y        | 权限编号                      |
+| permissionName | `string` | 64     | Y    | Y        | 权限名称                      |
+- 实例：
+
+``` tab="请求实例"
+/identity/permission/query?address=b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9
+```
+
+```json tab="响应实例"
+{
+    "data":[
+        {
+            "permissionIndex":22,
+            "permissionName":"CONTRACT_INVOKE"
+        },
+        {
+            "permissionIndex":0,
+            "permissionName":"DEFAULT"
+        },
+        {
+            "permissionIndex":21,
+            "permissionName":"CONTRACT_ISSUE"
+        }
+    ],
+    "msg":"Success",
+    "respCode":"000000",
+    "success":true
+}
+```
+
+
+
+##### Identity鉴权
+- [x] 开放
+- 接口描述：  检查用户是否有鉴别的权限
+- 请求地址：`POST`：`identity/checkPermission`
+- 请求参数：(无签名) 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| address | `string` | 40     | Y    | N        | 用户地址                     |
+| permissionNames | `<string[]>` | 40     | N    | Y        | 需要检查的权限，数组                     |
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| data | `boolean` | 64     | Y    | Y        | 检查结果，成功返回true,失败返回false                      |
+
+- 实例：
+
+``` tab="请求实例"
+{
+	"address":"b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9",
+	"permissionNames":[
+		"CONTRACT_INVOKE"
+	]
+} 
+```
+
+```json tab="响应实例"
+{
+    "data":"true",
+    "msg":"Success",
+    "respCode":"000000"
+}
 ```
 
 ##### 查询Identity
