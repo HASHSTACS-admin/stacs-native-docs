@@ -629,22 +629,24 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：用户发布自定义合约实现业务
 - 请求地址：`POST`:`/contract/deploy`
 - 请求参数：
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- + fromAddr + contractAddress +  name + symbol + extension + functionName
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount+ fromAddr + contractAddress +  name + symbol + extension + functionName
+
 
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
 | fromAddr        | `string`   | 40       | Y    | Y        | 提交者地址                 |
 | contractAddress | `string`   | 40       | N    | Y        | 必须参与投票的domainId列表 |
 | name            | `string`   | 64       | Y    | Y        | 合约名称                   |
+| symbol          | `string`   | 64       | Y    | Y      | 合约简称                   |
 | extension       | `string`   | 1024     | N    | Y        | 扩展属性                   |
 | contractor      | `string`   |          | Y    | N        | 合约构造器(函数)名         |
 | sourceCode      | `string`   |          | Y    | N        | 合约代码                   |
 | initArgs        | `object[]` |          | Y    | N        | 合约构造入参               |
 
 - 响应参数：
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+
+| 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
+| --------------- | ---------- | -------- | ---- | -------- | ---------------------|
 | txId | `string` |      | Y    | Y        | 交易id                      |
 
 - 实例：
@@ -689,8 +691,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
 - 请求地址：`POST`:`/contract/invoke`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- + methodSignature + from +  to + args + functionName
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount+ methodSignature + from +  to + args + functionName
 
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:    | --------     | -------- | ---- | -------- | :---------------------------- |
@@ -701,6 +702,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | to             | `string`     |      | Y    | Y        | 执行的合约地址                     |
 
 - 响应参数：
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | txId | `string` |      | Y    | Y        | 交易id                      |
@@ -741,6 +743,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述： 链支持可直接调用合约查询方法(不执行交易流程)
 - 请求地址：`POST`:`/contract/query`
 - 请求参数： （无）
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 |     address     | `string`   | 40       | Y    | N        | 合约地址                               |
@@ -750,6 +753,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 
 - 响应参数：响应参数返回类型为对象数组，数组中的参与取决与合约发放返回定义，该例balanceOf方法返回的是uint256类型的值，该值为方法定义方法的余额
+
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -826,6 +830,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 请求地址：`GET`:`/permission/queryAll`
 - 请求参数： 
 - 签名原值拼接排序（无需签名）
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 
@@ -901,6 +906,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | property     | `string` | 1024   | Y    | Y      |  属性json格式       |
 
 
+- 响应参数：
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
@@ -986,7 +992,8 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 请求地址：`POST`:`/permission/cancel`
 - 请求参数： 
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
-+ identityAddress + permissionNames + functionName
++identityAddress + permissionNames + functionName
+
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
 | identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
@@ -1029,7 +1036,8 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 请求地址：`POST`:`/identity/bdManage`
 - 请求参数： 
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
-+ targetAddress + actionType +BDCodes+ functionName
++targetAddress + actionType +BDCodes+ functionName
+
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
 | targetAddress | `string`   | 40       | Y    | Y        | 目标identity地址              |
@@ -1178,7 +1186,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | property | `string` | 64     | Y    | Y        |  扩展属性                   |
 
 - 实例：
-
+```json tab="请求实例"
 ```
 
 ```json tab="响应实例"
@@ -1254,6 +1262,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 请求参数： 
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
 +attestation+functionName
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
