@@ -89,13 +89,12 @@
 >   `Domain`管理旗下`RS`节点的接口，让节点可以**注册**到`Domain`中参与交易处理，也可以**移除**`domain`下指定节点
 
 #### 注册RS
-
-- - [ ] 开放
-
-- 接口描述： RS 注册
-
-- 请求地址：`POST`：`/rs/register` 
-
+- [x] 开放
+- 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
+- 请求地址：`POST`：`/rs/register`
+- 请求参数： 
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +snapshotId + functionName 
 - 请求参数： 
 
   |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
@@ -144,38 +143,81 @@
 
 ### CA
 
-> 节点接入时认证信息
-
 #### CA注册
 
-- - [ ] 开放
-
-- 接口描述：  注册 CA 信息
-
+- [x] 开放
+- 接口描述： 将CA上链
 - 请求地址：`POST`：`/ca/auth`
-
 - 请求参数： 
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +caList(循环caList拼接顺序 period+domainId+user+usage+pubKey,period格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时)  
 
-  |  属性  | 类型         | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :----: | ------------ | -------- | ---- | -------- | ---- |
-  | caList | `list<CaVO>` |          | Y    | Y        |      |
-
-- CaVO：
-
-  |   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                 |
-  | :------: | -------- | -------- | ---- | -------- | -------------------- |
-  |  period  | `date`   |          | Y    | Y        | ca生效时间(暂时无用) |
-  |  pubKey  | `string` |          | Y    | Y        | ca公钥               |
-  |   user   | `string` |          | Y    | Y        |                      |
-  | domainId | `string` |          | Y    | Y        | 生效的domainId       |
-  |  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus  |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| snapshotId | `string` | 64     | Y    | Y        | 快照id                      |
 
 
 - 响应参数：
 
-  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | ---- | -------- | ---- | -------- | ---- |
-  |  无  |      |          |      |          |      |
+|    属性        | 类型     | 最大长度 | 必填     | 是否签名 | 说明                          |
+| :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
+| txId          | `string` |        | Y       | Y        | 交易id                      |
+| caList        | `json[]` |        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
+| proxyNodeName | `string` |        | Y       | N        | 代理节点                      |
+
+-- caList
+| version       | `string` |        | Y       | Y        | 版本号                      |
+| period        | `string` |        | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时                      |
+| pubKey        | `string` |        | Y       | Y        | 公钥                      |
+| user          | `string` |        | Y       | Y        | 节点名称                      |
+| domainId      | `string` |        | Y       | Y        | domain                      |
+| usage         | `string` |        | Y       | Y        | biz/consensus                      |
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` |      | Y    | Y        | 交易id                      |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"caList":[
+		{
+			"domainId":"FORT-CAPITAL",
+			"period":1579343411360,
+			"pubKey":"048cd341689539e91f3a74fb66060ffa11afb6f8cdc1f5ef79f962a90b0aa7ee9c233a263ae6be1a92ed4742c027a7ffcee677d34415574e7632375f474d0c93bc",
+			"usage":"biz",
+			"user":"Node-d",
+			"version":"1.0.0"
+		},
+		{
+			"domainId":"FORT-CAPITAL",
+			"period":1579343411402,
+			"pubKey":"045164d0cb674adeb461d3fb9e88217824ed0663bb8858a245c47362bdfcc9fad65515cb95f9b1123a1b62f6ab4bf6612d0b950caf6f384abc43b5610f4fdd78b4",
+			"submitter":"9056d67b-7b83-4d04-8524-dcd86408881b1234",
+			"submitterSign":"9056d67b-7b83-4d04-8524-dcd86408881b1234",
+			"usage":"consensus",
+			"user":"Node-d",
+			"version":"1.0.0"
+		}
+	],
+	"execPolicyId":"CA_AUTH",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"CA_AUTH",
+	"proxyNodeName":null,
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"018e63a4c83e339417e0c85d9355fee1e62907cfdc0dfec0a45d3bb0fe13c1793e0828709351ab0cb3b76e88a13c1ad11841c54d376c071039ec6e4bfc4faa4e3f",
+	"txId":"9a2b9cfb143acccd49ece0b5b6fa8474c97a6e414e099bcb031da085c2fca80b"
+} 
+```
+
+```json tab="响应实例"
+{"data":null,"msg":"Success","respCode":"000000","success":true}  
+```
 
 #### CA更新
 
@@ -279,33 +321,6 @@
   | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
   | :--: | ---- | -------- | ---- | -------- | ---- |
   |  无  |      |          |      |          |      |
-
-
-
-### 手续费
-
-#### 手续费地址合约配置
-
-- - [ ] 开放
-
-- 接口描述：  配置手续费收取货币所在合约地址，以及收取手续费后，转入手续费的账户地址。
-
-- 请求地址：`POST`：`/fee/setConfig`
-
-- 请求参数： 
-
-  |      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                       |
-  | :-------------: | -------- | -------- | ---- | -------- | -------------------------- |
-  | currency        | `string` | 32       | Y    | Y        | 币种代码symbol              |
-  | receiveAddr     | `string` | 40       | Y    | Y        | 手续费收费地址               |
-
-- 响应参数：
-
-  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | ---- | -------- | ---- | -------- | ---- |
-  |  无  |      |          |      |          |      |
-
-
 
 ####policy注册
 #### Policy
@@ -945,7 +960,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：  给Identity赋予已入链的permission
 - 请求地址：`POST`:`/permission/authorize`
 - 请求参数
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount + identityType + permissionNames + functionName
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount +identityAddress+ identityType + permissionNames + functionName
 
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
