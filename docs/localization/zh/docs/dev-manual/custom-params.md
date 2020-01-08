@@ -48,6 +48,7 @@ drs.domain.chainPubKey=04711e86d74444c10d7506dbcfcb861ae1280a384ba617802a02d81ea
 drs.domain.merchantPriKey=78637c920bc993f50c038fa146b917fc625793e59f677cdbfbbe1c46b7fd407a
 drs.domain.aesKey=gsp-sto-12sd9ie4
 drs.domain.merchantId=default
+# 当前drs的访问地址，该地址用于接收区块链的回调数据
 drs.domain.callbackUrl=http://localhost:8080/drs/callback
 
 # 数据源配置
