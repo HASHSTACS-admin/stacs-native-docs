@@ -152,12 +152,7 @@
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
  +caList(循环caList拼接顺序 period+domainId+user+usage+pubKey,period格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时)  
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| snapshotId | `string` | 64     | Y    | Y        | 快照id                      |
-
-
-- 响应参数：
+- 请求参数：
 
 |    属性        | 类型     | 最大长度 | 必填     | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
@@ -176,7 +171,7 @@
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| :---------: | -------- | -------- | ---- | -------- | :-------------------------|
 | txId | `string` |      | Y    | Y        | 交易id                      |
 
 - 实例：
@@ -220,81 +215,162 @@
 ```
 
 #### CA更新
-
-- - [ ] 开放
-
-- 接口描述：  更新 CA 信息
-
-- 请求地址：`POST`：`/ca/update`
+- [x] 开放
+- 接口描述： 更新CA
+- 请求地址：`POST`：`ca/update`
+- 请求参数： 
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +caList(循环caList拼接顺序 period+domainId+user+usage+pubKey,period格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时)  
 
 - 请求参数：
 
-  |   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                 |
-  | :------: | -------- | -------- | ---- | -------- | -------------------- |
-  |  period  | `date`   |          | Y    | Y        | ca生效时间(暂时无用) |
-  |  pubKey  | `string` |          | Y    | Y        | ca公钥               |
-  |   user   | `string` |          | Y    | Y        |                      |
-  | domainId | `string` |          | Y    | Y        | 生效的domainId       |
-  |  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus  |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| period | `string` | 64     | Y    | Y        | 过期时间                      |
+| pubKey | `string` | 64     | Y    | Y        | 公钥                      |
+| user | `string` | 64     | Y    | Y        | 节点名称                      |
+| domainId | `string` | 64     | Y    | Y        | 域                      |
+| usage; | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
+
 
 - 响应参数：
 
-  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | ---- | -------- | ---- | -------- | ---- |
-  |  无  |      |          |      |          |      |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` |      | Y    | Y        | 交易id                      |
 
+- 实例：
 
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"domainId":"FORT-CAPITAL",
+	"execPolicyId":"CA_UPDATE",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"CA_UPDATE",
+	"period":1579343411360,
+	"pubKey":"041db72c7828299254ad1163ec8c39e9d33443eaef4b113ec1010e6f4f1b722854a4e8321db3013acbd6a69e1c3f45bf014351554d523d3661157ec169d8b5402c",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"01bbe21608707ce555549f807e1ce41f37defc900919b2ede6011cd672b042ff551b935f4f4792007bc93a9820d5048ae198617eac4e71b6fc89d3e399d2f50bbf",
+	"txId":"8eb84689c2098ec00833fdb5ae0382cc8f6f35b8a19aace4573e1897fd1b511c",
+	"usage":"biz",
+	"user":"Node-d"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"\"8eb84689c2098ec00833fdb5ae0382cc8f6f35b8a19aace4573e1897fd1b511c\"",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 #### CA撤销
-
-- - [ ] 开放
-
-- 接口描述：  撤销授权后的 CA
-
+- [x] 开放
+- 接口描述： 撤销CA，设置CA为不可用
 - 请求地址：`POST`:`/ca/cancel`
-
 - 请求参数： 
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +domainId+user+usage+pubKey
 
-  |   属性   | 类型     | 最大长度 | 必填 | 是否签名 | 说明                |
-  | :------: | -------- | -------- | ---- | -------- | ------------------- |
-  |  pubKey  | `string` |          | Y    | Y        |                     |
-  |   user   | `string` |          | Y    | Y        |                     |
-  | domainId | `string` |          | Y    | Y        |                     |
-  |  usage   | `string` |          | Y    | Y        | 1. biz 2. consensus |
+- 请求参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| pubKey | `string` | 64     | Y    | Y        | 公钥                      |
+| user | `string` | 64     | Y    | Y        | 节点名称                      |
+| domainId | `string` | 64     | Y    | Y        | 域                      |
+| usage; | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
+
 
 - 响应参数：
 
-  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | ---- | -------- | ---- | -------- | ---- |
-  |  无  |      |          |      |          |      |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` |      | Y    | Y        | 交易id                      |
 
-> 相比**统一参数**，缺少了`period`字段
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"domainId":"FORT-CAPITAL",
+	"execPolicyId":"CA_CANCEL",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"CA_CANCEL",
+	"pubKey":"041db72c7828299254ad1163ec8c39e9d33443eaef4b113ec1010e6f4f1b722854a4e8321db3013acbd6a69e1c3f45bf014351554d523d3661157ec169d8b5402c",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"0025dff49f9383d8d5ca09aabae0390536546759d82658ca7d536214012091c7fb51d898a376fa6d2f1c95ee57e0b28be90be378af28706256c44a4706bcb07dec",
+	"txId":"3865a759f1308b370074bf34a21f87016f23f566c428b80bf1b7afc5515b0703",
+	"usage":"biz",
+	"user":"Node-d"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":"\"3865a759f1308b370074bf34a21f87016f23f566c428b80bf1b7afc5515b0703\"",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
+
 
 ### 节点
 
 #### 节点加入
-
-- - [ ] 开放
-
-- 接口描述：  节点加入共识网络
-
+- [x] 开放
+- 接口描述： 节点加入共识网络
 - 请求地址：`POST`：`/node/join`
+- 请求参数：
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +nodeName+domainId+signValue+pubKey+functionName 
 
-- 请求参数： 
 
-  |   属性    | 类型     | 最大长度 | 必填 | 是否签名 | 说明           |
-  | :-------: | -------- | -------- | ---- | -------- | -------------- |
-  | nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
-  | domainId  | `string` |          | Y    | Y        |                |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+ | nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
+  | domainId  | `string` |          | Y    | Y        |   domain域             |
   | signValue | `string` |          | Y    | Y        |                |
   |  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
 
+
 - 响应参数：
 
-  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | ---- | -------- | ---- | -------- | ---- |
-  |  无  |      |          |      |          |      |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"domainId":"FORT-CAPITAL",
+	"execPolicyId":"NODE_JOIN",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"NODE_JOIN",
+	"nodeName":"Node-d",
+	"pubKey":"04ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf054",
+	"sign":"005a086c04657767f395744c13d3e7eced587f95fa71e2735e4f020b3aee5c339715dd8e329a50bd90a3f17c01925cdc988a3264dbcb95d3abb7c31d29bf2758bb",
+	"signValue":"4c34be99e70917f2c8ecf0c9a6111e108cbd36180bd161a9468e56a05a8e72c5SystemBDNODE_JOINNode-dFORT-CAPITALFORT-CAPITALNode-d04ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf05404ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf054NODE_JOIN",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"01be5c031f1c1fa055fffffd16573635794c9b07557eb7cec79692f933ab0907351b4e67e5e9fee951878341430c8fec65b06c8b9fed7cb96f91a4ca3524fc1ee4",
+	"txId":"4c34be99e70917f2c8ecf0c9a6111e108cbd36180bd161a9468e56a05a8e72c5"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":null,
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 
 
@@ -322,28 +398,19 @@
   | :--: | ---- | -------- | ---- | -------- | ---- |
   |  无  |      |          |      |          |      |
 
-####policy注册
-#### Policy
-
-##### AssigMeta类型
-
-
-| 属性          | 类型          | 最大长度 | 必填 | 是否签名 | 说明                           |
-| ------------- | ------------- | -------- | ---- | -------- | ------------------------------ |
-| verifyNum     | `int`         |          | N    | Y        | 需要投票的domain数量           |
-| mustDomainIds | `list<string` |          | N    | Y        | 必须参与投票的domainId列表     |
-| expression    | `string`      |          | N    | Y        | 投票规则表达式，example: n/2+1 |
 
 ##### Policy注册
 
-- [ ] 开放
+- [x] 开放
+- 接口描述： 注册Policy
+- 请求地址：`POST`:`/policy/register`
+- 请求参数：
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +policyId+policyName+votePattern+desc+[verifyNum+mustDomainIds+expression]+domainIds+requireAuthIds+functionName 
 
-`POST`:`/policy/register`
 
->   创建新的投票策略
-
-| 属性           | 类型           | 最大长度 | 必填 | 是否签名 | 说明                                         |
-| -------------- | -------------- | -------- | ---- | -------- | -------------------------------------------- |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
 | policyName     | `string`       | 64       | Y    | Y        |                                              |
 | votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
@@ -351,24 +418,125 @@
 | decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
 | domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
 | requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
+| assignMeta | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
+
+- assignMeta结构
+| verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
+| expression | `string` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
+| mustDomainIds | `list<string>` |          | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
+
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"assignMeta":{
+		"expression":"n/2+1",
+		"mustDomainIds":null,
+		"verifyNum":1
+	},
+	"bdCode":"SystemBD",
+	"callbackType":"ALL",
+	"decisionType":"FULL_VOTE",
+	"domainIds":[
+		"Domain"
+	],
+	"execPolicyId":"REGISTER_POLICY",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"REGISTER_POLICY",
+	"policyId":"P_",
+	"policyName":"P_-name",
+	"requireAuthIds":[],
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"015bcf8f804fec7835676d594899cf6643a5fe4ac3c586dfa6f89842e756234862514719c31a043eca395256e03707e228f7cdb15daeb0e9de2545d2c4ecbea304",
+	"txId":"92904f2ed902d1a4b7c2442d302fd098fbbf6aee071b8179d51c885cfabe87ce",
+	"votePattern":"SYNC"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":null,
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ##### Policy更新
+- [x] 开放
+- 接口描述： 修改Policy
+- 请求地址：`POST`:`/policy/modify`
+- 请求参数：
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +policyId+policyName+votePattern+desc+[verifyNum+mustDomainIds+expression]+domainIds+requireAuthIds+functionName 
 
-- [ ] 开放
 
-`POST`:`/policy/modify`
-
->   更新旧的投票策略
-
-|      属性      | 类型           | 最大长度 | 必填 | 是否签名 | 说明                                         |
-| :------------: | -------------- | -------- | ---- | -------- | -------------------------------------------- |
-|    policyId    | `string`       | 32       | Y    | Y        | 注册的policyId                               |
-|   policyName   | `string`       | 64       | Y    | Y        |                                              |
-|  votePattern   | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
-|  callbackType  | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
-|  decisionType  | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-|   domainIds    | `list<string>` |          | Y    | Y        | domainId列表                                 |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
+| policyName     | `string`       | 64       | Y    | Y        |                                              |
+| votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
+| callbackType   | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
+| decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
+| domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
 | requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
+| assignMeta | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
+
+- assignMeta结构
+| verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
+| expression | `string` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
+| mustDomainIds | `list<string>` |          | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
+
+
+
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"assignMeta":{
+		"expression":"n/2+1",
+		"mustDomainIds":null,
+		"verifyNum":1
+	},
+	"bdCode":"SystemBD",
+	"callbackType":"ALL",
+	"decisionType":"FULL_VOTE",
+	"domainIds":[
+		"Domain"
+	],
+	"execPolicyId":"MODIFY_POLICY",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"MODIFY_POLICY",
+	"policyId":"P_ID_873",
+	"policyName":"P_ID_873-name",
+	"requireAuthIds":[],
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"006f17de9fe8a791c2e90f0e5207069adad3d531236946d332c499a56aa857026f2896183ff1f9b8028ea20be4184febd70fa86ee24017a3601d61c4d98a622f0a",
+	"txId":"fc180d4f1fe7ed3d5cccabcad3b9c8205f4c7c6d9ec7e5395274c786b4a1a223",
+	"votePattern":"SYNC"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":null,
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ## 非系统级接口
 
