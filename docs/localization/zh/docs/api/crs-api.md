@@ -377,27 +377,57 @@
 
 #### 节点离开
 
-- - [ ] 开放
+#### 节点加入
+- [x] 开放
+- 接口描述： 节点离开
+- 请求地址：`POST`：`/node/level`
+- 请求参数：
+- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
+ +nodeName+domainId+signValue+pubKey+functionName 
 
-- 接口描述： 节点离开共识网络
 
-- 请求地址：`POST`：`/node/leave`
-
-- 请求参数： 
-
-  |   属性    | 类型     | 最大长度 | 必填 | 是否签名 | 说明           |
-  | :-------: | -------- | -------- | ---- | -------- | -------------- |
-  | nodeName  | `string` | 32       | Y    | Y        | 离开的节点名称 |
-  | domainId  | `string` | 16       | Y    | Y        |                |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+ | nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
+  | domainId  | `string` |          | Y    | Y        |   domain域             |
   | signValue | `string` |          | Y    | Y        |                |
+  | sign | `string` |          | Y    | Y        |            对signValue的签名    |
   |  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+
 
 - 响应参数：
 
-  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | ---- | -------- | ---- | -------- | ---- |
-  |  无  |      |          |      |          |      |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"bdCode":"SystemBD",
+	"domainId":"Domain",
+	"execPolicyId":"NODE_LEAVE",
+	"feeCurrency":null,
+	"feeMaxAmount":null,
+	"functionName":"NODE_LEAVE",
+	"nodeName":"Node-g12",
+	"pubKey":"04ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf054",
+	"sign":"002d678597d5b2402cc37bf836efe9a7f122ca7687231aeb6db4b0efee3e92aaa26aedcd6d68e08d77aadfc8f72d89b328505a4f36444b09b9df888c533d721057",
+	"signValue":"1111111111",
+	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+	"submitterSign":"00d538eb51258ef8972ced6565442a0885d3d3a8bb9d63e240e7123636011c2f406b33c5ba7a420031da602caff355d74170ab8ba3e303fd6c3cf57dc7d5c7752f",
+	"txId":"f23329f0d855b525b301c9054fe05b38d97478c91a0b60a01300cb31fe473c25"
+} 
+```
+
+```json tab="响应实例"
+{
+	"data":null,
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 ##### Policy注册
 
