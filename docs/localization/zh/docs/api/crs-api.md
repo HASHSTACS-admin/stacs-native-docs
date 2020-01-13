@@ -709,20 +709,20 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| bdCode          | `string`     | 40     | N    | N        | 查询的BD                     |
+| bdCode          | `string`     | 32     | N    | N        | 查询的BD                     |
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| bdType | `string` | 64     | Y    | Y        | bd类型(system/contract/asserts)                      |
-| code | `string` | 64     | Y    | Y        | BD的code，唯一                     |
-| desc | `string` | 64     | Y    | Y        | 描述                     |
+| bdType | `string` | 32     | Y    | Y        | bd类型(system/contract/asserts)                      |
+| code | `string` | 32     | Y    | Y        | BD的code，唯一                     |
+| desc | `string` | 1024     | Y    | Y        | 描述                     |
 | functions | `JSONArray` | 4082     | Y    | Y        | bd定义的支持的function申明|
 | initPermission | `string` | 64     | Y    | Y        | 发布BD时，发布者需要具备的权限                      |
 | initPolicy | `string` | 64     | Y    | Y        | 发布BD时，发布执行的policy策略    |
 | name | `string` | 64     | Y    | Y        | BD名称                      |
-| bdVersion | `string` | 64     | Y    | Y        | BD版本号                     |
+| bdVersion | `string` | 4     | Y    | Y        | BD版本号                     |
 - 实例：
 
 ``` tab="请求实例"
@@ -912,6 +912,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接）       |
 | from           | `string`     |      | Y    | Y        | 同交易提交地址                     |
 | to             | `string`     |      | Y    | Y        | 执行的合约地址                     |
+| remark         | `string`     |      | Y    | Y        | 备注存证                     |
 
 - 响应参数：
 
@@ -1112,10 +1113,10 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
-| address      | `string` | 64     | Y    | Y        | Identity地址                      |
+| address      | `string` | 40     | Y    | Y        | Identity地址                      |
 | hidden       | `int`    | 1      | Y    | Y        | 是否隐藏                      |
 | identityType | `string` | 64     | Y    | Y        |  1. user 2. domain 3. node       |
-| property     | `string` | 1024   | Y    | Y      |  属性json格式       |
+| property     | `string` | 1024   | N    | Y      |  属性json格式       |
 
 
 - 响应参数：
@@ -1344,7 +1345,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | N        | 用户地址                     |
-| permissionNames | `<string[]>` | 40     | N    | Y        | 需要检查的权限，数组                     |
+| permissionNames | `<string[]>` |      | N    | Y        | 需要检查的权限，数组                     |
 
 - 响应参数：
 
@@ -1387,12 +1388,12 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| address | `string` | 64     | Y    | Y        | user identity 地址                      |
+| address | `string` | 40     | Y    | Y        | user identity 地址                      |
 | currentTxId | `string` | 64     | Y    | Y        |    user identity 改修改时的txId                   |
 | froze | `string` | 64     | Y    | Y        | 用户冻结的bd                      |
-| hidden | `string` | 64     | Y    | Y        | 1：显示，0：隐藏                      |
+| hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
 | identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
-| kYC | `string` | 64     | Y    | Y        | identity认证信息                      |
+| kYC | `string` |      | Y    | Y        | identity认证信息                      |
 | permissions | `string` | 64     | Y    | Y        | 权限编号(32进制)                      |
 | preTxId | `string` | 64     | Y    | Y        |  上次identity被修改时交易id                   |
 | property | `string` | 64     | Y    | Y        |  扩展属性                   |
