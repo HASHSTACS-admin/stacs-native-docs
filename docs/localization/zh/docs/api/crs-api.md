@@ -912,7 +912,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接）       |
 | from           | `string`     |      | Y    | Y        | 同交易提交地址                     |
 | to             | `string`     |      | Y    | Y        | 执行的合约地址                     |
-| remark         | `string`     |      | Y    | Y        | 备注存证                     |
+| remark         | `string`     |      | N    | Y        | 备注存证                     |
 
 - 响应参数：
 
