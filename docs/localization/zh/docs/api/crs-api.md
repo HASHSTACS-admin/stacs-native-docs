@@ -847,7 +847,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
 | fromAddr        | `string`   | 40       | Y    | Y        | 提交者地址                 |
-| contractAddress | `string`   | 40       | N    | Y        | 必须参与投票的domainId列表 |
+| contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
 | name            | `string`   | 64       | Y    | Y        | 合约名称                   |
 | symbol          | `string`   | 64       | Y    | Y      | 合约简称                   |
 | extension       | `string`   | 1024     | N    | Y        | 扩展属性                   |
