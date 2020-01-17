@@ -1345,7 +1345,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | N        | 用户地址                     |
-| permissionNames | `<string[]>` |      | N    | Y        | 需要检查的权限，数组                     |
+| permissionNames | `<string[]>` |      | Y    | Y        | 需要检查的权限，数组                     |
 
 - 响应参数：
 
