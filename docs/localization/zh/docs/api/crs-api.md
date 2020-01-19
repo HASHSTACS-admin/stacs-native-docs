@@ -504,7 +504,7 @@
 | extension       | `string`   | 1024     | N    | Y        | 扩展属性                   |
 | contractor      | `string`   |          | Y    | Y        | 合约构造器(函数)名         |
 | sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
-| initArgs        | `object[]` |          | Y    | Y        | 合约构造入参               |
+| initArgs        | `object[]` |          | N    | Y        | 合约构造入参(initArgs和contractor参数列表应该保持一致)               |
 
 
 
@@ -519,7 +519,7 @@
 | 属性            | 类型         | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | --------------- | ------------ | -------- | ---- | -------- | ------------------------------------------------------------ |
 | methodSignature | `string`     |          | Y    | Y        | 方法签名                                                     |
-| args            | `object[]`   |          | N    | Y        | 合约方法入参                                                 |
+| args            | `object[]`   |          | N    | Y        | 合约方法入参（参数需要和methodSignature参数列表保持一致）                                                 |
 | from            | `string`     | 40       | Y    | Y        | 交易提交地址                                                 |
 | to              | `string`     | 40       | Y    | Y        | 合约地址                                                     |
 | value           | `BigDecimal` |          | N    | Y        | (如果是转账方法)转账金额                                     |
@@ -629,7 +629,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
 | address      | `string` | 64     | Y    | Y        | Identity地址                      |
-| hidden       | `int`    | 1      | Y    | Y        | 是否隐藏                      |
+| hidden       | `string`    | 1      | Y    | Y        | 是否隐藏(0:隐藏,1:显示)                      |
 | identityType | `string` | 64     | Y    | Y        |  1. user 2. domain 3. node       |
 
 
@@ -649,7 +649,7 @@
 	"feeMaxAmount":null,
 	"froze":null,
 	"functionName":"IDENTITY_SETTING",
-	"hidden":0,
+	"hidden":"0",
 	"identityType":"user",
 	"property":"{}",
 	"signValue":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6SystemBDIDENTITY_SETTINGnullnulluser{}4a02aa7f84d01b63b28c81c096f8c2e3feda7df9IDENTITY_SETTING",
