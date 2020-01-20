@@ -352,7 +352,7 @@
 ##### BD查询
 
 - [x] 开放
-- 接口描述：  按db查询db详情
+- 接口描述：  按BD查询BD详情
 - 请求地址：`GET`:`/bd/query?bdCode={bdCode}`
 - 请求参数： 
 
@@ -365,7 +365,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| bdType | `string` | 64     | Y    | Y        | bd类型(system/contract/asserts)                      |
+| bdType | `string` | 64     | Y    | Y        | bd类型(system/contract/assets)                      |
 | code | `string` | 64     | Y    | Y        | BD的code，唯一                     |
 | desc | `string` | 64     | Y    | Y        | 描述                     |
 | functions | `JSONArray` | 4082     | Y    | Y        | bd定义的支持的function申明|
@@ -383,7 +383,7 @@
 {
 	"data":[
 		{
-			"bdType":"asserts",
+			"bdType":"assets",
 			"bdVersion":"1.0",
 			"code":"CBD_SC_87716",
 			"createTime":1576152885920,
