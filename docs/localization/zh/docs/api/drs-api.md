@@ -102,7 +102,7 @@
 | subbmiter      | `String`        | 40       | Y    | 用户地址                                    
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                                   
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费                              
-| sign           | `String`        | 64       | Y    | 签名                                        
+| submitterSign           | `String`        | 64       | Y    | 签名                                        
 | bdCode         | `String`        |          | Y    | BD code                                
 | policyId       | `String`        | 32       | Y    | 注册的policyId                               
 | policyName     | `String`        | 64       | Y    | ploicy name                                 
@@ -139,7 +139,7 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                            
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                           
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费                      
-| sign           | `String`        | 64       | Y    | 签名                                
+| submitterSign           | `String`        | 64       | Y    | 签名                                
 | bdCode         | `String`        |          | Y    | BD code                            
 | policyId       | `String`        | 32       | Y    | 注册的policyId                       
 | policyName     | `String`        | 64       | Y    | ploicy name                         
@@ -211,7 +211,7 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                        
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                       
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                            
+| submitterSign           | `String`        | 64       | Y    | 签名                            
 | bdCode         | `String`        |          | Y    | BD code                  
 | permissionNames | `String[]`     |          | Y    | PermissionName数组 
 
@@ -228,7 +228,7 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                        
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                       
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                            
+| submitterSign           | `String`        | 64       | Y    | 签名                            
 | bdCode         | `String`        |          | Y    | BD code                  
 | identityAddress | `String`       | 40       | Y    | 要授权的identity地址              
 | permissionNames | `String[]`     |          | Y    | 给Identity授权的PermissionName数组
@@ -248,7 +248,7 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                              
+| submitterSign           | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | identityAddress | `String`       | 40       | Y    | 要撤销授权的identity地址            
 | permissionNames | `String[]`     |          | Y    | 给Identity授权的PermissionName数组 
@@ -266,7 +266,7 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                              
+| submitterSign           | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | identityAddress | `String`       | 40       | Y    | 目标identity地址    
 | KYC             | `String`       | 1024     | Y    | KYC属性                      
@@ -285,7 +285,7 @@
 | subbmiter      | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                              
+| submitterSign           | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | methodName     | `String`        |          | Y    | 合约构造方法    
 | args           | `Object[]`      |          | Y    | 合约参数    
@@ -306,7 +306,7 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                              
+| submitterSign           | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | methodName     | `String`        |          | Y    | 合约方法    
 | args           | `Object[]`      |          | Y    | 合约参数    
@@ -325,7 +325,7 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                              
+| submitterSign           | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | attestation    | `String`        | 4096     | Y    | 存证内容 
 
@@ -342,7 +342,7 @@
 | subbmiter    | `String`        | 40       | Y    | 用户地址                          
 | feeCurrency    | `String`        | 32       | N    | 手续费币种                         
 | feeMaxAmount   | `String`        | 18       | N    | 最大允许的手续费
-| sign           | `String`        | 64       | Y    | 签名                              
+| submitterSign           | `String`        | 64       | Y    | 签名                              
 
 
 ## 查询类接口
