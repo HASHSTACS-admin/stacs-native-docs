@@ -362,3 +362,29 @@
 ||||
 
 
+
+#### 注册回调
+- 接口描述：DRS收到上链成功的交易时，回调到dapp，dapp需要实现回调接口，实现`supportType`和`handle`方法
+- 接口地址：`io.stacs.nav.dapp.core.callback.ITxCallbackHandler`
+example
+```
+    @Component @Slf4j
+    public class CustomerHandler implements ITxCallbackHandler {
+        @Override public CallbackType[] supportType() {
+          /**
+         *注册所有有交易回调，上链所有的交易都会回调到该handler：CallbackType.of("*")
+         *注册functionName回调，当执行的交易functionName为KYC_SETTING会回调到该handler: CallbackType.of("KYC_SETTING")
+         *注册bdCode+functionName回调，当执行的交易functionName为KYC_SETTING，bdCode为systemBD 会回调到该handler: CallbackType.of("KYC_SETTING","systemBD")
+         *注册bdCode+functionName回调，当执行的交易functionName为KYC_SETTING，bdCode为systemBD 会回调到该handler: CallbackType.of("KYC_SETTING","systemBD")
+         *注册bdCode+functionName+version回调，当执行的交易functionName为KYC_SETTING，bdCode为systemBD ,version为4.0时会
+         * 回调到该handler: CallbackType.of("KYC_SETTING","systemBD","4.0.0")
+         */
+            return new CallbackType[]{CallbackType.of("*")};
+        }
+    
+        @Override public void handle(TransactionPO transactionPO) {
+            log.info("all call back invoked transactionPO:{}",transactionPO);
+        }
+    }
+```
+

@@ -596,7 +596,7 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | code      | `string` | 32     | Y    | Y        | BD编号（唯一）                      |
 | name      | `string` | 64     | Y    | Y        | BD名称                      |
-| bdType    | `string` | 32     | Y    | Y        | BD类型（/system/contract/asserts）                      |
+| bdType    | `string` | 32     | Y    | Y        | BD类型（/system/contract/assets）                      |
 | desc      | `string` | 1024     | N    | Y        | 描述                      |
 | functions | `json[]` |      | Y    | Y        | bd定义function (字符串拆分逗号分隔拼接)                     |
 | initPermission | `string` | 64     | Y    | Y        | 初始化BD的业务需要permission                      |
@@ -610,7 +610,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | desc           | `string` | 256     | N    | Y        | function描述                     |
 | execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该function已经存在于链上                      |
 | execPolicy     | `string` | 32     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
-| methodSign     | `string` | 64     | Y    | Y        | 如果dbType类型为(contract/asserts),则为方法签名                      |
+| methodSign     | `string` | 64     | Y    | Y        | 如果dbType类型为(contract/assets),则为方法签名                      |
 | name           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
 | type           | `string` | 64     | Y    | Y        | (SystemAction/Contract/ContractQuery)             |
 
@@ -625,7 +625,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 ```json tab="请求实例"
 {
 	"bdCode":"SystemBD",
-	"bdType":"asserts",
+	"bdType":"assets",
 	"bdVersion":"1.0",
 	"code":"CBD_SC_61418",
 	"desc":null,
@@ -715,7 +715,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| bdType | `string` | 32     | Y    | Y        | bd类型(system/contract/asserts)                      |
+| bdType | `string` | 32     | Y    | Y        | bd类型(system/contract/assets)                      |
 | code | `string` | 32     | Y    | Y        | BD的code，唯一                     |
 | desc | `string` | 1024     | Y    | Y        | 描述                     |
 | functions | `JSONArray` | 4082     | Y    | Y        | bd定义的支持的function申明|
@@ -733,7 +733,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 {
 	"data":[
 		{
-			"bdType":"asserts",
+			"bdType":"assets",
 			"bdVersion":"1.0",
 			"code":"CBD_SC_87716",
 			"createTime":1576152885920,
