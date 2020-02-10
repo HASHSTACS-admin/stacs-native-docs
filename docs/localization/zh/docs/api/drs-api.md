@@ -367,7 +367,7 @@
 - 接口描述：DRS收到上链成功的交易时，回调到dapp，dapp需要实现回调接口，实现`supportType`和`handle`方法
 - 接口地址：`io.stacs.nav.dapp.core.callback.ITxCallbackHandler`
 example
-```
+```java
     @Component @Slf4j
     public class CustomerHandler implements ITxCallbackHandler {
         @Override public CallbackType[] supportType() {
