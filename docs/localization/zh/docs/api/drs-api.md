@@ -288,7 +288,7 @@
 | submitterSign           | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | methodName     | `String`        |          | Y    | 合约构造方法    
-| args           | `Object[]`      |          | Y    | 合约参数    
+| args           | `Object[]`      |          | Y    | 合约参数  方法执行入参参数，（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）  
 | code           | `String `       |          | Y    | 合约代码   
 | bizData        | `JsonObject`    |          | N    | 业务数据json    
 
@@ -309,7 +309,7 @@
 | submitterSign           | `String`        | 64       | Y    | 签名                              
 | bdCode         | `String`        |          | Y    | BD code                    
 | methodName     | `String`        |          | Y    | 合约方法    
-| args           | `Object[]`      |          | Y    | 合约参数    
+| args           | `Object[]`      |          | Y    | 合约参数方法执行入参参数，（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）    
 | bizData        | `JsonObject`    |          | N    | 业务数据json    
 
 #### 存证交易

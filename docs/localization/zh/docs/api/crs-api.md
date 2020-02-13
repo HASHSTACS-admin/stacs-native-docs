@@ -853,7 +853,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | extension       | `string`   | 1024     | N    | Y        | 扩展属性                   |
 | contractor      | `string`   |          | Y    | N        | 合约构造器(函数)名         |
 | sourceCode      | `string`   |          | Y    | N        | 合约代码                   |
-| initArgs        | `object[]` |          | Y    | N        | 合约构造入参               |
+| initArgs        | `object[]` |          | Y    | N        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
 
 - 响应参数：
 
@@ -909,7 +909,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | :---------:    | --------     | -------- | ---- | -------- | :---------------------------- |
 | value          | `bigDecimal` |      | Y    | Y        | 转入合约金额(为null)                      |
 | methodSignature| `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
-| args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接）       |
+| args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）       |
 | from           | `string`     |      | Y    | Y        | 同交易提交地址                     |
 | to             | `string`     |      | Y    | Y        | 执行的合约地址                     |
 | remark         | `string`     |      | N    | Y        | 备注存证                     |
