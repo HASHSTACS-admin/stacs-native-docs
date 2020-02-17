@@ -108,7 +108,31 @@ DApp可以是普通Java工程，也可以是Spring-boot工程，只需要使用 
    若是Web项目，该项配置会被默认替换为DApp的Name，不支持自定义
 - dapp spring-boot Application类需配置包扫描路径：io.stacs.nav.dapp"
 
+### **DApp 升级**
+#### **升级文件目录说明**
+- 需在项目resources目录下建立文件名为upgrade的目录，其下含有两个子目录：DDL、DML
+- 需在DDL和DML目录下按照递增方式命名脚本文件，存放具体版本的升级脚本，如：1.sql,2.sql
+- 目录结构：
+``` 
+   
+   resources
+   │
+   └───upgrade
+   │   │
+   │   └───DDL
+   │       │   1.sql
+   │       │   2.sql
+   │       │   ...
+   │   
+   └───----DML
+           │   1.sql
+           │   2.sql
+           │   ...
+```  
 
+#### **AppStore配置说明**
+- AppStore的Json配置中增加`versionCode`字段，int类型，从0递增
+- 表示dapp的版本记录，该值在Dapp的upgrade文件下的DDL/DML下应该有与之对应的*.sql文件。
 
 [1]: dapp.md
 [2]: https://github.com/Aurorasic/stacs-native-dapp/tree/dev/dapp-sample

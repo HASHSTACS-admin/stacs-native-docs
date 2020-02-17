@@ -107,6 +107,28 @@ Dapp可以是普通java工程，也可以是spring-boot工程，只需要使用 
 - webContextPath   
    若是web项目，需指定其自己的contextPath，注意：安装时该取值如果跟已有的重名，则会导致启动失败。
 
+### **DApp 升级**
+#### **升级文件目录说明**
+- 需在项目resources目录下建立文件名为upgrade的目录，其下含有两个子目录：DDL、DML
+- 需在DDL和DML目录下按照递增方式命名脚本文件，存放具体版本的升级脚本，如：1.sql,2.sql
+- 目录结构：
+``` 
+   
+   resources
+   │
+   └───upgrade
+   │   │
+   │   └───DDL
+   │       │   1.sql
+   │       │   2.sql
+   │       │   ...
+   │   
+   └───----DML
+           │   1.sql
+           │   2.sql
+           │   ...
+```  
+
 ### Sample
 
  [Stacs-Dapp-Sample][2]
