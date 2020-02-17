@@ -128,6 +128,9 @@ Dapp可以是普通java工程，也可以是spring-boot工程，只需要使用 
            │   2.sql
            │   ...
 ```  
+#### **AppStore配置说明**
+- AppStore的Json配置中增加`versionCode`字段，int类型，从0递增
+- 表示dapp的版本记录，该值在Dapp的upgrade文件下的DDL/DML下应该有与之对应的*.sql文件。
 
 ### Sample
 
