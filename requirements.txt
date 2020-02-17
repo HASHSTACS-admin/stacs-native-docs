@@ -1,5 +1,4 @@
-pip>=20.0.2
-markdown>=3.2
+Markdown
 pymdown-extensions
 mkdocs>=1.0.4
 mkdocs-material
