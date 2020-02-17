@@ -1,4 +1,4 @@
-pip install --upgrade pip
-markdown>=3.2
+pip>=20.0.2
+pymdown-extensions
 mkdocs>=1.0.4
 mkdocs-material
