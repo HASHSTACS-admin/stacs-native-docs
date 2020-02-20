@@ -12,7 +12,7 @@ native的智能合约基于以太坊`EVM`模块开发，并对其做了升级优
 
    + eq 等于表达式，当表达式为"eq(countries,'AUSTRALIA')" ,KYC:{"countries":"AUSTRALIA"}验证成功；
    + not 不等于表达式 当表达式为"not(countries,'AUSTRALIA')" ,KYC:{"countries":"AUSTRALIA"}验证失败；
-   + || 表达式连接符，表示或关系"eq(countries,'AUSTRALIA') || eq(countries,'CHAIN')" ,KYC:{"countries":"AUSTRALIA"}验证成功
+   + || 表达式连接符，表示或关系"eq(countries,'AUSTRALIA') || eq(countries,'CHINA')" ,KYC:{"countries":"AUSTRALIA"}验证成功
    + && 表达式连接符，表示且关系多个条件必须满足"eq(countries,'AUSTRALIA') && eq(age,'10')" ,KYC:{"countries":"AUSTRALIA"}验证失败
 
   
@@ -50,13 +50,14 @@ native的智能合约基于以太坊`EVM`模块开发，并对其做了升级优
 
 ###  合约调用合约方法参数定义安全规范
 
-  如果合约A中的`sayHello`调用合约`getResult(bool result)`方法，那么合约A的`sayHello`方法的参数列表开始必须满足从合约B的参数列表
+  如果合约A中的`sayHello(bool result, uint256 a, uint256 b, address add)`调用合约B`getResult`方法，那么合约B的`getResult`方法的参数列表必须属于合约A
+  `sayHello`参数列表子项
 
-  `sayHello(bool result, uint256 a, uint256 b, address add) #合法`
+  `getResult(bool result, uint256 a, uint256 b, address add) #合法`
 
-  `sayHello(bool result, address add) #合法`
+  `getResult(bool result, address add) #合法`
 
-  `sayHello(uint256 result, address add) #不合法合法`
+  `getResult(uint256 result, address add) #不合法合法`
 
 实现原理 :
 

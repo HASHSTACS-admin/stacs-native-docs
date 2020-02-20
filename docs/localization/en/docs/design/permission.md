@@ -48,9 +48,9 @@ identityType：`Identity`类型1. user 2. domain 3. node
       BigInteger VIP = new BigInteger("2").pow(1);
       BigInteger AIP = new BigInteger("2").pow(2);
 
-      //对转换的permission求余
+      //对转换的permission求或运算(|)
        BigInteger d= DEFAULT.or(VIP).or(AIP);
-      //对求余的permission再次转换为32进制，最终Identity的permission记为7
+      //对求或运算的permission再次转换为32进制，最终Identity的permission记为7
       System.out.println(d.toString(32));
 ~~~
 
