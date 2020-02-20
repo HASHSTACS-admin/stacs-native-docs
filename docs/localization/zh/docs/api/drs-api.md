@@ -72,7 +72,7 @@
 | -------------  | -------------   | -------- | ---- | -------------------------------- |
 | code           | `String`        | 64       | Y    | bd code                                     
 | name           | `String`        | 40       | Y    | bd name                                    
-| bdType         | `String`        | 32       | N    | 类型 system:系统类型bd;contract:合约类型;assets:合约资产类型bd,:如果bdType为assets，functions必须包含(uint256) balanceOf(address)和(uint256) balanceOf(address) 
+| bdType         | `String`        | 32       | N    | 类型 system:系统类型bd \n contract:合约类型;assets:合约资产类型bd,:如果bdType为assets，functions必须包含(uint256) balanceOf(address)和(uint256) balanceOf(address) 
 | desc           | `String`        | 18       | N    | 描述                              
 | initPermission | `String`        | 64       | Y    | 权限                                        
 | initPolicy     | `String`        |          | Y    | policy                                
