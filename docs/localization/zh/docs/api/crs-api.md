@@ -18,7 +18,7 @@
 - `Identity`:
 
 ## 系统内置function
-系统内置BD为SystemBD
+系统内置BD为SystemBD [系统BD列表](api/SystemBd.md)
 
 ## 系统内置Permission
 
