@@ -17,12 +17,51 @@
 - `BD`:
 - `Identity`:
 
-## 系统内置function
-系统内置BD为SystemBD [系统BD列表](SystemBd.md)
+## 系统内置function表
+| functionName      	| execPermission | execPolicy         	| 备注 |
+| :-----                |  :-----        |  :-----             |  :-----            |  
+| IDENTITY_SETTING  	| DEFAULT        | IDENTITY_SETTING   	|给地址做身份认证      |
+| BD_PUBLISH  			| DEFAULT        | BD_PUBLISH   	  	|发布BD      |
+| PERMISSION_REGISTER  	| DEFAULT        | PERMISSION_REGISTER  |注册Permission      |
+| AUTHORIZE_PERMISSION  | DEFAULT        | AUTHORIZE_PERMISSION |给地址添加Permission      |
+| CANCEL_PERMISSION  	| RS        	 | CANCEL_PERMISSION   	|取消地址的Permission      |
+| REGISTER_POLICY  		| DEFAULT        | REGISTER_POLICY   	|注册Policy      |
+| MODIFY_POLICY  		| DEFAULT        | MODIFY_POLICY   	    |修改Policy      |
+| REGISTER_RS  			| DEFAULT        | REGISTER_RS   	    |注册为RS节点      |
+| CANCEL_RS  			| RS        	 | CANCEL_RS   	  		|取消RS节点      |
+| CA_AUTH  				| DEFAULT        | CA_AUTH   	  		|注册CA      |
+| CA_CANCEL  			| RS        	 | CA_CANCEL   	  		|取消CA      |
+| CA_UPDATE  			| RS        	 | CA_UPDATE   	  		|更新CA      |
+| NODE_JOIN  			| DEFAULT        | NODE_JOIN   	  		|节点加入      |
+| NODE_LEAVE  			| RS        	 | NODE_LEAVE   	  	|节点离开      |
+| SYSTEM_PROPERTY  		| RS        	 | SYSTEM_PROPERTY   	|设置系统属性      |
+| IDENTITY_BD_MANAGE  	| DEFAULT        | IDENTITY_BD_MANAGE  	|冻结Identity使用BD      |
+| KYC_SETTING  			| DEFAULT        | KYC_SETTING   	  	|为Identity设置KYC      |
+| SET_FEE_CONFIG  		| RS        	 | SET_FEE_CONFIG   	|设置费用      |
+| SET_FEE_RULE  		| RS        	 | SET_FEE_RULE   	  	|设置费用规则      |
+| SAVE_ATTESTATION  	| DEFAULT        | SAVE_ATTESTATION   	|存证交易      |
+| BUILD_SNAPSHOT  		| DEFAULT        | BUILD_SNAPSHOT   	|快照交易      |
 
-## 系统内置Permission
+## 系统内置Permission表
+| Permission      	    | 备注 |
+| :-----                |  :-----        |  
+| DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       | 
+| RS  			        | 系统节点初始化时RS节点拥有该Permission        | 
 
-## 系统内置Policy
+## 系统内置Policy表
+| Policy       	    |投票方式            |决议方式            |备注                |
+| :-----            |  :-----           |  :-----           |:-----           |
+|REGISTER_POLICY    |  ASYNC            |FULL_VOTE          |  |
+|MODIFY_POLICY    |  ASYNC            |FULL_VOTE          |  |
+|REGISTER_RS        |  ASYNC            |FULL_VOTE          |  |
+|CANCEL_RS        |  ASYNC            |FULL_VOTE          |  |
+|CA_AUTH        |  ASYNC            |FULL_VOTE          |  |
+|CA_UPDATE        |  ASYNC            |FULL_VOTE          |  |
+|CA_CANCEL        |  ASYNC            |FULL_VOTE          |  |
+|NODE_JOIN        |  ASYNC            |FULL_VOTE          |  |
+|NODE_LEAVE        |  ASYNC            |FULL_VOTE          |  |
+|SET_FEE_CONFIG        |  ASYNC            |FULL_VOTE      |    |
+
 
 ## 接口规范
 
@@ -86,13 +125,41 @@
 
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
-|     txId      | `string` | 64       | Y    |    Y     | 请求Id                                                       |
+|     txId      | `string` | 64       | Y    |    Y     | 请求Id    
+|    bdCode     | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode    |
+| functionName  | `string` | 32        | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CREATE_CONTRACT` |
 |   submitter   | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
-| submitterSign | `string` | 64       | Y    |    Y     | 提交者签名                                                   |
-|    bdCode     | `string` | 64       | Y    |    Y     |                                                              |
+|   actionDatas   | `string` |        | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+|   version     | `string` | 40       | Y    |    Y     | 交易版本号                                               |
+|extensionDatas | `string` | 1024     | Y    |    Y     | 交易存证新消息                                               |
+| maxAllowFee   | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
 |  feeCurrency  | `string` | 32       | N    |    Y     | 手续费币种                                                   |
-| feeMaxAmount  | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
-| functionName  | `string` |          | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CREATE_CONTRACT` |
+| submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |                                                            |
+
+## 签名方式
+### 交易签名值拼接方式 
+```java
+public static final String SEPARATOR = "|";
+public static final String getSignValue(Transaction tx){
+      StringBuilder sb = new StringBuilder();
+      sb.append(tx.getTxId()).append(SEPARATOR)
+          .append(tx.getBdCode()).append(SEPARATOR)
+          .append(tx.getFunctionName()).append(SEPARATOR)
+          .append(tx.getSubmitter()).append(SEPARATOR)
+          .append(tx.getActionDatas()).append(SEPARATOR)
+          .append(tx.getVersion());
+      if(StringUtils.isNotEmpty(tx.getExtensionDatas())){
+          sb.append(SEPARATOR).append(tx.getExtensionDatas());
+      }   if(StringUtils.isNotEmpty(tx.getMaxAllowFee())){
+          sb.append(SEPARATOR).append(tx.getMaxAllowFee());
+      }
+      if(StringUtils.isNotEmpty(tx.getFeeCurrency())){
+          sb.append(SEPARATOR).append(tx.getFeeCurrency());
+      }
+      log.info("get sign source  value :{}",sb.toString());
+      return sb.toString();
+  }
+```
 
 > 相比非系统级，少了`execPolicyId`字段，接口中会设定固定的`execPolicyId`
 
