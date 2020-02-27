@@ -1,5 +1,6 @@
 ## 系统内置SystemBD表
 | functionName      	| execPermission | execPolicy         	| 备注 |
+| :-----                |  :-----        |  :-----             |  :-----            |  
 | IDENTITY_SETTING  	| DEFAULT        | IDENTITY_SETTING   	|给地址做身份认证      |
 | BD_PUBLISH  			| DEFAULT        | BD_PUBLISH   	  	|发布BD      |
 | PERMISSION_REGISTER  	| DEFAULT        | PERMISSION_REGISTER  |注册Permission      |
