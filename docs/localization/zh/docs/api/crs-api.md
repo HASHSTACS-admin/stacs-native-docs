@@ -599,10 +599,10 @@
 ##### BD发布
 - [x] 开放
 - 接口描述：  功能：发布自定义`BD`
-    1：所有类型的交易都需要指定`bdCode`,系统内置`BD`参考()；
-    2：发布BD使用用到的`Policy`和`execPermission`，链上必须存在（参考`注册Permission`和`注册Policy`功能）
-    3：如果发布`bdType`类型为`assets`或`contract`,那么后续发布的合约必须满足该`BD`的`functions`规范；
-    4：如果发布的`bdType`为`system`,那么`BD`的`functions`中定义的`name`只能是系统内置的`function`;
+   1. 所有类型的交易都需要指定`bdCode`,系统内置`BD`参考()；
+   2. 发布BD使用用到的`Policy`和`execPermission`，链上必须存在（参考`注册Permission`和`注册Policy`功能）
+   3. 如果发布`bdType`类型为`assets`或`contract`,那么后续发布的合约必须满足该`BD`的`functions`规范；
+   4. 如果发布的`bdType`为`system`,那么`BD`的`functions`中定义的`name`只能是系统内置的`function`;
 - functionName：`BD_PUBLISH`
 - 请求参数： 
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
