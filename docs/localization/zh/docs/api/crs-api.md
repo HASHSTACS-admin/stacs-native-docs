@@ -194,13 +194,10 @@ public static final String getSignValue(Transaction tx){
 
 >   `Domain`管理旗下`RS`节点的接口，让节点可以**注册**到`Domain`中参与交易处理，也可以**移除**`domain`下指定节点
 
-#### 注册RS
+#### <a id="REGISTER_RS">注册RS
 - [x] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
-- 请求地址：`POST`：`/rs/register`
-- 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +snapshotId + functionName 
+- functionName：`REGISTER_RS`
 - 请求参数： 
 
   |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
@@ -588,15 +585,11 @@ public static final String getSignValue(Transaction tx){
 } 
 ```
 
-##### Policy更新
+##### <id ="MODIFY_POLICY">Policy更新</a>
 - [x] 开放
 - 接口描述： 修改Policy
-- 请求地址：`POST`:`/policy/modify`
+- functionName：`MODIFY_POLICY`
 - 请求参数：
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +policyId+policyName+votePattern+desc+[verifyNum+mustDomainIds+expression]+domainIds+requireAuthIds+functionName 
-
-
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
@@ -658,17 +651,6 @@ public static final String getSignValue(Transaction tx){
 ```
 
 ## 非系统级接口
-
-### 交易类接口
-|     接口functionName        | 说明             |
-| :-----------:              | ---------------- |
-| BD_PUBLISH[BD_PUBLISH]                 |发布自定义`BD`     |
-| BD_PUBLISH                 |发布自定义`BD`     |
-| BD_PUBLISH                 |发布自定义`BD`     |
-| BD_PUBLISH                 |发布自定义`BD`     |
-| BD_PUBLISH                 |发布自定义`BD`     |
-| BD_PUBLISH                 |发布自定义`BD`     |
-
 
 #### 交易类接口通用参数列表
 
@@ -852,14 +834,13 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 ```
 
 #### 快照
-##### 快照发布
+##### <a id="BUILD_SNAPSHOT">快照发布</a>
 
 - [x] 开放
 - 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
 （快照发布使用的是存证的execPolicyId和functionName）
-- 请求地址：`POST`:`/snapshot/build`
+- functionName：`BUILD_SNAPSHOT`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount+ snapshotId + functionName 
  
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -935,15 +916,12 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
        
 #### 智能合约
 
-##### 部署
+##### <a id="CONTRACT_CREATION">合约部署</a>
 
 - [x] 开放
 - 接口描述：用户发布自定义合约实现业务
-- 请求地址：`POST`:`/contract/deploy`
+- functionName：`CONTRACT_CREATION`
 - 请求参数：
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount+ fromAddr + contractAddress +  name + symbol + extension + functionName
-
-
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
 | fromAddr        | `string`   | 40       | Y    | Y        | 提交者地址                 |
@@ -998,13 +976,11 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 } 
 ```
 
-##### 执行
+##### <a id="CONTRACT_INVOKE">合约执行</a>
 - [x] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
-- 请求地址：`POST`:`/contract/invoke`
+- functionName：`${functionName}`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount+ methodSignature + from +  to + args + functionName
-
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:    | --------     | -------- | ---- | -------- | :---------------------------- |
 | value          | `bigDecimal` |      | Y    | Y        | 转入合约金额(为null)                      |
@@ -1096,11 +1072,11 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 #### Permission
 
-##### 新增Permission
+##### <a id="PERMISSION_REGISTER"> 新增Permission </a>
 
 - [x] 开放
 - 接口描述：  添加permission,Identity被授予permission后才能执行该permission所定义交易
-- 请求地址：`POST`:`/permission/register`
+- functionName：`PERMISSION_REGISTER`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -1203,13 +1179,12 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 #### Identity
 
-##### Identity设置
+##### <a id="IDENTITY_SETTING">Identity设置</a>
 
 - [x] 开放
 - 接口描述：  设置Identity(此接口不能设置KYC信息)
-- 请求地址：`POST`:`/identity/setting`
+- functionName：`IDENTITY_SETTING`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount + identityType + property + address + functionName
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -1252,14 +1227,12 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 } 
 ```
 
-##### Identity授权
+##### <a id="AUTHORIZE_PERMISSION">Identity授权Permission</a>
 
 - [x] 开放
 - 接口描述：  给Identity赋予已入链的permission
-- 请求地址：`POST`:`/permission/authorize`
+- functionName：`AUTHORIZE_PERMISSION`
 - 请求参数
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount +identityAddress+ identityType + permissionNames + functionName
-
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
 | identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
@@ -1298,11 +1271,11 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 } 
 ```
 
-##### identity撤销权限
+##### <a id="CANCEL_PERMISSION">identity撤销Permission</a>
 
 - [x] 开放
 - 接口描述：  撤销Identity已被授权的permission
-- 请求地址：`POST`:`/permission/cancel`
+- functionName：`CANCEL_PERMISSION`
 - 请求参数： 
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
 +identityAddress + permissionNames + functionName
@@ -1342,15 +1315,12 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 	"respCode":"000000"
 } 
 ```
-##### Identity冻结/解冻
+##### <a id="IDENTITY_BD_MANAGE">Identity冻结/解冻BD</a>
 
 - [x] 开放
 - 接口描述：冻结某个bdCode，冻结成功后identity无法执行该bdCode的所有function 
-- 请求地址：`POST`:`/identity/bdManage`
+- functionName：`IDENTITY_BD_MANAGE`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
-+targetAddress + actionType +BDCodes+ functionName
-
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
 | targetAddress | `string`   | 40       | Y    | Y        | 目标identity地址              |
@@ -1520,15 +1490,12 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 } 
 ```
 
-##### KYC设置
+##### <a id="KYC_SETTING">KYC设置</KYC_SETTING>
 
 - [x] 开放
 - 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息;identityType会覆盖之前identityType
-- 请求地址：`POST`:`/kyc/setting`
+- functionName：`KYC_SETTING`
 - 请求参数：
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
-+ identityAddress + KYC +identityType+ functionName
-
 |      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                            |
 | :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
 | identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
@@ -1567,15 +1534,12 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 } 
 ```
 
-#### 存证
+#### <a id="SAVE_ATTESTATION">存证</a>
 
 - [x] 开放
 - 接口描述：  保存存证信息入链
-- 请求地址：`POST`:`/attestation/save`
+- functionName：`SAVE_ATTESTATION`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
-+attestation+functionName
-
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
