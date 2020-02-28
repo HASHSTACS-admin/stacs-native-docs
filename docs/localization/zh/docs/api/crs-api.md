@@ -1,3 +1,7 @@
+……
+[TOC]
+……
+
 # CRS接口文档
 
 接口分为区分系统级和非系统级接口， 系统级接口仅供内部RS节点调用，对外接口均为非系统级接口。
@@ -649,6 +653,15 @@ public static final String getSignValue(Transaction tx){
 ## 非系统级接口
 
 ### 交易类接口
+|     接口functionName        | 说明             |
+| :-----------:              | ---------------- |
+| BD_PUBLISH[BD_PUBLISH]                 |发布自定义`BD`     |
+| BD_PUBLISH                 |发布自定义`BD`     |
+| BD_PUBLISH                 |发布自定义`BD`     |
+| BD_PUBLISH                 |发布自定义`BD`     |
+| BD_PUBLISH                 |发布自定义`BD`     |
+| BD_PUBLISH                 |发布自定义`BD`     |
+
 
 #### 交易类接口通用参数列表
 
@@ -661,7 +674,6 @@ public static final String getSignValue(Transaction tx){
 | bdCode | `string` | 64       | Y    | Y        |        |
 |  feeCurrency  | `string` | 32       | N    | Y        | 手续费币种       |
 | feeMaxAmount  | `string` | 18       | N    | Y        | 最大允许的手续费 |
-#### BD
 
 ##### BD发布
 - [x] 开放
@@ -672,8 +684,6 @@ public static final String getSignValue(Transaction tx){
    4. 如果发布的`bdType`为`system`,那么`BD`的`functions`中定义的`name`只能是系统内置的`function`;
 - functionName：`BD_PUBLISH`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +code+name+bdType+desc+initPermission + initPolicy + bdVersion + functions + functionName 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
