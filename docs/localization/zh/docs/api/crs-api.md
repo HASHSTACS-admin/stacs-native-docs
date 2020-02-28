@@ -5,9 +5,29 @@
 请求数据采用AES256加密，并会将加密数据采用ECC签名，具体参见接口规范
 
 ## 接口列表
-| 接口function                   | 说明 |
-| :-----                           | :-----    |
-|<a href="#BD_PUBLISH">BD_PUBLISH</a>  |发布BD|
+| 接口function                                              | 说明 |
+| :-----                                                    | :-----    |
+|<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |发布BD|
+|<a href="#REGISTER_POLICY">REGISTER_POLICY</a>             |注册Policy|
+|<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |修改Policy|
+|<a href="#MODIFY_POLICY">MODIFY_POLICY</a>                 |给地址做身份认证|
+|<a href="#PERMISSION_REGISTER">PERMISSION_REGISTER</a>     |注册Permission|
+|<a href="#AUTHORIZE_PERMISSION">AUTHORIZE_PERMISSION</a>   |给地址添加Permission|
+|<a href="#CANCEL_PERMISSION">CANCEL_PERMISSION</a>         |取消地址的Permission|
+|<a href="#KYC_SETTING">KYC_SETTING</a>                     |为Identity设置KYC|
+|<a href="#IDENTITY_BD_MANAGE">IDENTITY_BD_MANAGE</a>       |冻结Identity使用BD|
+|<a href="#SAVE_ATTESTATION">SAVE_ATTESTATION</a>           |存证交易|
+|<a href="#BUILD_SNAPSHOT">BUILD_SNAPSHOT</a>               |快照交易|
+|<a href="#CA_AUTH">CA_AUTH</a>                             |注册CA|
+|<a href="#CA_CANCEL">CA_CANCEL</a>                         |取消CA|
+|<a href="#CA_UPDATE">CA_UPDATE</a>                         |更新CA|
+|<a href="#NODE_JOIN">NODE_JOIN</a>                         |节点加入|
+|<a href="#REGISTER_RS">REGISTER_RS</a>                     |注册为RS节点|
+|<a href="#CANCEL_RS">CANCEL_RS</a>                         |取消RS节点|
+|<a href="#SYSTEM_PROPERTY">SYSTEM_PROPERTY</a>             |设置系统属性|
+|<a href="#SET_FEE_CONFIG">SET_FEE_CONFIG</a>               |设置费用|
+|<a href="#SET_FEE_RULE">SET_FEE_RULE</a>                   |设置费用规则|
+
 
 
 
@@ -206,13 +226,13 @@ public static final String getSignValue(Transaction tx){
 
 
 
-#### 移除RS
+#### <a id="CANCEL_RS"/>移除RS</a>
 
 - - [ ] 开放
 
 - 接口描述：  移除已注册的 RS
 
-- 请求地址：`POST`：`/rs/cancel`
+- functionName：`CANCEL_RS`
 
 - 请求参数： 
 
@@ -229,18 +249,13 @@ public static final String getSignValue(Transaction tx){
 
 ### CA
 
-#### CA注册
+#### <a id="CA_AUTH"/>CA注册</a>
 
 - [x] 开放
 - 接口描述： 将CA上链
-- 请求地址：`POST`：`/ca/auth`
+- functionName：`CA_AUTH`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +caList(循环caList拼接顺序 period+domainId+user+usage+pubKey,period格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时)  
 
-- 请求参数：
-
-|    属性        | 类型     | 最大长度 | 必填     | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
 | txId          | `string` |        | Y       | Y        | 交易id                      |
 | caList        | `json[]` |        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
@@ -300,13 +315,10 @@ public static final String getSignValue(Transaction tx){
 {"data":null,"msg":"Success","respCode":"000000","success":true}  
 ```
 
-#### CA更新
+#### <a id="CA_UPDATE"/>CA更新</a>
 - [x] 开放
 - 接口描述： 更新CA
-- 请求地址：`POST`：`ca/update`
-- 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +caList(循环caList拼接顺序 period+domainId+user+usage+pubKey,period格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时)  
+- functionName：`CA_UPDATE`
 
 - 请求参数：
 
@@ -353,13 +365,11 @@ public static final String getSignValue(Transaction tx){
 } 
 ```
 
-#### CA撤销
+#### <a id="CA_CANCEL">CA撤销</a>
 - [x] 开放
 - 接口描述： 撤销CA，设置CA为不可用
-- 请求地址：`POST`:`/ca/cancel`
+- functionName：`CA_CANCEL`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +domainId+user+usage+pubKey
 
 - 请求参数：
 
@@ -407,14 +417,11 @@ public static final String getSignValue(Transaction tx){
 
 ### 节点
 
-#### 节点加入
+#### <a id="NODE_JOIN">节点加入</a>
 - [x] 开放
 - 接口描述： 节点加入共识网络
-- 请求地址：`POST`：`/node/join`
+- functionName：`NODE_JOIN`
 - 请求参数：
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +nodeName+domainId+signValue+pubKey+functionName 
-
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -461,15 +468,12 @@ public static final String getSignValue(Transaction tx){
 
 
 
-#### 节点离开
+#### <a id="NODE_LEAVE">节点离开</aa>
 
 - [x] 开放
 - 接口描述： 节点离开
-- 请求地址：`POST`：`/node/level`
+- functionName：`NODE_LEAVE`
 - 请求参数：
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +nodeName+domainId+signValue+pubKey+functionName 
-
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -514,11 +518,11 @@ public static final String getSignValue(Transaction tx){
 } 
 ```
 
-##### Policy注册
+##### <a id="REGISTER_POLICY">Policy注册</a>
 
 - [x] 开放
 - 接口描述： 注册Policy
-- 请求地址：`POST`:`/policy/register`
+- functionName：`REGISTER_POLICY`
 - 请求参数：
 - 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
  +policyId+policyName+votePattern+desc+[verifyNum+mustDomainIds+expression]+domainIds+requireAuthIds+functionName 
