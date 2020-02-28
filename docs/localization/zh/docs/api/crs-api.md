@@ -1,12 +1,15 @@
-……
-[TOC]
-……
-
 # CRS接口文档
 
 接口分为区分系统级和非系统级接口， 系统级接口仅供内部RS节点调用，对外接口均为非系统级接口。
 非系统级接口又分为查询类接口和交易类接口，查询类接口采用GET请求，接口无安全性设计考虑；交易类接口采用POST请求，
 请求数据采用AES256加密，并会将加密数据采用ECC签名，具体参见接口规范
+
+## 接口列表
+| 接口function                   | 说明 |
+| :-----                           | :-----    |
+|<a href="#head">BD_PUBLISH</>  |发布BD|
+
+
 
 ## 术语
 - `merchantId`: 商户Id, 用于区分不同的接入方
@@ -675,7 +678,7 @@ public static final String getSignValue(Transaction tx){
 |  feeCurrency  | `string` | 32       | N    | Y        | 手续费币种       |
 | feeMaxAmount  | `string` | 18       | N    | Y        | 最大允许的手续费 |
 
-##### BD发布
+##### <a id="BD_PUBLISH">BD发布</a>
 - [x] 开放
 - 接口描述：  功能：发布自定义`BD`
    1. 所有类型的交易都需要指定`bdCode`,系统内置`BD`参考()；
