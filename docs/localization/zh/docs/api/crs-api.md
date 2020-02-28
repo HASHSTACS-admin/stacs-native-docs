@@ -7,7 +7,7 @@
 ## 接口列表
 | 接口function                   | 说明 |
 | :-----                           | :-----    |
-|<a href="#head">BD_PUBLISH</>  |发布BD|
+|<a href="#BD_PUBLISH">BD_PUBLISH</a>  |发布BD|
 
 
 
