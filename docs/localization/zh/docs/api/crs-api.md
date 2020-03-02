@@ -104,7 +104,7 @@
     
     *   `POST`:         
         `Content-Type: application/json`  
-        `merchantId:${merchantId}`: CRS分配的
+        `merchantId:{merchantId}`: CRS分配的
         
     
 - Http响应状态码 200
@@ -117,8 +117,8 @@
     
       |     属性     | 类型     | 说明                                                         |
       | :----------: | -------- | ------------------------------------------------------------ |
-      | requestParam | `string` | 请求数据，将原始请求数据采用${merchantAesKey}加密后使用BASE64编码 |
-      |  signature   | `string` | 商户签名，将原始请求数据采用${merchantPriKey}签名后的HEX格式数据 |
+      | requestParam | `string` | 请求数据，将原始请求数据采用{merchantAesKey}加密后使用BASE64编码 |
+      |  signature   | `string` | 商户签名，将原始请求数据采用{merchantPriKey}签名后的HEX格式数据 |
     
     - 响应数据格式
     
@@ -126,8 +126,8 @@
       | :-------: | -------- | ------------------------------------------------------------ |
       | respCode  | `string` | 返回状态码，000000为成功，其他为失败                         |
       |    msg    | `string` | 返回状态描述                                                 |
-      |   data    | `string` | 响应数据，将原始响应数据采用${merchantAesKey}加密后使用BASE64编码 |
-      | signature | `string` | CRS签名，将原始响应数据采用${crsPriKey}签名后的HEX格式数据   |
+      |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码 |
+      | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
     
 
 
@@ -259,6 +259,7 @@ public static final String getSignValue(Transaction tx){
 - functionName：`CA_AUTH`
 - 请求参数： 
 
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
 | txId          | `string` |        | Y       | Y        | 交易id                      |
 | caList        | `json[]` |        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
@@ -540,6 +541,8 @@ public static final String getSignValue(Transaction tx){
 | assignMeta | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
 | expression | `string` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
 | mustDomainIds | `list<string>` |          | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
@@ -588,7 +591,7 @@ public static final String getSignValue(Transaction tx){
 } 
 ```
 
-##### <id ="MODIFY_POLICY">Policy更新</a>
+##### <a id ="MODIFY_POLICY">Policy更新</a>
 - [x] 开放
 - 接口描述： 修改Policy
 - functionName：`MODIFY_POLICY`
@@ -606,6 +609,8 @@ public static final String getSignValue(Transaction tx){
 | assignMeta | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
 | expression | `string` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
 | mustDomainIds | `list<string>` |          | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
@@ -885,7 +890,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 - [x] 开放
 - 接口描述：  
-- 请求地址：`GET`:`/snapshot/query?txId=${txId}`
+- 请求地址：`GET`:`/snapshot/query?txId={txId}`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -984,7 +989,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 ##### <a id="CONTRACT_INVOKE">合约执行</a>
 - [x] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
-- functionName：`${functionName}`
+- functionName：`{functionName}`
 - 请求参数： 
 
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -1451,7 +1456,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 - [x] 开放
 - 接口描述：查询Identity的详细信息  
-- 请求地址：`GET`:`identity/query?userAddress=${userAddress}`
+- 请求地址：`GET`:`identity/query?userAddress={userAddress}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
