@@ -82,6 +82,7 @@
 - policyData结构
 
 |    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId           | `string`   | 64       | Y    |        | 交易原始内容                      |
 | policyVersion      | `string`   | 64       | Y    |        | policy投票内容                    |
 | actionType         | `string`   | 64       | Y    |        | methodSign                      |
