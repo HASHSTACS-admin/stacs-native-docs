@@ -4,6 +4,20 @@
 非系统级接口又分为查询类接口和交易类接口，查询类接口采用GET请求，接口无安全性设计考虑；交易类接口采用POST请求，
 请求数据采用AES256加密，并会将加密数据采用ECC签名，具体参见接口规范
 
+## 术语
+- `merchantId`: 商户Id, 用于区分不同的接入方
+- `merchantPriKey`: 商户ECC私钥，用于签名请求数据
+- `merchantPubKey`: 商户ECC公钥，用于CRS验证商户请求签名
+- `merchantAesKey`: 商户AES256格式密钥，用于加密请求数据或响应数据
+- `crsPubKey`: CRS公钥，用户商户验证响应数据签名
+- `crsPriKey`: CRS公钥，用于CRS签名响应数据
+- `Permission`:
+- `Policy`:
+- `KYC`:
+- `BD`:
+- `Identity`:
+- `{}`: 动态值表示符号
+
 ## 交易接口列表
 | 接口function                                              | 说明 |
 | :-----                                                    | :-----    |
@@ -36,20 +50,6 @@
 |<a href="query-api.md#queryTxByTxId/{txId}">queryTxByTxId/{txId}</a>             |根据txId查询交易数据|
 |<a href="query-api.md#/queryTxsByHeight/{height}">/queryTxsByHeight/{height}</a> |根据高度查询区块内所有交易数据|
 |<a href="query-api.md#/queryContract">/queryContract</a>                 |合约数据状态查询|
-
-## 术语
-- `merchantId`: 商户Id, 用于区分不同的接入方
-- `merchantPriKey`: 商户ECC私钥，用于签名请求数据
-- `merchantPubKey`: 商户ECC公钥，用于CRS验证商户请求签名
-- `merchantAesKey`: 商户AES256格式密钥，用于加密请求数据或响应数据
-- `crsPubKey`: CRS公钥，用户商户验证响应数据签名
-- `crsPriKey`: CRS公钥，用于CRS签名响应数据
-- `Permission`:
-- `Policy`:
-- `KYC`:
-- `BD`:
-- `Identity`:
-- `{}`: 动态值表示符号
 
 ## 系统内置function表
 | functionName      	| execPermission | execPolicy         	| 备注 |
@@ -95,7 +95,6 @@
 |NODE_JOIN        |  ASYNC            |FULL_VOTE          |  |
 |NODE_LEAVE        |  ASYNC            |FULL_VOTE          |  |
 |SET_FEE_CONFIG        |  ASYNC            |FULL_VOTE      |    |
-
 
 ## 接口规范
 
