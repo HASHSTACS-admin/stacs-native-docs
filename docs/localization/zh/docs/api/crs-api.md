@@ -32,10 +32,10 @@
 ## 查询接口列表
 | 接口地址                                                          | 说明 |
 | :-----                                                           | :-----    |
-|<a href="#/queryMaxHeight">/queryMaxHeight/{height}</a>              |查询当前最大区块高度|
-|<a href="#queryTxByTxId/{txId}">queryTxByTxId/{txId}</a>             |根据txId查询交易数据|
-|<a href="#/queryTxsByHeight/{height}">/queryTxsByHeight/{height}</a> |根据高度查询区块内所有交易数据|
-|<a href="#/queryContract">/queryContract</a>                 |合约数据状态查询|
+|<a href="query-api.md#/queryMaxHeight">/queryMaxHeight/{height}</a>              |查询当前最大区块高度|
+|<a href="query-api.md#queryTxByTxId/{txId}">queryTxByTxId/{txId}</a>             |根据txId查询交易数据|
+|<a href="query-api.md#/queryTxsByHeight/{height}">/queryTxsByHeight/{height}</a> |根据高度查询区块内所有交易数据|
+|<a href="query-api.md#/queryContract">/queryContract</a>                 |合约数据状态查询|
 
 ## 术语
 - `merchantId`: 商户Id, 用于区分不同的接入方
@@ -527,6 +527,7 @@ public static final String getSignValue(Transaction tx){
 - 接口描述： 注册Policy
 - functionName：`REGISTER_POLICY`
 - 请求参数：
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
@@ -592,6 +593,7 @@ public static final String getSignValue(Transaction tx){
 - 接口描述： 修改Policy
 - functionName：`MODIFY_POLICY`
 - 请求参数：
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
@@ -924,6 +926,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：用户发布自定义合约实现业务
 - functionName：`CONTRACT_CREATION`
 - 请求参数：
+
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
 | fromAddr        | `string`   | 40       | Y    | Y        | 提交者地址                 |
@@ -983,6 +986,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
 - functionName：`${functionName}`
 - 请求参数： 
+
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:    | --------     | -------- | ---- | -------- | :---------------------------- |
 | value          | `bigDecimal` |      | Y    | Y        | 转入合约金额(为null)                      |
@@ -1234,6 +1238,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：  给Identity赋予已入链的permission
 - functionName：`AUTHORIZE_PERMISSION`
 - 请求参数
+
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
 | identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
@@ -1278,6 +1283,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：  撤销Identity已被授权的permission
 - functionName：`CANCEL_PERMISSION`
 - 请求参数： 
+
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
 | identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
@@ -1319,6 +1325,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：冻结某个bdCode，冻结成功后identity无法执行该bdCode的所有function 
 - functionName：`IDENTITY_BD_MANAGE`
 - 请求参数： 
+
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
 | targetAddress | `string`   | 40       | Y    | Y        | 目标identity地址              |
@@ -1445,7 +1452,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - [x] 开放
 - 接口描述：查询Identity的详细信息  
 - 请求地址：`GET`:`identity/query?userAddress=${userAddress}`
-- 请求参数： （无需签名）
+- 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
@@ -1494,6 +1501,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息;identityType会覆盖之前identityType
 - functionName：`KYC_SETTING`
 - 请求参数：
+
 |      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                            |
 | :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
 | identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
@@ -1538,6 +1546,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：  保存存证信息入链
 - functionName：`SAVE_ATTESTATION`
 - 请求参数： 
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
@@ -1624,106 +1633,3 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明          |
 | :----------: | -------- | -------- | ---- | -------- | ------------- |
 | callBackAddr | `string` |          | Y    | Y        | 回调地址，URL |
-
-##### <a id="/queryMaxHeight">查询当前最大区块高度</a>
-- [x] 开放
-- 接口描述：  查询当前最大的区块高度
-- 请求地址：`GET`:`/queryMaxHeight`
-- 请求参数： 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| height | `long` | 64     | Y    | Y        | 当前链的最大高度                      |
-
-##### <a id="/queryTxByTxId/{txId}">根据txId查询交易数据</a>
-- [x] 开放
-- 接口描述：  查询当前最大的区块高度
-- 请求地址：`GET`:`/queryTxByTxId/{txId}`
-- 请求参数： 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| coreTx             | `json`     | 64       | Y    |        | 交易原始内容                      |
-| policyData         | `json`     | 64       | N    |        | policy投票内容(交易未上链，返回为null)                    |
-| transactionReceipt | `json`     | 64       | N    |        | 交易执行结果(交易未上链，返回为null)                      |
-| blockHeight        | `string`   | 64       | N    |        | 区块高度 (交易未上链，返回为null)                     |
-| blockTime          | `string`   | 64       | N    |        | 区块时间(交易未上链，返回为null)                      |
-
-##### <a id="/queryTxsByHeight/{height}">根据高度查询区块内所有交易数据</a>
-- [x] 开放
-- 接口描述：  根据高度查询区块内所有交易数据
-- 请求地址：`GET`:`/queryTxsByHeight/{height}`
-- 请求参数： 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| coreTx             | `json`     | 64       | Y    |        | 交易原始内容                      |
-| policyData         | `json`     | 64       | Y    |        | policy投票内容                    |
-| transactionReceipt | `json`     | 64       | Y    |        | 交易执行结果                      |
-| blockHeight        | `string`   | 64       | Y    |        | 区块高度                      |
-| blockTime          | `string`   | 64       | Y    |        | 区块时间                      |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| coreTx             | `json`     | 64       | Y    |        | 交易原始内容                      |
-| policyData         | `json`     | 64       | Y    |        | policy投票内容                    |
-| transactionReceipt | `json`     | 64       | Y    |        | 交易执行结果                      |
-| blockHeight        | `string`   | 64       | Y    |        | 区块高度                      |
-| blockTime          | `string`   | 64       | Y    |        | 区块时间                      |
-
-##### <a id="/queryContract">合约状态查询</a>
-- [x] 开放
-- 接口描述：  根据高度查询区块内所有交易数据
-- 请求地址：`POST`:`/queryContract`
-- 请求参数： 
-|    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
-| :----------------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| blockHeight        | `long`     | 64     | N    |          | 指定查询合约的区块高度，不指定使用链的最大高度|
-| address            | `string`   | 40     | Y    |          | 指定查询合约地址，需要满足地址格式|
-| methodSignature    | `string`   |        | Y    |          | 指定查询合约方法|
-| parameters         | `jsonArray`|        | N    |          | 如果查询的方法参数列表为空，可以不指定参数，需要和`methodSignature`参数列表对应|
-
-- 响应参数：
-
-|    属性             | 类型        | 最大长度  | 必填  | 是否签名 | 说明                          |
-| :----------------: | -----------| -------- | ---- | -------- | :---------------------------- |
-| data             | `array`     | 64       | Y    |        | 返回的是一个数组，取决于合约方法返回值的定义   |
-
-#### 交易返回属性结果
-- policyData结构
-|    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
-| policyId           | `string`   | 64       | Y    |        | 交易原始内容                      |
-| policyVersion      | `string`   | 64       | Y    |        | policy投票内容                    |
-| actionType         | `string`   | 64       | Y    |        | methodSign                      |
-| sender             | `string`   | 64       | Y    |        | 区块高度                      |
-| sendTime           | `date`     | 64       | Y    |        | 区块时间                      |
-| voteInfos          | `json[]`   | 64       | Y    |        | 区块时间                      |
-| decision           | `string`   | 64       | Y    |        | 区块时间                      |
-
-- voteInfos结构
-|    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| domainId           | `string`   | 64       | Y    |        | Domain                      |
-| owner              | `string`   | 64       | Y    |        | 投票节点                    |
-| decision           | `boolean`  | 64       | Y    |        | 投票回执结果                      |
-| signType           | `string`   | 64       | Y    |        | 签名类型(BIZ|CONSENSUS)                      |
-| sign               | `date`     | 64       | Y    |        | 投票节点签名                      |
-
-- transactionReceipt结构
-|    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId               | `string`   | 64       | Y    |        | 交易id                      |
-| result             | `boolean`  | 64       | Y    |        | 交易执行结果                    |
-| errorCode          | `string`   | 64       | N    |        | 错误码                      |
-| errorMessage       | `string`   | 64       | N    |        | 错误描述                      |
-| receiptData        | `json`     | 64       | Y    |        | action回执                      |
-| version            | `string`   | 64       | Y    |        | 交易版本号                      |
