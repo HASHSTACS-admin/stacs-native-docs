@@ -527,10 +527,6 @@ public static final String getSignValue(Transaction tx){
 - 接口描述： 注册Policy
 - functionName：`REGISTER_POLICY`
 - 请求参数：
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount
- +policyId+policyName+votePattern+desc+[verifyNum+mustDomainIds+expression]+domainIds+requireAuthIds+functionName 
-
-
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
@@ -1124,7 +1120,6 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：  
 - 请求地址：`GET`:`/permission/queryAll`
 - 请求参数： 
-- 签名原值拼接排序（无需签名）
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -1283,9 +1278,6 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：  撤销Identity已被授权的permission
 - functionName：`CANCEL_PERMISSION`
 - 请求参数： 
-- 签名原值拼接排序(feeCurrency,feeMaxAmount如果为null，则字符串拼接为"")：txId + bdCode + execPolicyId+feeCurrency + feeMaxAmount 
-+identityAddress + permissionNames + functionName
-
 |      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
 | :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
 | identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
@@ -1589,7 +1581,6 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 接口描述：  查询入链存证信息
 - 请求地址：`GET`:`/attestation/query?txId={txId}`
 - 请求参数： 
-- 签名原值拼接排序(无需签名)
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
