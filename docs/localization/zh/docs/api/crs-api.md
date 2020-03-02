@@ -994,7 +994,6 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:    | --------     | -------- | ---- | -------- | :---------------------------- |
-| value          | `bigDecimal` |      | Y    | Y        | 转入合约金额(为null)                      |
 | methodSignature| `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
 | args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）       |
 | from           | `string`     |      | Y    | Y        | 同交易提交地址                     |
