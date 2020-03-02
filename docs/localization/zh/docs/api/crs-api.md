@@ -49,6 +49,7 @@
 - `KYC`:
 - `BD`:
 - `Identity`:
+- `{}`: 动态值表示符号
 
 ## 系统内置function表
 | functionName      	| execPermission | execPolicy         	| 备注 |
