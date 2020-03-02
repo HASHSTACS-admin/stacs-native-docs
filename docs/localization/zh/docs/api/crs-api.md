@@ -1700,6 +1700,7 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 #### 交易返回属性结果
 - policyData结构
+|    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
 | policyId           | `string`   | 64       | Y    |        | 交易原始内容                      |
 | policyVersion      | `string`   | 64       | Y    |        | policy投票内容                    |
 | actionType         | `string`   | 64       | Y    |        | methodSign                      |
@@ -1709,6 +1710,8 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | decision           | `string`   | 64       | Y    |        | 区块时间                      |
 
 - voteInfos结构
+|    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | domainId           | `string`   | 64       | Y    |        | Domain                      |
 | owner              | `string`   | 64       | Y    |        | 投票节点                    |
 | decision           | `boolean`  | 64       | Y    |        | 投票回执结果                      |
@@ -1716,6 +1719,8 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | sign               | `date`     | 64       | Y    |        | 投票节点签名                      |
 
 - transactionReceipt结构
+|    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | txId               | `string`   | 64       | Y    |        | 交易id                      |
 | result             | `boolean`  | 64       | Y    |        | 交易执行结果                    |
 | errorCode          | `string`   | 64       | N    |        | 错误码                      |
