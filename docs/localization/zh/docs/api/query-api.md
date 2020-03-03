@@ -9,7 +9,7 @@
 |<a href="queryContract">/queryContract</a>                             |合约数据状态查询|
 |<a href="queryBlock">/queryBlock</a>                                   |查询区块数据(未完成)|
 
-#### <a id="COMMON_PRAMS_LIST">通用返回参数列表</a>
+#### <a id="COMMON_PRAMS_LIST">`coreTx`交易通用返回参数列表</a>
 
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
