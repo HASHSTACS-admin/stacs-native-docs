@@ -96,6 +96,16 @@
 |NODE_LEAVE        |  ASYNC            |FULL_VOTE          |  |
 |SET_FEE_CONFIG        |  ASYNC            |FULL_VOTE      |    |
 
+## SDK
+更快接入参考SDK提供的`SubmitTransactionExample`实例
+```java
+<dependency>
+    <groupId>com.hashstacs</groupId>
+    <artifactId>stacs-client</artifactId>
+    <version>4.1.0-SNAPSHOT</version>
+</dependency>
+```
+
 ## 接口规范
 
 - HTTP请求头
