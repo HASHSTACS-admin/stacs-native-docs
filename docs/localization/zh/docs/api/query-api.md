@@ -1,4 +1,11 @@
 ### 查询接口
+## 查询接口列表
+| 接口地址                                                          | 说明 |
+| :-----                                                           | :-----    |
+|<a href="queryMaxHeight">/queryMaxHeight/{height}</a>              |查询当前最大区块高度|
+|<a href="queryTxByTxId/{txId}">queryTxByTxId/{txId}</a>             |根据txId查询交易数据|
+|<a href="queryTxsByHeight/{height}">/queryTxsByHeight/{height}</a> |根据高度查询区块内所有交易数据|
+|<a href="queryContract">/queryContract</a>   
 
 #### <a id="COMMON_PRAMS_LIST">通用返回参数列表</a>
 
