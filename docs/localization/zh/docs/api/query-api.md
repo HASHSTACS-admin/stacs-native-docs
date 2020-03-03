@@ -17,7 +17,7 @@
 
 ##### <a id="/queryTxByTxId/{txId}">根据txId查询交易数据</a>
 - [x] 开放
-- 接口描述：  查询当前最大的区块高度
+- 接口描述：  根据txId查询交易数据
 - 请求地址：`GET`:`/queryTxByTxId/{txId}`
 - 请求参数： 
 
@@ -60,7 +60,7 @@
 
 ##### <a id="/queryContract">合约状态查询</a>
 - [x] 开放
-- 接口描述：  根据高度查询区块内所有交易数据
+- 接口描述：  合约状态查询
 - 请求地址：`POST`:`/queryContract`
 - 请求参数： 
 
@@ -88,8 +88,8 @@
 | actionType         | `string`   | 64       | Y    |        | methodSign                      |
 | sender             | `string`   | 64       | Y    |        | 区块高度                      |
 | sendTime           | `date`     | 64       | Y    |        | 区块时间                      |
-| voteInfos          | `json[]`   | 64       | Y    |        | 区块时间                      |
-| decision           | `string`   | 64       | Y    |        | 区块时间                      |
+| voteInfos          | `json[]`   | 64       | Y    |        | 投票信息                      |
+| decision           | `string`   | 64       | Y    |        | 决议                      |
 
 - voteInfos结构
 
@@ -98,7 +98,7 @@
 | domainId           | `string`   | 64       | Y    |        | Domain                      |
 | owner              | `string`   | 64       | Y    |        | 投票节点                    |
 | decision           | `boolean`  | 64       | Y    |        | 投票回执结果                      |
-| signType           | `string`   | 64       | Y    |        | 签名类型(BIZ|CONSENSUS)                      |
+| signType           | `string`   | 64       | Y    |        | 签名类型(BIZ/CONSENSUS)                      |
 | sign               | `date`     | 64       | Y    |        | 投票节点签名                      |
 
 - transactionReceipt结构
