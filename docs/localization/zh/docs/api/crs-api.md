@@ -703,7 +703,14 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | execPolicy     | `string` | 32     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
 | methodSign     | `string` | 64     | Y    | Y        | 如果dbType类型为(contract/assets),则为方法签名                      |
 | name           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
-| type           | `string` | 64     | Y    | Y        | (SystemAction/Contract/ContractQuery)             |
+| type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
+
+- <a id="FUNCTION_TYPE">function type类型</a>
+|    类型         | 说明     | 
+| :---------:    | -------- |
+| SystemAction   |系统内置function功能|
+| Contract       |该function属于合约方法|
+| ContractQuery  |该function属于合约查询类,可以通过<a href="query-api.md#queryContract">合约状态查询</a>调用该方法|
 
 - 响应参数：
 
