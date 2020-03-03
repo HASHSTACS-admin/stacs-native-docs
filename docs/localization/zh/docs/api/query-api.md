@@ -1,5 +1,20 @@
 ### 查询接口
 
+#### <a id="COMMON_PRAMS_LIST">通用返回参数列表</a>
+
+|     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
+| :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
+|     txId      | `string` | 64       | Y    |    Y     | 请求Id    
+|    bdCode     | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode    |
+| functionName  | `string` | 32        | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CREATE_CONTRACT` |
+|   submitter   | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
+|   actionDatas   | `string` |        | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+|   version     | `string` | 40       | Y    |    Y     | 交易版本号                                               |
+|extensionDatas | `string` | 1024     | Y    |    Y     | 交易存证新消息                                               |
+| maxAllowFee   | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
+|  feeCurrency  | `string` | 32       | N    |    Y     | 手续费币种                                                   |
+| submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |                                                            |
+
 ##### <a id="/queryMaxHeight">查询当前最大区块高度</a>
 - [x] 开放
 - 接口描述：  查询当前最大的区块高度
@@ -28,7 +43,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| coreTx             | `json`     | 64       | Y    |        | 交易原始内容                      |
+| <a href="COMMON_PRAMS_LIST">coreTx</a>             | `json`     | 64       | Y    |        | 交易原始内容                      |
 | policyData         | `json`     | 64       | N    |        | policy投票内容(交易未上链，返回为null)                    |
 | transactionReceipt | `json`     | 64       | N    |        | 交易执行结果(交易未上链，返回为null)                      |
 | blockHeight        | `string`   | 64       | N    |        | 区块高度 (交易未上链，返回为null)                     |
@@ -42,7 +57,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| coreTx             | `json`     | 64       | Y    |        | 交易原始内容                      |
+| <a href="COMMON_PRAMS_LIST">coreTx</a>              | `json`     | 64       | Y    |        | 交易原始内容                      |
 | policyData         | `json`     | 64       | Y    |        | policy投票内容                    |
 | transactionReceipt | `json`     | 64       | Y    |        | 交易执行结果                      |
 | blockHeight        | `string`   | 64       | Y    |        | 区块高度                      |
