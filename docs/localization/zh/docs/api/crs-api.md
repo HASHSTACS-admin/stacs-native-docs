@@ -713,74 +713,58 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 
 - 实例：
 
-```json tab="请求实例"
-{
-	"bdCode":"SystemBD",
-	"bdType":"assets",
-	"bdVersion":"1.0",
-	"code":"CBD_SC_61418",
-	"desc":null,
-	"execPolicyId":"BD_PUBLISH",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"BD_PUBLISH",
-	"functions":[
-		{
-			"desc":"",
-			"execPermission":"CONTRACT_INVOKE",
-			"execPolicy":"CONTRACT_INVOKE",
-			"methodSign":"transfer(address,uint256)",
-			"name":"transfer",
-			"type":"Contract"
-		},
-		{
-			"desc":"",
-			"execPermission":"CONTRACT_INVOKE",
-			"execPolicy":"CONTRACT_INVOKE",
-			"methodSign":"transferToContract(uint256,uint256,address,string)",
-			"name":"transferToContract",
-			"type":"Contract"
-		},
-		{
-			"desc":"",
-			"execPermission":"CONTRACT_INVOKE",
-			"execPolicy":"CONTRACT_INVOKE",
-			"methodSign":"balanceOf(address)",
-			"name":"balanceOf",
-			"type":"Contract"
-		},
-		{
-			"desc":"",
-			"execPermission":"CONTRACT_INVOKE",
-			"execPolicy":"CONTRACT_INVOKE",
-			"methodSign":"additionalIssue(uint256)",
-			"name":"additionalIssue",
-			"type":"Contract"
-		},
-		{
-			"desc":"",
-			"execPermission":"CONTRACT_INVOKE",
-			"execPolicy":"CONTRACT_INVOKE",
-			"methodSign":"buybackPay(address[],uint256[])",
-			"name":"buybackPay",
-			"type":"Contract"
-		},
-		{
-			"desc":"",
-			"execPermission":"CONTRACT_INVOKE",
-			"execPolicy":"CONTRACT_INVOKE",
-			"methodSign":"settlPay(address[],uint256[])",
-			"name":"settlPay",
-			"type":"Contract"
-		}
-	],
-	"initPermission":"DEFAULT",
-	"initPolicy":"CONTRACT_ISSUE",
-	"name":"CBD_SC_61418",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"00597f7f51767ed748cfe83d54b117a6a6f7af5556b051c0cff82708dff13892736ff022fddd9a0dbcfaeafe8df2b1c211dcb1b666b3d64859f0e331f4bd7d7dac",
-	"txId":"0f2222f69027942c341b0e1296256b2b8acd3135bc448b3e6bea106d22e362a3"
-} 
+```java tab="请求实例"
+BusinessDefineVO bd = new BusinessDefineVO();
+bd.setCode("sto_code");
+bd.setName("sto_code_name");
+bd.setBdType("assets");
+bd.setInitPermission("DEFAULT");
+bd.setInitPolicy("DEFAULT_SYNC_POLICY");
+bd.setBdVersion("1.0.0");
+bd.setVersion("1.0.0");
+
+//余额方法
+FunctionDefine functionDefine = new FunctionDefine();
+functionDefine.setName("balanceOf");
+functionDefine.setType("Contract");
+functionDefine.setDesc("余额查询");
+functionDefine.setMethodSign("(uint256) balanceOf(address)");
+functionDefine.setExecPermission("DEFAULT");
+functionDefine.setExecPolicy("DEFAULT_SYNC_POLICY");
+
+//转账方法
+FunctionDefine functionDefine2 = new FunctionDefine();
+functionDefine2.setName("transfer");
+functionDefine2.setType("Contract");
+functionDefine2.setDesc("转账");
+functionDefine2.setMethodSign("(bool) transfer(address,uint256)");
+functionDefine2.setExecPermission("DEFAULT");
+functionDefine2.setExecPolicy("DEFAULT_SYNC_POLICY");
+
+List<FunctionDefine> functions = new ArrayList<>();
+functions.add(functionDefine);
+functions.add(functionDefine2);
+bd.setFunctions(functions);
+
+StacsECKey ecKey = new StacsECKey();
+
+TxVo<BusinessDefineVO> tx = new TxVo<>();
+tx.setActionDatas(bd);
+tx.setBdCode("SystemBD");
+tx.setFunctionName("BD_PUBLISH");
+tx.setSubmitter(ecKey.getHexAddress());
+tx.setVersion("1.0.0");
+tx.setExtensionDatas("");
+tx.setMaxAllowFee("");
+tx.setFeeCurrency("");
+tx.setTxId(IdGenerator.generate64TxId(JSON.toJSONString(tx)+System.currentTimeMillis()));
+
+//交易格式转换并附签名
+Transaction transaction = TransactionBuilder.buildTransaction(tx);
+//使用submitter的ECC进行交易签名
+transaction.setSubmitterSign(ecKey.signMessage(TransactionBuilder.getSignValue(transaction)));
+CasDecryptReponse casDecryptReponse = stoClient.submitTransaction(transaction);
+log.info("响应结果：{}",casDecryptReponse);
 ```
 
 ```json tab="响应实例"
