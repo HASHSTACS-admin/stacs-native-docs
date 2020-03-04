@@ -26,8 +26,7 @@
 |<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |修改Policy|
 |<a href="#MODIFY_POLICY">MODIFY_POLICY</a>                 |给地址做身份认证|
 |<a href="#PERMISSION_REGISTER">PERMISSION_REGISTER</a>     |注册Permission|
-|<a href="#AUTHORIZE_PERMISSION">AUTHORIZE_PERMISSION</a>   |给地址添加Permission|
-|<a href="#CANCEL_PERMISSION">CANCEL_PERMISSION</a>         |取消地址的Permission|
+|<a href="#AUTHORIZE_PERMISSION">AUTHORIZE_PERMISSION</a>   |给地址授权Permission|
 |<a href="#KYC_SETTING">KYC_SETTING</a>                     |为Identity设置KYC|
 |<a href="#IDENTITY_BD_MANAGE">IDENTITY_BD_MANAGE</a>       |冻结Identity使用BD|
 |<a href="#SAVE_ATTESTATION">SAVE_ATTESTATION</a>           |存证交易|
@@ -53,12 +52,11 @@
 
 ## 系统内置function表
 | functionName      	| execPermission | execPolicy         	| 备注 |
-| :-----                |  :-----        |  :-----             |  :-----            |  
+| :-----                |  :-----        |  :-----             |  :-----            |
 | IDENTITY_SETTING  	| DEFAULT        | IDENTITY_SETTING   	|给地址做身份认证      |
 | BD_PUBLISH  			| DEFAULT        | BD_PUBLISH   	  	|发布BD      |
 | PERMISSION_REGISTER  	| DEFAULT        | PERMISSION_REGISTER  |注册Permission      |
 | AUTHORIZE_PERMISSION  | DEFAULT        | AUTHORIZE_PERMISSION |给地址添加Permission      |
-| CANCEL_PERMISSION  	| RS        	 | CANCEL_PERMISSION   	|取消地址的Permission      |
 | REGISTER_POLICY  		| DEFAULT        | REGISTER_POLICY   	|注册Policy      |
 | MODIFY_POLICY  		| DEFAULT        | MODIFY_POLICY   	    |修改Policy      |
 | REGISTER_RS  			| DEFAULT        | REGISTER_RS   	    |注册为RS节点      |
@@ -78,9 +76,9 @@
 
 ## 系统内置Permission表
 | Permission      	    | 备注 |
-| :-----                |  :-----        |  
-| DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       | 
-| RS  			        | 系统节点初始化时RS节点拥有该Permission        | 
+| :-----                |  :-----        |
+| DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
+| RS  			        | 系统节点初始化时RS节点拥有该Permission        |
 
 ## 系统内置Policy表
 | Policy       	    |投票方式            |决议方式            |备注                |
@@ -164,18 +162,13 @@
 }
 ```
 
-
-## 系统级接口
-
-!!! info "提示"
-    系统级接口只能由`CRS`节点发起，并不对`DRS`节点开放。
-
 ### <a id="COMMON_PRAMS_LIST">通用参数列表</a>
 
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
-|     txId      | `string` | 64       | Y    |    Y     | 请求Id    
-|    bdCode     | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode    |
+|     txId      | `string` | 64       | Y    |    Y     | 请求Id |
+| bdCode     | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode  |
+| templateCode| `string`| 32|N|Y|发布合约或执行合约方法时的合约templateCode|
 | functionName  | `string` | 32        | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CREATE_CONTRACT` |
 |   submitter   | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 |   actionDatas   | `string` |        | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
@@ -185,8 +178,8 @@
 |  feeCurrency  | `string` | 32       | N    |    Y     | 手续费币种                                                   |
 | submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |                                                            |
 
-## 签名方式
-### 交易签名值拼接方式 
+###  签名方式
+#### 交易签名值拼接方式 
 ``` java
 
     /**
@@ -230,7 +223,10 @@
   
 ```
 
-> 相比非系统级，少了`execPolicyId`字段，接口中会设定固定的`execPolicyId`
+## 系统级接口
+
+!!! info "提示"
+    系统级接口只能由`CRS`节点发起，并不对`DRS`节点开放。
 
 ### Domain & RS
 
@@ -302,12 +298,14 @@
 | proxyNodeName | `string` |        | Y       | N        | 代理节点                      |
 
 -- caList
-| version       | `string` |        | Y       | Y        | 版本号                      |
-| period        | `string` |        | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时                      |
-| pubKey        | `string` |        | Y       | Y        | 公钥                      |
-| user          | `string` |        | Y       | Y        | 节点名称                      |
-| domainId      | `string` |        | Y       | Y        | domain                      |
-| usage         | `string` |        | Y       | Y        | biz/consensus                      |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:   | -------- | -------- | ----  | -------- | :---------------- |
+| version       | `string` |        | Y       | Y        | 版本号   |
+| period        | `string` |        | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
+| pubKey        | `string` |        | Y       | Y        | 公钥   |
+| user          | `string` |        | Y       | Y        | 节点名称  |
+| domainId      | `string` |        | Y       | Y        | domain  |
+| usage         | `string` |        | Y       | Y        | biz/consensus      |
 
 - 响应参数：
 
@@ -465,16 +463,17 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
- | nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
-  | domainId  | `string` |          | Y    | Y        |   domain域             |
-  | signValue | `string` |          | Y    | Y        |                |
-  |  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+| nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
+| domainId  | `string` |          | Y    | Y        |   domain域             |
+| signValue | `string` |          | Y    | Y        |                |
+|  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
 
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| :---------: | -------- | -------- | ---- | -------- | :---------------- |
+| 	| 	|	|	| | 		|
 
 
 - 实例：
@@ -517,17 +516,18 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
- | nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
-  | domainId  | `string` |          | Y    | Y        |   domain域             |
-  | signValue | `string` |          | Y    | Y        |                |
-  | sign | `string` |          | Y    | Y        |            对signValue的签名    |
-  |  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+| nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
+| domainId  | `string` |          | Y    | Y        |   domain域             |
+| signValue | `string` |          | Y    | Y        |                |
+| sign | `string` |          | Y    | Y        |            对signValue的签名    |
+|  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
 
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| :---------: | -------- | -------- | ---- | -------- | :----------- |
+| 	|	|	|	|	|	|	|
 
 
 - 实例：
@@ -587,7 +587,8 @@
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| :---------: | -------- | -------- | ---- | -------- | :----------- |
+| 	|	|	|	|	|	|
 
 
 - 实例：
@@ -655,8 +656,11 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
+| :---------: | -------- | -------- | ---- | -------- | :---------- |
+|             |          |          |      |          |        |
+
+
 
 - 实例：
 
@@ -697,18 +701,7 @@
 
 ## 非系统级接口
 
-#### 交易类接口通用参数列表
-
-|     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-| :-----------: | -------- | -------- | ---- | -------- | ---------------- |
-|     txId      | `string` | 64       | Y    | Y        | 请求Id           |
-|   submitter   | `string` | 40       | Y    | Y        | 操作提交者地址   |
-| execPolicyId  | `string` | 32       | Y    | Y        | 执行policyId     |
-| submitterSign | `string` | 64       | Y    | Y        | 提交者签名       |
-| bdCode | `string` | 64       | Y    | Y        |        |
-|  feeCurrency  | `string` | 32       | N    | Y        | 手续费币种       |
-| feeMaxAmount  | `string` | 18       | N    | Y        | 最大允许的手续费 |
-
+#### BD
 ##### <a id="BD_PUBLISH">BD发布</a>
 - [x] 开放
 - 接口描述：  功能：发布自定义`BD`
@@ -728,13 +721,22 @@
 | functions | `List<FunctionDefine>` |          | Y    | Y        | bd定义function            |
 | contracts | `List<ContractDefine>` |          | Y    | Y        | bd定义contract            |
 | bdVersion | `string`               | 4        | Y    | Y        | bd版本                    |
+`ContractDefine`定义:
 
-function定义:
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
+|   templateCode   | `string` | 32    | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
+| desc           | `string` | 256     | N    | Y        | function描述                     |
+| createPermission | `string` | 64     | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
+| createPolicy | `string` | 32     | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
+| functions | `List<FunctionDefine>` |          | Y    | Y        | 合约方法定义function            |
+
+`FunctionDefine`定义:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
 | desc           | `string` | 256     | N    | Y        | function描述                     |
-| execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该function已经存在于链上                      |
+| execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该permission已经存在于链上                   |
 | execPolicy     | `string` | 32     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
 | methodSign     | `string` | 64     | Y    | Y        | 如果dbType类型为(contract/assets),则为方法签名                      |
 | name           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
@@ -742,15 +744,15 @@ function定义:
 
 - <a id="bdType">bdType类型</a>
 
-|    类型                         | 说明                         | 
+|    类型                         | 说明                         |
 | :-----------------------------:| --------                    |
-| system                         |定义`bdType`为`system` 时，`BD`下发布的`functions`的`type`只能是`SystemAction`|
-| contract                       |定义`bdType`为`contract` 时，`BD`下发布的`functions`需要满足合约定义
-| assets                         |定义`bdType`为`assets`，`functions`必须包含`(uint256) balanceOf(address)`和`(uint256) balanceOf(address)`|
+| system                         | 定义`bdType`为`system` 时，`BD`下发布的`functions`的`type`只能是`SystemAction`|
+|  contract                       | 定义`bdType`为`contract` 时，`BD`下发布的`functions`需要满足合约定义|
+| assets                         | 定义`bdType`为`assets`，`functions`必须包含`(uint256) balanceOf(address)`和`(uint256) balanceOf(address)`|
 
 - <a id="FUNCTION_TYPE">function type类型</a>
 
-|    类型                         | 说明                         | 
+|    类型                         | 说明                         |
 | :-----------------------------:| --------                    |
 | SystemAction                   |系统内置function功能            |
 | Contract                       |该function属于合约方法           |
@@ -905,7 +907,7 @@ log.info("响应结果：{}",casDecryptReponse);
 （快照发布使用的是存证的execPolicyId和functionName）
 - functionName：`BUILD_SNAPSHOT`
 - 请求参数： 
- 
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | snapshotId | `string` | 64     | Y    | Y        | 快照id                      |
@@ -977,7 +979,7 @@ log.info("响应结果：{}",casDecryptReponse);
     "success":true
 }
 ```
-       
+
 #### 智能合约
 
 ##### <a id="CONTRACT_CREATION">合约部署</a>
@@ -1111,6 +1113,7 @@ log.info("响应结果：{}",casDecryptReponse);
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| 	|	|	|	|	|	|
 
 - 实例：
 
@@ -1279,8 +1282,8 @@ log.info("响应结果：{}",casDecryptReponse);
 ```
 -  <a id="identityType">identityType类型</a> 
 
-|     类型                   | 说明                | 
-| :-----------------------: | ------------------  | 
+|     类型                   | 说明                |
+| :-----------------------: | ------------------  |
 | user                      |  普通用户            |
 | domain                    |  Domain域           |
 | node                      |  参与网络的区块链节点   |
@@ -1296,6 +1299,7 @@ log.info("响应结果：{}",casDecryptReponse);
 | :---------------: | ---------- | -------- | ---- | -------- | ------------------------------------ |
 | identityAddress   | `string`   | 40       | Y    | Y        | 新增identity地址                      |
 | addPermissions    | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组     |
+| canclePermissions    | `string[]` |          | Y    | Y        | 给Identity撤销的的PermissionName数组     |
 |  identityType     | `string`   |          | Y    | Y        | 1. user 2. domain 3. node            |
 
 - 响应参数：
@@ -1316,6 +1320,7 @@ log.info("响应结果：{}",casDecryptReponse);
 	"identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
 	"identityType":"user",
 	"addPermissions":["permission_97251"],
+	"cancelPermissions":["permission_97251"],
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"00b7dbeccdc06a57dd3ed5028d329c7ff9ae0c392967e4bb12220818ef9f0c26be4674102cb12036243c19ccce10f5beb89b4ce4b290d19ede1ff2227502daf7ff",
 	"txId":"c03ba6d1fe11c941b110a3064ce675e52c74be56c9dae4beaccbe287ce4f86e1"
@@ -1330,48 +1335,7 @@ log.info("响应结果：{}",casDecryptReponse);
 } 
 ```
 
-##### <a id="CANCEL_PERMISSION">identity撤销Permission</a>
 
-- [x] 开放
-- 接口描述：  撤销Identity已被授权的permission
-- functionName：`CANCEL_PERMISSION`
-- 请求参数： 
-
-|      属性          | 类型          | 最大长度 | 必填 | 是否签名 | 说明                               |
-| :---------------: | ----------   | -------- | ---- | -------- | ---------------------------------- |
-| identityAddress   | `string`     | 40       | Y    | Y        | 新增identity地址                   |
-| cancelPermissions | `string[]`   |          | Y    | Y        | 给Identity撤销授权的PermissionName数组(签名拼接时，需要使用逗号进行分割拼接成字符串) |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | txId                      |
-
-- 实例：
-
-```json tab="请求实例"
-{
-	"bdCode":"SystemBD",
-	"execPolicyId":"CANCEL_PERMISSION",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"CANCEL_PERMISSION",
-	"identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
-	"cancelPermissions":["permission_97251"],
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"01d28a6d7d7ed2b68bc7b0b63e1089a4d6c1f91dc5ffa22a99d508f744fc29aa554369f96c27594e3956aede9dbb8aa143cbedcd49850198b5391be958e160b9b6",
-	"txId":"49046127ec22fd91e95ed7339bfbc051d1141869bb6abdae0699503e3255e8dc"
-} 
-```
-
-```json tab="响应实例"
-{
-	"data":"49046127ec22fd91e95ed7339bfbc051d1141869bb6abdae0699503e3255e8dc",
-	"msg":"Success",
-	"respCode":"000000"
-} 
-```
 ##### <a id="IDENTITY_BD_MANAGE">Identity冻结/解冻BD</a>
 
 - [x] 开放
@@ -1382,7 +1346,7 @@ log.info("响应结果：{}",casDecryptReponse);
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
 | targetAddress | `string`   | 40       | Y    | Y        | 目标identity地址              |
-|    codes    | `string[]` |          | Y    | Y          | |
+|    codes    | `string[]` |          | Y    | Y          | 冻结或解冻的类型code|
 |  actionType   | `string`   |          | Y    | Y        | <a href="actionType">操作类型</a> |
 |  frozeType   | `string`   |          | Y    | Y        | <a href="frozeType">冻结类型</a> |
 
@@ -1408,18 +1372,18 @@ log.info("响应结果：{}",casDecryptReponse);
 
 -  <a id="actionType">操作类型</a> 
 
-|     类型                   | 说明                 | 
-| :-----------------------: | ------------------  | 
+|     类型                   | 说明                 |
+| :-----------------------: | ------------------  |
 | FROZE                     | 冻结`Identity`的`BD`后,`Identity`不能再调用被冻结`BD`所有交易;<br>冻结`Identity`的`CONTRACT`后,`Identity`不能再调用被冻结`CONTRACT`所有交易,但可以调用`BD`的其他`templateCode`合约;<br>冻结`Identity`的`FUNCTION_NAME`后`Identity`不能在调用被冻结`FUNCTION_NAME`交易,但可以调用`BD`的其他`FUNCTION_NAME`|
 | UNFROZE                   | 解冻`BD`,`CONTRACT`,`functionName`,解冻成功后可以正常使用|
 
 -  <a id="frozeType">冻结类型</a> 
 
-|     类型                   | 说明                 | 
-| :-----------------------: | ------------------  | 
+|     类型                   | 说明                 |
+| :-----------------------: | ------------------  |
 | BD                        |  冻结或解冻整个`BD`   |
 | CONTRACT                  |  冻结或解冻整个整个合约,冻结的是合约code格式为`bdCode`+`templateCode`|
-| FUNCTION_NAME              |  冻结或解冻`funtionName`   |
+| FUNCTION_NAME              |  冻结或解冻`funtionName`,code格式为`bdCode`+`templateCode`+`functionName`  |
 
 
 
@@ -1534,6 +1498,7 @@ log.info("响应结果：{}",casDecryptReponse);
 
 - 实例：
 ```json tab="请求实例"
+
 ```
 
 ```json tab="响应实例"
@@ -1554,7 +1519,7 @@ log.info("响应结果：{}",casDecryptReponse);
 } 
 ```
 
-##### <a id="KYC_SETTING">KYC设置</KYC_SETTING>
+##### <a id="KYC_SETTING">KYC设置</a>
 
 - [x] 开放
 - 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息;identityType会覆盖之前identityType
