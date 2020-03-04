@@ -98,12 +98,14 @@
 
 ## SDK
 更快接入参考SDK提供的`SubmitTransactionExample`实例
-```java
+``` java
+
 <dependency>
     <groupId>com.hashstacs</groupId>
     <artifactId>stacs-client</artifactId>
     <version>4.1.0-SNAPSHOT</version>
 </dependency>
+
 ```
 
 ## 接口规范
@@ -181,27 +183,47 @@
 
 ## 签名方式
 ### 交易签名值拼接方式 
-```java
-public static final String SEPARATOR = "|";
-public static final String getSignValue(Transaction tx){
-      StringBuilder sb = new StringBuilder();
-      sb.append(tx.getTxId()).append(SEPARATOR)
-          .append(tx.getBdCode()).append(SEPARATOR)
-          .append(tx.getFunctionName()).append(SEPARATOR)
-          .append(tx.getSubmitter()).append(SEPARATOR)
-          .append(tx.getActionDatas()).append(SEPARATOR)
-          .append(tx.getVersion());
-      if(StringUtils.isNotEmpty(tx.getExtensionDatas())){
-          sb.append(SEPARATOR).append(tx.getExtensionDatas());
-      }   if(StringUtils.isNotEmpty(tx.getMaxAllowFee())){
-          sb.append(SEPARATOR).append(tx.getMaxAllowFee());
-      }
-      if(StringUtils.isNotEmpty(tx.getFeeCurrency())){
-          sb.append(SEPARATOR).append(tx.getFeeCurrency());
-      }
-      log.info("get sign source  value :{}",sb.toString());
-      return sb.toString();
-  }
+``` java
+
+    /**
+     * should sign fields
+     */
+    private static String[] SIGN_FIELDS = new String[]
+        {"txId","bdCode","functionName","templateCode","submitter","version","actionDatas","extensionDatas","maxAllowFee","feeCurrency"};
+
+    public static final String getSignValue(Transaction tx){
+        String str = "";
+        try {
+            StringBuilder sb = new StringBuilder();
+            for(String fieldName : SIGN_FIELDS){
+                Field f = tx.getClass().getDeclaredField(fieldName);
+                f.setAccessible(true);
+                Object v = f.get(tx);
+                if(v != null && StringUtils.isNotEmpty(String.valueOf(v))){
+
+                    sb.append("\"").append(fieldName).append("\"").append(":");
+
+                    if(!StringUtils.equals(fieldName,"actionDatas")){
+                        sb.append("\"");
+                    }
+
+                    sb.append(v);
+
+                    if(!StringUtils.equals(fieldName,"actionDatas")){
+                        sb.append("\"");
+                    }
+
+                    sb.append(SEPARATOR);
+                }
+            }
+            str = sb.toString();
+            str = str.substring(0,str.length() - 1);
+        } catch (Exception e) {
+            log.error("make json has error",e);
+        }
+        return "{" + str + "}";
+    }
+  
 ```
 
 > 相比非系统级，少了`execPolicyId`字段，接口中会设定固定的`execPolicyId`
@@ -693,16 +715,15 @@ public static final String getSignValue(Transaction tx){
 - functionName：`BD_PUBLISH`
 - 请求参数： 
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| code      | `string` | 32     | Y    | Y        | BD编号（唯一）                      |
-| name      | `string` | 64     | Y    | Y        | BD名称                      |
-| bdType    | `string` | 32     | Y    | Y        | BD类型（/system/contract/assets）                      |
-| desc      | `string` | 1024     | N    | Y        | 描述                      |
-| functions | `json[]` |      | Y    | Y        | bd定义function (字符串拆分逗号分隔拼接)                     |
-| initPermission | `string` | 64     | Y    | Y        | 初始化BD的业务需要permission                      |
-| initPolicy | `string` | 32     | Y    | Y        | 初始化BD的业务需要policy策略                     |
-| bdVersion | `string` | 4     | Y    | Y        | bd版本                     |
+|    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
+| code      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
+| label      | `string`              | 64       | Y    | Y        | BD名称                             |
+| bdType    | `string`               | 32       | Y    | Y        | BD类型（/system/contract/assets）   |
+| desc      | `string`               | 1024     | N    | Y        | 描述                      |
+| functions | `List<FunctionDefine>` |          | Y    | Y        | bd定义function            |
+| contracts | `List<ContractDefine>` |          | Y    | Y        | bd定义contract            |
+| bdVersion | `string`               | 4        | Y    | Y        | bd版本                    |
 
 function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(address)和(uint256) balanceOf(address)
 
@@ -731,56 +752,76 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 - 实例：
 
 ```java tab="请求实例"
-BusinessDefineVO bd = new BusinessDefineVO();
+BusinessDefine bd = new BusinessDefine();
 bd.setCode("sto_code");
-bd.setName("sto_code_name");
+bd.setLabel("sto_code_name");
 bd.setBdType("assets");
-bd.setInitPermission("DEFAULT");
-bd.setInitPolicy("DEFAULT_SYNC_POLICY");
-bd.setBdVersion("1.0.0");
-bd.setVersion("1.0.0");
+bd.setBdVersion(VersionEnum.V4.getCode());
+bd.setVersion(VersionEnum.V4.getCode());
 
 //余额方法
 FunctionDefine functionDefine = new FunctionDefine();
 functionDefine.setName("balanceOf");
-functionDefine.setType("Contract");
+functionDefine.setType(FunctionType.Contract);
 functionDefine.setDesc("余额查询");
 functionDefine.setMethodSign("(uint256) balanceOf(address)");
 functionDefine.setExecPermission("DEFAULT");
-functionDefine.setExecPolicy("DEFAULT_SYNC_POLICY");
+functionDefine.setExecPolicy("BD_PUBLISH");
 
 //转账方法
 FunctionDefine functionDefine2 = new FunctionDefine();
 functionDefine2.setName("transfer");
-functionDefine2.setType("Contract");
+functionDefine2.setType(FunctionType.Contract);
 functionDefine2.setDesc("转账");
 functionDefine2.setMethodSign("(bool) transfer(address,uint256)");
 functionDefine2.setExecPermission("DEFAULT");
-functionDefine2.setExecPolicy("DEFAULT_SYNC_POLICY");
+functionDefine2.setExecPolicy("BD_PUBLISH");
 
 List<FunctionDefine> functions = new ArrayList<>();
 functions.add(functionDefine);
 functions.add(functionDefine2);
-bd.setFunctions(functions);
+
+List<FunctionDefine> functions1 = new ArrayList<>();
+functions1.add(BeanConvertor.convertBean(functionDefine,FunctionDefine.class));
+functions1.add(BeanConvertor.convertBean(functionDefine2,FunctionDefine.class));
+
+//合约-1
+ContractDefine contractDefine = new ContractDefine();
+contractDefine.setTemplateCode("code-balanceOf-1");
+contractDefine.setCreatePolicy("BD_PUBLISH");
+contractDefine.setCreatePermission("DEFAULT");
+contractDefine.setDesc("余额查询-1");
+contractDefine.setFunctions(functions);
+
+//合约-2
+ContractDefine contractDefine1 = new ContractDefine();
+contractDefine1.setTemplateCode("code-balanceOf-2");
+contractDefine1.setCreatePolicy("BD_PUBLISH");
+contractDefine1.setCreatePermission("DEFAULT");
+contractDefine1.setDesc("余额查询-2");
+contractDefine1.setFunctions(functions1);
+
+List<ContractDefine> contractDefines = new ArrayList<>();
+contractDefines.add(contractDefine);
+contractDefines.add(contractDefine1);
+bd.setContracts(contractDefines);
 
 StacsECKey ecKey = new StacsECKey();
 
-TxVo<BusinessDefineVO> tx = new TxVo<>();
+TxVo<BusinessDefine> tx = new TxVo<>();
 tx.setActionDatas(bd);
 tx.setBdCode("SystemBD");
 tx.setFunctionName("BD_PUBLISH");
 tx.setSubmitter(ecKey.getHexAddress());
-tx.setVersion("1.0.0");
+tx.setVersion(VersionEnum.V4.getCode());
 tx.setExtensionDatas("");
 tx.setMaxAllowFee("");
 tx.setFeeCurrency("");
 tx.setTxId(IdGenerator.generate64TxId(JSON.toJSONString(tx)+System.currentTimeMillis()));
 
-//交易格式转换并附签名
+//交易格式转换
 Transaction transaction = TransactionBuilder.buildTransaction(tx);
-//使用submitter的ECC进行交易签名
-transaction.setSubmitterSign(ecKey.signMessage(TransactionBuilder.getSignValue(transaction)));
-CasDecryptReponse casDecryptReponse = stoClient.submitTransaction(transaction);
+CasDecryptReponse casDecryptReponse = stoClient.submitTransaction(TxDataVO.of(transaction,ecKey));
 log.info("响应结果：{}",casDecryptReponse);
 ```
 
@@ -1244,11 +1285,11 @@ log.info("响应结果：{}",casDecryptReponse);
 - functionName：`AUTHORIZE_PERMISSION`
 - 请求参数
 
-|      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
-| :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
-| identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
-| permissionNames | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组(签名拼接时，需要使用逗号进行分割拼接成字符串) |
-|  identityType   | `string`   |          | Y    | Y        | 1. user 2. domain 3. node          |
+|      属性          | 类型       | 最大长度 | 必填 | 是否签名 | 说明                                    |
+| :---------------: | ---------- | -------- | ---- | -------- | ------------------------------------ |
+| identityAddress   | `string`   | 40       | Y    | Y        | 新增identity地址                      |
+| addPermissions    | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组     |
+|  identityType     | `string`   |          | Y    | Y        | 1. user 2. domain 3. node            |
 
 - 响应参数：
 
@@ -1267,7 +1308,7 @@ log.info("响应结果：{}",casDecryptReponse);
 	"functionName":"AUTHORIZE_PERMISSION",
 	"identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
 	"identityType":"user",
-	"permissionNames":["permission_97251"],
+	"addPermissions":["permission_97251"],
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"00b7dbeccdc06a57dd3ed5028d329c7ff9ae0c392967e4bb12220818ef9f0c26be4674102cb12036243c19ccce10f5beb89b4ce4b290d19ede1ff2227502daf7ff",
 	"txId":"c03ba6d1fe11c941b110a3064ce675e52c74be56c9dae4beaccbe287ce4f86e1"
@@ -1289,10 +1330,10 @@ log.info("响应结果：{}",casDecryptReponse);
 - functionName：`CANCEL_PERMISSION`
 - 请求参数： 
 
-|      属性       | 类型       | 最大长度 | 必填 | 是否签名 | 说明                               |
-| :-------------: | ---------- | -------- | ---- | -------- | ---------------------------------- |
-| identityAddress | `string`   | 40       | Y    | Y        | 新增identity地址                   |
-| permissionNames | `string[]` |          | Y    | Y        | 给Identity撤销授权的PermissionName数组(签名拼接时，需要使用逗号进行分割拼接成字符串) |
+|      属性          | 类型          | 最大长度 | 必填 | 是否签名 | 说明                               |
+| :---------------: | ----------   | -------- | ---- | -------- | ---------------------------------- |
+| identityAddress   | `string`     | 40       | Y    | Y        | 新增identity地址                   |
+| cancelPermissions | `string[]`   |          | Y    | Y        | 给Identity撤销授权的PermissionName数组(签名拼接时，需要使用逗号进行分割拼接成字符串) |
 
 - 响应参数：
 
@@ -1310,7 +1351,7 @@ log.info("响应结果：{}",casDecryptReponse);
 	"feeMaxAmount":null,
 	"functionName":"CANCEL_PERMISSION",
 	"identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
-	"permissionNames":["permission_97251"],
+	"cancelPermissions":["permission_97251"],
 	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
 	"submitterSign":"01d28a6d7d7ed2b68bc7b0b63e1089a4d6c1f91dc5ffa22a99d508f744fc29aa554369f96c27594e3956aede9dbb8aa143cbedcd49850198b5391be958e160b9b6",
 	"txId":"49046127ec22fd91e95ed7339bfbc051d1141869bb6abdae0699503e3255e8dc"
