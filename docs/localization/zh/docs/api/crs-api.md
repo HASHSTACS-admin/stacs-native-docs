@@ -173,10 +173,10 @@
 |   submitter   | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 |   actionDatas   | `string` |        | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 |   version     | `string` | 40       | Y    |    Y     | 交易版本号                                               |
-|extensionDatas | `string` | 1024     | Y    |    Y     | 交易存证新消息                                               |
+|extensionDatas | `string` | 1024     | N   |    Y     | 交易存证新消息                                               |
 | maxAllowFee   | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
 |  feeCurrency  | `string` | 32       | N    |    Y     | 手续费币种                                                   |
-| submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |                                                            |
+| submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |
 
 ###  签名方式
 #### 交易签名值拼接方式 
@@ -716,7 +716,6 @@
 | :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
 | code      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
 | label      | `string`              | 64       | Y    | Y        | BD名称                             |
-| bdType    | `string`               | 32       | Y    | Y        | BD类型<a href="bdType">bdType类型</a>   |
 | desc      | `string`               | 1024     | N    | Y        | 描述                      |
 | functions | `List<FunctionDefine>` |          | Y    | Y        | bd定义function            |
 | contracts | `List<ContractDefine>` |          | Y    | Y        | bd定义contract            |
@@ -742,13 +741,6 @@
 | name           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
 | type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
 
-- <a id="bdType">bdType类型</a>
-
-|    类型                         | 说明                         |
-| :-----------------------------:| --------                    |
-| system                         | 定义`bdType`为`system` 时，`BD`下发布的`functions`的`type`只能是`SystemAction`|
-|  contract                       | 定义`bdType`为`contract` 时，`BD`下发布的`functions`需要满足合约定义|
-| assets                         | 定义`bdType`为`assets`，`functions`必须包含`(uint256) balanceOf(address)`和`(uint256) balanceOf(address)`|
 
 - <a id="FUNCTION_TYPE">function type类型</a>
 
@@ -770,7 +762,6 @@
 BusinessDefine bd = new BusinessDefine();
 bd.setCode("sto_code");
 bd.setLabel("sto_code_name");
-bd.setBdType("assets");
 bd.setBdVersion(VersionEnum.V4.getCode());
 bd.setVersion(VersionEnum.V4.getCode());
 
@@ -863,7 +854,6 @@ log.info("响应结果：{}",casDecryptReponse);
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| bdType | `string` | 32     | Y    | Y        | bd类型(system/contract/assets)                      |
 | code | `string` | 32     | Y    | Y        | BD的code，唯一                     |
 | desc | `string` | 1024     | Y    | Y        | 描述                     |
 | functions | `JSONArray` | 4082     | Y    | Y        | bd定义的支持的function申明|
@@ -1257,9 +1247,7 @@ log.info("响应结果：{}",casDecryptReponse);
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
 | address      | `string` | 40     | Y    | Y        | Identity地址                      |
-| hidden       | `int`    | 1      | Y    | Y        | 是否隐藏                      |
-| identityType | `string` | 64     | Y    | Y        |  <a href="identityType">identityType类型</a>     |
-| property     | `string` | 1024   | N    | Y      |  属性json格式       |
+| property     | `string` | 1024   | Y   | Y      |  属性json格式       |
 
 
 - 响应参数：
@@ -1282,14 +1270,6 @@ log.info("响应结果：{}",casDecryptReponse);
 } 
 ```
 
--  <a id="identityType">identityType类型</a> 
-
-|     类型                   | 说明                |
-| :-----------------------: | ------------------  |
-| user                      |  普通用户            |
-| domain                    |  Domain域           |
-| node                      |  参与网络的区块链节点   |
-
 
 #####  <a id="AUTHORIZE_PERMISSION">Identity授权Permission</a>
 
@@ -1303,7 +1283,6 @@ log.info("响应结果：{}",casDecryptReponse);
 | identityAddress   | `string`   | 40       | Y    | Y        | 新增identity地址                      |
 | addPermissions    | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组     |
 | canclePermissions    | `string[]` |          | Y    | Y        | 给Identity撤销的的PermissionName数组     |
-|  identityType     | `string`   |          | Y    | Y        | 1. user 2. domain 3. node            |
 
 - 响应参数：
 
@@ -1490,7 +1469,9 @@ log.info("响应结果：{}",casDecryptReponse);
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | Y        | user identity 地址                      |
 | currentTxId | `string` | 64     | Y    | Y        |    user identity 改修改时的txId                   |
-| froze | `string` | 64     | Y    | Y        | 用户冻结的bd                      |
+| frozeBDs | `string` | 64     | Y    | Y        | 冻结的bd，采用`,`分隔  |
+| frozeContracts | `string` | 64     | Y    | Y        | 冻结的合约，采用`,`分隔   |
+| frozeFunctions | `string` | 64     | Y    | Y        | 冻结的function，采用`,`分隔   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
 | identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
 | kYC | `string` |      | Y    | Y        | identity认证信息                      |
@@ -1532,7 +1513,15 @@ log.info("响应结果：{}",casDecryptReponse);
 | :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
 | identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
 | KYC       | `string` | 1024     | Y    | Y        | KYC属性（json字符串，合约目前支持kyc验证）                         |
-| identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node |
+| identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node， 用户可自定义 |
+
+-  <a id="identityType">identityType类型</a> 
+
+|     类型                   | 说明                |
+| :-----------------------: | ------------------  |
+| user                      |  普通用户            |
+| domain                    |  Domain域           |
+| node                      |  参与网络的区块链节点   |
 
 - 响应参数：
 
