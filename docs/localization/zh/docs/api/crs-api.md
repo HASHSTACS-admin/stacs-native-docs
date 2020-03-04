@@ -723,13 +723,13 @@
 | :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
 | code      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
 | label      | `string`              | 64       | Y    | Y        | BD名称                             |
-| bdType    | `string`               | 32       | Y    | Y        | BD类型<a href="FUNCTION_TYPE">function type类型</a>   |
+| bdType    | `string`               | 32       | Y    | Y        | BD类型<a href="bdType">bdType类型</a>   |
 | desc      | `string`               | 1024     | N    | Y        | 描述                      |
 | functions | `List<FunctionDefine>` |          | Y    | Y        | bd定义function            |
 | contracts | `List<ContractDefine>` |          | Y    | Y        | bd定义contract            |
 | bdVersion | `string`               | 4        | Y    | Y        | bd版本                    |
 
-function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(address)和(uint256) balanceOf(address)
+function定义:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -740,10 +740,18 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | name           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
 | type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
 
+- <a id="bdType">bdType类型</a>
+
+|    类型                         | 说明                         | 
+| :-----------------------------:| --------                    |
+| system                         |定义`bdType`为`system` 时，`BD`下发布的`functions`的`type`只能是`SystemAction`|
+| contract                       |定义`bdType`为`contract` 时，`BD`下发布的`functions`需要满足合约定义
+| assets                         |定义`bdType`为`assets`，`functions`必须包含`(uint256) balanceOf(address)`和`(uint256) balanceOf(address)`|
+
 - <a id="FUNCTION_TYPE">function type类型</a>
 
 |    类型                         | 说明                         | 
-| :---------:                    | --------                    |
+| :-----------------------------:| --------                    |
 | SystemAction                   |系统内置function功能            |
 | Contract                       |该function属于合约方法           |
 | ContractQuery                  |该function属于合约查询类,可以通过<a href="query-api.md#queryContract">合约状态查询</a>调用该方法|
