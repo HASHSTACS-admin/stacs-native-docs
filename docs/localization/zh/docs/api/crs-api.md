@@ -108,6 +108,10 @@
 
 ```
 
+## KYC规范
+
+> 
+
 ## 接口规范
 
 - HTTP请求头
@@ -1375,8 +1379,9 @@ log.info("响应结果：{}",casDecryptReponse);
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
 | targetAddress | `string`   | 40       | Y    | Y        | 目标identity地址              |
-|    BDCodes    | `string[]` |          | Y    | Y        | 冻结的bd数组，冻结成功后，identity无法操作冻结bd的所有交易(签名拼接时，需要使用逗号进行分割拼接成字符串)|
-|  actionType   | `string`   |          | Y    | Y        | 操作类型： froze:冻结  unfroze:解冻 |
+|    codes    | `string[]` |          | Y    | Y          | |
+|  actionType   | `string`   |          | Y    | Y        | <a href="actionType">操作类型</a> |
+|  frozeType   | `string`   |          | Y    | Y        | <a href="frozeType">冻结类型</a> |
 
 - 响应参数：
 
@@ -1387,19 +1392,7 @@ log.info("响应结果：{}",casDecryptReponse);
 - 实例：
 
 ```json tab="请求实例"
-{
-	"actionType":"froze",
-	"bDCodes":["CBD_SC_97251"],
-	"bdCode":"SystemBD",
-	"execPolicyId":"IDENTITY_BD_MANAGE",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"IDENTITY_BD_MANAGE",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"01355fe479c900c5bd3ec52c01aa3543f271b4ba6b0963adc31cc4b7baa1ccace17e1dd22c93a3ff9e7d35ad80e6a6e2028a38854583778a424a0c6ac143bb3975",
-	"targetAddress":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"txId":"9e93ae8071511828c2879206a1a6c50f3d292f5790e3d8f0379a0b3b5f98b67c"
-} 
+
 ```
 
 ```json tab="响应实例"
@@ -1409,6 +1402,23 @@ log.info("响应结果：{}",casDecryptReponse);
 	"respCode":"000000"
 } 
 ```
+
+-  <a id="actionType">操作类型</a> 
+
+|     类型                   | 说明                 | 
+| :-----------------------: | ------------------  | 
+| FROZE                     | 冻结`Identity`的`BD`后,`Identity`不能再调用被冻结`BD`所有交易;<br>冻结`Identity`的`CONTRACT`后,`Identity`不能再调用被冻结`CONTRACT`所有交易,但可以调用`BD`的其他`templateCode`合约;<br>冻结`Identity`的`FUNCTION_NAME`后`Identity`不能在调用被冻结`FUNCTION_NAME`交易,但可以调用`BD`的其他`FUNCTION_NAME`|
+| UNFROZE                   | 解冻`BD`,`CONTRACT`,`functionName`,解冻成功后可以正常使用|
+
+-  <a id="frozeType">冻结类型</a> 
+
+|     类型                   | 说明                 | 
+| :-----------------------: | ------------------  | 
+| BD                        |  冻结或解冻整个`BD`   |
+| CONTRACT                  |  冻结或解冻整个整个合约,冻结的是合约code格式为`bdCode`+`templateCode`|
+| FUNCTION_NAME              |  冻结或解冻`funtionName`   |
+
+
 
 ##### Identity权限查询
 
@@ -1421,7 +1431,7 @@ log.info("响应结果：{}",casDecryptReponse);
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | N        | 用户地址                     |
 
-- 响应参数：
+
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
