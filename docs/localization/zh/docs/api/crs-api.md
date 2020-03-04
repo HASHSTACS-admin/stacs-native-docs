@@ -723,7 +723,7 @@
 | :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
 | code      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
 | label      | `string`              | 64       | Y    | Y        | BD名称                             |
-| bdType    | `string`               | 32       | Y    | Y        | BD类型（/system/contract/assets）   |
+| bdType    | `string`               | 32       | Y    | Y        | BD类型<a href="FUNCTION_TYPE">function type类型</a>   |
 | desc      | `string`               | 1024     | N    | Y        | 描述                      |
 | functions | `List<FunctionDefine>` |          | Y    | Y        | bd定义function            |
 | contracts | `List<ContractDefine>` |          | Y    | Y        | bd定义contract            |
@@ -741,11 +741,12 @@ function定义:如果bdType为assets，functions必须包含(uint256) balanceOf(
 | type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
 
 - <a id="FUNCTION_TYPE">function type类型</a>
-|    类型         | 说明     | 
-| :---------:    | -------- |
-| SystemAction   |系统内置function功能|
-| Contract       |该function属于合约方法|
-| ContractQuery  |该function属于合约查询类,可以通过<a href="query-api.md#queryContract">合约状态查询</a>调用该方法|
+
+|    类型                         | 说明                         | 
+| :---------:                    | --------                    |
+| SystemAction                   |系统内置function功能            |
+| Contract                       |该function属于合约方法           |
+| ContractQuery                  |该function属于合约查询类,可以通过<a href="query-api.md#queryContract">合约状态查询</a>调用该方法|
 
 - 响应参数：
 
@@ -1245,7 +1246,7 @@ log.info("响应结果：{}",casDecryptReponse);
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
 | address      | `string` | 40     | Y    | Y        | Identity地址                      |
 | hidden       | `int`    | 1      | Y    | Y        | 是否隐藏                      |
-| identityType | `string` | 64     | Y    | Y        |  1. user 2. domain 3. node       |
+| identityType | `string` | 64     | Y    | Y        |  <a href="identityType">identityType类型</a>     |
 | property     | `string` | 1024   | N    | Y      |  属性json格式       |
 
 
@@ -1258,20 +1259,7 @@ log.info("响应结果：{}",casDecryptReponse);
 - 实例：
 
 ```json tab="请求实例"
-{
-	"address":"4a02aa7f84d01b63b28c81c096f8c2e3feda7df9",
-	"bdCode":"SystemBD",
-	"execPolicyId":"IDENTITY_SETTING",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"froze":null,
-	"functionName":"IDENTITY_SETTING",
-	"identityType":"user",
-	"property":"{}",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"0126dd3b87c68bd0977c9dd952f3695dc6ecb7f9b85125918a8834991d16547e3f71380e4ed9bf1cc9b3cc3b47d8ad90208bff8f2f15cc0991dc8fe0dcbeeda7f0",
-	"txId":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6"
-} 
+
 ```
 
 ```json tab="响应实例"
@@ -1281,6 +1269,13 @@ log.info("响应结果：{}",casDecryptReponse);
 	"respCode":"000000"
 } 
 ```
+-  <a id="identityType">identityType类型</a> 
+
+|     类型                   | 说明                | 
+| :-----------------------: | ------------------  | 
+| user                      |  普通用户            |
+| domain                    |  Domain域           |
+| node                      |  参与网络的区块链节点   |
 
 ##### <a id="AUTHORIZE_PERMISSION">Identity授权Permission</a>
 
