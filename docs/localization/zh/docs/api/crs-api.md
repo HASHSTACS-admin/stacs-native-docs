@@ -1189,6 +1189,7 @@ log.info("响应结果：{}",casDecryptReponse);
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+|	|	|	|	|	|	|
 
 - 响应参数：
 
@@ -1280,6 +1281,7 @@ log.info("响应结果：{}",casDecryptReponse);
 	"respCode":"000000"
 } 
 ```
+
 -  <a id="identityType">identityType类型</a> 
 
 |     类型                   | 说明                |
@@ -1288,7 +1290,8 @@ log.info("响应结果：{}",casDecryptReponse);
 | domain                    |  Domain域           |
 | node                      |  参与网络的区块链节点   |
 
-##### <a id="AUTHORIZE_PERMISSION">Identity授权Permission</a>
+
+#####  <a id="AUTHORIZE_PERMISSION">Identity授权Permission</a>
 
 - [x] 开放
 - 接口描述：  给Identity赋予已入链的permission
@@ -1334,7 +1337,6 @@ log.info("响应结果：{}",casDecryptReponse);
 	"respCode":"000000"
 } 
 ```
-
 
 ##### <a id="IDENTITY_BD_MANAGE">Identity冻结/解冻BD</a>
 
