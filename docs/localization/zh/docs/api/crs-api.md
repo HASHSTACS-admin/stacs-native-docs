@@ -684,8 +684,8 @@
 | code      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
 | label      | `string`              | 64       | Y    | Y        | BD名称                             |
 | desc      | `string`               | 1024     | N    | Y        | 描述                      |
-| functions | `List<FunctionDefine>` |          | Y    | Y        | bd定义function            |
-| contracts | `List<ContractDefine>` |          | Y    | Y        | bd定义contract            |
+| functions | `List<FunctionDefine>` |          | N    | Y        | bd定义function            |
+| contracts | `List<ContractDefine>` |          | N    | Y        | bd定义contract            |
 | bdVersion | `string`               | 4        | Y    | Y        | bd版本                    |
 
 `ContractDefine`定义:
