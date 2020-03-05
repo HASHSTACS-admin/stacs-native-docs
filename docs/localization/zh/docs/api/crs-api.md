@@ -74,6 +74,13 @@
 | SAVE_ATTESTATION  	| DEFAULT        | SAVE_ATTESTATION   	|存证交易      |
 | BUILD_SNAPSHOT  		| DEFAULT        | BUILD_SNAPSHOT   	|快照交易      |
 
+## 合约类的function表
+
+| functionName      	| execPermission | execPolicy         	| 备注 |
+| :-------------------- |  :-----        |  :-----             |  :--------------------            |
+| CONTRACT_CREATION		| 取决于BD定义    | 取决于BD定义   	   |合约创建                            |
+| ${functionDefine.name}| 取决于BD定义    | 取决于BD定义   	   |合约中的方法，functionDefine中的name |
+
 ## 系统内置Permission表
 | Permission      	    | 备注 |
 | :-----                |  :-----        |
@@ -161,19 +168,31 @@
 	"signature": "012db52119a153606a362ff78e197e27cbf1fbff8e04d138cfe0e858ab701741ae1556e0667a145a50004504771297e48815ef31a9f5028b9132da0f70ded82075"
 }
 ```
+### <a id="requestParam">requestParam参数列表</a>
 
+|     属性     | 类型     | 说明                                                         |
+| :----------: | -------- | ------------------------------------------------------------ |
+| txData       | `string` | 请求原始数据                                                   |
+| txSign       | `string` | 请求原始数据的签名                                            |
+
+```示例：
+   {
+       "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionName":"BD_PUBLISH","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","name":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","name":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","name":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","name":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
+       "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
+   }
+```
 ### <a id="COMMON_PRAMS_LIST">通用参数列表</a>
 
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
-|     txId      | `string` | 64       | Y    |    Y     | 请求Id |
-| bdCode     | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode  |
-| templateCode| `string`| 32|N|Y|发布合约或执行合约方法时的合约templateCode|
-| functionName  | `string` | 32        | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CREATE_CONTRACT` |
-|   submitter   | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
-|   actionDatas   | `string` |        | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
-|   version     | `string` | 40       | Y    |    Y     | 交易版本号                                               |
-|extensionDatas | `string` | 1024     | N   |    Y     | 交易存证新消息                                               |
+| txId          | `string` | 64       | Y    |    Y     | 请求Id |
+| bdCode        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode  |
+| templateCode  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode|
+| functionName  | `string` | 32       | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
+| submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
+| actionDatas   | `string` |          | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+| version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
+|extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
 | maxAllowFee   | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
 |  feeCurrency  | `string` | 32       | N    |    Y     | 手续费币种                                                   |
 | submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |
@@ -317,7 +336,6 @@
 
 ```json tab="请求实例"
 {
-	"bdCode":"SystemBD",
 	"caList":[
 		{
 			"domainId":"FORT-CAPITAL",
@@ -338,14 +356,7 @@
 			"version":"1.0.0"
 		}
 	],
-	"execPolicyId":"CA_AUTH",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"CA_AUTH",
-	"proxyNodeName":null,
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"018e63a4c83e339417e0c85d9355fee1e62907cfdc0dfec0a45d3bb0fe13c1793e0828709351ab0cb3b76e88a13c1ad11841c54d376c071039ec6e4bfc4faa4e3f",
-	"txId":"9a2b9cfb143acccd49ece0b5b6fa8474c97a6e414e099bcb031da085c2fca80b"
+	"proxyNodeName":null
 } 
 ```
 
@@ -364,7 +375,7 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | period | `string` | 64     | Y    | Y        | 过期时间                      |
 | pubKey | `string` | 64     | Y    | Y        | 公钥                      |
-| user | `string` | 64     | Y    | Y        | 节点名称                      |
+| user   | `string`   | 64     | Y    | Y        | 节点名称                      |
 | domainId | `string` | 64     | Y    | Y        | 域                      |
 | usage; | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
 
@@ -379,17 +390,9 @@
 
 ```json tab="请求实例"
 {
-	"bdCode":"SystemBD",
 	"domainId":"FORT-CAPITAL",
-	"execPolicyId":"CA_UPDATE",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"CA_UPDATE",
 	"period":1579343411360,
 	"pubKey":"041db72c7828299254ad1163ec8c39e9d33443eaef4b113ec1010e6f4f1b722854a4e8321db3013acbd6a69e1c3f45bf014351554d523d3661157ec169d8b5402c",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"01bbe21608707ce555549f807e1ce41f37defc900919b2ede6011cd672b042ff551b935f4f4792007bc93a9820d5048ae198617eac4e71b6fc89d3e399d2f50bbf",
-	"txId":"8eb84689c2098ec00833fdb5ae0382cc8f6f35b8a19aace4573e1897fd1b511c",
 	"usage":"biz",
 	"user":"Node-d"
 } 
@@ -429,16 +432,10 @@
 
 ```json tab="请求实例"
 {
-	"bdCode":"SystemBD",
 	"domainId":"FORT-CAPITAL",
-	"execPolicyId":"CA_CANCEL",
 	"feeCurrency":null,
 	"feeMaxAmount":null,
-	"functionName":"CA_CANCEL",
 	"pubKey":"041db72c7828299254ad1163ec8c39e9d33443eaef4b113ec1010e6f4f1b722854a4e8321db3013acbd6a69e1c3f45bf014351554d523d3661157ec169d8b5402c",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"0025dff49f9383d8d5ca09aabae0390536546759d82658ca7d536214012091c7fb51d898a376fa6d2f1c95ee57e0b28be90be378af28706256c44a4706bcb07dec",
-	"txId":"3865a759f1308b370074bf34a21f87016f23f566c428b80bf1b7afc5515b0703",
 	"usage":"biz",
 	"user":"Node-d"
 } 
@@ -480,19 +477,13 @@
 
 ```json tab="请求实例"
 {
-	"bdCode":"SystemBD",
 	"domainId":"FORT-CAPITAL",
-	"execPolicyId":"NODE_JOIN",
 	"feeCurrency":null,
 	"feeMaxAmount":null,
-	"functionName":"NODE_JOIN",
 	"nodeName":"Node-d",
 	"pubKey":"04ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf054",
 	"sign":"005a086c04657767f395744c13d3e7eced587f95fa71e2735e4f020b3aee5c339715dd8e329a50bd90a3f17c01925cdc988a3264dbcb95d3abb7c31d29bf2758bb",
 	"signValue":"4c34be99e70917f2c8ecf0c9a6111e108cbd36180bd161a9468e56a05a8e72c5SystemBDNODE_JOINNode-dFORT-CAPITALFORT-CAPITALNode-d04ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf05404ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf054NODE_JOIN",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"01be5c031f1c1fa055fffffd16573635794c9b07557eb7cec79692f933ab0907351b4e67e5e9fee951878341430c8fec65b06c8b9fed7cb96f91a4ca3524fc1ee4",
-	"txId":"4c34be99e70917f2c8ecf0c9a6111e108cbd36180bd161a9468e56a05a8e72c5"
 } 
 ```
 
@@ -534,19 +525,11 @@
 
 ```json tab="请求实例"
 {
-	"bdCode":"SystemBD",
 	"domainId":"Domain",
-	"execPolicyId":"NODE_LEAVE",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"NODE_LEAVE",
 	"nodeName":"Node-g12",
 	"pubKey":"04ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf054",
 	"sign":"002d678597d5b2402cc37bf836efe9a7f122ca7687231aeb6db4b0efee3e92aaa26aedcd6d68e08d77aadfc8f72d89b328505a4f36444b09b9df888c533d721057",
 	"signValue":"1111111111",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"00d538eb51258ef8972ced6565442a0885d3d3a8bb9d63e240e7123636011c2f406b33c5ba7a420031da602caff355d74170ab8ba3e303fd6c3cf57dc7d5c7752f",
-	"txId":"f23329f0d855b525b301c9054fe05b38d97478c91a0b60a01300cb31fe473c25"
 } 
 ```
 
@@ -574,7 +557,7 @@
 | decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
 | domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
 | requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
-| assignMeta | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
+| assignMeta     | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -600,22 +583,14 @@
 		"mustDomainIds":null,
 		"verifyNum":1
 	},
-	"bdCode":"SystemBD",
 	"callbackType":"ALL",
 	"decisionType":"FULL_VOTE",
 	"domainIds":[
 		"Domain"
 	],
-	"execPolicyId":"REGISTER_POLICY",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"REGISTER_POLICY",
 	"policyId":"P_",
 	"policyName":"P_-name",
 	"requireAuthIds":[],
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"015bcf8f804fec7835676d594899cf6643a5fe4ac3c586dfa6f89842e756234862514719c31a043eca395256e03707e228f7cdb15daeb0e9de2545d2c4ecbea304",
-	"txId":"92904f2ed902d1a4b7c2442d302fd098fbbf6aee071b8179d51c885cfabe87ce",
 	"votePattern":"SYNC"
 } 
 ```
@@ -671,22 +646,14 @@
 		"mustDomainIds":null,
 		"verifyNum":1
 	},
-	"bdCode":"SystemBD",
 	"callbackType":"ALL",
 	"decisionType":"FULL_VOTE",
 	"domainIds":[
 		"Domain"
 	],
-	"execPolicyId":"MODIFY_POLICY",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"MODIFY_POLICY",
 	"policyId":"P_ID_873",
 	"policyName":"P_ID_873-name",
 	"requireAuthIds":[],
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"006f17de9fe8a791c2e90f0e5207069adad3d531236946d332c499a56aa857026f2896183ff1f9b8028ea20be4184febd70fa86ee24017a3601d61c4d98a622f0a",
-	"txId":"fc180d4f1fe7ed3d5cccabcad3b9c8205f4c7c6d9ec7e5395274c786b4a1a223",
 	"votePattern":"SYNC"
 } 
 ```
@@ -720,15 +687,16 @@
 | functions | `List<FunctionDefine>` |          | Y    | Y        | bd定义function            |
 | contracts | `List<ContractDefine>` |          | Y    | Y        | bd定义contract            |
 | bdVersion | `string`               | 4        | Y    | Y        | bd版本                    |
+
 `ContractDefine`定义:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
-|   templateCode   | `string` | 32    | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
-| desc           | `string` | 256     | N    | Y        | function描述                     |
-| createPermission | `string` | 64     | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
-| createPolicy | `string` | 32     | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
-| functions | `List<FunctionDefine>` |          | Y    | Y        | 合约方法定义function            |
+| :-----------:    | -------- | -------------- | ---- | -------- | :---------------------------- |
+|   templateCode   | `string` | 32             | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
+| desc             | `string` | 256            | N    | Y        | function描述                     |
+| createPermission | `string` | 64             | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
+| createPolicy     | `string` | 32             | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
+| functions        | `List<FunctionDefine>`|      | Y        | Y        | 合约方法定义function            |
 
 `FunctionDefine`定义:
 
@@ -758,132 +726,71 @@
 
 - 实例：
 
-```java tab="请求实例"
-BusinessDefine bd = new BusinessDefine();
-bd.setCode("sto_code");
-bd.setLabel("sto_code_name");
-bd.setBdVersion(VersionEnum.V4.getCode());
-bd.setVersion(VersionEnum.V4.getCode());
+```java tab="请求实例-actionDatas"
+    {
+        "datas":{
+            "bdVersion":"4.0.0",
+            "code":"sto_code",
+            "contracts":[
+                {
+                    "createPermission":"DEFAULT",
+                    "createPolicy":"BD_PUBLISH",
+                    "desc":"余额查询-1",
+                    "functions":[
+                        {
+                            "desc":"余额查询",
+                            "execPermission":"DEFAULT",
+                            "execPolicy":"BD_PUBLISH",
+                            "methodSign":"(uint256) balanceOf(address)",
+                            "name":"balanceOf",
+                            "type":"Contract"
+                        },
+                        {
+                            "desc":"转账",
+                            "execPermission":"DEFAULT",
+                            "execPolicy":"BD_PUBLISH",
+                            "methodSign":"(bool) transfer(address,uint256)",
+                            "name":"transfer",
+                            "type":"Contract"
+                        }
+                    ],
+                    "templateCode":"code-balanceOf-1"
+                },
+                {
+                    "createPermission":"DEFAULT",
+                    "createPolicy":"BD_PUBLISH",
+                    "desc":"余额查询-2",
+                    "functions":[
+                        {
+                            "desc":"余额查询",
+                            "execPermission":"DEFAULT",
+                            "execPolicy":"BD_PUBLISH",
+                            "methodSign":"(uint256) balanceOf(address)",
+                            "name":"balanceOf",
+                            "type":"Contract"
+                        },
+                        {
+                            "desc":"转账",
+                            "execPermission":"DEFAULT",
+                            "execPolicy":"BD_PUBLISH",
+                            "methodSign":"(bool) transfer(address,uint256)",
+                            "name":"transfer",
+                            "type":"Contract"
+                        }
+                    ],
+                    "templateCode":"code-balanceOf-2"
+                }
+            ],
+            "label":"sto_code_name"
+        },
+        "version":"4.0.0"
+    }
 
-//余额方法
-FunctionDefine functionDefine = new FunctionDefine();
-functionDefine.setName("balanceOf");
-functionDefine.setType(FunctionType.Contract);
-functionDefine.setDesc("余额查询");
-functionDefine.setMethodSign("(uint256) balanceOf(address)");
-functionDefine.setExecPermission("DEFAULT");
-functionDefine.setExecPolicy("BD_PUBLISH");
-
-//转账方法
-FunctionDefine functionDefine2 = new FunctionDefine();
-functionDefine2.setName("transfer");
-functionDefine2.setType(FunctionType.Contract);
-functionDefine2.setDesc("转账");
-functionDefine2.setMethodSign("(bool) transfer(address,uint256)");
-functionDefine2.setExecPermission("DEFAULT");
-functionDefine2.setExecPolicy("BD_PUBLISH");
-
-List<FunctionDefine> functions = new ArrayList<>();
-functions.add(functionDefine);
-functions.add(functionDefine2);
-
-List<FunctionDefine> functions1 = new ArrayList<>();
-functions1.add(BeanConvertor.convertBean(functionDefine,FunctionDefine.class));
-functions1.add(BeanConvertor.convertBean(functionDefine2,FunctionDefine.class));
-
-//合约-1
-ContractDefine contractDefine = new ContractDefine();
-contractDefine.setTemplateCode("code-balanceOf-1");
-contractDefine.setCreatePolicy("BD_PUBLISH");
-contractDefine.setCreatePermission("DEFAULT");
-contractDefine.setDesc("余额查询-1");
-contractDefine.setFunctions(functions);
-
-//合约-2
-ContractDefine contractDefine1 = new ContractDefine();
-contractDefine1.setTemplateCode("code-balanceOf-2");
-contractDefine1.setCreatePolicy("BD_PUBLISH");
-contractDefine1.setCreatePermission("DEFAULT");
-contractDefine1.setDesc("余额查询-2");
-contractDefine1.setFunctions(functions1);
-
-List<ContractDefine> contractDefines = new ArrayList<>();
-contractDefines.add(contractDefine);
-contractDefines.add(contractDefine1);
-bd.setContracts(contractDefines);
-
-StacsECKey ecKey = new StacsECKey();
-
-TxVo<BusinessDefine> tx = new TxVo<>();
-tx.setActionDatas(bd);
-tx.setBdCode("SystemBD");
-tx.setFunctionName("BD_PUBLISH");
-tx.setSubmitter(ecKey.getHexAddress());
-tx.setVersion(VersionEnum.V4.getCode());
-tx.setExtensionDatas("");
-tx.setMaxAllowFee("");
-tx.setFeeCurrency("");
-tx.setTxId(IdGenerator.generate64TxId(JSON.toJSONString(tx)+System.currentTimeMillis()));
-
-//交易格式转换
-Transaction transaction = TransactionBuilder.buildTransaction(tx);
-CasDecryptReponse casDecryptReponse = stoClient.submitTransaction(TxDataVO.of(transaction,ecKey));
-log.info("响应结果：{}",casDecryptReponse);
 ```
 
 ```json tab="响应实例"
 {
 	"data":"0f2222f69027942c341b0e1296256b2b8acd3135bc448b3e6bea106d22e362a3",
-	"msg":"Success",
-	"respCode":"000000"
-} 
-```
-
-##### BD查询
-
-- [x] 开放
-- 接口描述：  按db查询db详情
-- 请求地址：`GET`:`/bd/query?bdCode={bdCode}`
-- 请求参数： （无需签名）
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| bdCode          | `string`     | 32     | N    | N        | 查询的BD                     |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| code | `string` | 32     | Y    | Y        | BD的code，唯一                     |
-| desc | `string` | 1024     | Y    | Y        | 描述                     |
-| functions | `JSONArray` | 4082     | Y    | Y        | bd定义的支持的function申明|
-| initPermission | `string` | 64     | Y    | Y        | 发布BD时，发布者需要具备的权限                      |
-| initPolicy | `string` | 64     | Y    | Y        | 发布BD时，发布执行的policy策略    |
-| name | `string` | 64     | Y    | Y        | BD名称                      |
-| bdVersion | `string` | 4     | Y    | Y        | BD版本号                     |
-- 实例：
-
-``` tab="请求实例"
-/bd/query?bdCode=
-```
-
-```json tab="响应实例"
-{
-	"data":[
-		{
-			"bdType":"assets",
-			"bdVersion":"1.0",
-			"code":"CBD_SC_87716",
-			"createTime":1576152885920,
-			"desc":null,
-			"functions":"[{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"transfer(address,uint256)\",\"name\":\"transfer\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"transferToContract(uint256,uint256,address,string)\",\"name\":\"transferToContract\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"balanceOf(address)\",\"name\":\"balanceOf\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"additionalIssue(uint256)\",\"name\":\"additionalIssue\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"buybackPay(address[],uint256[])\",\"name\":\"buybackPay\",\"type\":\"Contract\"},{\"desc\":\"\",\"execPermission\":\"CONTRACT_INVOKE\",\"execPolicy\":\"CONTRACT_INVOKE\",\"methodSign\":\"settlPay(address[],uint256[])\",\"name\":\"settlPay\",\"type\":\"Contract\"}]",
-			"id":null,
-			"initPermission":"DEFAULT",
-			"initPolicy":"CONTRACT_ISSUE",
-			"name":"CBD_SC_87716",
-			"updateTime":null
-		}
-	],
 	"msg":"Success",
 	"respCode":"000000"
 } 
@@ -912,16 +819,10 @@ log.info("响应结果：{}",casDecryptReponse);
 - 实例：
 
 ```json tab="请求实例"
-
-	"bdCode":"SystemBD",
-	"execPolicyId":"BUILD_SNAPSHOT",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"BUILD_SNAPSHOT",
-	"snapshotId":"28829",
-	"submitter":"323c1e309841d2feb683b1227658de77d90406bf",
-	"submitterSign":"00c2fff5aeeb03cf0d77badbf71841169540856f387fb31f6797021ea78961e4de505cb1269626568f62f876861de7e99494be704961153dae2ba6012934246abd",
-	"txId":"541dadd6cb406a8206c6e3ea5979a52a30786ccf7480f5ec598c452e0a23c549"
+	{
+	    "datas":{"snapshotId":"0e248ba7-8c95-4667-a1f3-d98c2a861973"},
+	    "version":"4.0.0"
+    }
 } 
 ```
 
@@ -984,11 +885,12 @@ log.info("响应结果：{}",casDecryptReponse);
 | fromAddr        | `string`   | 40       | Y    | Y        | 提交者地址                 |
 | contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
 | name            | `string`   | 64       | Y    | Y        | 合约名称                   |
-| symbol          | `string`   | 64       | Y    | Y      | 合约简称                   |
-| extension       | `string`   | 1024     | N    | Y        | 扩展属性                   |
-| contractor      | `string`   |          | Y    | N        | 合约构造器(函数)名         |
-| sourceCode      | `string`   |          | Y    | N        | 合约代码                   |
-| initArgs        | `object[]` |          | Y    | N        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
+| symbol          | `string`   | 64       | Y    | Y        | 合约简称                   |
+| extension       | `string`   | 1024     | Y    | Y        | 扩展属性                   |
+| contractor      | `string`   |          | Y    | Y        | 合约构造器(函数)名         |
+| sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
+| initArgs        | `object[]` |          | Y    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
+| version         | `string`   |10        | Y    | Y        | 版本号：4.0.0            |
 
 - 响应参数：
 
@@ -999,29 +901,24 @@ log.info("响应结果：{}",casDecryptReponse);
 - 实例：
 ```json tab="请求实例"
 {
-	"bdCode":"CBD_SC_50954",
-	"contractAddress":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb",
-	"contractor":"StandardCurrency(address,string,string,uint,uint8,string)",
-	"execPolicyId":"CONTRACT_ISSUE",
-	"extension":"{\"a\":1}",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"fromAddr":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
-	"functionName":"CREATE_CONTRACT",
-	"initArgs":[
-		"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
-		"S_50954",
-		"S_50954_Name",
-		100000000000000,
-		8,
-		"00000000000000000000000000000000000000000000000000000074785f6964"
-	],
-	"name":"StandardCurrency",
-	"sourceCode":"pragma solidity ^0.4.24;\n\n\n//This smart contact is generated for  #name#\ncontract Common {\n    bytes32 constant STACS_ADDR = bytes32(0x5354414353000000000000000000000000000000000000000000000000000001);\n    bytes32 constant  POLICY_ID = bytes32(0x0000000000000000000000000000000000000000000000706f6c6963795f6964);\n    bytes32 constant TX_ID = bytes32(0x00000000000000000000000000000000000000000000000000000074785f6964);\n    bytes32 constant MSG_SENDER = bytes32(0x000000000000000000000000000000000000000000004d53475f53454e444552);\n    event Bytes32(bytes32);\n    event UintLog(uint, uint);\n    event Bytes(bytes);\n    event Address(address);\n    event String(string);\n\n    bytes32 policyId;\n\n    function updatePolicyId(string newPolicyIdStr) public returns (bool success);\n\n    function getPolicyId() public view returns (bytes32){\n        return policyId;\n    }\n\n    function recovery(bytes sig, bytes32 hash) public pure returns (address) {\n        bytes32 r;\n        bytes32 s;\n        uint8 v;\n        //Check the signature length\n        require(sig.length == 65, \"signature length not match\");\n\n        // Divide the signature in r, s and v variables\n        assembly {\n            r := mload(add(sig, 32))\n            s := mload(add(sig, 64))\n            v := byte(0, mload(add(sig, 96)))\n        }\n        // Version of signature should be 27 or 28\n        if (v < 27) {\n            v += 27;\n        }\n        //check version\n        if (v != 27 && v != 28) {\n            return address(0);\n        }\n        return ecrecover(hash, v, r, s);\n    }\n\n    function hexStr2bytes(string data) public pure returns (bytes){\n        bytes memory a = bytes(data);\n        require(a.length > 0, \"hex string to bytes error, hex string is empty\");\n        uint[] memory b = new uint[](a.length);\n\n        for (uint i = 0; i < a.length; i++) {\n            uint _a = uint(a[i]);\n\n            if (_a > 96) {\n                b[i] = _a - 97 + 10;\n            }\n            else if (_a > 66) {\n                b[i] = _a - 65 + 10;\n            }\n            else {\n                b[i] = _a - 48;\n            }\n        }\n\n        bytes memory c = new bytes(b.length / 2);\n        for (uint _i = 0; _i < b.length; _i += 2) {\n            c[_i / 2] = byte(b[_i] * 16 + b[_i + 1]);\n        }\n        return c;\n    }\n\n    function getContextIdByKey(bytes32 key) internal returns (bytes32 contextPolicyId){\n        emit Bytes32(key);\n        bytes32 output = getContextParam(key, 32, STACS_ADDR);\n        require(output.length > 0, \"output is empty\");\n        return output;\n    }\n\n    function getContextParam(bytes32 input, uint outputSize, bytes32 precompliedContractAddr) internal returns (bytes32){\n        bytes32[1] memory inputs;\n        inputs[0] = input;\n        bytes32 stacs_addr = precompliedContractAddr;\n        bytes32[1] memory output;\n        assembly{\n            let success := call(//This is the critical change (Pop the top stack value)\n            0, //5k gas\n            stacs_addr, //To addr\n            0, //No value\n            inputs,\n            32,\n            output,\n            outputSize)\n        }\n        emit Bytes32(output[0]);\n        return output[0];\n    }\n\n    function stringToBytes32(string memory source) public pure returns (bytes32 result) {\n        bytes memory tempEmptyStringTest = bytes(source);\n        if (tempEmptyStringTest.length == 0) {\n            return 0x0;\n        }\n        assembly {\n            result := mload(add(source, 32))\n        }\n    }\n\n    function splitBytes(bytes strBytes, uint start, uint length) public pure returns (bytes){\n        require(strBytes.length > 0, \"input bytes length is 0\");\n        bytes memory b = new bytes(length);\n        for (uint i = 0; i < length; i++) {\n            b[i] = strBytes[start + i];\n        }\n        return b;\n    }\n\n    function bytesToAddress(bytes bys) internal pure returns (address addr) {\n        require(bys.length == 20, \"bytes to address error. input bytes length is not 20\");\n        assembly {\n            addr := mload(add(bys, 20))\n        }\n    }\n\n    function bytesToBytes32(bytes bytes_32) public pure returns (bytes32 result){\n        require(bytes_32.length == 32, \"input bytes length must is 32\");\n        assembly {\n            result := mload(add(bytes_32, 32))\n        }\n    }\n\n    function hexStringToBytes32(string hexString) public pure returns (bytes32 result){\n        bytes memory hexStringBytes = bytes(hexString);\n        require(hexStringBytes.length == 64, \"hex String length must is 64\");\n        return bytesToBytes32(hexStr2bytes(hexString));\n    }\n\n    function verifyPolicyId() internal returns (bool){\n        bytes32 contextPolicyId = getContextIdByKey(POLICY_ID);\n        emit Bytes32(contextPolicyId);\n        emit Bytes32(policyId);\n        require(contextPolicyId == policyId, \"policyId failed validation\");\n        return true;\n    }\n\n    //assemble the given address bytecode. If bytecode exists then the _addr is a contract.\n    function isContract(address _addr) public view returns (bool is_contract) {\n        uint length;\n        assembly {\n        //retrieve the size of the code on target address, this needs assembly\n            length := extcodesize(_addr)\n        }\n        return (length > 0);\n    }\n\n    function getContextParam2(bytes32 input, uint outputSize, bytes32 precompliedContractAddr) internal returns (bytes32){\n        bytes32[1] memory inputs;\n        inputs[0] = input;\n        bytes32 stacs_addr = precompliedContractAddr;\n        bytes32[1] memory output;\n        assembly{\n            let success := call(\n            0,\n            stacs_addr,\n            0,\n            inputs,\n            32,\n            output,\n            outputSize)\n        }\n        return output[0];\n    }\n\n    //get context sender\n    function getContextSender() internal returns (address){\n        //通过使用增强的预编译合约验证，originalAddress是否是最原始交易的sender\n        bytes32 output = getContextParam2(MSG_SENDER, 32, STACS_ADDR);\n        return address(output);\n    }\n}\n\n\n//This smart contact is generated for  #name#\ncontract StandardToken is Common {\n    address issuerAddress;\n    address ownerAddress;\n    string tokenName;\n    string tokenSymbol;\n    uint totalSupplyAmount;\n    uint8 decimalsDigit;\n\n\n    function issuerAddr() public view returns (address){\n        return issuerAddress;\n    }\n\n    function ownerAddr() public view returns (address){\n        return ownerAddress;\n    }\n\n    function name() public view returns (string){\n        return tokenName;\n    }\n\n    function symbol() public view returns (string){\n        return tokenSymbol;\n    }\n\n    function decimals() public view returns (uint8){\n        return decimalsDigit;\n    }\n\n    function totalSupply() public view returns (uint256){\n        return totalSupplyAmount;\n    }\n\n\n\n    function transfer(address _to, uint256 _value) public payable returns (bool success);\n\n    function transferFrom(address _from, address _to, uint256 _value) internal returns (bool);\n\n    function recoverToken(address _from, address _to, uint256 _value) public payable returns (bool success);\n\n    function additionalIssue(uint num) public returns (bool success);\n\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n    function updatePolicyId(string newPolicyIdStr) public returns (bool success){\n        require(verifyPolicyId());\n        //update policyId\n        bytes32 newPolicyId = hexStringToBytes32(newPolicyIdStr);\n        policyId = newPolicyId;\n        return true;\n    }\n\n    function settlPay(address[] _addrs, uint256[] _values) public returns (bool success){\n        require(_addrs.length == _values.length);\n        require(_addrs.length > 0, \"address array length is 0\");\n\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            transferFrom(msg.sender, _addrs[i], _values[i]);\n        }\n        return true;\n    }\n\n    function buybackPay( address[] _addrs, uint256[] _payValues)public returns (bool success){\n        require(_addrs.length == _payValues.length,\"addr length not eq value length\");\n\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            transferFrom(getContextSender(), _addrs[i], _payValues[i]);\n        }\n        return true;\n    }\n}\n\n\n//This smart contact is generated for  #name#\ninterface TokenReceiver {\n    /// @param _payment stable token payment of subscribe token\n    /// @param _amount The amount of token to be transferred\n    /// @return success whether the contract method invoke is successful\n    function receiveToken(uint256 _payment, uint256 _amount) external returns (bool success);\n\n    ///@return offerAddress the address of contract offer\n    function tokenOwnerAddress() external view returns (address offerAddress);\n\n    function symbol() external view returns (string);\n}\n\n\n//This smart contact is generated for  #name#\ncontract StandardCurrency is StandardToken {\n\n    constructor (\n        address _ownerAddr,\n        string _tokenName,\n        string _tokenSymbol,\n        uint _totalSupply,\n        uint8 _decimals,\n        string _policyId\n    ) public {\n        ownerAddress = _ownerAddr;\n        issuerAddress = msg.sender;\n        tokenName = _tokenName;\n        tokenSymbol = _tokenSymbol;\n        decimalsDigit = _decimals;\n        totalSupplyAmount = _totalSupply;\n        balance[ownerAddress] = totalSupplyAmount;\n        policyId = hexStringToBytes32(_policyId);\n        emit Bytes32(policyId);\n    }\n\n    mapping(address => uint) balance;\n\n    function balanceOf(address _owner) public view returns (uint256 balanceAmount){\n        balanceAmount = balance[_owner];\n        return (balanceAmount);\n    }\n\n    function getBalance(address _owner) internal view returns (uint){\n        return balance[_owner];\n    }\n\n    function additionalIssue(uint num) public returns (bool){\n        require(false, \"standard currency temporarily do not support additional issuance\");\n        //        require(verifyPolicyId());\n        //        bytes32 txId = getContextIdByKey(TX_ID);\n        //        bytes32 sourceHash = getAdditionalIssueSourceHashInner(txId, msg.sender, num);\n        //        require(verifySpecifiedAddressSig(issuerAddress,sourceHash, signature));\n        //        totalSupplyAmount += num;\n        //        balance[ownerAddress] += num;\n        return false;\n    }\n\n    function transfer(address _to, uint256 _value) public payable returns (bool success){\n        require(msg.sender != 0x0, \"from address is 0x0\");\n        return transferFrom(msg.sender, _to, _value);\n    }\n\n    function batchTransfer(address[] _addrs, uint256[] _values) public returns (bool success){\n        require(_addrs.length == _values.length);\n        require(_addrs.length > 0, \"address array length is 0\");\n\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            transferFrom(msg.sender, _addrs[i], _values[i]);\n        }\n        return true;\n    }\n    function recoverToken(address _from, address _to, uint256 _value) public payable returns (bool success){\n        require(msg.sender != 0x0, \"msg.sender address is 0x0\");\n        return transferFrom(_from, _to, _value);\n    }\n\n    function transferFrom(address _from, address _to, uint256 _value) internal returns (bool){\n        require(_to != 0x0, \"to address is 0x0\");\n        require(_value > 0, \"the value must be that is greater than zero.\");\n        require(balance[_from]  >= _value, \"balance not enough\");\n        require(balance[_to] + _value >= balance[_to], \"to address balance overflow\");\n        uint previousBalance = balance[_from] + balance[_to];\n        balance[_from] -= _value;\n        balance[_to] += _value;\n        emit Transfer(_from, _to, _value);\n        assert(balance[_from] + balance[_to] == previousBalance);\n\n        return true;\n    }\n\n    /// @param _to The address of the contract\n    /// @param token use verify sign\n    /// @param _payment cost of stable token to subscribe\n    /// @param _amount The amount of token to be transferred/// @param _amount The amount of token to be transferred\n    /// @return Whether the subscribe is successful or not\n    function transferToContract(uint256 _payment, uint256 _amount,address _to, string token ) public returns (bool success) {\n        emit UintLog(_payment,getBalance(msg.sender));\n        require(_payment <= getBalance(msg.sender), \"standard currency balance not enough\");\n        require(_to != address(0), \"to address illegal\");\n        require(isContract(_to), \"unstable currency contract address does not exist\");\n\n        TokenReceiver tokenReceiver = TokenReceiver(_to);\n        require(keccak256(tokenReceiver.symbol()) == keccak256(token), \"the token symbol not equals\");\n\n        address contractOfferAddress = tokenReceiver.tokenOwnerAddress();\n        success = transferFrom(msg.sender, contractOfferAddress, _payment);\n        if (success) {\n            success = tokenReceiver.receiveToken(_payment, _amount);\n            emit RechangeSuccess(msg.sender, success);\n            if (!success) {\n                rollbackTransfer(msg.sender, contractOfferAddress, _payment);\n            }\n        }\n        return success;\n    }\n\n    // rollback of transfer when failure\n    function rollbackTransfer(address _from, address _to, uint _value) private {\n        balance[_to] -= _value;\n        balance[_from] += _value;\n        emit RollbackTransfer(_to, _from, _value);\n    }\n\n\n    event RechangeSuccess(address indexed _to, bool success);\n    event RollbackTransfer(address indexed _from, address indexed _to, uint256 _value);\n}",
-	"submitter":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
-	"submitterSign":"01b8c3509b70758de076bc3850d4ae00f77a4ed5d37ce7e639a8a98aaf4b5c194841f2131d3063328310ee9498086baeb8dcfcd22187cc3fc5746c6fd5eb6b7ecf",
-	"symbol":"S_50954",
-	"txId":"4a7bc3a9b86583818b94a5de346fce29047f88a07e773a47c70701f5bb2f7f32"
+	"datas":
+	{
+        "fromAddr":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
+        "contractAddress":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb",
+        "contractor":"StandardCurrency(address,string,string,uint,uint8,string)",
+        "extension":"{\"a\":1}",
+        "initArgs":[
+            "1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
+            "S_50954",
+            "S_50954_Name",
+            100000000000000,
+            8,
+            "00000000000000000000000000000000000000000000000000000074785f6964"
+        ],
+        "name":"StandardCurrency",
+        "sourceCode":"pragma solidity ^0.4.24;"
+	},
+	"version":"4.0.0"
 } 
 ```
 
@@ -1046,6 +943,7 @@ log.info("响应结果：{}",casDecryptReponse);
 | from           | `string`     |      | Y    | Y        | 同交易提交地址                     |
 | to             | `string`     |      | Y    | Y        | 执行的合约地址                     |
 | remark         | `string`     |      | N    | Y        | 备注存证                     |
+| version        | `string`     |10    | Y    | Y        | 版本号：4.0.0            |
 
 - 响应参数：
 
@@ -1057,22 +955,17 @@ log.info("响应结果：{}",casDecryptReponse);
 
 ```json tab="请求实例"
 {
-	"args":[
-		"e966fe88795f4ff5b772475efea405631e644f59",
-		20
-	],
-	"bdCode":"CBD_SC_50954",
-	"execPolicyId":"CONTRACT_INVOKE",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"from":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
-	"functionName":"transfer",
-	"methodSignature":"(bool) transfer(address,uint256)",
-	"submitter":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
-	"submitterSign":"0161df9af5b9998a8e3bb8b49882d1fc2ba7f32681ed99e74978f4b6c9fa1a5ba77b03f0a5d2314cbeb795ebd4c0e91de5625c130bd204f3246a53102621628cf1",
-	"to":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb",
-	"txId":"9584564d326e9cd0a1fe161257c49d2edc973feb43335de54a7ae198d42602a4",
-	"value":null
+	"datas":
+	    {
+            "args":[
+                "e966fe88795f4ff5b772475efea405631e644f59",
+                20
+            ],
+            "from":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
+            "methodSignature":"(bool) transfer(address,uint256)",
+            "to":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb"
+        },
+    "version":"4.0.0"   
 } 
 ```
 
@@ -1087,7 +980,7 @@ log.info("响应结果：{}",casDecryptReponse);
 ##### 查询
 - [x] 开放
 - 接口描述： 链支持可直接调用合约查询方法(不执行交易流程)
-- 请求地址：`POST`:`/contract/query`
+- 请求地址：`POST`:`/queryContract`
 - 请求参数： （无）
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -1151,15 +1044,11 @@ log.info("响应结果：{}",casDecryptReponse);
 
 ```json tab="请求实例"
 {
-	"bdCode":"SystemBD",
-	"execPolicyId":"PERMISSION_REGISTER",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"PERMISSION_REGISTER",
-	"permissionName":"permission_97251",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"0146a281667fea21a7f3fa5910689b3a0ea33a84f6d87885584237cd0306cc05715cdc6a527c9564c58a05e801b117ae2cf43869656fd4bb4aa8eee7e2bb355763",
-	"txId":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7"
+	"datas":
+    	    {
+	            "permissionName":"permission_97251",
+            },
+    "version":"4.0.0"   
 } 
 ```
 
@@ -1259,7 +1148,14 @@ log.info("响应结果：{}",casDecryptReponse);
 - 实例：
 
 ```json tab="请求实例"
-
+{
+   "datas":
+    	    {
+	          "address":"5342594ae09e2f8844464824e24e61334603bc49",
+	          "property":""
+            },
+    "version":"4.0.0"   
+}
 ```
 
 ```json tab="响应实例"
@@ -1293,20 +1189,18 @@ log.info("响应结果：{}",casDecryptReponse);
 - 实例：
 
 ```json tab="请求实例"
+
 {
-	"bdCode":"SystemBD",
-	"execPolicyId":"AUTHORIZE_PERMISSION",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"AUTHORIZE_PERMISSION",
-	"identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
-	"identityType":"user",
-	"addPermissions":["permission_97251"],
-	"cancelPermissions":["permission_97251"],
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"00b7dbeccdc06a57dd3ed5028d329c7ff9ae0c392967e4bb12220818ef9f0c26be4674102cb12036243c19ccce10f5beb89b4ce4b290d19ede1ff2227502daf7ff",
-	"txId":"c03ba6d1fe11c941b110a3064ce675e52c74be56c9dae4beaccbe287ce4f86e1"
-} 
+   "datas":
+    	    {
+	            "identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
+                "identityType":"user",
+                "addPermissions":["permission_97251"],
+                "cancelPermissions":["permission_97251"],
+            },
+    "version":"4.0.0"   
+}
+
 ```
 
 ```json tab="响应实例"
@@ -1340,6 +1234,15 @@ log.info("响应结果：{}",casDecryptReponse);
 - 实例：
 
 ```json tab="请求实例"
+{
+   "datas":
+    	    {
+	            "actionType":"UNFROZE",
+                "frozeType":"BD",
+                "codes":["SystemBD"]
+            },
+    "version":"4.0.0"   
+}
 
 ```
 
@@ -1533,18 +1436,14 @@ log.info("响应结果：{}",casDecryptReponse);
 
 ```json tab="请求实例"
 {
-	"bdCode":"SystemBD",
-	"execPolicyId":"KYC_SETTING",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
-	"functionName":"KYC_SETTING",
-	"identityAddress":"7cc176180280d46bc15d871e02475ae47a4255f2",
-	"identityType":"user",
-	"kYC":"{\"aaa\":111,\"bbb\":222}",
-	"submitter":"177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-	"submitterSign":"016f1536b7a6f1df12fe8b7a165d9c646028fb127c4d74e5f991aa05c234ad6d77656cc83a206334ae83f44cfbf3ad11078ac004825da67b48e47b6e51a8941ee9",
-	"txId":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5"
-} 
+   "datas":
+    	    {
+	            "identityAddress":"7cc176180280d46bc15d871e02475ae47a4255f2",
+                "identityType":"user",
+                "kYC":"{\"aaa\":111,\"bbb\":222}",
+            },
+    "version":"4.0.0"   
+}
 ```
 
 ```json tab="响应实例"
@@ -1591,6 +1490,16 @@ log.info("响应结果：{}",casDecryptReponse);
     submitter: "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
     submitterSign: "00053bf0571664f5de53b3afd7d18e32eaf8ce6afe3a2352e3bdf90d4ff748a2b66977d3b2d5c8a1f88867109bfde3c1eba25910fcc64649f2e41e39946f71dada",
     txId: "71a29ad1d5968081bfc911b07066a2e953ebe5451b1f1779a9ff54f580170914"
+}
+{
+   "datas":
+    	    {
+	           "attestation": "我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
+               "attestationVersion": "1.0",
+               "objective": "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
+               "remark": "markmarkmarkmarkmark",
+            },
+    "version":"4.0.0"   
 }
 ```
 
