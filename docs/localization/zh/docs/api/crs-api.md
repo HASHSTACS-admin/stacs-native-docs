@@ -155,7 +155,15 @@
 
 ```json tab="请求实例"
 {
-	"requestParam": "qxZrjKc4aV/57vHBAh9yLUC40ez4XsE7OJgHFM4Uy2BrmE3mwkzcVdR20QIEHhcWvyeSVy4mQIu5pG7HhpS+AvBdH33f/r+4YSXmtKo1/vOkLsU5h/t1Z23sD/gRRMB1K5zqH7PK+Ij0//zLuLavg0+UZgFT8m3fW5egy9ULTuRPYQgmU627hrJZU72qP+EoEOKR06+RRQDflz0gkA9SSVpz9MgAZCnYFe8sFtMSqAjeRWTspaP9qXXcX4OafMYm4GlrNkyWUYwcl9A8G2NLOViGuPuDC8tFKShN+9mt4uPwsvj6um7eGwlBBL8FtqrWcX2HZMFTdHCD1rNipi+lbDta5j54p6y5wpLHoR9AOxiOuWXOiGDhzE/HiXae7DRiaPI/AHmVu5p8KPTiKIVSphpbl0kK5vv+lunvmokn1DOlRMs6CvFRIKnqbRwJrEvpaPZkXXqerYbIevtQ9e8ZtRxpdgms5bWGIAijlrOzxsKxmzCrvuMAWt9tHUz2LpCyJCG+woEnbD4p/mJ0u+68kE7P6bztLanWJ31X8DnZlRKs88S3WgYlq3WJrnuQ+qQqRbf5f6+hqPGogxVOZ3AOC3uAVTE4fkcyPTLCOuMDXp5B9hPioXHyMPVMZyGkc1IFx84XRa++uJKGQ7Ja1E/MDANTFxu4CQ/szvHuvVP+Gl3Fk50rKMY0/QiH155xgSq7pnwy2ItCYiTXXc09D2jiahEcXOLGqCuHLh/7YY3zH8hV6dxhB9/66HLaF4p5jGiXyUvbZRhcQE2gu+jW43EETLq+t29z122NQm75M+Q60toy7UrIr+brOrAfMYGpE527vNZAmaEWFJd2i8lDDXoaGMd8l8OiHqnMbxjWQsU4VkGHz0+3jpZpJY5fraq+EgATXfG9IyiNM+yrNL+kwcEmnH3WOdcve+P8keocey2SPu5LgQ10XUvN6qVsi+m6qXy6TsjAWq3Zq5u8beIY9zFBWxScaXlV9c4XLJkXM7tfz04wD7/hGM/S4Il8awRYHAJkUEF2GR1zYNzDFeHWq/mE2x3HWogdKAjwwkPdw8ZEjN9BIVDKVmH1Q/12nUgfr1w9",
+	"requestParam": "{
+	    "txData":"{
+	        "txId":"txId-123",
+	        "bdCode":"SystemBD",
+	        "functionName":"BD_PUBLISH",
+	        .......
+	    }",
+	    txSign:"xxx"
+	}",
 	"signature": "017236d91c3fa2560a5c5fdee1e4a7a55397d146213153d09cea97b1d1949596e2636cf6081bf1a0695811556e9f41918924c41a58149e994ab4132eb54279345d"
 }
 ```
@@ -807,7 +815,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| snapshotId | `string` | 64     | Y    | Y        | 快照id                      |
+| remark      | `string` | 256      | Y    | Y        | 快照备注                      |
 
 
 - 响应参数：
@@ -1464,7 +1472,6 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
 |   version   | `string` | 20       | Y    | N        | 存证版本                      |
-|   remark    | `string` | 1024     | N    | N        | 备注                          |
 |  objective  | `string` | 40       | N    | N        | 目标地址，默认使用`submitter` |
 
 - 响应参数：
@@ -1477,26 +1484,11 @@
 
 ```json tab="请求实例"
 {
-    attestation: "我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
-    attestationVersion: "1.0",
-    bdCode: "SystemBD",
-    execPolicyId: "SAVE_ATTESTATION",
-    feeCurrency: null,
-    feeMaxAmount: null,
-    functionName: "SAVE_ATTESTATION",
-    objective: "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-    remark: "markmarkmarkmarkmark",
-    submitter: "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-    submitterSign: "00053bf0571664f5de53b3afd7d18e32eaf8ce6afe3a2352e3bdf90d4ff748a2b66977d3b2d5c8a1f88867109bfde3c1eba25910fcc64649f2e41e39946f71dada",
-    txId: "71a29ad1d5968081bfc911b07066a2e953ebe5451b1f1779a9ff54f580170914"
-}
-{
    "datas":
     	    {
 	           "attestation": "我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
                "attestationVersion": "1.0",
                "objective": "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-               "remark": "markmarkmarkmarkmark",
             },
     "version":"4.0.0"   
 }
@@ -1534,8 +1526,7 @@
 {
 	"data":{
 		"attestation":"我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
-		"attestationVersion":"1.0",
-		"remark":"markmarkmarkmarkmark"
+		"attestationVersion":"1.0"
 	},
 	"msg":"Success",
 	"respCode":"000000"
