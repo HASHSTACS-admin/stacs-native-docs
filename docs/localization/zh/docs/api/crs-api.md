@@ -1194,7 +1194,6 @@
    "datas":
     	    {
 	            "identityAddress":"5165c656244637cf8d5f7ad8f5e10f703c784962",
-                "identityType":"user",
                 "addPermissions":["permission_97251"],
                 "cancelPermissions":["permission_97251"],
             },
