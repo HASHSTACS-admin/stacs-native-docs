@@ -170,10 +170,9 @@
 
 ```json tab="响应实例"
 {
-	"data": "LxLoZ460dSIcnN2jZWvDfEwUsg8B2cEwgnb5olJp6jbrOYSIAryN+27QpLLRLNeIGqwSHgTRr93mtpJlqA0wCPS9iLt/vLY3hS4fQjtF4Rs=",
+	"data": "",
 	"msg": "Success", // 操作成功
 	"respCode": "000000", // 返回代码， 000000为成功
-	"signature": "012db52119a153606a362ff78e197e27cbf1fbff8e04d138cfe0e858ab701741ae1556e0667a145a50004504771297e48815ef31a9f5028b9132da0f70ded82075"
 }
 ```
 ### <a id="requestParam">requestParam参数列表</a>
