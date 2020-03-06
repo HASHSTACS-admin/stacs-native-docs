@@ -38,6 +38,9 @@
 ##### <a id="/queryContract">合约状态查询</a>
 - [x] 开放
 - 接口描述：  合约状态查询
+    1. blockHeight传0或null返回当前最新区块高度的合约状态;
+    2. 如果链查询时区块链高度为1返回查询结果为`合约不存在`错误信息;
+    3. 传的高度大于实际链的最大高度返回`the block is not exist`错误信息
 - 请求地址：`POST`:`/queryContract`
 - 请求参数： 
 

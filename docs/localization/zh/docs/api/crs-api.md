@@ -265,20 +265,19 @@
 - functionName：`REGISTER_RS`
 - 请求参数： 
 
-  |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-  | :---------: | -------- | -------- | ---- | :------: | ---------------- |
-  |    rsId     | `string` | 32       | Y    |    Y     | RS id            |
-  |    desc     | `string` | 128      | Y    |    Y     | RS 节点描述      |
-  |  domainId   | `string` | 16       | Y    |    Y     | Domain ID        |
-  | maxNodeSize | `int`    |          | N    |    Y     | 最大节点允许数量 |
-  | domainDesc  | `string` |          | N    |    Y     | domain 描述      |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
+| :---------: | -------- | -------- | ---- | :------: | ---------------- |
+|    rsId     | `string` | 32       | Y    |    Y     | RS id            |
+|    desc     | `string` | 128      | Y    |    Y     | RS 节点描述      |
+|  domainId   | `string` | 16       | Y    |    Y     | Domain ID        |
+| maxNodeSize | `int`    |          | N    |    Y     | 最大节点允许数量 |
+| domainDesc  | `string` |          | N    |    Y     | domain 描述      |
   
 - 响应参数：
 
-  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | ---- | -------- | ---- | -------- | ---- |
-  |  无  |      |          |      |          |      |
-
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :-------------------------|
+| txId | `string` |      | Y    | Y        | 交易id                      |
 
 ##### 示例
 
@@ -298,15 +297,15 @@
 
 - 请求参数： 
 
-  | 属性 | 类型     | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | -------- | -------- | ---- | -------- | ---- |
-  | rsId | `string` | 32       | Y    | Y        |      |
+| 属性 | 类型     | 最大长度 | 必填 | 是否签名 | 说明 |
+| :---------: | -------- | -------- | ---- | -------- | :-------------------------|
+| rsId | `string` | 32       | Y    | Y        |      |
   
 - 响应参数：
 
-  | 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-  | :--: | ---- | -------- | ---- | -------- | ---- |
-  |  无  |      |          |      |          |      |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :-------------------------|
+| txId | `string` |      | Y    | Y        | 交易id                      |
 
 
 ### CA
@@ -324,8 +323,9 @@
 | caList        | `json[]` |        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
 | proxyNodeName | `string` |        | Y       | N        | 代理节点                      |
 
--- caList
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+- `caList`
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                       |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------- |
 | version       | `string` |        | Y       | Y        | 版本号   |
 | period        | `string` |        | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
@@ -418,7 +418,6 @@
 - [x] 开放
 - 接口描述： 撤销CA，设置CA为不可用
 - functionName：`CA_CANCEL`
-- 请求参数： 
 
 - 请求参数：
 
@@ -568,6 +567,7 @@
 | assignMeta     | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
@@ -629,13 +629,12 @@
 | assignMeta | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
+
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
 | expression | `string` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
 | mustDomainIds | `list<string>` |          | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
-
-
 
 - 响应参数：
 
@@ -890,7 +889,6 @@
 
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
-| fromAddr        | `string`   | 40       | Y    | Y        | 提交者地址                 |
 | contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
 | name            | `string`   | 64       | Y    | Y        | 合约名称                   |
 | symbol          | `string`   | 64       | Y    | Y        | 合约简称                   |
@@ -948,8 +946,7 @@
 | :---------:    | --------     | -------- | ---- | -------- | :---------------------------- |
 | methodSignature| `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
 | args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）       |
-| from           | `string`     |      | Y    | Y        | 同交易提交地址                     |
-| to             | `string`     |      | Y    | Y        | 执行的合约地址                     |
+| contractAddress             | `string`     |      | Y    | Y        | 执行的合约地址                     |
 | remark         | `string`     |      | N    | Y        | 备注存证                     |
 | version        | `string`     |10    | Y    | Y        | 版本号：4.0.0            |
 
@@ -969,7 +966,6 @@
                 "e966fe88795f4ff5b772475efea405631e644f59",
                 20
             ],
-            "from":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
             "methodSignature":"(bool) transfer(address,uint256)",
             "to":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb"
         },
