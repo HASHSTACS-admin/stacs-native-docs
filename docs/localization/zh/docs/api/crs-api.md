@@ -8,7 +8,7 @@
 - `merchantId`: 商户Id, 用于区分不同的接入方
 - `merchantPriKey`: 商户ECC私钥，用于签名请求数据
 - `merchantPubKey`: 商户ECC公钥，用于CRS验证商户请求签名
-- `merchantAesKey`: 商户AES256格式密钥，用于加密请求数据或响应数据
+- `merchantAesKey`: 商户AES256格式密钥，用于加密请求数据或响应数据--不配置表示不加密(同时要求zuul也不要配置)
 - `crsPubKey`: CRS公钥，用户商户验证响应数据签名
 - `crsPriKey`: CRS公钥，用于CRS签名响应数据
 - `Permission`:
@@ -147,7 +147,7 @@
       | :-------: | -------- | ------------------------------------------------------------ |
       | respCode  | `string` | 返回状态码，000000为成功，其他为失败                         |
       |    msg    | `string` | 返回状态描述                                                 |
-      |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码 |
+      |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码-aesKey不配置时不做解密 |
       | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
     
 
@@ -160,6 +160,7 @@
 	        "txId":"txId-123",
 	        "bdCode":"SystemBD",
 	        "functionName":"BD_PUBLISH",
+	        "type":"BD_PUBLISH",
 	        .......
 	    }",
 	    txSign:"xxx"
@@ -180,22 +181,23 @@
 |     属性     | 类型     | 说明                                                         |
 | :----------: | -------- | ------------------------------------------------------------ |
 | txData       | `string` | 请求原始数据                                                   |
-| txSign       | `string` | 请求原始数据的签名                                            |
+| txSign       | `string` | 请求原始数据的签名(用户级)                                       |
 
 示例：
 ```json 
-   {
-       "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionName":"BD_PUBLISH","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","name":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","name":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","name":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","name":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
+{
+   "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionName":"BD_PUBLISH","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","name":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","name":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","name":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","name":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
        "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
-   }
+}
 ```
 ### <a id="COMMON_PRAMS_LIST">通用参数列表</a>
 
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
 | txId          | `string` | 64       | Y    |    Y     | 请求Id |
-| bdCode        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode  |
-| templateCode  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode|
+| bdCode        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode                                       |
+| templateCode  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
+| type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
 | functionName  | `string` | 32       | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` |          | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
@@ -213,7 +215,7 @@
      * should sign fields
      */
     private static String[] SIGN_FIELDS = new String[]
-        {"txId","bdCode","functionName","templateCode","submitter","version","actionDatas","extensionDatas","maxAllowFee","feeCurrency"};
+        {"txId","bdCode","functionName","templateCode","type","submitter","version","actionDatas","extensionDatas","maxAllowFee","feeCurrency"};
 
     public static final String getSignValue(Transaction tx){
         String str = "";
