@@ -28,7 +28,6 @@
 |<a href="#PERMISSION_REGISTER">PERMISSION_REGISTER</a>     |注册Permission|
 |<a href="#AUTHORIZE_PERMISSION">AUTHORIZE_PERMISSION</a>   |给地址授权Permission|
 |<a href="#KYC_SETTING">KYC_SETTING</a>                     |为Identity设置KYC|
-|<a href="#IDENTITY_BD_MANAGE">IDENTITY_BD_MANAGE</a>       |冻结Identity使用BD|
 |<a href="#SAVE_ATTESTATION">SAVE_ATTESTATION</a>           |存证交易|
 |<a href="#BUILD_SNAPSHOT">BUILD_SNAPSHOT</a>               |快照交易|
 |<a href="#CA_AUTH">CA_AUTH</a>                             |注册CA|
@@ -67,7 +66,6 @@
 | NODE_JOIN  			| DEFAULT        | NODE_JOIN   	  		|节点加入      |
 | NODE_LEAVE  			| RS        	 | NODE_LEAVE   	  	|节点离开      |
 | SYSTEM_PROPERTY  		| RS        	 | SYSTEM_PROPERTY   	|设置系统属性      |
-| IDENTITY_BD_MANAGE  	| DEFAULT        | IDENTITY_BD_MANAGE  	|冻结Identity使用BD      |
 | KYC_SETTING  			| DEFAULT        | KYC_SETTING   	  	|为Identity设置KYC      |
 | SET_FEE_CONFIG  		| RS        	 | SET_FEE_CONFIG   	|设置费用      |
 | SET_FEE_RULE  		| RS        	 | SET_FEE_RULE   	  	|设置费用规则      |
@@ -1215,65 +1213,6 @@
 	"respCode":"000000"
 } 
 ```
-
-##### <a id="IDENTITY_BD_MANAGE">Identity冻结/解冻BD</a>
-
-- [x] 开放
-- 接口描述：冻结某个bdCode，冻结成功后identity无法执行该bdCode的所有function 
-- functionName：`IDENTITY_BD_MANAGE`
-- 请求参数： 
-
-|     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| targetAddress | `string`   | 40       | Y    | Y        | 目标identity地址              |
-|    codes    | `string[]` |          | Y    | Y          | 冻结或解冻的类型code|
-|  actionType   | `string`   |          | Y    | Y        | <a href="actionType">操作类型</a> |
-|  frozeType   | `string`   |          | Y    | Y        | <a href="frozeType">冻结类型</a> |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | txId                      |
-
-- 实例：
-
-```json tab="请求实例"
-{
-   "datas":
-    	    {
-	            "actionType":"UNFROZE",
-                "frozeType":"BD",
-                "codes":["SystemBD"]
-            },
-    "version":"4.0.0"   
-}
-
-```
-
-```json tab="响应实例"
-{
-	"data":"9e93ae8071511828c2879206a1a6c50f3d292f5790e3d8f0379a0b3b5f98b67c",
-	"msg":"Success",
-	"respCode":"000000"
-} 
-```
-
--  <a id="actionType">操作类型</a> 
-
-|     类型                   | 说明                 |
-| :-----------------------: | ------------------  |
-| FROZE                     | 冻结`Identity`的`BD`后,`Identity`不能再调用被冻结`BD`所有交易;<br>冻结`Identity`的`CONTRACT`后,`Identity`不能再调用被冻结`CONTRACT`所有交易,但可以调用`BD`的其他`templateCode`合约;<br>冻结`Identity`的`FUNCTION_NAME`后`Identity`不能在调用被冻结`FUNCTION_NAME`交易,但可以调用`BD`的其他`FUNCTION_NAME`|
-| UNFROZE                   | 解冻`BD`,`CONTRACT`,`functionName`,解冻成功后可以正常使用|
-
--  <a id="frozeType">冻结类型</a> 
-
-|     类型                   | 说明                 |
-| :-----------------------: | ------------------  |
-| BD                        |  冻结或解冻整个`BD`   |
-| CONTRACT                  |  冻结或解冻整个整个合约,冻结的是合约code格式为`bdCode`+`templateCode`|
-| FUNCTION_NAME              |  冻结或解冻`funtionName`,code格式为`bdCode`+`templateCode`+`functionName`  |
-
 
 
 ##### Identity权限查询
