@@ -28,12 +28,27 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| coreTx             | `json`     | 64       | Y    |        | 交易原始内容                      |
+| <a href="coreTx">coreTx</a>             | `json`     | 64       | Y    |        | 交易原始内容                      |
 | policyData         | `json`     | 64       | N    |        | policy投票内容(交易未上链，返回为null)                    |
 | transactionReceipt | `json`     | 64       | N    |        | 交易执行结果(交易未上链，返回为null)                      |
 | blockHeight        | `string`   | 64       | N    |        | 区块高度 (交易未上链，返回为null)                     |
 | blockTime          | `string`   | 64       | N    |        | 区块时间(交易未上链，返回为null)                      |
 
+- <a id="coreTx">coreTx</a>:
+
+|     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
+| :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
+| txId          | `string` | 64       | Y    |    Y     | 请求Id |
+| bdCode        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode  |
+| templateCode  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode|
+| functionName  | `string` | 32       | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
+| submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
+| actionDatas   | `string` |          | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+| version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
+|extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
+| maxAllowFee   | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
+|  feeCurrency  | `string` | 32       | N    |    Y     | 手续费币种                                                   |
+| submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名 
 
 ##### <a id="/queryContract">合约状态查询</a>
 - [x] 开放
@@ -109,7 +124,17 @@
 | :--------------: | --------------------- | ------- | ---- |  :---------------------------- |
 | genesis          | `boolean`             | 6       | Y    |  是否为创世块                   |
 | blockHeader      | `BlockHeader`         | 64      | Y    |  BlockHeader对象               |
-| transactionList  | `List<TransactionPO>` | 64      | Y    |  含有TransactionPO的集合        |
+| transactionList  | `JSONArray<Transaction>` | 64      | Y    |  含有<a href="Transaction">Transaction</a>的集合        |
+
+- <a id="Transaction">Transaction</a>:
+
+|    属性                     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:                | -------- | -------- | ---- | -------- | :---------------------------- |
+| <a href="coreTx">coreTx</a>| `json`     | 64       | Y    |        | 交易原始内容                      |
+| policyData                 | `json`     | 64       | Y    |        | policy投票内容                    |
+| transactionReceipt         | `json`     | 64       | Y    |        | 交易执行结果                     |
+| blockHeight                | `string`   | 64       | Y    |        | 区块高度                     |
+| blockTime                  | `string`   | 64       | Y    |        | 区块时间                  |
 
 - BlockHeader对象属性：
 
