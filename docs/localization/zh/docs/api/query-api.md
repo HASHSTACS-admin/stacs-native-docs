@@ -28,7 +28,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| <a href="coreTx">coreTx</a>             | `json`     | 64       | Y    |        | 交易原始内容                      |
+| <a href="#coreTx">coreTx</a>             | `json`     | 64       | Y    |        | 交易原始内容                      |
 | policyData         | `json`     | 64       | N    |        | policy投票内容(交易未上链，返回为null)                    |
 | transactionReceipt | `json`     | 64       | N    |        | 交易执行结果(交易未上链，返回为null)                      |
 | blockHeight        | `string`   | 64       | N    |        | 区块高度 (交易未上链，返回为null)                     |
@@ -124,7 +124,7 @@
 | :--------------: | --------------------- | ------- | ---- |  :---------------------------- |
 | genesis          | `boolean`             | 6       | Y    |  是否为创世块                   |
 | blockHeader      | `BlockHeader`         | 64      | Y    |  BlockHeader对象               |
-| transactionList  | `JSONArray<Transaction>` | 64      | Y    |  含有<a href="Transaction">Transaction</a>的集合        |
+| transactionList  | `JSONArray<Transaction>` | 64      | Y    |  含有<a href="#Transaction">Transaction</a>的集合        |
 
 - <a id="Transaction">Transaction</a>:
 
