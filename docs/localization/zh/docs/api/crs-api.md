@@ -44,7 +44,7 @@
 ## 查询接口列表
 | 接口地址                                                          | 说明 |
 | :-----                                                           | :-----    |
-|<a href="query-api.md#/queryMaxHeight">/queryMaxHeight/{height}</a>              |查询当前最大区块高度|
+|[queryMaxHeight][1]</a>              |查询当前最大区块高度|
 |<a href="query-api.md#queryTxByTxId/{txId}">queryTxByTxId/{txId}</a>             |根据txId查询交易数据|
 |<a href="query-api.md#/queryTxsByHeight/{height}">/queryTxsByHeight/{height}</a> |根据高度查询区块内所有交易数据|
 |<a href="query-api.md#/queryContract">/queryContract</a>                 |合约数据状态查询|
@@ -1484,3 +1484,5 @@
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明          |
 | :----------: | -------- | -------- | ---- | -------- | ------------- |
 | callBackAddr | `string` |          | Y    | Y        | 回调地址，URL |
+
+[1]: query-api.md#queryMaxHeight 
