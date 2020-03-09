@@ -13,7 +13,7 @@
 - `crsPriKey`: CRS公钥，用于CRS签名响应数据
 - `Permission`:
 - `Policy`:
-- `KYC`:
+- `kyc`:
 - `BD`:
 - `Identity`:
 - `{}`: 动态值表示符号
@@ -1090,44 +1090,22 @@
 ```
 
 ```json tab="响应实例"
-
-	"data":[
+{
+	"data": [
 		{
-			"permissionIndex":34,
-			"permissionName":"permission_98731"
+			"permissionIndex": 0,
+			"permissionName": "DEFAULT"
 		},
 		{
-			"permissionIndex":45,
-			"permissionName":"permission_97251"
-		},
-		{
-			"permissionIndex":1,
-			"permissionName":"RS"
-		},
-		{
-			"permissionIndex":0,
-			"permissionName":"DEFAULT"
-		},
-		{
-			"permissionIndex":21,
-			"permissionName":"CONTRACT_ISSUE2"
-		},
-		{
-			"permissionIndex":1,
-			"permissionName":"CONTRACT_ISSUE"
-		},
-		{
-			"permissionIndex":22,
-			"permissionName":"CONTRACT_INVOKE2"
-		},
-		{
-			"permissionIndex":2,
-			"permissionName":"CONTRACT_INVOKE"
+			"permissionIndex": 2,
+			"permissionName": "RS"
 		}
 	],
-	"msg":"Success",
-	"respCode":"000000"
-} 
+	"msg": "Success",
+	"respCode": "000000",
+	"success": true
+}
+ 
 ```
 
 #### Identity
@@ -1242,23 +1220,19 @@
 
 ```json tab="响应实例"
 {
-    "data":[
-        {
-            "permissionIndex":22,
-            "permissionName":"CONTRACT_INVOKE"
-        },
-        {
-            "permissionIndex":0,
-            "permissionName":"DEFAULT"
-        },
-        {
-            "permissionIndex":21,
-            "permissionName":"CONTRACT_ISSUE"
-        }
-    ],
-    "msg":"Success",
-    "respCode":"000000",
-    "success":true
+	"data": [
+		{
+			"permissionIndex": 0,
+			"permissionName": "DEFAULT"
+		},
+		{
+			"permissionIndex": 2,
+			"permissionName": "RS"
+		}
+	],
+	"msg": "Success",
+	"respCode": "000000",
+	"success": true
 }
 ```
 
@@ -1285,9 +1259,9 @@
 
 ``` tab="请求实例"
 {
-	"address":"b187fa1ba0e50a887b3fbd23f0c7f4163300b5f9",
+	"address":"33c1237c1a99284ebe001f102eee70cf6a306866",
 	"permissionNames":[
-		"CONTRACT_INVOKE"
+		"RS"
 	]
 } 
 ```
@@ -1304,12 +1278,12 @@
 
 - [x] 开放
 - 接口描述：查询Identity的详细信息  
-- 请求地址：`GET`:`identity/query?userAddress={userAddress}`
+- 请求地址：`GET`:`identity/query?address={address}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| userAddress | `string`   | 40       | Y    | Y        | identity地址              |
+| address | `string`   | 40       | Y    | Y        | identity地址              |
 
 
 - 响应参数：
@@ -1323,7 +1297,7 @@
 | frozeFunctions | `string` | 64     | Y    | Y        | 冻结的function，采用`,`分隔   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
 | identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
-| kYC | `string` |      | Y    | Y        | identity认证信息                      |
+| kyc | `string` |      | Y    | Y        | identity认证信息                      |
 | permissions | `string` | 64     | Y    | Y        | 权限编号(32进制)                      |
 | preTxId | `string` | 64     | Y    | Y        |  上次identity被修改时交易id                   |
 | property | `string` | 64     | Y    | Y        |  扩展属性                   |
@@ -1335,20 +1309,14 @@
 
 ```json tab="响应实例"
 {
-"data":{
-		"address":"f6ff9c931b453543c1514030dfdba444f7f81e64",
-		"currentTxId":"92264f3552f54d1db0bded08b943004692aefd2033ad7b43876251cee8187967",
-		"froze":null,
+	"data":{
+		"address":"33c1237c1a99284ebe001f102eee70cf6a306866",
 		"hidden":1,
-		"identityType":"user",
-		"kYC":"{\"aaa\":111,\"bbb\":222}",
-		"permissions":"1",
-		"preTxId":"92264f3552f54d1db0bded08b943004692aefd2033ad7b43876251cee8187967",
-		"property":null
-	},
-	"msg":"Success",
-	"respCode":"000000"
-} 
+		"kyc":"{\"a\":\"1\",\"b\":\"1\",\"c\":\"1\"}",
+		"permissions":"5",
+		"preTxId":"",
+		"currentTxId":"2357f642afea07282916ff879c9e12430ea61bd5387946499464759a687a4236"
+}
 ```
 
 ##### <a id="KYC_SETTING">KYC设置</a>
