@@ -111,7 +111,7 @@
 
 ```
 
-## KYC规范
+## kyc规范
 
 > 
 
@@ -1329,7 +1329,7 @@
 |      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                            |
 | :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
 | identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
-| KYC       | `string` | 1024     | Y    | Y        | KYC属性（json字符串，合约目前支持kyc验证）                         |
+| kyc       | `string` | 1024     | Y    | Y        | `kyc`属性（json字符串，合约目前支持kyc验证）                         |
 | identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node， 用户可自定义 |
 
 -  <a id="identityType">identityType类型</a> 
@@ -1354,7 +1354,7 @@
     	    {
 	            "identityAddress":"7cc176180280d46bc15d871e02475ae47a4255f2",
                 "identityType":"user",
-                "kYC":"{\"aaa\":111,\"bbb\":222}",
+                "kyc":"{\"aaa\":111,\"bbb\":222}",
             },
     "version":"4.0.0"   
 }
