@@ -859,6 +859,7 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | blockHeight | `int` |      | Y    | Y        | 区块高度                      |
 | snapshotId | `string` |      | Y    | Y        | 快照id                      |
+| remark     | `string` |      | Y    | Y        | 备注                      |
 
 - 实例：
 
@@ -870,7 +871,8 @@
 {
     "data":{
         "blockHeight":926,
-        "snapshotId":"68240"
+        "snapshotId":"68240",
+        "remark":"remark"
     },
     "msg":"Success",
     "respCode":"000000",
