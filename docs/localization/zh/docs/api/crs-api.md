@@ -827,7 +827,7 @@
 
 ```json tab="请求实例"
 	{
-	    "datas":{"snapshotId":"0e248ba7-8c95-4667-a1f3-d98c2a861973"},
+	    "datas":{"remark":"0e248ba7-8c95-4667-a1f3-d98c2a861973"},
 	    "version":"4.0.0"
     }
 } 
