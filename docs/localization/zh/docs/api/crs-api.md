@@ -44,10 +44,10 @@
 ## 查询接口列表
 | 接口地址                                                          | 说明 |
 | :-----                                                           | :-----    |
-|[queryMaxHeight][1]</a>              |查询当前最大区块高度|
-|<a href="query-api.md#queryTxByTxId/{txId}">queryTxByTxId/{txId}</a>             |根据txId查询交易数据|
-|<a href="query-api.md#/queryTxsByHeight/{height}">/queryTxsByHeight/{height}</a> |根据高度查询区块内所有交易数据|
-|<a href="query-api.md#/queryContract">/queryContract</a>                 |合约数据状态查询|
+|[queryMaxHeight][1]                  |查询当前最大区块高度|
+|[queryTxByTxId/{txId}][2]            |根据txId查询交易数据|
+|[queryTxsByHeight/{height}][3]       |根据高度查询区块内所有交易数据|
+|[queryContract][4]                   |合约数据状态查询|
 
 ## 系统内置function表
 | functionName      	| execPermission | execPolicy         	| 备注 |
@@ -1486,3 +1486,6 @@
 | callBackAddr | `string` |          | Y    | Y        | 回调地址，URL |
 
 [1]: query-api.md#queryMaxHeight 
+[2]: query-api.md#queryTxByTxId/{txId} 
+[3]: query-api.md#queryTxsByHeight/{height}
+[4]: query-api.md#queryContract
