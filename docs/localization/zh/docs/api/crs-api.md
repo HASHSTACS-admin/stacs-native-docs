@@ -894,11 +894,9 @@
 | contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
 | name            | `string`   | 64       | Y    | Y        | 合约名称                   |
 | symbol          | `string`   | 64       | Y    | Y        | 合约简称                   |
-| extension       | `string`   | 1024     | Y    | Y        | 扩展属性                   |
 | contractor      | `string`   |          | Y    | Y        | 合约构造器(函数)名         |
 | sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
 | initArgs        | `object[]` |          | Y    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
-| version         | `string`   |10        | Y    | Y        | 版本号：4.0.0            |
 
 - 响应参数：
 
@@ -914,7 +912,6 @@
         "fromAddr":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
         "contractAddress":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb",
         "contractor":"StandardCurrency(address,string,string,uint,uint8,string)",
-        "extension":"{\"a\":1}",
         "initArgs":[
             "1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
             "S_50954",
