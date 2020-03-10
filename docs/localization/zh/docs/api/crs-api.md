@@ -946,8 +946,6 @@
 | methodSignature| `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
 | args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）       |
 | contractAddress             | `string`     |      | Y    | Y        | 执行的合约地址                     |
-| remark         | `string`     |      | N    | Y        | 备注存证                     |
-| version        | `string`     |10    | Y    | Y        | 版本号：4.0.0            |
 
 - 响应参数：
 
@@ -966,7 +964,7 @@
                 20
             ],
             "methodSignature":"(bool) transfer(address,uint256)",
-            "to":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb"
+            "contractAddress":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb"
         },
     "version":"4.0.0"   
 } 
