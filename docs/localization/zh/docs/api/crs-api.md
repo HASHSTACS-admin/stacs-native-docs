@@ -1378,8 +1378,8 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
-|   version   | `string` | 20       | Y    | N        | 存证版本                      |
-|  objective  | `string` | 40       | N    | N        | 目标地址，默认使用`submitter` |
+| attestationVersion   | `string` | 20       | Y    | N        | 存证版本                      |
+| objective  | `string` | 40       | N    | N        | 目标地址，默认使用`submitter` |
 
 - 响应参数：
 
@@ -1410,7 +1410,7 @@
 ##### 存证查询
 - [x] 开放
 - 接口描述：  查询入链存证信息
-- 请求地址：`GET`:`/attestation/query?txId={txId}`
+- 请求地址：`GET`:`querySaveAttestation/{txId}`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -1421,19 +1421,23 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | txId                      |
+| attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
+| attestationVersion   | `string` | 20       | Y    | N        | 存证版本                      |
+| objective  | `string` | 40       | N    | N        | 目标地址，默认使用`submitter` |
 
 - 实例：
 
 ```json tab="请求实例"
-/attestation/query?txId={txId}
+/querySaveAttestation/61fe2a4856c1664d76a4cd13902744917fbde96aa630eef3e9a8d5b5f2c43259
 ```
 
 ```json tab="响应实例"
 {
 	"data":{
-		"attestation":"我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
-		"attestationVersion":"1.0"
+		"attestation":"xxxxxxxxxxx",
+        "index":0,
+        "attestationVersion":"4.0.0",
+        "version":"4.0.0"
 	},
 	"msg":"Success",
 	"respCode":"000000"
