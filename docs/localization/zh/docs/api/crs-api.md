@@ -896,7 +896,7 @@
 | symbol          | `string`   | 64       | Y    | Y        | 合约简称                   |
 | contractor      | `string`   |          | Y    | Y        | 合约构造器(函数)名         |
 | sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
-| initArgs        | `object[]` |          | Y    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
+| initArgs        | `object[]` |          | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
 
 - 响应参数：
 
@@ -909,7 +909,6 @@
 {
 	"datas":
 	{
-        "fromAddr":"1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
         "contractAddress":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb",
         "contractor":"StandardCurrency(address,string,string,uint,uint8,string)",
         "initArgs":[
@@ -921,6 +920,7 @@
             "00000000000000000000000000000000000000000000000000000074785f6964"
         ],
         "name":"StandardCurrency",
+        "symbol":"BTC",
         "sourceCode":"pragma solidity ^0.4.24;"
 	},
 	"version":"4.0.0"
@@ -942,10 +942,10 @@
 - 请求参数： 
 
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------:    | --------     | -------- | ---- | -------- | :---------------------------- |
-| methodSignature| `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
-| args           | `object[]`   |      | Y    | Y        | 方法执行入参参数，（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）       |
-| contractAddress             | `string`     |      | Y    | Y        | 执行的合约地址                     |
+| :------------:  | --------     | -------- | ---- | -------- | :---------------------------- |
+| methodSignature | `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
+| args            | `object[]`   |      | N    | Y        | 方法执行入参参数      |
+| contractAddress | `string`     |      | Y    | Y        | 执行的合约地址                     |
 
 - 响应参数：
 
