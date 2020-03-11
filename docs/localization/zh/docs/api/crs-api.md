@@ -23,8 +23,7 @@
 | :-----                                                    | :-----    |
 |<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |发布BD|
 |<a href="#REGISTER_POLICY">REGISTER_POLICY</a>             |注册Policy|
-|<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |修改Policy|
-|<a href="#MODIFY_POLICY">MODIFY_POLICY</a>                 |给地址做身份认证|
+|<a href="#MODIFY_POLICY">MODIFY_POLICY</a>                 |修改Policy|
 |<a href="#PERMISSION_REGISTER">PERMISSION_REGISTER</a>     |注册Permission|
 |<a href="#AUTHORIZE_PERMISSION">AUTHORIZE_PERMISSION</a>   |给地址授权Permission|
 |<a href="#KYC_SETTING">KYC_SETTING</a>                     |为Identity设置KYC|
@@ -858,7 +857,6 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | blockHeight | `int` |      | Y    | Y        | 区块高度                      |
-| snapshotId | `string` |      | Y    | Y        | 快照id                      |
 | remark     | `string` |      | Y    | Y        | 备注                      |
 
 - 实例：
