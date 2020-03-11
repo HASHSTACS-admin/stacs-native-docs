@@ -21,6 +21,7 @@
 ## 交易接口列表
 | 接口function                                              | 说明 |
 | :-----                                                    | :-----    |
+|<a href="#IDENTITY_SETTING">IDENTITY_SETTING</a>                       |发布BD|
 |<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |发布BD|
 |<a href="#REGISTER_POLICY">REGISTER_POLICY</a>             |注册Policy|
 |<a href="#MODIFY_POLICY">MODIFY_POLICY</a>                 |修改Policy|
