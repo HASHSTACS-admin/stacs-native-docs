@@ -1399,38 +1399,43 @@
 ##### 存证查询
 - [x] 开放
 - 接口描述：  查询入链存证信息
-- 请求地址：`GET`:`querySaveAttestation/{txId}`
+- 请求地址：`GET`:`queryAttestation/{id}`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | 存证交易id                      |
+| id | `string` | 64     | Y    | Y        | 存证id                      |
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
-| attestationVersion   | `string` | 20       | Y    | N        | 存证版本                      |
-| objective  | `string` | 40       | N    | N        | 目标地址，默认使用`submitter` |
+|    属性        | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:   | -------- | -------- | ---- | -------- | :---------------------------- |
+| id            | `string` | 64     | Y        | Y        | 存证id                      |
+| attestation   | `string` | 4096       | Y    | N        | 存证内容                      |
+| preTxId       | `string` | 64       | Y     | N        | 上次一次修改`txId` |
+| currentTxId   | `string` | 64       | Y     | N        | 最近一次修改`txId` |
+| version       | `int`    | 10       | Y     | N        | 版本号，系统自增 |
+| bdId          | `string` | 32       | Y     | N        | 设置存证时的`bdId` |
 
 - 实例：
 
 ```json tab="请求实例"
-/querySaveAttestation/61fe2a4856c1664d76a4cd13902744917fbde96aa630eef3e9a8d5b5f2c43259
+/queryAttestation/cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f
 ```
 
 ```json tab="响应实例"
 {
 	"data":{
-		"attestation":"xxxxxxxxxxx",
-        "index":0,
-        "attestationVersion":"4.0.0",
-        "version":"4.0.0"
+		"attestation":"modify xxxxxxxxxxx",
+		"bdId":"sto_code_token1308",
+		"id":"cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f",
+		"preTxId":"9ae0f0c2fda16dafe6f86f71360aabbb58e2853599470d23314db559b95b887b",
+		"version":2,
+		"currentTxId":"30d5f16f0a2808a96eabd0d71ae7cb218c4a7bb65bbd256bfeec64193bfa572b"
 	},
 	"msg":"Success",
 	"respCode":"000000"
-} 
+}
 ```
 
 
