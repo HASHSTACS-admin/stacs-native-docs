@@ -28,7 +28,7 @@
 |<a href="#PERMISSION_REGISTER">PERMISSION_REGISTER</a>     |注册Permission|
 |<a href="#AUTHORIZE_PERMISSION">AUTHORIZE_PERMISSION</a>   |给地址授权Permission|
 |<a href="#KYC_SETTING">KYC_SETTING</a>                     |为Identity设置KYC|
-|<a href="#SAVE_ATTESTATION">SAVE_ATTESTATION</a>           |存证交易|
+|<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           |存证交易|
 |<a href="#BUILD_SNAPSHOT">BUILD_SNAPSHOT</a>               |快照交易|
 |<a href="#CA_AUTH">CA_AUTH</a>                             |注册CA|
 |<a href="#CA_CANCEL">CA_CANCEL</a>                         |取消CA|
@@ -69,7 +69,6 @@
 | KYC_SETTING  			| DEFAULT        | KYC_SETTING   	  	|为Identity设置KYC      |
 | SET_FEE_CONFIG  		| RS        	 | SET_FEE_CONFIG   	|设置费用      |
 | SET_FEE_RULE  		| RS        	 | SET_FEE_RULE   	  	|设置费用规则      |
-| SAVE_ATTESTATION  	| DEFAULT        | SAVE_ATTESTATION   	|存证交易      |
 | BUILD_SNAPSHOT  		| DEFAULT        | BUILD_SNAPSHOT   	|快照交易      |
 
 ## 合约类的function表
@@ -1362,18 +1361,17 @@
 } 
 ```
 
-#### <a id="SAVE_ATTESTATION">存证</a>
+#### <a id="SET_ATTESTATION">存证</a>
 
 - [x] 开放
 - 接口描述：  保存存证信息入链
-- functionName：`SAVE_ATTESTATION`
+- functionId：`SET_ATTESTATION`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
-| attestationVersion   | `string` | 20       | Y    | N        | 存证版本                      |
-| objective  | `string` | 40       | N    | N        | 目标地址，默认使用`submitter` |
+| id   | `string` | 64       | Y    | N        | 存证Id（唯一）                      |
 
 - 响应参数：
 
@@ -1385,19 +1383,16 @@
 
 ```json tab="请求实例"
 {
-   "datas":
-    	    {
-	           "attestation": "我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，我是存证，",
-               "attestationVersion": "1.0",
-               "objective": "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf",
-            },
-    "version":"4.0.0"   
+	"txData":"{\"txId\":\"19d486684f268b79660875b45d70b81bff5052a08d8c3fe3188eec148936bda9\",\"bdId\":\"sto_code_token2256\",\"functionId\":\"SET_ATTESTATION\",\"type\":\"SET_ATTESTATION\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"attestation\":\"modify  xxxxxxxxxxx v2\",\"id\":\"cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f\"},\"version\":\"4.0.0\"}}",
+	"txSign":"010bc1fecff8bbdc3418f57aaa04fc69c95f4ed0ff4193dcf079fba27d4141803c30657b0a4b448019048850f4a1aa27b49b98f83c5281a904c8754d0547069032"
 }
 ```
 
 ```json tab="响应实例"
 {
-   txId: "71a29ad1d5968081bfc911b07066a2e953ebe5451b1f1779a9ff54f580170914"
+    respCode='000000',
+    msg='Success', 
+    data=19d486684f268b79660875b45d70b81bff5052a08d8c3fe3188eec148936bda9
 }
 ```
 
