@@ -973,7 +973,7 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | id            | `string` | 64        | Y    | Y        | permission id（唯一）       |
 | label         | `string` | 64        | N    | Y        | 名称       |
-| type          | `string` | 64        | N    | Y        | 授权类型       |（ADDRESS/IDENTITY）
+| type          | `string` | 64        | N    | Y        | 授权类型（ADDRESS/IDENTITY）       |
 | authorizers   | `string[]`|          | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas         | `json`    |2048      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
 
