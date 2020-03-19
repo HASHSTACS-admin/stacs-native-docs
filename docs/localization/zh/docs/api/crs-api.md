@@ -25,8 +25,7 @@
 |<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |发布BD|
 |<a href="#REGISTER_POLICY">REGISTER_POLICY</a>             |注册Policy|
 |<a href="#MODIFY_POLICY">MODIFY_POLICY</a>                 |修改Policy|
-|<a href="#PERMISSION_REGISTER">PERMISSION_REGISTER</a>     |注册Permission|
-|<a href="#AUTHORIZE_PERMISSION">AUTHORIZE_PERMISSION</a>   |给地址授权Permission|
+|<a href="#SET_PERMISSION">SET_PERMISSION</a>     |注册Permission|
 |<a href="#KYC_SETTING">KYC_SETTING</a>                     |为Identity设置KYC|
 |<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           |存证交易|
 |<a href="#BUILD_SNAPSHOT">BUILD_SNAPSHOT</a>               |快照交易|
@@ -54,8 +53,7 @@
 | :-----                |  :-----        |  :-----             |  :-----            |
 | IDENTITY_SETTING  	| DEFAULT        | IDENTITY_SETTING   	|给地址做身份认证      |
 | BD_PUBLISH  			| DEFAULT        | BD_PUBLISH   	  	|发布BD      |
-| PERMISSION_REGISTER  	| DEFAULT        | PERMISSION_REGISTER  |注册Permission      |
-| AUTHORIZE_PERMISSION  | DEFAULT        | AUTHORIZE_PERMISSION |给地址添加Permission      |
+| SET_PERMISSION  	    | DEFAULT        | SET_PERMISSION  |注册Permission      |
 | REGISTER_POLICY  		| DEFAULT        | REGISTER_POLICY   	|注册Policy      |
 | MODIFY_POLICY  		| DEFAULT        | MODIFY_POLICY   	    |修改Policy      |
 | REGISTER_RS  			| DEFAULT        | REGISTER_RS   	    |注册为RS节点      |
@@ -964,16 +962,20 @@
 
 #### Permission
 
-##### <a id="PERMISSION_REGISTER"> 新增Permission </a>
+##### <a id="SET_PERMISSION"> 新增Permission </a>
 
 - [x] 开放
 - 接口描述：  添加permission,Identity被授予permission后才能执行该permission所定义交易
-- functionName：`PERMISSION_REGISTER`
+- functionName：`SET_PERMISSION`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| permissionName       | `string` | 64        | Y    | Y        | permission名称       |
+| id            | `string` | 64        | Y    | Y        | permission id（唯一）       |
+| label         | `string` | 64        | N    | Y        | 名称       |
+| type          | `string` | 64        | N    | Y        | 授权类型       |（ADDRESS/IDENTITY）
+| authorizers   | `string[]`|          | Y    | Y        | 被授予后期可以修改Permission的地址|
+| datas         | `json`    |2048      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
 
 - 响应参数：
 
@@ -985,20 +987,18 @@
 
 ```json tab="请求实例"
 {
-	"datas":
-    	    {
-	            "permissionName":"permission_97251",
-            },
-    "version":"4.0.0"   
-} 
+	"txData":"{\"txId\":\"b1269f6239121c98174d3f8e2ff64dba32d0b0b87062e103f811b0431541537d\",\"bdId\":\"SystemBD\",\"functionId\":\"SET_PERMISSION\",\"type\":\"SET_PERMISSION\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"authorizers\":[\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\"],\"datas\":\"{\\\"combineType\\\":\\\"AND\\\",\\\"propertyRule\\\":\\\"true\\\",\\\"kycRule\\\":\\\"true\\\"}\",\"id\":\"Permission1\",\"type\":\"IDENTITY\"},\"version\":\"4.0.0\"}}",
+	"txSign":"001f0a1b4ee2a9723858f8e00a70b1d0be1d121d972bac1edf1478dd5c8fc410ee67ebe56ddd739786ceae717370530567b34534a93bc5f4e49f0408df765a43c1"
+}
 ```
 
 ```json tab="响应实例"
 
-	"data":"45ebc7a42b0ad5364e4f5a141db6473a12ffce2ee7d5226d9490183ef172d4a7",
-	"msg":"Success",
-	"respCode":"000000"
-} 
+{
+    respCode='000000', 
+    msg='Success', 
+    data=b1269f6239121c98174d3f8e2ff64dba32d0b0b87062e103f811b0431541537d
+}
 ```
 
 ##### 查询permission
@@ -1015,8 +1015,13 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| permissionIndex | `int` | 64     | Y    | Y        | permission编号                  |
-| permissionName  | `string` | 64     | Y    | Y        | permission名称               |
+| id            | `string` | 64        | Y    | Y        | permission id（唯一）       |
+| label         | `string` | 64        | N    | Y        | 名称       |
+| type          | `string` | 64        | N    | Y        | 授权类型       |（ADDRESS/IDENTITY）
+| authorizers   | `string[]`|          | Y    | Y        | 被授予后期可以修改Permission的地址|
+| datas         | `json`    |2048      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
+| preTxId       | `string`  |64        | Y    | Y        |上次操作的txId|
+| currentTxId   | `string`  |64        | Y    | Y        |最近操作的txId|
 
 - 实例：
 
@@ -1026,19 +1031,44 @@
 
 ```json tab="响应实例"
 {
-	"data": [
-		{
-			"permissionIndex": 0,
-			"permissionName": "DEFAULT"
-		},
-		{
-			"permissionIndex": 2,
-			"permissionName": "RS"
-		}
-	],
-	"msg": "Success",
-	"respCode": "000000",
-	"success": true
+    "data":[
+        {
+            "authorizers":[
+                "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf"
+            ],
+            "currentTxId":null,
+            "datas":"["177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf"]",
+            "id":"RS",
+            "label":null,
+            "preTxId":null,
+            "type":"ADDRESS"
+        },
+        {
+            "authorizers":[
+                "b8da898d50712ea4695ade4b1de6926cbc4bcfb9"
+            ],
+            "currentTxId":"4e933250b076195dc50a525dbaae488dc31415c6174615377823d30ed499fb54",
+            "datas":"{"combineType":"AND","propertyRule":"true","kycRule":"true"}",
+            "id":"Permission1",
+            "label":null,
+            "preTxId":"e65940b9823a8895eb3d074cf2dcbb4432422d3481198de59cbfd635c078de8e",
+            "type":"IDENTITY"
+        },
+        {
+            "authorizers":[
+                "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf"
+            ],
+            "currentTxId":null,
+            "datas":"["ALL"]",
+            "id":"DEFAULT",
+            "label":null,
+            "preTxId":null,
+            "type":"ADDRESS"
+        }
+    ],
+    "msg":"Success",
+    "respCode":"000000",
+    "success":true
 }
  
 ```
