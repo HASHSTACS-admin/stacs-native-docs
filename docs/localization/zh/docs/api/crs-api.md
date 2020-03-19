@@ -551,22 +551,22 @@
 } 
 ```
 
-##### <a id="REGISTER_POLICY">Policy注册</a>
+##### <a id="SET_POLICY">Policy设置</a>
 
 - [x] 开放
-- 接口描述： 注册Policy
-- functionName：`REGISTER_POLICY`
+- 接口描述： Policy设置
+- functionName：`SET_POLICY`
 - 请求参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
-| policyName     | `string`       | 64       | Y    | Y        |                                              |
+| policyId       | `string`       | 32       | Y    | Y        | 注册/修改的policyId                               |
+| label          | `string`       | 64       | Y    | Y        |                                              |
 | votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
 | callbackType   | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
 | decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
 | domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
-| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
+| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
 | assignMeta     | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
@@ -600,69 +600,7 @@
 		"Domain"
 	],
 	"policyId":"P_",
-	"policyName":"P_-name",
-	"requireAuthIds":[],
-	"votePattern":"SYNC"
-} 
-```
-
-```json tab="响应实例"
-{
-	"data":null,
-	"msg":"Success",
-	"respCode":"000000"
-} 
-```
-
-##### <a id ="MODIFY_POLICY">Policy更新</a>
-- [x] 开放
-- 接口描述： 修改Policy
-- functionName：`MODIFY_POLICY`
-- 请求参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
-| policyName     | `string`       | 64       | Y    | Y        |                                              |
-| votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
-| callbackType   | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
-| decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-| domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
-| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
-| assignMeta | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
-
-- assignMeta结构
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
-| expression | `string` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
-| mustDomainIds | `list<string>` |          | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
-
-- 响应参数：
-
-| 属性 | 类型 | 最大长度 | 必填 | 是否签名 | 说明 |
-| :---------: | -------- | -------- | ---- | -------- | :---------- |
-|             |          |          |      |          |        |
-
-
-
-- 实例：
-
-```json tab="请求实例"
-{
-	"assignMeta":{
-		"expression":"n/2+1",
-		"mustDomainIds":null,
-		"verifyNum":1
-	},
-	"callbackType":"ALL",
-	"decisionType":"FULL_VOTE",
-	"domainIds":[
-		"Domain"
-	],
-	"policyId":"P_ID_873",
-	"policyName":"P_ID_873-name",
+	"label":"P_-name",
 	"requireAuthIds":[],
 	"votePattern":"SYNC"
 } 
