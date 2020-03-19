@@ -192,9 +192,13 @@
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
 | txId          | `string` | 64       | Y    |    Y     | 请求Id |
-| bdCode        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode                                       |
-| templateCode  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
+| bdId        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode                                       |
+| templateId  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
 | type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
+| subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
+| sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
+| merchantId    | `string` | 32       | N    |    Y     |商户id                                            |
+| merchantSign  | `string` | 128      | N    |    Y     |商户签名                                            |
 | functionName  | `string` | 32       | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` |          | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
@@ -212,7 +216,7 @@
      * should sign fields
      */
     private static String[] SIGN_FIELDS = new String[]
-        {"txId","bdCode","functionName","templateCode","type","submitter","version","actionDatas","extensionDatas","maxAllowFee","feeCurrency"};
+        {"txId","bdCode","functionName","templateCode","type","submitter","version","actionDatas","extensionDatas","maxAllowFee","feeCurrency","subType","sessionId"};
 
     public static final String getSignValue(Transaction tx){
         String str = "";
@@ -687,7 +691,7 @@
 
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
-| code      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
+| id      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
 | label      | `string`              | 64       | Y    | Y        | BD名称                             |
 | desc      | `string`               | 1024     | N    | Y        | 描述                      |
 | functions | `List<FunctionDefine>` |          | N    | Y        | bd定义function            |
@@ -698,7 +702,7 @@
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -------------- | ---- | -------- | :---------------------------- |
-|   templateCode   | `string` | 32             | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
+|   templateId   | `string` | 32             | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
 | desc             | `string` | 256            | N    | Y        | function描述                     |
 | createPermission | `string` | 64             | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
 | createPolicy     | `string` | 32             | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
@@ -736,7 +740,7 @@
     {
         "datas":{
             "bdVersion":"4.0.0",
-            "code":"sto_code",
+            "id":"sto_code",
             "contracts":[
                 {
                     "createPermission":"DEFAULT",
@@ -760,7 +764,7 @@
                             "type":"Contract"
                         }
                     ],
-                    "templateCode":"code-balanceOf-1"
+                    "templateId":"code-balanceOf-1"
                 },
                 {
                     "createPermission":"DEFAULT",
@@ -784,7 +788,7 @@
                             "type":"Contract"
                         }
                     ],
-                    "templateCode":"code-balanceOf-2"
+                    "templateId":"code-balanceOf-2"
                 }
             ],
             "label":"sto_code_name"
@@ -1106,14 +1110,16 @@
 ##### <a id="IDENTITY_SETTING">Identity设置</a>
 
 - [x] 开放
-- 接口描述：  设置Identity(此接口不能设置KYC信息)
+- 接口描述：  设置Identity(此接口可以设置KYC信息)
 - functionName：`IDENTITY_SETTING`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
 | address      | `string` | 40     | Y    | Y        | Identity地址                      |
-| property     | `string` | 1024   | Y   | Y      |  属性json格式       |
+| property     | `string` | 1024   | Y    | Y        |  属性json格式       |
+| identityType | `string` | 32     | N    | Y        |  type:user/node/domain       |
+| kyc          | `string` | 4096   | N    | Y        |  kyc信息       |
 
 
 - 响应参数：
@@ -1143,6 +1149,86 @@
 } 
 ```
 
+
+#### Identity冻结
+
+##### <a id="FREEZE_IDENTITY">Identity冻结</a>
+
+- [x] 开放
+- 接口描述：  Identity冻结
+- functionName：`FREEZE_IDENTITY`
+- 请求参数： 
+
+|    属性            | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-------------- :  | -------- | -------- | ---- | -------- | :---------------------------- |
+| targetAddress      | `string` | 40     | Y    | Y        | Identity地址                      |
+
+
+- 响应参数：
+
+|     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
+| :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
+| txId | `string` |          | Y    | Y        | 交易id |                           |
+
+- 实例：
+
+```json tab="请求实例"
+{
+   "datas":
+    	    {
+	          "address":"5342594ae09e2f8844464824e24e61334603bc49",
+            },
+    "version":"4.0.0"   
+}
+```
+
+```json tab="响应实例"
+{
+	"data":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
+
+#### Identity解冻
+
+##### <a id="UNFREEZE_IDENTITY">Identity解冻</a>
+
+- [x] 开放
+- 接口描述：  Identity解冻
+- functionName：`UNFREEZE_IDENTITY`
+- 请求参数： 
+
+|    属性            | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-------------- :  | -------- | -------- | ---- | -------- | :---------------------------- |
+| targetAddress      | `string` | 40     | Y    | Y        | Identity地址                      |
+
+
+- 响应参数：
+
+|     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
+| :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
+| txId | `string` |          | Y    | Y        | 交易id |                           |
+
+- 实例：
+
+```json tab="请求实例"
+{
+   "datas":
+    	    {
+	          "address":"5342594ae09e2f8844464824e24e61334603bc49",
+            },
+    "version":"4.0.0"   
+}
+```
+
+```json tab="响应实例"
+{
+	"data":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6",
+	"msg":"Success",
+	"respCode":"000000"
+} 
+```
 
 #####  <a id="AUTHORIZE_PERMISSION">Identity授权Permission</a>
 
