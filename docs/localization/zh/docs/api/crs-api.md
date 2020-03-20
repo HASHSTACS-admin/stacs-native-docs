@@ -270,8 +270,8 @@
 |    rsId     | `string` | 32       | Y    |    Y     | RS id            |
 |    desc     | `string` | 128      | Y    |    Y     | RS 节点描述      |
 |  domainId   | `string` | 16       | Y    |    Y     | Domain ID        |
-| maxNodeSize | `int`    |          | N    |    Y     | 最大节点允许数量 |
-| domainDesc  | `string` |          | N    |    Y     | domain 描述      |
+| maxNodeSize | `int`    | 10         | N    |    Y     | 最大节点允许数量 |
+| domainDesc  | `string` | 1024         | N    |    Y     | domain 描述      |
   
 - 响应参数：
 
@@ -319,20 +319,20 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
-| txId          | `string` |        | Y       | Y        | 交易id                      |
-| caList        | `json[]` |        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
-| proxyNodeName | `string` |        | Y       | N        | 代理节点                      |
+| txId          | `string` | 64       | Y       | Y        | 交易id                      |
+| caList        | `json[]` | 1024       | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
+| proxyNodeName | `string` | 32       | Y       | N        | 代理节点                      |
 
 - `caList`
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                       |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------- |
-| version       | `string` |        | Y       | Y        | 版本号   |
-| period        | `string` |        | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
-| pubKey        | `string` |        | Y       | Y        | 公钥   |
-| user          | `string` |        | Y       | Y        | 节点名称  |
-| domainId      | `string` |        | Y       | Y        | domain  |
-| usage         | `string` |        | Y       | Y        | biz/consensus      |
+| version       | `string` | 6       | Y       | Y        | 版本号   |
+| period        | `string` | 13       | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
+| pubKey        | `string` | 64       | Y       | Y        | 公钥   |
+| user          | `string` | 64       | Y       | Y        | 节点名称  |
+| domainId      | `string` | 32       | Y       | Y        | domain  |
+| usage         | `string` | 10      | Y       | Y        | biz/consensus      |
 
 - 响应参数：
 
