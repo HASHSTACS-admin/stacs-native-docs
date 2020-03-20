@@ -19,27 +19,27 @@
 - `{}`: 动态值表示符号
 
 ## 交易接口列表
-| 接口function                                              | 说明 |
+| 接口type                                              | 说明 |
 | :-----                                                    | :-----    |
 |<a href="#SET_IDENTITY">SET_IDENTITY</a>                   |Identity设置|
 |<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>             |Identity冻结|
 |<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a>         |Identity解冻|
-|<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |发布BD|
-|<a href="#REGISTER_POLICY">REGISTER_POLICY</a>             |注册Policy|
-|<a href="#MODIFY_POLICY">MODIFY_POLICY</a>                 |修改Policy|
-|<a href="#SET_PERMISSION">SET_PERMISSION</a>     |注册Permission|
-|<a href="#KYC_SETTING">KYC_SETTING</a>                     |为Identity设置KYC|
-|<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           |存证交易|
+|<a href="#ADD_BD">ADD_BD</a>                               |发布BD|
+|<a href="#SET_PERMISSION">SET_PERMISSION</a>     			|Permission设置|
+|<a href="#SET_POLICY">SET_POLICY</a>             			|设置Policy|
+|<a href="#UPDATE_POLICY">UPDATE_POLICY</a>                 |修改Policy|
+|<a href="#ADD_RS">ADD_RS</a>                               |RS注册|
+|<a href="#REMOVE_RS">REMOVE_RS</a>                         |RS撤销|
+|<a href="#INIT_CA">INIT_CA</a>                             |CA初始化|
+|<a href="#ADD_CA">ADD_CA</a>                               |CA认证|
+|<a href="#UPDATE_CA">UPDATE_CA</a>                         |CA更新|
+|<a href="#REMOVE_CA">REMOVE_CA</a>                         |CA撤销|
+|<a href="#ADD_NODE">ADD_NODE</a>                           |节点加入|
+|<a href="#REMOVE_NODE">REMOVE_NODE</a>                     |退出节点|
+|<a href="#ADD_CONTRACT">ADD_CONTRACT</a>                   |合约创建|
+|<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>           |合约执行|
+|<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           	|存证|
 |<a href="#BUILD_SNAPSHOT">BUILD_SNAPSHOT</a>               |快照交易|
-|<a href="#CA_AUTH">CA_AUTH</a>                             |注册CA|
-|<a href="#CA_CANCEL">CA_CANCEL</a>                         |取消CA|
-|<a href="#CA_UPDATE">CA_UPDATE</a>                         |更新CA|
-|<a href="#NODE_JOIN">NODE_JOIN</a>                         |节点加入|
-|<a href="#ADD_RS">ADD_RS</a>                               |注册为RS节点|
-|<a href="#CANCEL_RS">CANCEL_RS</a>                         |取消RS节点|
-|<a href="#SYSTEM_PROPERTY">SYSTEM_PROPERTY</a>             |设置系统属性|
-|<a href="#SET_FEE_CONFIG">SET_FEE_CONFIG</a>               |设置费用|
-|<a href="#SET_FEE_RULE">SET_FEE_RULE</a>                   |设置费用规则|
 
 
 ## 查询接口列表
@@ -73,13 +73,6 @@
 | ADD_SNAPSHOT  		| DEFAULT           | SYNC_ONE_VOTE_DEFAULT |快照交易      |
 | SET_ATTESTATION  		|                   |    	                |存证      |
 
-## 合约类的function表
-
-| functionName      	| execPermission | execPolicy         	| 备注 |
-| :-------------------- |  :-----        |  :-----             |  :--------------------            |
-| CONTRACT_CREATION		| 取决于BD定义    | 取决于BD定义   	   |合约创建                            |
-| ${functionDefine.name}| 取决于BD定义    | 取决于BD定义   	   |合约中的方法，functionDefine中的name |
-
 ## 系统内置Permission表
 | Permission      	    | 备注 |
 | :-----                |  :-----        |
@@ -87,18 +80,20 @@
 | RS  			        | 系统节点初始化时RS节点拥有该Permission        |
 
 ## 系统内置Policy表
-| Policy       	    |投票方式            |决议方式            |备注                |
-| :-----            |  :-----           |  :-----           |:-----           |
-|REGISTER_POLICY    |  ASYNC            |FULL_VOTE          |  |
-|MODIFY_POLICY    |  ASYNC            |FULL_VOTE          |  |
-|ADD_RS           |  ASYNC            |FULL_VOTE          |  |
-|CANCEL_RS        |  ASYNC            |FULL_VOTE          |  |
-|CA_AUTH        |  ASYNC            |FULL_VOTE          |  |
-|CA_UPDATE        |  ASYNC            |FULL_VOTE          |  |
-|CA_CANCEL        |  ASYNC            |FULL_VOTE          |  |
-|NODE_JOIN        |  ASYNC            |FULL_VOTE          |  |
-|NODE_LEAVE        |  ASYNC            |FULL_VOTE          |  |
-|SET_FEE_CONFIG        |  ASYNC            |FULL_VOTE      |    |
+| Policy       	   		|投票方式            |决议方式            |备注               |
+| :-----           		|  :-----           |  :-----           |:-----           |
+|SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
+|ADD_RS    				|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_RS    			|  ASYNC            |FULL_VOTE          |  |
+|ADD_CA           		|	 ASYNC          |FULL_VOTE          |  |
+|UPDATE_CA        		|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_CA        		|  ASYNC            |FULL_VOTE          |  |
+|ADD_NODE         		|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_NODE      		|  ASYNC            |FULL_VOTE          |  |
+|SYNC_ONE_VOTE_DEFAULT  |  SYNC             |FULL_VOTE          |  |
+|ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
+|SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
+
 
 ## SDK
 更快接入参考SDK提供的`SubmitTransactionExample`实例
@@ -107,7 +102,7 @@
 <dependency>
     <groupId>com.hashstacs</groupId>
     <artifactId>stacs-client</artifactId>
-    <version>4.1.0-SNAPSHOT</version>
+    <version>4.1.1-SNAPSHOT</version>
 </dependency>
 
 ```
@@ -201,13 +196,11 @@
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
 | merchantId    | `string` | 32       | N    |    Y     |商户id                                            |
 | merchantSign  | `string` | 128      | N    |    Y     |商户签名                                            |
-| functionName  | `string` | 32       | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
+| functionId  | `string` | 32          | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
-| actionDatas   | `string` |          | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+| actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
 |extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
-| maxAllowFee   | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
-|  feeCurrency  | `string` | 32       | N    |    Y     | 手续费币种                                                   |
 | submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |
 
 ###  签名方式
@@ -275,8 +268,8 @@
 |    rsId     | `string` | 32       | Y    |    Y     | RS id            |
 |    desc     | `string` | 128      | Y    |    Y     | RS 节点描述      |
 |  domainId   | `string` | 16       | Y    |    Y     | Domain ID        |
-| maxNodeSize | `int`    |          | N    |    Y     | 最大节点允许数量 |
-| domainDesc  | `string` |          | N    |    Y     | domain 描述      |
+| maxNodeSize | `int`    | 10         | N    |    Y     | 最大节点允许数量 |
+| domainDesc  | `string` | 1024         | N    |    Y     | domain 描述      |
   
 - 响应参数：
 
@@ -315,29 +308,29 @@
 
 ### CA
 
-#### <a id="CA_AUTH"/>CA注册</a>
+#### <a id="ADD_CA"/>CA注册</a>
 
 - [x] 开放
 - 接口描述： 将CA上链
-- functionName：`CA_AUTH`
+- functionId：`ADD_CA`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
-| txId          | `string` |        | Y       | Y        | 交易id                      |
-| caList        | `json[]` |        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
-| proxyNodeName | `string` |        | Y       | N        | 代理节点                      |
+| txId          | `string` | 64       | Y       | Y        | 交易id                      |
+| caList        | `json[]` |1024        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
+| proxyNodeName | `string` | 64       | Y       | N        | 代理节点                      |
 
 - `caList`
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                       |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------- |
-| version       | `string` |        | Y       | Y        | 版本号   |
-| period        | `string` |        | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
-| pubKey        | `string` |        | Y       | Y        | 公钥   |
-| user          | `string` |        | Y       | Y        | 节点名称  |
-| domainId      | `string` |        | Y       | Y        | domain  |
-| usage         | `string` |        | Y       | Y        | biz/consensus      |
+| version       | `string` |10       | Y       | Y        | 版本号   |
+| period        | `string` |20       | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
+| pubKey        | `string` |131      | Y       | Y        | 公钥   |
+| user          | `string` |32        | Y       | Y        | 节点名称  |
+| domainId      | `string` |32        | Y       | Y        | domain  |
+| usage         | `string` |10        | Y       | Y        | biz/consensus      |
 
 - 响应参数：
 
@@ -619,14 +612,14 @@
 ## 非系统级接口
 
 #### BD
-##### <a id="BD_PUBLISH">BD发布</a>
+##### <a id="ADD_BD">BD发布</a>
 - [x] 开放
 - 接口描述：  功能：发布自定义`BD`
    1. 所有类型的交易都需要指定`bdCode`,系统内置`BD`参考()；
    2. 发布BD使用用到的`Policy`和`execPermission`，链上必须存在（参考`注册Permission`和`注册Policy`功能）
    3. 如果发布`bdType`类型为`assets`或`contract`,那么后续发布的合约必须满足该`BD`的`functions`规范；
    4. 如果发布的`bdType`为`system`,那么`BD`的`functions`中定义的`name`只能是系统内置的`function`;
-- functionName：`BD_PUBLISH`
+- type：`ADD_BD`
 - 请求参数： 
 
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
