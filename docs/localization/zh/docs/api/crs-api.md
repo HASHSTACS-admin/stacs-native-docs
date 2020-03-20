@@ -198,7 +198,7 @@
 | type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
 | functionName  | `string` | 32       | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
-| actionDatas   | `string` |          | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+| actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
 |extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
 | maxAllowFee   | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
@@ -329,7 +329,7 @@
 | :---------:   | -------- | -------- | ----  | -------- | :---------------- |
 | version       | `string` | 6       | Y       | Y        | 版本号   |
 | period        | `string` | 13       | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
-| pubKey        | `string` | 64       | Y       | Y        | 公钥   |
+| pubKey        | `string` |131       | Y       | Y        | 公钥   |
 | user          | `string` | 64       | Y       | Y        | 节点名称  |
 | domainId      | `string` | 32       | Y       | Y        | domain  |
 | usage         | `string` | 10      | Y       | Y        | biz/consensus      |
@@ -382,7 +382,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | period | `string` | 64     | Y    | Y        | 过期时间                      |
-| pubKey | `string` | 64     | Y    | Y        | 公钥                      |
+| pubKey | `string` |131     | Y    | Y        | 公钥                      |
 | user   | `string`   | 64     | Y    | Y        | 节点名称                      |
 | domainId | `string` | 64     | Y    | Y        | 域                      |
 | usage; | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
@@ -423,7 +423,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| pubKey | `string` | 64     | Y    | Y        | 公钥                      |
+| pubKey | `string` | 131     | Y    | Y        | 公钥                      |
 | user | `string` | 64     | Y    | Y        | 节点名称                      |
 | domainId | `string` | 64     | Y    | Y        | 域                      |
 | usage; | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
@@ -467,10 +467,10 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
-| domainId  | `string` |          | Y    | Y        |   domain域             |
-| signValue | `string` |          | Y    | Y        |                |
-|  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+| nodeName  | `string` | 32         | Y    | Y        | 加入的节点名称 |
+| domainId  | `string` | 32         | Y    | Y        |   domain域             |
+| signValue | `string` | 256         | Y    | Y        |                |
+|  pubKey   | `string` | 131         | Y    | Y        | 节点公钥       |
 
 
 - 响应参数：
@@ -514,11 +514,11 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
-| domainId  | `string` |          | Y    | Y        |   domain域             |
-| signValue | `string` |          | Y    | Y        |                |
-| sign | `string` |          | Y    | Y        |            对signValue的签名    |
-|  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+| nodeName  | `string` |32          | Y    | Y        | 加入的节点名称 |
+| domainId  | `string` |32          | Y    | Y        |   domain域             |
+| signValue | `string` |1024          | Y    | Y        |                |
+| sign | `string` |   1024       | Y    | Y        |            对signValue的签名    |
+|  pubKey   | `string` |131          | Y    | Y        | 节点公钥       |
 
 
 - 响应参数：
