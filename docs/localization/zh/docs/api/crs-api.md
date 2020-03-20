@@ -63,8 +63,6 @@
 | REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
 | ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
 | REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
-| ADD_CONTRACT  	    |         	    |    	  	                |合约创建      |
-| EXECUTE_CONTRACT      |         	    |    	  	                |合约执行      |
 | ADD_SNAPSHOT  		| DEFAULT           | SYNC_ONE_VOTE_DEFAULT |快照交易      |
 
 ## 系统内置Permission表
