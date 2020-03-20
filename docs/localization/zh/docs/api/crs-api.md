@@ -362,7 +362,7 @@
 | pubKey | `string` | 64     | Y    | Y        | 公钥                      |
 | user   | `string`   | 64     | Y    | Y        | 节点名称                      |
 | domainId | `string` | 64     | Y    | Y        | 域                      |
-| usage; | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
+| usage | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
 
 
 - 响应参数：
