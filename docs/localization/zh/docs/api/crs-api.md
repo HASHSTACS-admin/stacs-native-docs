@@ -27,7 +27,6 @@
 |<a href="#ADD_BD">ADD_BD</a>                               |发布BD|
 |<a href="#SET_PERMISSION">SET_PERMISSION</a>     			|Permission设置|
 |<a href="#SET_POLICY">SET_POLICY</a>             			|设置Policy|
-|<a href="#UPDATE_POLICY">UPDATE_POLICY</a>                 |修改Policy|
 |<a href="#ADD_RS">ADD_RS</a>                               |RS注册|
 |<a href="#REMOVE_RS">REMOVE_RS</a>                         |RS撤销|
 |<a href="#INIT_CA">INIT_CA</a>                             |CA初始化|
@@ -39,7 +38,7 @@
 |<a href="#ADD_CONTRACT">ADD_CONTRACT</a>                   |合约创建|
 |<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>           |合约执行|
 |<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           	|存证|
-|<a href="#BUILD_SNAPSHOT">BUILD_SNAPSHOT</a>               |快照交易|
+|<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>               |快照交易|
 
 
 ## 查询接口列表
@@ -59,7 +58,6 @@
 | ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
 | SET_PERMISSION  	    | DEFAULT        | SET_PERMISSION           |Permission设置      |
 | SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
-| UPDATE_POLICY  		| DEFAULT        | UPDATE_POLICY   	        |修改Policy      |
 | ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
 | REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
 | INIT_CA  			    |         	     |    	  		            |CA初始化     |
@@ -370,10 +368,10 @@
 {"data":null,"msg":"Success","respCode":"000000","success":true}  
 ```
 
-#### <a id="CA_UPDATE"/>CA更新</a>
+#### <a id="UPDATE_CA"/>CA更新</a>
 - [x] 开放
 - 接口描述： 更新CA
-- type：`CA_UPDATE`
+- type：`UPDATE_CA`
 
 - 请求参数：
 
@@ -611,21 +609,19 @@
 ##### <a id="ADD_BD">BD发布</a>
 - [x] 开放
 - 接口描述：  功能：发布自定义`BD`
-   1. 所有类型的交易都需要指定`bdCode`,系统内置`BD`参考()；
+   1. 所有类型的交易都需要指定`bdId`,系统内置`BD`参考()；
    2. 发布BD使用用到的`Policy`和`execPermission`，链上必须存在（参考`注册Permission`和`注册Policy`功能）
-   3. 如果发布`bdType`类型为`assets`或`contract`,那么后续发布的合约必须满足该`BD`的`functions`规范；
-   4. 如果发布的`bdType`为`system`,那么`BD`的`functions`中定义的`name`只能是系统内置的`function`;
 - type：`ADD_BD`
 - 请求参数： 
 
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
-| id      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
-| label      | `string`              | 64       | Y    | Y        | BD名称                             |
-| desc      | `string`               | 1024     | N    | Y        | 描述                      |
-| functions | `List<FunctionDefine>` |          | N    | Y        | bd定义function            |
-| contracts | `List<ContractDefine>` |          | N    | Y        | bd定义contract            |
-| bdVersion | `string`               | 4        | Y    | Y        | bd版本                    |
+| id      | `string`                 |32       | Y    | Y        | BD编号（唯一）                      |
+| label      | `string`              |64       | Y    | Y        | BD名称                             |
+| desc      | `string`               |1024     | N    | Y        | 描述                      |
+| functions | `List<FunctionDefine>` |2048     | N    | Y        | bd定义function            |
+| contracts | `List<ContractDefine>` |2048     | N    | Y        | bd定义contract            |
+| bdVersion | `string`               | 4       | Y    | Y        | bd版本                    |
 
 `ContractDefine`定义:
 
@@ -635,7 +631,7 @@
 | desc             | `string` | 256            | N    | Y        | function描述                     |
 | createPermission | `string` | 64             | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
 | createPolicy     | `string` | 32             | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
-| functions        | `List<FunctionDefine>`|      | Y        | Y        | 合约方法定义function            |
+| functions        | `List<FunctionDefine>`|2048      | Y        | Y        | 合约方法定义function            |
 
 `FunctionDefine`定义:
 
@@ -644,7 +640,7 @@
 | desc           | `string` | 256     | N    | Y        | function描述                     |
 | execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该permission已经存在于链上                   |
 | execPolicy     | `string` | 32     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
-| methodSign     | `string` | 64     | Y    | Y        | 如果dbType类型为(contract/assets),则为方法签名                      |
+| methodSign     | `string` | 64     | Y    | Y        | 如何发布的是合约填写的合约方法签名
 | name           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
 | type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
 
@@ -667,81 +663,26 @@
 
 ```java tab="请求实例-actionDatas"
     {
-        "datas":{
-            "bdVersion":"4.0.0",
-            "id":"sto_code",
-            "contracts":[
-                {
-                    "createPermission":"DEFAULT",
-                    "createPolicy":"BD_PUBLISH",
-                    "desc":"余额查询-1",
-                    "functions":[
-                        {
-                            "desc":"余额查询",
-                            "execPermission":"DEFAULT",
-                            "execPolicy":"BD_PUBLISH",
-                            "methodSign":"(uint256) balanceOf(address)",
-                            "name":"balanceOf",
-                            "type":"Contract"
-                        },
-                        {
-                            "desc":"转账",
-                            "execPermission":"DEFAULT",
-                            "execPolicy":"BD_PUBLISH",
-                            "methodSign":"(bool) transfer(address,uint256)",
-                            "name":"transfer",
-                            "type":"Contract"
-                        }
-                    ],
-                    "templateId":"code-balanceOf-1"
-                },
-                {
-                    "createPermission":"DEFAULT",
-                    "createPolicy":"BD_PUBLISH",
-                    "desc":"余额查询-2",
-                    "functions":[
-                        {
-                            "desc":"余额查询",
-                            "execPermission":"DEFAULT",
-                            "execPolicy":"BD_PUBLISH",
-                            "methodSign":"(uint256) balanceOf(address)",
-                            "name":"balanceOf",
-                            "type":"Contract"
-                        },
-                        {
-                            "desc":"转账",
-                            "execPermission":"DEFAULT",
-                            "execPolicy":"BD_PUBLISH",
-                            "methodSign":"(bool) transfer(address,uint256)",
-                            "name":"transfer",
-                            "type":"Contract"
-                        }
-                    ],
-                    "templateId":"code-balanceOf-2"
-                }
-            ],
-            "label":"sto_code_name"
-        },
-        "version":"4.0.0"
+    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"name\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
     }
 
 ```
 
 ```json tab="响应实例"
 {
-	"data":"0f2222f69027942c341b0e1296256b2b8acd3135bc448b3e6bea106d22e362a3",
-	"msg":"Success",
-	"respCode":"000000"
-} 
+respCode='000000', 
+msg='Success', 
+data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```
 
 #### 快照
-##### <a id="BUILD_SNAPSHOT">快照发布</a>
+##### <a id="ADD_SNAPSHOT">快照发布</a>
 
 - [x] 开放
 - 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
 （快照发布使用的是存证的execPolicyId和name）
-- type：`BUILD_SNAPSHOT`
+- type：`ADD_SNAPSHOT`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -759,18 +700,17 @@
 
 ```json tab="请求实例"
 	{
-	    "datas":{"remark":"0e248ba7-8c95-4667-a1f3-d98c2a861973"},
-	    "version":"4.0.0"
+    	"txData":"{\"txId\":\"27f02fcbfcbdfb6659da0f3d870f11c969730efbb7a0ef769fd5ced4b7ed7a13\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_SNAPSHOT\",\"type\":\"ADD_SNAPSHOT\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"remark\":\"d01a7e41-184c-4a69-bc98-a9a9a2f5005f\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"008fe95f4d816e93a14d46344c2140c20491d1d73bdeb7a6f2cae65d989fe9b84517fa1d04ea70e420990d2e1c32f9d69c539d40cf771d3fad42a4df3760fb8083"
     }
-} 
 ```
 
 ```json tab="响应实例"
 {
-	"data":"\"541dadd6cb406a8206c6e3ea5979a52a30786ccf7480f5ec598c452e0a23c549\"",
-	"msg":"Success",
-	"respCode":"000000"
-} 
+    "data":"27f02fcbfcbdfb6659da0f3d870f11c969730efbb7a0ef769fd5ced4b7ed7a13",
+    "msg":"Success","respCode":"000000",
+    "success":true
+}
 ```
 
 ##### 快照查询
