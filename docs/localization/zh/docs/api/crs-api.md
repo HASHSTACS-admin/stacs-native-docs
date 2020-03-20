@@ -53,17 +53,14 @@
 | functionName      	| execPermission | execPolicy         	    | 备注 |
 | :-----                |  :-----        |  :-----                  |  :-----            |
 | ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
-| SET_PERMISSION  	    | DEFAULT        | SET_PERMISSION           |Permission设置      |
 | SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
 | ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
 | REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
-| INIT_CA  			    |         	     |    	  		            |CA初始化     |
 | ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
 | UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
 | REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
 | ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
 | REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
-| ADD_SNAPSHOT  		| DEFAULT           | SYNC_ONE_VOTE_DEFAULT |快照交易      |
 
 ## 系统内置Permission表
 | Permission      	    | 备注 |
@@ -394,10 +391,10 @@
 } 
 ```
 
-#### <a id="CA_CANCEL">CA撤销</a>
+#### <a id="REMOVE_CA">CA撤销</a>
 - [x] 开放
 - 接口描述： 撤销CA，设置CA为不可用
-- type：`CA_CANCEL`
+- type：`REMOVE_CA`
 
 - 请求参数：
 
