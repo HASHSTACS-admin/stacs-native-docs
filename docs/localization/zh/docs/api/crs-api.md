@@ -570,9 +570,9 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
-| expression | `string` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
-| mustDomainIds | `list<string>` |          | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
+| verifyNum | `int`     | 10         | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
+| expression | `string` | 64         | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
+| mustDomainIds | `list<string>` | 256         | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
 
 
 - 响应参数：
@@ -1291,10 +1291,10 @@
 | frozeFunctions | `string` | 64     | Y    | Y        | 冻结的function，采用`,`分隔   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
 | identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
-| kyc | `string` |      | Y    | Y        | identity认证信息                      |
+| kyc | `string` | 1024     | N    | Y        | identity认证信息                      |
 | permissions | `string` | 64     | Y    | Y        | 权限编号(32进制)                      |
 | preTxId | `string` | 64     | Y    | Y        |  上次identity被修改时交易id                   |
-| property | `string` | 64     | Y    | Y        |  扩展属性                   |
+| property | `string` | 1024     | Y    | Y        |  扩展属性                   |
 
 - 实例：
 ```json tab="请求实例"
@@ -1328,11 +1328,11 @@
 
 -  <a id="identityType">identityType类型</a> 
 
-|     类型                   | 说明                |
-| :-----------------------: | ------------------  |
-| user                      |  普通用户            |
-| domain                    |  Domain域           |
-| node                      |  参与网络的区块链节点   |
+|     类型                                                        | 说明                        |
+| :--------------------------------------------------------------:| ------------------------  |
+| user                                                            |  普通用户            |
+| domain                                                          |  Domain域           |
+| node                                                            |  参与网络的区块链节点   |
 
 - 响应参数：
 
