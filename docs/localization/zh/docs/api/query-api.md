@@ -41,7 +41,7 @@
 | txId          | `string` | 64       | Y    |    Y     | 请求Id |
 | bdId        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode  |
 | templateId  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode|
-| functionId  | `string` | 32       | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
+| functionId  | `string` | 32       | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` | text        | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |

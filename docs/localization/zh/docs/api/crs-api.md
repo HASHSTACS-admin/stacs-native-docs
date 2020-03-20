@@ -50,7 +50,7 @@
 |[queryContract][4]                   |合约数据状态查询|
 
 ## 系统内置function表
-| functionName      	| execPermission | execPolicy         	    | 备注 |
+| functionidId      	| execPermission | execPolicy         	    | 备注 |
 | :-----                |  :-----        |  :-----                  |  :-----            |
 | ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
 | SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
@@ -169,7 +169,7 @@
 示例：
 ```json 
 {
-   "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionName":"BD_PUBLISH","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","name":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","name":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","name":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","name":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
+   "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionId":"ADD_BD","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
        "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
 }
 ```
@@ -608,7 +608,7 @@
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -------------- | ---- | -------- | :---------------------------- |
-|   templateId   | `string` | 32             | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
+| templateId   | `string` | 32             | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
 | desc             | `string` | 256            | N    | Y        | function描述                     |
 | createPermission | `string` | 64             | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
 | createPolicy     | `string` | 32             | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
@@ -622,7 +622,7 @@
 | execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该permission已经存在于链上                   |
 | execPolicy     | `string` | 32     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
 | methodSign     | `string` | 64     | Y    | Y        | 如何发布的是合约填写的合约方法签名
-| name           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
+| id           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
 | type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
 
 
@@ -644,7 +644,7 @@
 
 ```java tab="请求实例-actionDatas"
     {
-    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"name\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
+    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
     	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
     }
 
@@ -662,7 +662,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - [x] 开放
 - 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
-（快照发布使用的是存证的execPolicyId和name）
+（快照发布使用的是存证的execPolicyId和id）
 - type：`ADD_SNAPSHOT`
 - 请求参数： 
 
@@ -744,7 +744,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
 | contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
-| name            | `string`   | 64       | Y    | Y        | 合约名称                   |
+| id            | `string`   | 64       | Y    | Y        | 合约名称                   |
 | symbol          | `string`   | 64       | Y    | Y        | 合约简称                   |
 | contractor      | `string`   | 1024         | Y    | Y        | 合约构造器(函数)名         |
 | sourceCode      | `string`   | text         | Y    | Y        | 合约代码                   |
@@ -766,12 +766,12 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
         "initArgs":[
             "1b3c3dd36e37478ffa73e86816b20a1c12a57fa4",
             "S_50954",
-            "S_50954_Name",
+            "S_50954_id",
             100000000000000,
             8,
             "00000000000000000000000000000000000000000000000000000074785f6964"
         ],
-        "name":"StandardCurrency",
+        "id":"StandardCurrency",
         "symbol":"BTC",
         "sourceCode":"pragma solidity ^0.4.24;"
 	},
