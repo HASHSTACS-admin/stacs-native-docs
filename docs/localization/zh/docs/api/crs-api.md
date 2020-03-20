@@ -145,7 +145,7 @@
 	    "txData":"{
 	        "txId":"txId-123",
 	        "bdCode":"SystemBD",
-	        "functionName":"BD_PUBLISH",
+	        "functionId":"BD_PUBLISH",
 	        "type":"BD_PUBLISH",
 	        .......
 	    }",
@@ -186,7 +186,7 @@
 | type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
-| functionId  | `string` | 32          | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
+| functionId  | `string` | 32          | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
@@ -737,11 +737,11 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 #### 智能合约
 
-##### <a id="CONTRACT_CREATION">合约部署</a>
+##### <a id="ADD_CONTRACT">合约部署</a>
 
 - [x] 开放
 - 接口描述：用户发布自定义合约实现业务
-- type：`CONTRACT_CREATION`
+- type：`ADD_CONTRACT`
 - 请求参数：
 
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
