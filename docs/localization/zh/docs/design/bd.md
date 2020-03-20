@@ -25,7 +25,7 @@ functions: # 功能列表
     * `Contract`: 合约方法。表示<code>methodSign</code>为合约的方法签名。
     * `SystemAction`: 系统功能。可选择如下功能：
         - `ADD_BD` : BD发布
-        - `IDENTITY_SETTING` : Identity设置
+        - `SET_IDENTITY` : Identity设置
         - `FREEZE_IDENTITY` : Identity冻结
         - `UNFREEZE_IDENTITY` : Identity解冻
         - `SET_PERMISSION` : Permission设置
