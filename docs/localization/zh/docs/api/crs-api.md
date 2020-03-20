@@ -211,7 +211,7 @@
      * should sign fields
      */
     private static String[] SIGN_FIELDS = new String[]
-        {"txId","bdCode","functionName","templateCode","type","submitter","version","actionDatas","extensionDatas","maxAllowFee","feeCurrency","subType","sessionId"};
+        {"txId","bdCode","funtionId","templateCode","type","submitter","version","actionDatas","extensionDatas","subType","sessionId"};
 
     public static final String getSignValue(Transaction tx){
         String str = "";
@@ -260,7 +260,7 @@
 #### <a id="ADD_RS">注册RS
 - [x] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
-- functionName：`ADD_RS`
+- type：`ADD_RS`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
@@ -291,7 +291,7 @@
 
 - 接口描述：  移除已注册的 RS
 
-- functionName：`CANCEL_RS`
+- type：`CANCEL_RS`
 
 - 请求参数： 
 
@@ -312,7 +312,7 @@
 
 - [x] 开放
 - 接口描述： 将CA上链
-- functionId：`ADD_CA`
+- type：`ADD_CA`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -373,7 +373,7 @@
 #### <a id="CA_UPDATE"/>CA更新</a>
 - [x] 开放
 - 接口描述： 更新CA
-- functionName：`CA_UPDATE`
+- type：`CA_UPDATE`
 
 - 请求参数：
 
@@ -415,7 +415,7 @@
 #### <a id="CA_CANCEL">CA撤销</a>
 - [x] 开放
 - 接口描述： 撤销CA，设置CA为不可用
-- functionName：`CA_CANCEL`
+- type：`CA_CANCEL`
 
 - 请求参数：
 
@@ -438,8 +438,6 @@
 ```json tab="请求实例"
 {
 	"domainId":"FORT-CAPITAL",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
 	"pubKey":"041db72c7828299254ad1163ec8c39e9d33443eaef4b113ec1010e6f4f1b722854a4e8321db3013acbd6a69e1c3f45bf014351554d523d3661157ec169d8b5402c",
 	"usage":"biz",
 	"user":"Node-d"
@@ -460,7 +458,7 @@
 #### <a id="NODE_JOIN">节点加入</a>
 - [x] 开放
 - 接口描述： 节点加入共识网络
-- functionName：`NODE_JOIN`
+- type：`NODE_JOIN`
 - 请求参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -483,8 +481,6 @@
 ```json tab="请求实例"
 {
 	"domainId":"FORT-CAPITAL",
-	"feeCurrency":null,
-	"feeMaxAmount":null,
 	"nodeName":"Node-d",
 	"pubKey":"04ba98bf34af47145cf552b710570538b37bf3eff124e51c3361d02ea128c0447737be86077667feaca6dbc0679ae0653c4887d328a2b9d6d7f777599c287bf054",
 	"sign":"005a086c04657767f395744c13d3e7eced587f95fa71e2735e4f020b3aee5c339715dd8e329a50bd90a3f17c01925cdc988a3264dbcb95d3abb7c31d29bf2758bb",
@@ -507,7 +503,7 @@
 
 - [x] 开放
 - 接口描述： 节点离开
-- functionName：`NODE_LEAVE`
+- type：`NODE_LEAVE`
 - 请求参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -550,7 +546,7 @@
 
 - [x] 开放
 - 接口描述： Policy设置
-- functionName：`SET_POLICY`
+- type：`SET_POLICY`
 - 请求参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -744,8 +740,8 @@
 
 - [x] 开放
 - 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
-（快照发布使用的是存证的execPolicyId和functionName）
-- functionName：`BUILD_SNAPSHOT`
+（快照发布使用的是存证的execPolicyId和name）
+- type：`BUILD_SNAPSHOT`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -821,7 +817,7 @@
 
 - [x] 开放
 - 接口描述：用户发布自定义合约实现业务
-- functionName：`CONTRACT_CREATION`
+- type：`CONTRACT_CREATION`
 - 请求参数：
 
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
@@ -829,9 +825,9 @@
 | contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
 | name            | `string`   | 64       | Y    | Y        | 合约名称                   |
 | symbol          | `string`   | 64       | Y    | Y        | 合约简称                   |
-| contractor      | `string`   |          | Y    | Y        | 合约构造器(函数)名         |
-| sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
-| initArgs        | `object[]` |          | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
+| contractor      | `string`   | 1024         | Y    | Y        | 合约构造器(函数)名         |
+| sourceCode      | `string`   | text         | Y    | Y        | 合约代码                   |
+| initArgs        | `object[]` | 2048         | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
 
 - 响应参数：
 
@@ -873,20 +869,20 @@
 ##### <a id="CONTRACT_INVOKE">合约执行</a>
 - [x] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
-- functionName：`{functionName}`
+- type：`EXECUTE_CONTRACT`
 - 请求参数： 
 
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :------------:  | --------     | -------- | ---- | -------- | :---------------------------- |
-| methodSignature | `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
-| args            | `object[]`   |      | N    | Y        | 方法执行入参参数      |
-| contractAddress | `string`     |      | Y    | Y        | 执行的合约地址                     |
+| methodSignature | `string`     | 256     | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
+| args            | `object[]`   | 2048     | N    | Y        | 方法执行入参参数      |
+| contractAddress | `string`     | 40     | Y    | Y        | 执行的合约地址                     |
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` |      | Y    | Y        | 交易id                      |
+| txId | `string` |   64   | Y    | Y        | 交易id                      |
 
 - 实例：
 
@@ -913,65 +909,21 @@
 } 
 ```
 
-##### 查询
-- [x] 开放
-- 接口描述： 链支持可直接调用合约查询方法(不执行交易流程)
-- 请求地址：`POST`:`/queryContract`
-- 请求参数： （无）
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-|     address     | `string`   | 40       | Y    | N        | 合约地址                               |
-| methodSignature | `string`   |          | Y    | N        | 方法签名，eg：`(uint256) get(uint256)` |
-|   blockHeight   | `long`     |          | N    | N        | 块高度，高度为null，默认查节点的最高链的最高度                                 |
-|   parameters    | `object[]` |          | N    | N        | 方法参数                               |
-
-
-- 响应参数：响应参数返回类型为对象数组，数组中的参与取决与合约发放返回定义，该例balanceOf方法返回的是uint256类型的值，该值为方法定义方法的余额
-
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| 	|	|	|	|	|	|
-
-- 实例：
-
-```json tab="请求实例"
-{
-	"address":"7fc61ef682d44bb74f6a9cce6e423f0277cb1b6c",
-	"blockHeight":null,
-	"methodSignature":"(uint256) balanceOf(address)",
-	"parameters":[
-		"f6ff9c931b453543c1514030dfdba444f7f81e64"
-	]
-}
-```
-
-```json tab="响应实例"
-{
-	"data":[
-		0
-	],
-	"msg":"Success",
-	"respCode":"000000"
-}  
-```
-
 #### Permission
 
-##### <a id="SET_PERMISSION"> 新增Permission </a>
+##### <a id="SET_PERMISSION"> 设置Permission </a>
 
 - [x] 开放
 - 接口描述：  添加permission,Identity被授予permission后才能执行该permission所定义交易
-- functionName：`SET_PERMISSION`
+- type：`SET_PERMISSION`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| id            | `string` | 64        | Y    | Y        | permission id（唯一）       |
-| label         | `string` | 64        | N    | Y        | 名称       |
-| type          | `string` | 64        | N    | Y        | 授权类型（ADDRESS/IDENTITY）       |
-| authorizers   | `string[]`|          | Y    | Y        | 被授予后期可以修改Permission的地址|
+| id            | `string`  | 64        | Y    | Y        | permission id（唯一）       |
+| label         | `string`  | 64        | N    | Y        | 名称       |
+| type          | `string`  | 64        | N    | Y        | 授权类型（ADDRESS/IDENTITY）       |
+| authorizers   | `string[]`|2048         | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas         | `json`    |2048      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
 
 - 响应参数：
@@ -1015,7 +967,7 @@
 | id            | `string` | 64        | Y    | Y        | permission id（唯一）       |
 | label         | `string` | 64        | N    | Y        | 名称       |
 | type          | `string` | 64        | N    | Y        | 授权类型       |（ADDRESS/IDENTITY）
-| authorizers   | `string[]`|          | Y    | Y        | 被授予后期可以修改Permission的地址|
+| authorizers   | `string[]`|2048          | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas         | `json`    |2048      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
 | preTxId       | `string`  |64        | Y    | Y        |上次操作的txId|
 | currentTxId   | `string`  |64        | Y    | Y        |最近操作的txId|
@@ -1076,7 +1028,7 @@
 
 - [x] 开放
 - 接口描述：  设置Identity(此接口可以设置KYC信息)
-- functionName：`SET_IDENTITY`
+- type：`SET_IDENTITY`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -1091,7 +1043,7 @@
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` |          | Y    | Y        | 交易id |                           |
+| txId | `string` |  64        | Y    | Y        | 交易id |                           |
 
 - 实例：
 
@@ -1121,7 +1073,7 @@
 
 - [x] 开放
 - 接口描述：  Identity冻结
-- functionName：`FREEZE_IDENTITY`
+- type：`FREEZE_IDENTITY`
 - 请求参数： 
 
 |    属性            | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -1133,7 +1085,7 @@
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` |          | Y    | Y        | 交易id |                           |
+| txId | `string` | 64         | Y    | Y        | 交易id |                           |
 
 - 实例：
 
@@ -1161,7 +1113,7 @@
 
 - [x] 开放
 - 接口描述：  Identity解冻
-- functionName：`UNFREEZE_IDENTITY`
+- type：`UNFREEZE_IDENTITY`
 - 请求参数： 
 
 |    属性            | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -1173,7 +1125,7 @@
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` |          | Y    | Y        | 交易id |                           |
+| txId | `string` |  64        | Y    | Y        | 交易id |                           |
 
 - 实例：
 
@@ -1205,7 +1157,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | N        | 用户地址                     |
-| permissionNames | `<string[]>` |      | Y    | Y        | 需要检查的权限，数组                     |
+| permissionNames | `<string[]>` | 1024     | Y    | Y        | 需要检查的权限，数组                     |
 
 - 响应参数：
 
@@ -1255,10 +1207,10 @@
 | frozeFunctions | `string` | 64     | Y    | Y        | 冻结的function，采用`,`分隔   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
 | identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
-| kyc | `string` |      | Y    | Y        | identity认证信息                      |
+| kyc | `string` |1024      | Y    | Y        | identity认证信息                      |
 | permissions | `string` | 64     | Y    | Y        | 权限编号(32进制)                      |
 | preTxId | `string` | 64     | Y    | Y        |  上次identity被修改时交易id                   |
-| property | `string` | 64     | Y    | Y        |  扩展属性                   |
+| property | `string` | 1024     | Y    | Y        |  扩展属性                   |
 
 - 实例：
 ```json tab="请求实例"
@@ -1277,54 +1229,6 @@
 }
 ```
 
-##### <a id="KYC_SETTING">KYC设置</a>
-
-- [x] 开放
-- 接口描述：  给Identity设置KYC信息，KYC为json格式，每次设置设置会覆盖之前的KYC信息;identityType会覆盖之前identityType
-- functionName：`KYC_SETTING`
-- 请求参数：
-
-|      属性       | 类型     | 最大长度 | 必填 | 是否签名 | 说明                            |
-| :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
-| identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
-| kyc       | `string` | 1024     | Y    | Y        | `kyc`属性（json字符串，合约目前支持kyc验证）                         |
-| identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node， 用户可自定义 |
-
--  <a id="identityType">identityType类型</a> 
-
-|     类型                   | 说明                |
-| :-----------------------: | ------------------  |
-| user                      |  普通用户            |
-| domain                    |  Domain域           |
-| node                      |  参与网络的区块链节点   |
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | txId                      |
-
-- 实例：
-
-```json tab="请求实例"
-{
-   "datas":
-    	    {
-	            "identityAddress":"7cc176180280d46bc15d871e02475ae47a4255f2",
-                "identityType":"user",
-                "kyc":"{\"aaa\":111,\"bbb\":222}",
-            },
-    "version":"4.0.0"   
-}
-```
-
-```json tab="响应实例"
-{
-	"data":"ebabcbf2151fbcfe42e1c5d2aae532b5eedac461fe71ccc67263c5a5a3b53ea5",
-	"msg":"Success",
-	"respCode":"000000"
-} 
-```
 
 #### <a id="SET_ATTESTATION">存证</a>
 
