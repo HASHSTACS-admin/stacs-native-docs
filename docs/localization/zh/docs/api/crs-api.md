@@ -1018,7 +1018,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| targetAddress      | `string` | 40     | Y    | Y        | Identity地址                      |
+| address      | `string` | 40     | Y    | Y        | Identity地址                      |
 
 
 - 响应参数：
@@ -1031,20 +1031,18 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 ```json tab="请求实例"
 {
-   "datas":
-    	    {
-	          "address":"5342594ae09e2f8844464824e24e61334603bc49",
-            },
-    "version":"4.0.0"   
+	"txData":"{\"txId\":\"f008e6d5b5abab6c795dd8b8bf3dc57c61189b68ae5903d9272b2a53e5dc1f97\",\"bdId\":\"bd_id_3599\",\"functionId\":\"FREEZE_IDENTITY\",\"type\":\"FREEZE_IDENTITY\",\"submitter\":\"5342594ae09e2f8844464824e24e61334603bc49\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"5342594ae09e2f8844464824e24e61334603bc49\"},\"version\":\"4.0.0\"}}",
+	"txSign":"01f9cb708cc1674183aa1a06fcf0edd83be4367627e5715d772132b14b0a1855a11683b295cc1affe85d4d430635968d15486ac49594e3322eb9fbafa30fee8c55"
 }
 ```
 
 ```json tab="响应实例"
 {
-	"data":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6",
-	"msg":"Success",
-	"respCode":"000000"
-} 
+    "data":"f008e6d5b5abab6c795dd8b8bf3dc57c61189b68ae5903d9272b2a53e5dc1f97",
+    "msg":"Success",
+    "respCode":"000000"
+    ,"success":true
+}
 ```
 
 #### Identity解冻
@@ -1058,7 +1056,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| targetAddress      | `string` | 40     | Y    | Y        | Identity地址                      |
+| address      | `string` | 40     | Y    | Y        | Identity地址                      |
 
 
 - 响应参数：
@@ -1071,20 +1069,18 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 ```json tab="请求实例"
 {
-   "datas":
-    	    {
-	          "address":"5342594ae09e2f8844464824e24e61334603bc49",
-            },
-    "version":"4.0.0"   
+	"txData":"{\"txId\":\"ff8541db5d88596dcbc09c1e15159c87b92421c16d4dcf65e7fc650d8e4f4abc\",\"bdId\":\"bd_id_3599\",\"functionId\":\"UNFREEZE_IDENTITY\",\"type\":\"UNFREEZE_IDENTITY\",\"submitter\":\"5342594ae09e2f8844464824e24e61334603bc49\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"5342594ae09e2f8844464824e24e61334603bc49\"},\"version\":\"4.0.0\"}}",
+	"txSign":"0023d7044b83890d37147886bbaafdc828b5ee48a27e636d76832f1718ac86b7e82a1bb8ec637603dfec8a949fb5a2e3ee361bcd57fa960bf270fbc96b373759ba"
 }
 ```
 
 ```json tab="响应实例"
 {
-	"data":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6",
-	"msg":"Success",
-	"respCode":"000000"
-} 
+    "data":"ff8541db5d88596dcbc09c1e15159c87b92421c16d4dcf65e7fc650d8e4f4abc",
+    "msg":"Success",
+    "respCode":"000000",
+    "success":true
+}
 ```
 
 
@@ -1142,15 +1138,13 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | Y        | user identity 地址                      |
 | currentTxId | `string` | 64     | Y    | Y        |    user identity 改修改时的txId                   |
-| frozeBDs | `string` | 64     | Y    | Y        | 冻结的bd，采用`,`分隔  |
-| frozeContracts | `string` | 64     | Y    | Y        | 冻结的合约，采用`,`分隔   |
-| frozeFunctions | `string` | 64     | Y    | Y        | 冻结的function，采用`,`分隔   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
+| froze | `boolean` |      | Y    | Y        | true：冻结，false：未冻结                      |
 | identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
 | kyc | `string` |1024      | Y    | Y        | identity认证信息                      |
-| permissions | `string` | 64     | Y    | Y        | 权限编号(32进制)                      |
 | preTxId | `string` | 64     | Y    | Y        |  上次identity被修改时交易id                   |
 | property | `string` | 1024     | Y    | Y        |  扩展属性                   |
+| version | `int` | 10     | Y    | Y        |  修改记录版本                   |
 
 - 实例：
 ```json tab="请求实例"
@@ -1160,12 +1154,17 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```json tab="响应实例"
 {
 	"data":{
-		"address":"33c1237c1a99284ebe001f102eee70cf6a306866",
-		"hidden":1,
-		"kyc":"{\"a\":\"1\",\"b\":\"1\",\"c\":\"1\"}",
-		"permissions":"5",
-		"preTxId":"",
-		"currentTxId":"2357f642afea07282916ff879c9e12430ea61bd5387946499464759a687a4236"
+		"address":"5342594ae09e2f8844464824e24e61334603bc49",
+		"bdId":"bd_id_3599",
+		"hidden":0,
+		"property":"",
+		"preTxId":"558d04f17c5ff0783a75644ffa87bdd21f59f6f21468a6370f2f4fb7731b5f43",
+		"froze":false,
+		"version":1,
+		"currentTxId":"beeb4eaf7a27ed4c2be3a911f2f3a0d0bef08806426e9ce3ef8ea2ba85b7f42d"
+	},
+	"msg":"Success",
+	"respCode":"000000"
 }
 ```
 
