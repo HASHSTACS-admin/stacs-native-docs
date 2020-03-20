@@ -559,12 +559,12 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
 | policyName     | `string`       | 64       | Y    | Y        |                                              |
-| votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
-| callbackType   | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
-| decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-| domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
-| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
-| assignMeta     | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
+| votePattern    | `string`       | 16         | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
+| callbackType   | `string`       | 16         | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
+| decisionType   | `string`       | 16         | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
+| domainIds      | `list<string>` | 512         | Y    | Y        | 参与投票的domainId列表                       |
+| requireAuthIds | `list<string>` | 512         | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
+| assignMeta     | `json`         |1024          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
 
@@ -621,12 +621,12 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册的policyId                               |
 | policyName     | `string`       | 64       | Y    | Y        |                                              |
-| votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
-| callbackType   | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
-| decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-| domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
-| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
-| assignMeta | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
+| votePattern    | `string`       |16         | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
+| callbackType   | `string`       |16         | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
+| decisionType   | `string`       |16          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
+| domainIds      | `list<string>` |512          | Y    | Y        | 参与投票的domainId列表                       |
+| requireAuthIds | `list<string>` |512         | N    | Y        | 需要通过该集合对应的rs授权才能修改当前policy |
+| assignMeta | `json`             |1024        | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
 
@@ -691,8 +691,8 @@
 | code      | `string`               | 32       | Y    | Y        | BD编号（唯一）                      |
 | label      | `string`              | 64       | Y    | Y        | BD名称                             |
 | desc      | `string`               | 1024     | N    | Y        | 描述                      |
-| functions | `List<FunctionDefine>` |          | N    | Y        | bd定义function            |
-| contracts | `List<ContractDefine>` |          | N    | Y        | bd定义contract            |
+| functions | `List<FunctionDefine>` | text     | N    | Y        | bd定义function            |
+| contracts | `List<ContractDefine>` | text     | N    | Y        | bd定义contract            |
 | bdVersion | `string`               | 4        | Y    | Y        | bd版本                    |
 
 `ContractDefine`定义:
@@ -703,7 +703,7 @@
 | desc             | `string` | 256            | N    | Y        | function描述                     |
 | createPermission | `string` | 64             | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
 | createPolicy     | `string` | 32             | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
-| functions        | `List<FunctionDefine>`|      | Y        | Y        | 合约方法定义function            |
+| functions        | `List<FunctionDefine>`|text      | Y        | Y        | 合约方法定义function            |
 
 `FunctionDefine`定义:
 
@@ -893,9 +893,9 @@
 | contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
 | name            | `string`   | 64       | Y    | Y        | 合约名称                   |
 | symbol          | `string`   | 64       | Y    | Y        | 合约简称                   |
-| contractor      | `string`   |          | Y    | Y        | 合约构造器(函数)名         |
-| sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
-| initArgs        | `object[]` |          | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
+| contractor      | `string`   | 1024     | Y    | Y        | 合约构造器(函数)名         |
+| sourceCode      | `string`   | text     | Y    | Y        | 合约代码                   |
+| initArgs        | `object[]` | 2048     | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
 
 - 响应参数：
 
@@ -942,9 +942,9 @@
 
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :------------:  | --------     | -------- | ---- | -------- | :---------------------------- |
-| methodSignature | `string`     |      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
-| args            | `object[]`   |      | N    | Y        | 方法执行入参参数      |
-| contractAddress | `string`     |      | Y    | Y        | 执行的合约地址                     |
+| methodSignature | `string`     |256      | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
+| args            | `object[]`   |2048      | N    | Y        | 方法执行入参参数      |
+| contractAddress | `string`     |40      | Y    | Y        | 执行的合约地址                     |
 
 - 响应参数：
 
@@ -986,9 +986,9 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 |     address     | `string`   | 40       | Y    | N        | 合约地址                               |
-| methodSignature | `string`   |          | Y    | N        | 方法签名，eg：`(uint256) get(uint256)` |
-|   blockHeight   | `long`     |          | N    | N        | 块高度，高度为null，默认查节点的最高链的最高度                                 |
-|   parameters    | `object[]` |          | N    | N        | 方法参数                               |
+| methodSignature | `string`   | 256         | Y    | N        | 方法签名，eg：`(uint256) get(uint256)` |
+|   blockHeight   | `long`     | 19         | N    | N        | 块高度，高度为null，默认查节点的最高链的最高度                                 |
+|   parameters    | `object[]` |2048          | N    | N        | 方法参数                               |
 
 
 - 响应参数：响应参数返回类型为对象数组，数组中的参与取决与合约发放返回定义，该例balanceOf方法返回的是uint256类型的值，该值为方法定义方法的余额
@@ -1155,8 +1155,8 @@
 |      属性          | 类型       | 最大长度 | 必填 | 是否签名 | 说明                                    |
 | :---------------: | ---------- | -------- | ---- | -------- | ------------------------------------ |
 | identityAddress   | `string`   | 40       | Y    | Y        | 新增identity地址                      |
-| addPermissions    | `string[]` |          | Y    | Y        | 给Identity授权的PermissionName数组     |
-| canclePermissions    | `string[]` |          | Y    | Y        | 给Identity撤销的的PermissionName数组     |
+| addPermissions    | `string[]` | 1024         | Y    | Y        | 给Identity授权的PermissionName数组     |
+| canclePermissions    | `string[]` |1024          | Y    | Y        | 给Identity撤销的的PermissionName数组     |
 
 - 响应参数：
 
@@ -1241,7 +1241,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | N        | 用户地址                     |
-| permissionNames | `<string[]>` |      | Y    | Y        | 需要检查的权限，数组                     |
+| permissionNames | `<string[]>` |1024      | Y    | Y        | 需要检查的权限，数组                     |
 
 - 响应参数：
 
@@ -1324,7 +1324,7 @@
 | :-------------: | -------- | -------- | ---- | -------- | ------------------------------- |
 | identityAddress | `string` | 40       | Y    | Y        | 目标identity地址                |
 | kyc       | `string` | 1024     | Y    | Y        | `kyc`属性（json字符串，合约目前支持kyc验证）                         |
-| identityType   | `string` |          | N    | Y        | 1. user(默认) 2. domain 3. node， 用户可自定义 |
+| identityType   | `string` |16          | N    | Y        | 1. user(默认) 2. domain 3. node， 用户可自定义 |
 
 -  <a id="identityType">identityType类型</a> 
 
