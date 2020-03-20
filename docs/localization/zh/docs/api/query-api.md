@@ -45,9 +45,11 @@
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` |          | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
+| subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
+| sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
+| merchantId    | `string` | 32       | N    |    Y     |商户id                                            |
+| merchantSign  | `string` | 128      | N    |    Y     |商户签名     
 |extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
-| maxAllowFee   | `string` | 18       | N    |    Y     | 最大允许的手续费                                             |
-|  feeCurrency  | `string` | 32       | N    |    Y     | 手续费币种                                                   |
 | submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名 
 
 ##### <a id="/queryContract">合约状态查询</a>
@@ -78,7 +80,8 @@
 
 |    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| policyId           | `string`   | 64       | Y    |        | 交易原始内容                      |
+| policyId           | `string`   | 64       | Y    |        | policy id(唯一)                      |
+| label             | `string`   | 64       | N    |          | policy 名称                      |
 | policyVersion      | `string`   | 64       | Y    |        | policy投票内容                    |
 | actionType         | `string`   | 64       | Y    |        | methodSign                      |
 | sender             | `string`   | 64       | Y    |        | 区块高度                      |
