@@ -52,9 +52,6 @@
 ## 系统内置function表
 | functionName      	| execPermission | execPolicy         	    | 备注 |
 | :-----                |  :-----        |  :-----                  |  :-----            |
-| SET_IDENTITY  	    |                |    	                    |Identity设置      |
-| FREEZE_IDENTITY  	    |                |    	                    |Identity冻结      |
-| UNFREEZE_IDENTITY  	|                |    	                    |Identity解冻      |
 | ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
 | SET_PERMISSION  	    | DEFAULT        | SET_PERMISSION           |Permission设置      |
 | SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
@@ -69,7 +66,6 @@
 | ADD_CONTRACT  	    |         	    |    	  	                |合约创建      |
 | EXECUTE_CONTRACT      |         	    |    	  	                |合约执行      |
 | ADD_SNAPSHOT  		| DEFAULT           | SYNC_ONE_VOTE_DEFAULT |快照交易      |
-| SET_ATTESTATION  		|                   |    	                |存证      |
 
 ## 系统内置Permission表
 | Permission      	    | 备注 |
@@ -192,8 +188,6 @@
 | type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
-| merchantId    | `string` | 32       | N    |    Y     |商户id                                            |
-| merchantSign  | `string` | 128      | N    |    Y     |商户签名                                            |
 | functionId  | `string` | 32          | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
@@ -209,7 +203,7 @@
      * should sign fields
      */
     private static String[] SIGN_FIELDS = new String[]
-        {"txId","bdCode","funtionId","templateCode","type","submitter","version","actionDatas","extensionDatas","subType","sessionId"};
+        {"txId","bdId","functionId","templateId","type","submitter","version","actionDatas","extensionDatas","subType","sessionId"};
 
     public static final String getSignValue(Transaction tx){
         String str = "";
@@ -273,15 +267,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :-------------------------|
-| txId | `string` |      | Y    | Y        | 交易id                      |
-
-##### 示例
-
-```java
-// todo sdk 请求代码
-```
-
-
+| txId | `string` | 64     | Y    | Y        | 交易id                      |
 
 #### <a id="CANCEL_RS"/>移除RS</a>
 
@@ -301,7 +287,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :-------------------------|
-| txId | `string` |      | Y    | Y        | 交易id                      |
+| txId | `string` |  64    | Y    | Y        | 交易id                      |
 
 
 ### CA
@@ -334,7 +320,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :-------------------------|
-| txId | `string` |      | Y    | Y        | 交易id                      |
+| txId | `string` | 64     | Y    | Y        | 交易id                      |
 
 - 实例：
 
@@ -388,7 +374,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` |      | Y    | Y        | 交易id                      |
+| txId | `string` |  64    | Y    | Y        | 交易id                      |
 
 - 实例：
 
@@ -429,7 +415,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` |      | Y    | Y        | 交易id                      |
+| txId | `string` | 64     | Y    | Y        | 交易id                      |
 
 - 实例：
 
@@ -461,10 +447,10 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
-| domainId  | `string` |          | Y    | Y        |   domain域             |
-| signValue | `string` |          | Y    | Y        |                |
-|  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+| nodeName  | `string` |   32       | Y    | Y        | 加入的节点名称 |
+| domainId  | `string` |   32       | Y    | Y        |   domain域             |
+| signValue | `string` |   1024      | Y    | Y        |                |
+|  pubKey   | `string` |    131      | Y    | Y        | 节点公钥       |
 
 
 - 响应参数：
@@ -506,11 +492,11 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| nodeName  | `string` |          | Y    | Y        | 加入的节点名称 |
-| domainId  | `string` |          | Y    | Y        |   domain域             |
-| signValue | `string` |          | Y    | Y        |                |
-| sign | `string` |          | Y    | Y        |            对signValue的签名    |
-|  pubKey   | `string` |          | Y    | Y        | 节点公钥       |
+| nodeName  | `string` |  32        | Y    | Y        | 加入的节点名称 |
+| domainId  | `string` |  32        | Y    | Y        |   domain域             |
+| signValue | `string` |  1024        | Y    | Y        |                |
+| sign | `string` |       256    | Y    | Y        |            对signValue的签名    |
+|  pubKey   | `string` |  131       | Y    | Y        | 节点公钥       |
 
 
 - 响应参数：
@@ -551,20 +537,20 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册/修改的policyId                               |
 | label          | `string`       | 64       | Y    | Y        |                                              |
-| votePattern    | `string`       |          | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
-| callbackType   | `string`       |          | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
-| decisionType   | `string`       |          | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-| domainIds      | `list<string>` |          | Y    | Y        | 参与投票的domainId列表                       |
-| requireAuthIds | `list<string>` |          | N    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
-| assignMeta     | `json` |          | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
+| votePattern    | `string`       | 10        | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
+| callbackType   | `string`       | 10         | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
+| decisionType   | `string`       | 10         | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
+| domainIds      | `list<string>` | 256         | Y    | Y        | 参与投票的domainId列表                       |
+| requireAuthIds | `list<string>` | 256         | N    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
+| assignMeta     | `json` | 1024         | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| verifyNum | `int` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
-| expression | `string` |          | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
-| mustDomainIds | `list<string>` |          | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
+| verifyNum | `int` |      10    | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
+| expression | `string` |   256       | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
+| mustDomainIds | `list<string>` | 256         | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
 
 
 - 响应参数：
@@ -687,14 +673,14 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| remark      | `string` | 256      | Y    | Y        | 快照备注                      |
+| remark      | `string` | 1024      | Y    | Y        | 快照备注                      |
 
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` |      | Y    | Y        | 交易id                      |
+| txId | `string` | 64     | Y    | Y        | 交易id                      |
 
 - 实例：
 
@@ -729,8 +715,8 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| blockHeight | `int` |      | Y    | Y        | 区块高度                      |
-| remark     | `string` |      | Y    | Y        | 备注                      |
+| blockHeight | `int` |   10   | Y    | Y        | 区块高度                      |
+| remark     | `string` |  1024    | Y    | Y        | 备注                      |
 
 - 实例：
 
@@ -773,7 +759,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | ---------------------|
-| txId | `string` |      | Y    | Y        | 交易id                      |
+| txId | `string` |  64    | Y    | Y        | 交易id                      |
 
 - 实例：
 ```json tab="请求实例"
@@ -1139,7 +1125,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | address | `string` | 40     | Y    | Y        | user identity 地址                      |
 | currentTxId | `string` | 64     | Y    | Y        |    user identity 改修改时的txId                   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
-| froze | `boolean` |      | Y    | Y        | true：冻结，false：未冻结                      |
+| froze | `boolean` |  10    | Y    | Y        | true：冻结，false：未冻结                      |
 | identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
 | kyc | `string` |1024      | Y    | Y        | identity认证信息                      |
 | preTxId | `string` | 64     | Y    | Y        |  上次identity被修改时交易id                   |
