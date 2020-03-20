@@ -21,7 +21,9 @@
 ## 交易接口列表
 | 接口function                                              | 说明 |
 | :-----                                                    | :-----    |
-|<a href="#IDENTITY_SETTING">IDENTITY_SETTING</a>           |设置Identity|
+|<a href="#SET_IDENTITY">SET_IDENTITY</a>                   |Identity设置|
+|<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>             |Identity冻结|
+|<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a>         |Identity解冻|
 |<a href="#BD_PUBLISH">BD_PUBLISH</a>                       |发布BD|
 |<a href="#REGISTER_POLICY">REGISTER_POLICY</a>             |注册Policy|
 |<a href="#MODIFY_POLICY">MODIFY_POLICY</a>                 |修改Policy|
@@ -33,7 +35,7 @@
 |<a href="#CA_CANCEL">CA_CANCEL</a>                         |取消CA|
 |<a href="#CA_UPDATE">CA_UPDATE</a>                         |更新CA|
 |<a href="#NODE_JOIN">NODE_JOIN</a>                         |节点加入|
-|<a href="#REGISTER_RS">REGISTER_RS</a>                     |注册为RS节点|
+|<a href="#ADD_RS">ADD_RS</a>                               |注册为RS节点|
 |<a href="#CANCEL_RS">CANCEL_RS</a>                         |取消RS节点|
 |<a href="#SYSTEM_PROPERTY">SYSTEM_PROPERTY</a>             |设置系统属性|
 |<a href="#SET_FEE_CONFIG">SET_FEE_CONFIG</a>               |设置费用|
@@ -49,25 +51,27 @@
 |[queryContract][4]                   |合约数据状态查询|
 
 ## 系统内置function表
-| functionName      	| execPermission | execPolicy         	| 备注 |
-| :-----                |  :-----        |  :-----             |  :-----            |
-| IDENTITY_SETTING  	| DEFAULT        | IDENTITY_SETTING   	|给地址做身份认证      |
-| BD_PUBLISH  			| DEFAULT        | BD_PUBLISH   	  	|发布BD      |
-| SET_PERMISSION  	    | DEFAULT        | SET_PERMISSION  |注册Permission      |
-| REGISTER_POLICY  		| DEFAULT        | REGISTER_POLICY   	|注册Policy      |
-| MODIFY_POLICY  		| DEFAULT        | MODIFY_POLICY   	    |修改Policy      |
-| REGISTER_RS  			| DEFAULT        | REGISTER_RS   	    |注册为RS节点      |
-| CANCEL_RS  			| RS        	 | CANCEL_RS   	  		|取消RS节点      |
-| CA_AUTH  				| DEFAULT        | CA_AUTH   	  		|注册CA      |
-| CA_CANCEL  			| RS        	 | CA_CANCEL   	  		|取消CA      |
-| CA_UPDATE  			| RS        	 | CA_UPDATE   	  		|更新CA      |
-| NODE_JOIN  			| DEFAULT        | NODE_JOIN   	  		|节点加入      |
-| NODE_LEAVE  			| RS        	 | NODE_LEAVE   	  	|节点离开      |
-| SYSTEM_PROPERTY  		| RS        	 | SYSTEM_PROPERTY   	|设置系统属性      |
-| KYC_SETTING  			| DEFAULT        | KYC_SETTING   	  	|为Identity设置KYC      |
-| SET_FEE_CONFIG  		| RS        	 | SET_FEE_CONFIG   	|设置费用      |
-| SET_FEE_RULE  		| RS        	 | SET_FEE_RULE   	  	|设置费用规则      |
-| BUILD_SNAPSHOT  		| DEFAULT        | BUILD_SNAPSHOT   	|快照交易      |
+| functionName      	| execPermission | execPolicy         	    | 备注 |
+| :-----                |  :-----        |  :-----                  |  :-----            |
+| SET_IDENTITY  	    |                |    	                    |Identity设置      |
+| FREEZE_IDENTITY  	    |                |    	                    |Identity冻结      |
+| UNFREEZE_IDENTITY  	|                |    	                    |Identity解冻      |
+| ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
+| SET_PERMISSION  	    | DEFAULT        | SET_PERMISSION           |Permission设置      |
+| SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
+| UPDATE_POLICY  		| DEFAULT        | UPDATE_POLICY   	        |修改Policy      |
+| ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
+| REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
+| INIT_CA  			    |         	     |    	  		            |CA初始化     |
+| ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
+| UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
+| REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
+| ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
+| REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
+| ADD_CONTRACT  	    |         	    |    	  	                |合约创建      |
+| EXECUTE_CONTRACT      |         	    |    	  	                |合约执行      |
+| ADD_SNAPSHOT  		| DEFAULT           | SYNC_ONE_VOTE_DEFAULT |快照交易      |
+| SET_ATTESTATION  		|                   |    	                |存证      |
 
 ## 合约类的function表
 
@@ -87,7 +91,7 @@
 | :-----            |  :-----           |  :-----           |:-----           |
 |REGISTER_POLICY    |  ASYNC            |FULL_VOTE          |  |
 |MODIFY_POLICY    |  ASYNC            |FULL_VOTE          |  |
-|REGISTER_RS        |  ASYNC            |FULL_VOTE          |  |
+|ADD_RS           |  ASYNC            |FULL_VOTE          |  |
 |CANCEL_RS        |  ASYNC            |FULL_VOTE          |  |
 |CA_AUTH        |  ASYNC            |FULL_VOTE          |  |
 |CA_UPDATE        |  ASYNC            |FULL_VOTE          |  |
@@ -260,10 +264,10 @@
 
 >   `Domain`管理旗下`RS`节点的接口，让节点可以**注册**到`Domain`中参与交易处理，也可以**移除**`domain`下指定节点
 
-#### <a id="REGISTER_RS">注册RS
+#### <a id="ADD_RS">注册RS
 - [x] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
-- functionName：`REGISTER_RS`
+- functionName：`ADD_RS`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
@@ -1075,11 +1079,11 @@
 
 #### Identity
 
-##### <a id="IDENTITY_SETTING">Identity设置</a>
+##### <a id="SET_IDENTITY">Identity设置</a>
 
 - [x] 开放
 - 接口描述：  设置Identity(此接口可以设置KYC信息)
-- functionName：`IDENTITY_SETTING`
+- functionName：`SET_IDENTITY`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
