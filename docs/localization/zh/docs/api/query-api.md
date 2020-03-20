@@ -43,7 +43,7 @@
 | templateCode  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode|
 | functionName  | `string` | 32       | Y    |    Y     | BD的functionName，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
-| actionDatas   | `string` |          | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+| actionDatas   | `string` | text        | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
@@ -65,8 +65,8 @@
 | :----------------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | blockHeight        | `long`     | 64     | N    |          | 指定查询合约的区块高度，不指定使用链的最大高度|
 | address            | `string`   | 40     | Y    |          | 指定查询合约地址，需要满足地址格式|
-| methodSignature    | `string`   |        | Y    |          | 指定查询合约方法|
-| parameters         | `jsonArray`|        | N    |          | 如果查询的方法参数列表为空，可以不指定参数，需要和`methodSignature`参数列表对应|
+| methodSignature    | `string`   |  256      | Y    |          | 指定查询合约方法|
+| parameters         | `jsonArray`|  256      | N    |          | 如果查询的方法参数列表为空，可以不指定参数，需要和`methodSignature`参数列表对应|
 
 - 响应参数：
 

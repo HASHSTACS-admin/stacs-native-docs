@@ -6,12 +6,9 @@ BD（Business Define）是定义一整套完整的包含所有业务相关功能
 具体定义如下：
 
 ```yaml
-name: 名称
-type: 业务类型（稳定币、证券、系统级合约），system-非合约型BD,不需要初始化
-code: 业务代码
-initPermission: 初始化所需Permission
-initPolicy: 初始化所需Policy
-version: 业务版本
+id: id
+label: 名称
+bdVersion: 业务版本
 functions: # 功能列表
   - name: 功能名称
     desc: 功能描述
@@ -22,35 +19,30 @@ functions: # 功能列表
 ```
 !!! note
     BD定义发布时所需要的[Permission][1]、[Policy][2]需要在BD发布前注册定义, BD的发布为系统功能，采用异步全Domain投票的Policy。
-
-- **业务类型/业务代码：** 业务类型与业务代码一一对应，业务代码是用于区分在链上发布的合约的业务属性。DApp可以根据具体的业务代码，获取其关联业务的合约，以便执行具体的业务功能。    
-    * `system`： 系统 BD 类型，不需要初始化，所包含的功能列表全部为系统功能，不包含合约方法 
-    * `contract`： 合约 BD 类型
-    * `assets`：资产 BD 类型，需要额外实现
-    * 自定义：合约类BD, 需要初始化，也即发布合约。可以包含系统功能，如kyc设置、打开快照等
   
 - **功能执行类型：** 定义了该功能执行的方法类型。
 
     * `Contract`: 合约方法。表示<code>methodSign</code>为合约的方法签名。
     * `SystemAction`: 系统功能。可选择如下功能：
-        - `BD_PUBLISH` : BD发布
-        - `IDENTITY_SETTING` : Identity设置，设置Identity的一般属性
-        - `IDENTITY_BD_MANAGE` : Identity BD 管理，冻结或解冻identity对BD的操作
-        - `KYC_SETTING` : Identity KYC 设置，设置Identity的KYC属性
-        - `PERMISSION_REGISTER` : Permission注册，注册系统permission
-        - `AUTHORIZE_PERMISSION` : Permission授权，将permission授权给某一Identity
-        - `CANCEL_PERMISSION` : Permission撤销授权，撤销Identity的Permission授权
-        - `REGISTER_POLICY` : Policy注册
-        - `MODIFY_POLICY` : Policy修改
-        - `SYSTEM_PROPERTY` : 系统属性配置，配置一些系统属性（key-value）
-        - `SET_FEE_RULE` : 手续费费率配置
-        - `SAVE_ATTESTATION` : 存证，保存存证数据
-        - `BUILD_SNAPSHOT` : 打快照
+        - `ADD_BD` : BD发布
+        - `IDENTITY_SETTING` : Identity设置
+        - `FREEZE_IDENTITY` : Identity冻结
+        - `UNFREEZE_IDENTITY` : Identity解冻
+        - `SET_PERMISSION` : Permission设置
+        - `SET_POLICY` : 设置Policy
+        - `ADD_RS` : RS注册
+        - `REMOVE_RS` : RS撤销
+        - `INIT_CA` : CA初始化
+        - `ADD_CA` : CA认证
+        - `UPDATE_CA` : CA更新
+        - `REMOVE_CA` : CA撤销
+        - `ADD_NODE` : 节点加入
+        - `REMOVE_NODE` : 退出节点
+        - `ADD_CONTRACT` : 合约创建
+        - `EXECUTE_CONTRACT` : 合约执行
+        - `SET_ATTESTATION` : 存证
+        - `ADD_SNAPSHOT` : 快照交易
         
-
-STACS智能合约通过BD定义的Permission和Policy约束规则，可以将合约的不同功能分配给不同Permission和policy, 每个[Identity][3]可以授予不同的Permission,
-通过这种方式，合约的不同功能就会授权由特定Permission的Identity执行，从而达到金融业务分权执行合约功能的目的。
-
 ### **系统初始BD**
 
 系统在初始化时，会默认初始化系统BD（定义如下），系统BD中定义的所有系统功能，都采用异步Domain投票策略且需要RS Permission。在初始化时会将系统BD中的Policy注册为Domain异步投票策略，系统BD中出现的Permission也会注册。
@@ -60,137 +52,76 @@ STACS智能合约通过BD定义的Permission和Policy约束规则，可以将合
 - 灵活性：后续可通过发布其他BD来指定某一系统功能采用其他投票策略或其他的Permission。但该BD的发布需要所有Domain异步授权投票，在保证灵活性的同时有确保了各Domain的公平性。
 
 ```yaml
-name: SystemBD
-bdType: system
-code: SystemBD
+label: SystemBD
+id: SystemBD
 bdVersion: 1.0
 functions:
-  - name: IDENTITY_SETTING
+  - name: ADD_BD
     type: SystemAction
-    desc: Identity设置
-    methodSign: IDENTITY_SETTING
+    desc: BD Specification
+    methodSign: ADD_BD
     execPermission: DEFAULT
-    execPolicy: IDENTITY_SETTING
-  - name: BD_PUBLISH
+    execPolicy: SYNC_ONE_VOTE_DEFAULT
+  - name: SET_PERMISSION
     type: SystemAction
-    desc: BD发布
-    methodSign: BD_PUBLISH
-    execPermission: RS
-    execPolicy: BD_PUBLISH
-  - name: PERMISSION_REGISTER
+    desc: Permission Register
+    methodSign: SET_PERMISSION
+    execPermission: DEFAULT
+    execPolicy: SYNC_ONE_VOTE_DEFAULT
+  - name: SET_POLICY
     type: SystemAction
-    desc: Permission注册
-    methodSign: PERMISSION_REGISTER
-    execPermission: RS
-    execPolicy: PERMISSION_REGISTER
-  - name: AUTHORIZE_PERMISSION
+    desc: Register Policy
+    methodSign: SET_POLICY
+    execPermission: DEFAULT
+    execPolicy: SYNC_ONE_VOTE_DEFAULT
+  - name: ADD_RS
     type: SystemAction
-    desc: Permission授权
-    methodSign: AUTHORIZE_PERMISSION
-    execPermission: RS
-    execPolicy: AUTHORIZE_PERMISSION
-  - name: CANCEL_PERMISSION
+    desc: Register Rs
+    methodSign: ADD_RS
+    execPermission: DEFAULT
+    execPolicy: ADD_RS
+  - name: REMOVE_RS
     type: SystemAction
-    desc: Permission撤销授权
-    methodSign: CANCEL_PERMISSION
+    desc: Cancel Rs
+    methodSign: REMOVE_RS
     execPermission: RS
-    execPolicy: CANCEL_PERMISSION
-  - name: REGISTER_POLICY
+    execPolicy: REMOVE_RS
+  - name: ADD_CA
     type: SystemAction
-    desc: Policy注册
-    methodSign: REGISTER_POLICY
-    execPermission: RS
-    execPolicy: REGISTER_POLICY
-  - name: MODIFY_POLICY
+    desc: CA Auth
+    methodSign: ADD_CA
+    execPermission: DEFAULT
+    execPolicy: ADD_CA
+  - name: REMOVE_CA
     type: SystemAction
-    desc: Policy修改
-    methodSign: MODIFY_POLICY
+    desc: CA Cancel
+    methodSign: REMOVE_CA
     execPermission: RS
-    execPolicy: MODIFY_POLICY
-  - name: REGISTER_RS
+    execPolicy: REMOVE_CA
+  - name: UPDATE_CA
     type: SystemAction
-    desc: RS注册
-    methodSign: REGISTER_RS
+    desc: CA Update
+    methodSign: UPDATE_CA
     execPermission: RS
-    execPolicy: REGISTER_RS
-  - name: CANCEL_RS
+    execPolicy: UPDATE_CA
+  - name: ADD_NODE
     type: SystemAction
-    desc: RS撤销
-    methodSign: RS_CANCEL
-    execPermission: RS
-    execPolicy: CANCEL_RS
-  - name: CA_AUTH
+    desc: Node Join
+    methodSign: ADD_NODE
+    execPermission: DEFAULT
+    execPolicy: ADD_NODE
+  - name: REMOVE_NODE
     type: SystemAction
-    desc: CA认证
-    methodSign: CA_AUTH
+    desc: Node Leave
+    methodSign: REMOVE_NODE
     execPermission: RS
-    execPolicy: CA_AUTH
-  - name: CA_CANCEL
+    execPolicy: REMOVE_NODE
+  - name: ADD_SNAPSHOT
     type: SystemAction
-    desc: CA撤销
-    methodSign: CA_CANCEL
-    execPermission: RS
-    execPolicy: CA_CANCEL
-  - name: CA_UPDATE
-    type: SystemAction
-    desc: CA更新
-    methodSign: CA_UPDATE
-    execPermission: RS
-    execPolicy: CA_UPDATE
-  - name: NODE_JOIN
-    type: SystemAction
-    desc: 节点加入
-    methodSign: NODE_JOIN
-    execPermission: RS
-    execPolicy: NODE_JOIN
-  - name: NODE_LEAVE
-    type: SystemAction
-    desc: 节点退出
-    methodSign: NODE_LEAVE
-    execPermission: RS
-    execPolicy: NODE_LEAVE
-  - name: SYSTEM_PROPERTY
-    type: SystemAction
-    desc: 系统属性配置
-    methodSign: SYSTEM_PROPERTY
-    execPermission: RS
-    execPolicy: SYSTEM_PROPERTY
-  - name: IDENTITY_BD_MANAGE
-    type: SystemAction
-    desc: Identity BD 管理（froze/unfroze）
-    methodSign: IDENTITY_BD_MANAGE
-    execPermission: RS
-    execPolicy: IDENTITY_BD_MANAGE
-  - name: KYC_SETTING
-    type: SystemAction
-    desc: identity kyc 设置
-    methodSign: KYC_SETTING
-    execPermission: RS
-    execPolicy: KYC_SETTING
-  - name: SET_FEE_CONFIG
-    type: SystemAction
-    desc: 手续费设置：合约地址 & 收取地址
-    methodSign: SET_FEE_CONFIG
-    execPermission: RS
-    execPolicy: SET_FEE_CONFIG
-  - name: SET_FEE_RULE
-    type: SystemAction
-    desc: 手续费费率配置
-    methodSign: SET_FEE_RULE
-    execPermission: RS
-    execPolicy: SET_FEE_RULE
-  - name: SAVE_ATTESTATION
-    type: SystemAction
-    desc: 保存存证
-    methodSign: SAVE_ATTESTATION
-    execPermission: RS
-    execPolicy: SAVE_ATTESTATION
-  - name: BUILD_SNAPSHOT
-    type: SystemAction
-    desc: 打快照
-    methodSign: BUILD_SNAPSHOT
-    execPermission: RS
-    execPolicy: BUILD_SNAPSHOT
+    desc: Build Snapshot
+    methodSign: ADD_SNAPSHOT
+    execPermission: DEFAULT
+    execPolicy: SYNC_ONE_VOTE_DEFAULT
 ```
 
 [1]: permission.md
