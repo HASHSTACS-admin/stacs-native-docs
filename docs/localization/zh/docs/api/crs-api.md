@@ -46,7 +46,6 @@
 | :-----                                                           | :-----    |
 |[queryMaxHeight][1]                  |查询当前最大区块高度|
 |[queryTxByTxId/{txId}][2]            |根据txId查询交易数据|
-|[queryTxsByHeight/{height}][3]       |根据高度查询区块内所有交易数据|
 |[queryContract][4]                   |合约数据状态查询|
 
 ## 系统内置function表
@@ -95,8 +94,6 @@
 </dependency>
 
 ```
-
-## kyc规范
 
 > 
 
@@ -296,9 +293,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
-| txId          | `string` | 64       | Y       | Y        | 交易id                      |
 | caList        | `json[]` |1024        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
-| proxyNodeName | `string` | 64       | Y       | N        | 代理节点                      |
 
 - `caList`
 
@@ -340,8 +335,7 @@
 			"user":"Node-d",
 			"version":"1.0.0"
 		}
-	],
-	"proxyNodeName":null
+	]
 } 
 ```
 
@@ -358,11 +352,11 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| period | `string` | 64     | Y    | Y        | 过期时间                      |
-| pubKey | `string` | 64     | Y    | Y        | 公钥                      |
-| user   | `string`   | 64     | Y    | Y        | 节点名称                      |
-| domainId | `string` | 64     | Y    | Y        | 域                      |
-| usage | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
+| period | `string`   | 20     | Y    | Y        | 过期时间                      |
+| pubKey | `string`   | 131    | Y    | Y        | 公钥                      |
+| user   | `string`   | 32     | Y    | Y        | 节点名称                      |
+| domainId | `string` | 32     | Y    | Y        | 域                      |
+| usage | `string`    | 10     | Y    | Y        | 使用类型biz/consensus                      |
 
 
 - 响应参数：
@@ -400,10 +394,10 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| pubKey | `string` | 64     | Y    | Y        | 公钥                      |
-| user | `string` | 64     | Y    | Y        | 节点名称                      |
-| domainId | `string` | 64     | Y    | Y        | 域                      |
-| usage; | `string` | 64     | Y    | Y        | 使用类型biz/consensus                      |
+| pubKey | `string` | 131     | Y    | Y        | 公钥                      |
+| user | `string` | 32     | Y    | Y        | 节点名称                      |
+| domainId | `string` | 32     | Y    | Y        | 域                      |
+| usage | `string` | 10     | Y    | Y        | 使用类型biz/consensus                      |
 
 
 - 响应参数：
@@ -444,7 +438,8 @@
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | nodeName  | `string` |   32       | Y    | Y        | 加入的节点名称 |
 | domainId  | `string` |   32       | Y    | Y        |   domain域             |
-| signValue | `string` |   1024      | Y    | Y        |                |
+| signValue | `string` |   1024      | Y    | Y        |   签名值             |
+| selfSign | `string` |   130      | Y    | Y        |   自签名后的签名值             |
 |  pubKey   | `string` |    131      | Y    | Y        | 节点公钥       |
 
 
@@ -490,7 +485,7 @@
 | nodeName  | `string` |  32        | Y    | Y        | 加入的节点名称 |
 | domainId  | `string` |  32        | Y    | Y        |   domain域             |
 | signValue | `string` |  1024        | Y    | Y        |                |
-| sign | `string` |       256    | Y    | Y        |            对signValue的签名    |
+| selfSign | `string` |    130      | Y    | Y        |            对signValue的签名    |
 |  pubKey   | `string` |  131       | Y    | Y        | 节点公钥       |
 
 
@@ -598,11 +593,11 @@
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
 | id      | `string`                 |32       | Y    | Y        | BD编号（唯一）                      |
-| label      | `string`              |64       | Y    | Y        | BD名称                             |
+| label      | `string`              |32       | Y    | Y        | BD名称                             |
 | desc      | `string`               |1024     | N    | Y        | 描述                      |
 | functions | `List<FunctionDefine>` |2048     | N    | Y        | bd定义function            |
 | contracts | `List<ContractDefine>` |2048     | N    | Y        | bd定义contract            |
-| bdVersion | `string`               | 4       | Y    | Y        | bd版本                    |
+| bdVersion | `string`               | 16       | Y    | Y        | bd版本                    |
 
 `ContractDefine`定义:
 
@@ -621,8 +616,8 @@
 | desc           | `string` | 256     | N    | Y        | function描述                     |
 | execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该permission已经存在于链上                   |
 | execPolicy     | `string` | 32     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
-| methodSign     | `string` | 64     | Y    | Y        | 如何发布的是合约填写的合约方法签名
-| id           | `string` | 64     | Y    | Y        | function名称在同一个bd下不能重复                      |
+| methodSign     | `string` | 256     | Y    | Y        | 如果发布的是合约则填写的合约方法签名
+| id           | `string` | 32     | Y    | Y        | function名称在同一个bd下不能重复                      |
 | type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
 
 
@@ -745,7 +740,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
 | contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
 | id            | `string`   | 64       | Y    | Y        | 合约名称                   |
-| symbol          | `string`   | 64       | Y    | Y        | 合约简称                   |
+| label          | `string`   | 64       | N    | Y        | 合约简称                   |
 | contractor      | `string`   | 1024         | Y    | Y        | 合约构造器(函数)名         |
 | sourceCode      | `string`   | text         | Y    | Y        | 合约代码                   |
 | initArgs        | `object[]` | 2048         | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
@@ -841,11 +836,11 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| id            | `string`  | 64        | Y    | Y        | permission id（唯一）       |
-| label         | `string`  | 64        | N    | Y        | 名称       |
-| type          | `string`  | 64        | N    | Y        | 授权类型（ADDRESS/IDENTITY）       |
-| authorizers   | `string[]`|2048         | Y    | Y        | 被授予后期可以修改Permission的地址|
-| datas         | `json`    |2048      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
+| id            | `string`  | 32        | Y    | Y        | permission id（唯一）       |
+| label         | `string`  | 32        | N    | Y        | 名称       |
+| type          | `string`  | 64        | Y    | Y        | 授权类型（ADDRESS/IDENTITY）       |
+| authorizers   | `string[]`|2048       | Y    | Y        | 被授予后期可以修改Permission的地址|
+| datas         | `json`    |2048       | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
 
 - 响应参数：
 
@@ -955,9 +950,9 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:  | -------- | -------- | ---- | -------- | :---------------------------- |
 | address      | `string` | 40     | Y    | Y        | Identity地址                      |
-| property     | `string` | 1024   | Y    | Y        |  属性json格式       |
+| property     | `string` | 1024   | N    | Y        |  属性json格式       |
 | identityType | `string` | 32     | N    | Y        |  type:user/node/domain       |
-| kyc          | `string` | 4096   | N    | Y        |  kyc信息       |
+| kyc          | `string` | 1024   | N    | Y        |  kyc信息       |
 
 
 - 响应参数：
@@ -1074,7 +1069,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | N        | 用户地址                     |
-| permissionNames | `<string[]>` | 1024     | Y    | Y        | 需要检查的权限，数组                     |
+| permissionNames | `string[]` | 1024     | Y    | Y        | 需要检查的权限，数组                     |
 
 - 响应参数：
 
@@ -1240,7 +1235,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明          |
 | :----------: | -------- | -------- | ---- | -------- | ------------- |
-| callBackAddr | `string` |          | Y    | Y        | 回调地址，URL |
+| callbackUrl | `string` |   1024    | Y    | Y        | 回调地址，URL |
 
 [1]: query-api.md#queryMaxHeight 
 [2]: query-api.md#queryTxByTxId/{txId} 
