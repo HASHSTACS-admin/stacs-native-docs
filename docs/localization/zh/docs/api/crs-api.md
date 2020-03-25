@@ -531,7 +531,7 @@
 | callbackType   | `string`       | 10         | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
 | decisionType   | `string`       | 10         | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
 | domainIds      | `list<string>` | 256         | Y    | Y        | 参与投票的domainId列表                       |
-| requireAuthIds | `list<string>` | 256         | N    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
+| requireAuthIds | `list<string>` | 256         | Y    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
 | assignMeta     | `json` | 1024         | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
 - assignMeta结构
