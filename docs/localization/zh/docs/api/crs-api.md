@@ -595,8 +595,8 @@
 | id      | `string`                 |32       | Y    | Y        | BD编号（唯一）                      |
 | label      | `string`              |32       | Y    | Y        | BD名称                             |
 | desc      | `string`               |1024     | N    | Y        | 描述                      |
-| functions | `List<FunctionDefine>` |2048     | N    | Y        | bd定义function            |
-| contracts | `List<ContractDefine>` |2048     | N    | Y        | bd定义contract            |
+| functions | `List<FunctionDefine>` |     | N    | Y        | bd定义function            |
+| contracts | `List<ContractDefine>` |     | N    | Y        | bd定义contract            |
 | bdVersion | `string`               | 16       | Y    | Y        | bd版本                    |
 
 `ContractDefine`定义:
@@ -607,7 +607,7 @@
 | desc             | `string` | 256            | N    | Y        | function描述                     |
 | createPermission | `string` | 64             | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
 | createPolicy     | `string` | 32             | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
-| functions        | `List<FunctionDefine>`|2048      | Y        | Y        | 合约方法定义function            |
+| functions        | `List<FunctionDefine>`    |      | Y        | Y        | 合约方法定义function            |
 
 `FunctionDefine`定义:
 
@@ -739,11 +739,11 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | -------------------------- |
 | contractAddress | `string`   | 40       | Y    | Y        | 合约地址 |
-| id            | `string`   | 64       | Y    | Y        | 合约名称                   |
-| label          | `string`   | 64       | N    | Y        | 合约简称                   |
-| contractor      | `string`   | 1024         | Y    | Y        | 合约构造器(函数)名         |
-| sourceCode      | `string`   | text         | Y    | Y        | 合约代码                   |
-| initArgs        | `object[]` | 2048         | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
+| id              | `string`   | 64       | Y    | Y        | 合约名称                   |
+| label           | `string`   | 64       | N    | Y        | 合约简称                   |
+| contractor      | `string`   | 1024     | Y    | Y        | 合约构造器(函数)名         |
+| sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
+| initArgs        | `object[]` |          | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
 
 - 响应参数：
 
@@ -791,7 +791,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :------------:  | --------     | -------- | ---- | -------- | :---------------------------- |
 | methodSignature | `string`     | 256     | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
-| args            | `object[]`   | 2048     | N    | Y        | 方法执行入参参数      |
+| args            | `object[]`   |         | N    | Y        | 方法执行入参参数      |
 | contractAddress | `string`     | 40     | Y    | Y        | 执行的合约地址                     |
 
 - 响应参数：
@@ -839,13 +839,13 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | id            | `string`  | 32        | Y    | Y        | permission id（唯一）       |
 | label         | `string`  | 32        | N    | Y        | 名称       |
 | type          | `string`  | 64        | Y    | Y        | 授权类型（ADDRESS/IDENTITY）       |
-| authorizers   | `string[]`|2048       | Y    | Y        | 被授予后期可以修改Permission的地址|
-| datas         | `json`    |2048       | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
+| authorizers   | `string[]`|           | Y    | Y        | 被授予后期可以修改Permission的地址|
+| datas         | `json`    |           | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| :---------:| -------- | -------- | ---- | -------- | :---------------------------- |
 | data       | `string` | 64        | Y    | Y        | 返回交易ID       |
 
 - 实例：
@@ -883,8 +883,8 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | id            | `string` | 64        | Y    | Y        | permission id（唯一）       |
 | label         | `string` | 64        | N    | Y        | 名称       |
 | type          | `string` | 64        | N    | Y        | 授权类型       |（ADDRESS/IDENTITY）
-| authorizers   | `string[]`|2048          | Y    | Y        | 被授予后期可以修改Permission的地址|
-| datas         | `json`    |2048      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
+| authorizers   | `string[]`|          | Y    | Y        | 被授予后期可以修改Permission的地址|
+| datas         | `json`    |          | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
 | preTxId       | `string`  |64        | Y    | Y        |上次操作的txId|
 | currentTxId   | `string`  |64        | Y    | Y        |最近操作的txId|
 
@@ -1069,7 +1069,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | N        | 用户地址                     |
-| permissionNames | `string[]` | 1024     | Y    | Y        | 需要检查的权限，数组                     |
+| permissionNames | `string[]` |      | Y    | Y        | 需要检查的权限，数组                     |
 
 - 响应参数：
 
@@ -1187,15 +1187,15 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| id | `string` | 64     | Y    | Y        | 存证id                      |
+| :---------:| -------- | -------| ---- | -------| :---------------------------- |
+|      id    | `string` | 64     | Y    | Y      | 存证id                      |
 
 - 响应参数：
 
-|    属性        | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+|    属性        | 类型     | 最大长度   | 必填 | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ---- | -------- | :---------------------------- |
-| id            | `string` | 64     | Y        | Y        | 存证id                      |
-| attestation   | `string` | 4096       | Y    | N        | 存证内容                      |
+| id            | `string` | 64       | Y    | Y        | 存证id                      |
+| attestation   | `string` | 4096     | Y    | N        | 存证内容                      |
 | preTxId       | `string` | 64       | Y     | N        | 上次一次修改`txId` |
 | currentTxId   | `string` | 64       | Y     | N        | 最近一次修改`txId` |
 | version       | `int`    | 10       | Y     | N        | 版本号，系统自增 |
