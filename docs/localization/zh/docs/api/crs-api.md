@@ -305,7 +305,7 @@
 | txId | `string` | 64     | Y    | Y        | 交易id                      |
 
 
-#### <a id="REMOVE_RS"/>移除RS</a>
+#### <a id="REMOVE_RS">移除RS</a>
 
 - [ ] 开放
 
@@ -386,7 +386,7 @@
 {"data":null,"msg":"Success","respCode":"000000","success":true}  
 ```
 
-#### <a id="UPDATE_CA"/>更新`CA`</a>
+#### <a id="UPDATE_CA">更新`CA`</a>
 - [x] 开放
 - 接口描述： 更新CA
 - type：`UPDATE_CA`
