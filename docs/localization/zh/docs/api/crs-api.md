@@ -4,6 +4,7 @@
 非系统级接口又分为查询类接口和交易类接口，查询类接口采用GET请求，接口无安全性设计考虑；交易类接口采用POST请求，
 请求数据采用AES256加密，并会将加密数据采用ECC签名，具体参见接口规范
 
+---
 ## 术语
 - `merchantId`: 商户Id, 用于区分不同的接入方
 - `merchantPriKey`: 商户ECC私钥，用于签名请求数据
@@ -18,6 +19,7 @@
 - `Identity`:
 - `{}`: 动态值表示符号
 
+---
 ## 系统内置
 
 ### 系统内置function列表
@@ -267,7 +269,7 @@
 </dependency>
 
 ```
-
+---
 ## 系统级接口
 
 !!! info "提示"
@@ -319,6 +321,8 @@
 
 
 ### CA
+
+> 
 
 #### <a id="ADD_CA"/>CA注册</a>
 
@@ -552,10 +556,10 @@
 } 
 ```
 
-#### <a id="SET_POLICY">Policy设置</a>
+### <a id="SET_POLICY">设置Policy</a>
 
 - [x] 开放
-- 接口描述： Policy设置
+- 接口描述： 设置Policy
 - type：`SET_POLICY`
 - 请求参数：
 
@@ -615,10 +619,12 @@
 } 
 ```
 
+---
 ## 非系统级接口
 
-#### BD
-##### <a id="ADD_BD">BD发布</a>
+### BD
+> 
+#### <a id="ADD_BD">BD发布</a>
 - [x] 开放
 - 接口描述：  功能：发布自定义`BD`
    1. 所有类型的交易都需要指定`bdId`,系统内置`BD`参考()；
@@ -688,8 +694,8 @@ msg='Success',
 data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```
 
-#### 快照
-##### <a id="ADD_SNAPSHOT">快照发布</a>
+### 快照
+#### <a id="ADD_SNAPSHOT">快照发布</a>
 
 - [x] 开放
 - 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
@@ -725,7 +731,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-##### 快照查询
+#### 快照查询
 
 - [x] 开放
 - 接口描述：  
@@ -763,9 +769,9 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-#### 智能合约
+### 智能合约
 
-##### <a id="ADD_CONTRACT">合约部署</a>
+#### <a id="ADD_CONTRACT">合约部署</a>
 
 - [x] 开放
 - 接口描述：用户发布自定义合约实现业务
@@ -818,7 +824,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 } 
 ```
 
-##### <a id="CONTRACT_INVOKE">合约执行</a>
+#### <a id="CONTRACT_INVOKE">合约执行</a>
 - [x] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
 - type：`EXECUTE_CONTRACT`
@@ -861,9 +867,9 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 } 
 ```
 
-#### Permission
+### Permission
 
-##### <a id="SET_PERMISSION"> 设置Permission </a>
+#### <a id="SET_PERMISSION"> 设置Permission </a>
 
 - [x] 开放
 - 接口描述：  添加permission,Identity被授予permission后才能执行该permission所定义交易
@@ -902,7 +908,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-##### 查询permission
+#### 查询permission
 - [x] 开放
 - 接口描述：  
 - 请求地址：`GET`:`/permission/queryAll`
@@ -974,9 +980,9 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
  
 ```
 
-#### Identity
+### Identity
 
-##### <a id="SET_IDENTITY">Identity设置</a>
+#### <a id="SET_IDENTITY">Identity设置</a>
 
 - [x] 开放
 - 接口描述：  设置Identity(此接口可以设置KYC信息)
@@ -1018,10 +1024,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 } 
 ```
 
-
-#### Identity冻结
-
-##### <a id="FREEZE_IDENTITY">Identity冻结</a>
+#### <a id="FREEZE_IDENTITY">Identity冻结</a>
 
 - [x] 开放
 - 接口描述：  Identity冻结
@@ -1057,9 +1060,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-#### Identity解冻
-
-##### <a id="UNFREEZE_IDENTITY">Identity解冻</a>
+#### <a id="UNFREEZE_IDENTITY">Identity解冻</a>
 
 - [x] 开放
 - 接口描述：  Identity解冻
@@ -1096,7 +1097,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```
 
 
-##### Identity鉴权
+#### Identity鉴权
 - [x] 开放
 - 接口描述：  检查用户是否有鉴别的权限
 - 请求地址：`POST`：`identity/checkPermission`
@@ -1132,7 +1133,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-##### 查询Identity
+#### 查询Identity
 
 - [x] 开放
 - 接口描述：查询Identity的详细信息  
@@ -1181,7 +1182,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```
 
 
-#### <a id="SET_ATTESTATION">存证</a>
+### <a id="SET_ATTESTATION">存证</a>
 
 - [x] 开放
 - 接口描述：  保存存证信息入链
@@ -1258,8 +1259,8 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-
-### 普通接口
+---
+## 普通接口
 
 #### DRS回调地址注册
 
