@@ -283,7 +283,6 @@
     系统级接口只能由`CRS`节点发起，并不对`DRS`和上层应用开放。
 
 ### Domain & RS
-
 >   `Domain`管理旗下`RS`节点的接口，让节点可以**注册**到`Domain`中参与交易处理，也可以**移除**`domain`下指定节点
 
 #### <a id="ADD_RS">注册RS</a>
@@ -327,12 +326,10 @@
 | :---------: | -------- | -------- | ---- | -------- | :-------------------------|
 | txId | `string` |  64    | Y    | Y        | 交易id                      |
 
-
-
-### CA管理
+### `CA`管理
 > 用于管理节点CA, 节点在加入集群前必须在链上有可信的CA
 
-#### <a id="ADD_CA">注册CA</a>
+#### <a id="ADD_CA">注册`CA`</a>
 - [x] 开放
 - 接口描述： 将CA上链
 - type：`ADD_CA`
@@ -390,7 +387,7 @@
 {"data":null,"msg":"Success","respCode":"000000","success":true}  
 ```
 
-#### <a id="UPDATE_CA"/>CA更新</a>
+#### <a id="UPDATE_CA"/>更新`CA`</a>
 - [x] 开放
 - 接口描述： 更新CA
 - type：`UPDATE_CA`
@@ -432,7 +429,7 @@
 } 
 ```
 
-#### <a id="REMOVE_CA">CA撤销</a>
+#### <a id="REMOVE_CA">撤销`CA`</a>
 - [x] 开放
 - 接口描述： 撤销CA，设置CA为不可用
 - type：`REMOVE_CA`
