@@ -5,7 +5,7 @@
 请求数据采用AES256加密，并会将加密数据采用ECC签名，具体参见接口规范
 
 
-## 术语
+## *术语*
 ---
 - `merchantId`: 商户Id, 用于区分不同的接入方
 - `merchantPriKey`: 商户ECC私钥，用于签名请求数据
@@ -21,7 +21,7 @@
 - `{}`: 动态值表示符号
 
 
-## 系统内置
+## *系统内置*
 --- 
 ### 系统内置Function
 
@@ -64,7 +64,7 @@ table th:first-of-type {
 |ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
 |SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
-## 接口规范
+## *接口规范*
 ---
 ### HTTP请求头
 
@@ -278,7 +278,7 @@ table th:first-of-type {
 
 ```
 
-## 系统级接口
+## *系统级接口*
 ---
 
 !!! info "提示"
@@ -629,7 +629,7 @@ table th:first-of-type {
 ```
 
 
-## 非系统级接口
+## *非系统级接口*
 ---
 ### <a id="ADD_BD">BD发布</a>
 - [ ] 开放
@@ -1268,7 +1268,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-## 普通接口
+## *普通接口*
 ---
 #### DRS回调地址注册
 
