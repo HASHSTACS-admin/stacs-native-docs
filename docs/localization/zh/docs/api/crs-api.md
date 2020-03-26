@@ -18,6 +18,38 @@
 - `Identity`:
 - `{}`: 动态值表示符号
 
+##交易统一接口
+####发起交易
+- [x] 开放
+- 接口描述：  功能：发起交易
+   1. 所有类型的交易都需要指定`bdId`
+- 请求地址：`POST`: `/submitTx`
+- 请求参数：
+
+|    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
+| txData      | `string`             |        | Y    | Y        | json格式化的交易数据                      |
+| txSign      | `string`             |        | Y    | Y        | 交易签名                             |
+
+- 实例：
+
+```json tab="请求实例-actionDatas"
+    {
+    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
+    }
+
+```
+
+```json tab="响应实例"
+  {
+     respCode='000000',
+     msg='Success', 
+     data=b81855f921bf87823a51c89457f136d242b67ef8d7c67c97f764ca05b8548b40
+  }
+
+```
+
 ## 交易接口列表
 | 接口type                                              | 说明 |
 | :-----                                                    | :-----    |
