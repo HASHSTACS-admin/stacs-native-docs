@@ -66,7 +66,7 @@ table th:first-of-type {
 
 ## **接口规范**
 ---
-1. HTTP请求头
+- HTTP请求头
 
     *   `GET`：**无额外参数**
     
@@ -75,11 +75,11 @@ table th:first-of-type {
         `merchantId:{merchantId}`: CRS分配的
         
     
-2. Http响应
+- Http响应
 
     * 响应状态码 200
   
-3. 安全性
+- 安全性
   
     所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
     
@@ -114,7 +114,7 @@ table th:first-of-type {
           |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码-aesKey不配置时不做解密 |
           | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
         
-4. 实例
+- 实例
 
 ```json tab="请求实例"
 {
