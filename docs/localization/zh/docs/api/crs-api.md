@@ -20,10 +20,17 @@
 - `Identity`:
 - `{}`: 动态值表示符号
 
----
-## 系统内置
 
+## 系统内置
+--- 
 ### 系统内置function列表
+
+<style>
+table th:first-of-type {
+	width: 100px;
+}
+</style>
+
 | functionidId      	| execPermission | execPolicy         	    | 备注 |
 | :-----                |  :-----        |  :-----                  |  :-----            |
 | ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
@@ -58,7 +65,7 @@
 |SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
 ## 接口规范
-
+---
 ### HTTP请求头
 
 *   `GET`：**无额外参数**
@@ -273,6 +280,7 @@
 
 ## 系统级接口
 ---
+
 !!! info "提示"
     系统级接口只能由`CRS`节点发起，并不对`DRS`和上层应用开放。
 
