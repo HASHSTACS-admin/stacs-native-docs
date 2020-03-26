@@ -66,7 +66,7 @@ table th:first-of-type {
 
 ## **接口规范**
 ---
-- HTTP请求头
+1. HTTP请求头
 
     *   `GET`：**无额外参数**
     
@@ -75,11 +75,11 @@ table th:first-of-type {
         `merchantId:{merchantId}`: CRS分配的
         
     
-- Http响应
+2. Http响应
 
     * 响应状态码 200
   
-- 安全性
+3. 安全性
   
     所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
     
@@ -114,31 +114,31 @@ table th:first-of-type {
           |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码-aesKey不配置时不做解密 |
           | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
         
-- 实例
+4. 实例
 
-```json tab="请求实例"
-{
-	"requestParam": "{
-	    "txData":"{
-	        "txId":"txId-123",
-	        "bdCode":"SystemBD",
-	        "functionId":"BD_PUBLISH",
-	        "type":"BD_PUBLISH",
-	        .......
-	    }",
-	    txSign:"xxx"
-	}",
-	"signature": "017236d91c3fa2560a5c5fdee1e4a7a55397d146213153d09cea97b1d1949596e2636cf6081bf1a0695811556e9f41918924c41a58149e994ab4132eb54279345d"
-}
-```
-
-```json tab="响应实例"
-{
-	"data": "",
-	"msg": "Success", // 操作成功
-	"respCode": "000000", // 返回代码， 000000为成功
-}
-```
+    ```json tab="请求实例"
+    {
+        "requestParam": "{
+            "txData":"{
+                "txId":"txId-123",
+                "bdCode":"SystemBD",
+                "functionId":"BD_PUBLISH",
+                "type":"BD_PUBLISH",
+                .......
+            }",
+            txSign:"xxx"
+        }",
+        "signature": "017236d91c3fa2560a5c5fdee1e4a7a55397d146213153d09cea97b1d1949596e2636cf6081bf1a0695811556e9f41918924c41a58149e994ab4132eb54279345d"
+    }
+    ```
+    
+    ```json tab="响应实例"
+    {
+        "data": "",
+        "msg": "Success", // 操作成功
+        "respCode": "000000", // 返回代码， 000000为成功
+    }
+    ```
 
 ### 统一交易提交接口
 - [x] 开放
