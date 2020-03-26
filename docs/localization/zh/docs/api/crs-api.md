@@ -23,46 +23,42 @@
 
 ## **系统内置**
 --- 
-### 系统内置Function
+1. 系统内置Function
 
-<style>
-table th:first-of-type {
-	width: 100px;
-}
-</style>
+    | functionidId      	| execPermission | execPolicy         	    | 备注 |
+    | :-----                |  :-----        |  :-----                  |  :-----            |
+    | ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
+    | SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
+    | ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
+    | REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
+    | ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
+    | UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
+    | REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
+    | ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
+    | REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
 
-| functionidId      	| execPermission | execPolicy         	    | 备注 |
-| :-----                |  :-----        |  :-----                  |  :-----            |
-| ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
-| SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
-| ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
-| REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
-| ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
-| UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
-| REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
-| ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
-| REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
+2. 系统内置Permission
+    
+    | Permission      	    | 备注 |
+    | :-----                |  :-----        |
+    | DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
+    | RS  			        | 系统节点初始化时RS节点拥有该Permission        |
 
-### 系统内置Permission
-| Permission      	    | 备注 |
-| :-----                |  :-----        |
-| DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
-| RS  			        | 系统节点初始化时RS节点拥有该Permission        |
-
-### 系统内置Policy
-| Policy       	   		|投票方式            |决议方式            |备注               |
-| :-----           		|  :-----           |  :-----           |:-----           |
-|SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
-|ADD_RS    				|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_RS    			|  ASYNC            |FULL_VOTE          |  |
-|ADD_CA           		|	 ASYNC          |FULL_VOTE          |  |
-|UPDATE_CA        		|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_CA        		|  ASYNC            |FULL_VOTE          |  |
-|ADD_NODE         		|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_NODE      		|  ASYNC            |FULL_VOTE          |  |
-|SYNC_ONE_VOTE_DEFAULT  |  SYNC             |FULL_VOTE          |  |
-|ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
-|SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
+3. 系统内置Policy
+    
+    | Policy       	   		|投票方式            |决议方式            |备注               |
+    | :-----           		|  :-----           |  :-----           |:-----           |
+    |SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
+    |ADD_RS    				|  ASYNC            |FULL_VOTE          |  |
+    |REMOVE_RS    			|  ASYNC            |FULL_VOTE          |  |
+    |ADD_CA           		|	 ASYNC          |FULL_VOTE          |  |
+    |UPDATE_CA        		|  ASYNC            |FULL_VOTE          |  |
+    |REMOVE_CA        		|  ASYNC            |FULL_VOTE          |  |
+    |ADD_NODE         		|  ASYNC            |FULL_VOTE          |  |
+    |REMOVE_NODE      		|  ASYNC            |FULL_VOTE          |  |
+    |SYNC_ONE_VOTE_DEFAULT  |  SYNC             |FULL_VOTE          |  |
+    |ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
+    |SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
 ## **接口规范**
 ---
@@ -235,35 +231,37 @@ table th:first-of-type {
 
 ### 接口索引
 
-#### 交易接口列表
-| 接口type                                              | 说明 |
-| :-----                                                    | :-----    |
-|<a href="#SET_IDENTITY">SET_IDENTITY</a>                   |Identity设置|
-|<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>             |Identity冻结|
-|<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a>         |Identity解冻|
-|<a href="#ADD_BD">ADD_BD</a>                               |发布BD|
-|<a href="#SET_PERMISSION">SET_PERMISSION</a>     			|Permission设置|
-|<a href="#SET_POLICY">SET_POLICY</a>             			|设置Policy|
-|<a href="#ADD_RS">ADD_RS</a>                               |RS注册|
-|<a href="#REMOVE_RS">REMOVE_RS</a>                         |RS撤销|
-|<a href="#INIT_CA">INIT_CA</a>                             |CA初始化|
-|<a href="#ADD_CA">ADD_CA</a>                               |CA认证|
-|<a href="#UPDATE_CA">UPDATE_CA</a>                         |CA更新|
-|<a href="#REMOVE_CA">REMOVE_CA</a>                         |CA撤销|
-|<a href="#ADD_NODE">ADD_NODE</a>                           |节点加入|
-|<a href="#REMOVE_NODE">REMOVE_NODE</a>                     |退出节点|
-|<a href="#ADD_CONTRACT">ADD_CONTRACT</a>                   |合约创建|
-|<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>           |合约执行|
-|<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           	|存证|
-|<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>               |快照交易|
+1. 交易接口列表
+
+    | 接口type                                              | 说明 |
+    | :-----                                                    | :-----    |
+    |<a href="#SET_IDENTITY">SET_IDENTITY</a>                   |Identity设置|
+    |<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>             |Identity冻结|
+    |<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a>         |Identity解冻|
+    |<a href="#ADD_BD">ADD_BD</a>                               |发布BD|
+    |<a href="#SET_PERMISSION">SET_PERMISSION</a>     			|Permission设置|
+    |<a href="#SET_POLICY">SET_POLICY</a>             			|设置Policy|
+    |<a href="#ADD_RS">ADD_RS</a>                               |RS注册|
+    |<a href="#REMOVE_RS">REMOVE_RS</a>                         |RS撤销|
+    |<a href="#INIT_CA">INIT_CA</a>                             |CA初始化|
+    |<a href="#ADD_CA">ADD_CA</a>                               |CA认证|
+    |<a href="#UPDATE_CA">UPDATE_CA</a>                         |CA更新|
+    |<a href="#REMOVE_CA">REMOVE_CA</a>                         |CA撤销|
+    |<a href="#ADD_NODE">ADD_NODE</a>                           |节点加入|
+    |<a href="#REMOVE_NODE">REMOVE_NODE</a>                     |退出节点|
+    |<a href="#ADD_CONTRACT">ADD_CONTRACT</a>                   |合约创建|
+    |<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>           |合约执行|
+    |<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           	|存证|
+    |<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>               |快照交易|
 
 
-#### 查询接口列表
-| 接口地址                                                          | 说明 |
-| :-----                                                           | :-----    |
-|[queryMaxHeight][1]                  |查询当前最大区块高度|
-|[queryTxByTxId/{txId}][2]            |根据txId查询交易数据|
-|[queryContract][4]                   |合约数据状态查询|
+2. 查询接口列表
+    
+    | 接口地址                                                          | 说明 |
+    | :-----                                                           | :-----    |
+    |[queryMaxHeight][1]                  |查询当前最大区块高度|
+    |[queryTxByTxId/{txId}][2]            |根据txId查询交易数据|
+    |[queryContract][4]                   |合约数据状态查询|
 
 
 ### 快速接入
