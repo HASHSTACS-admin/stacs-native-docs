@@ -35,7 +35,7 @@
     | UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
     | REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
     | ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
-    | REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
+    | REMOVE_NODE  			| DEFAULT     | REMOVE_NODE   	  	    |退出节点      |
 
 2. 系统内置Permission
     
@@ -56,7 +56,7 @@
     |REMOVE_CA        		|  ASYNC            |FULL_VOTE          |  |
     |ADD_NODE         		|  ASYNC            |FULL_VOTE          |  |
     |REMOVE_NODE      		|  ASYNC            |FULL_VOTE          |  |
-    |SYNC_ONE_VOTE_DEFAULT  |  SYNC             |FULL_VOTE          |  |
+    |SYNC_ONE_VOTE_DEFAULT  |  SYNC             |ONE_VOTE          |  |
     |ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
     |SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
@@ -306,13 +306,13 @@
 | :---------: | -------- | -------- | ---- | -------- | :-------------------------|
 | txId | `string` | 64     | Y    | Y        | 交易id                      |
 
-#### <a id="CANCEL_RS"/>移除RS</a>
+#### <a id="REMOVE_RS"/>移除RS</a>
 
 - - [ ] 开放
 
 - 接口描述：  移除已注册的 RS
 
-- type：`CANCEL_RS`
+- type：`REMOVE_RS`
 
 - 请求参数： 
 
@@ -327,12 +327,11 @@
 | txId | `string` |  64    | Y    | Y        | 交易id                      |
 
 
-### CA管理
 
+### CA管理
 > 用于管理节点CA, 节点在加入集群前必须在链上有可信的CA
 
-#### <a id="ADD_CA"/>注册CA</a>
-
+#### <a id="ADD_CA">注册CA</a>
 - [x] 开放
 - 接口描述： 将CA上链
 - type：`ADD_CA`
@@ -476,10 +475,10 @@
 ### 节点管理
 > 用于维护集群节点
 
-#### <a id="NODE_JOIN">节点加入</a>
+#### <a id="ADD_NODE">节点加入</a>
 - [x] 开放
 - 接口描述： 节点加入共识网络
-- type：`NODE_JOIN`
+- type：`ADD_NODE`
 - 请求参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -521,11 +520,11 @@
 
 
 
-#### <a id="NODE_LEAVE">节点离开</aa>
+#### <a id="REMOVE_NODE">节点退出</aa>
 
 - [x] 开放
-- 接口描述： 节点离开
-- type：`NODE_LEAVE`
+- 接口描述： 节点退出
+- type：`REMOVE_NODE`
 - 请求参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -830,7 +829,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 } 
 ```
 
-#### <a id="CONTRACT_INVOKE">合约执行</a>
+#### <a id="EXECUTE_CONTRACT">合约执行</a>
 - [ ] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
 - type：`EXECUTE_CONTRACT`
