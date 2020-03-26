@@ -18,19 +18,56 @@
 - `Identity`:
 - `{}`: 动态值表示符号
 
+## 系统内置
+
+### 系统内置function列表
+| functionidId      	| execPermission | execPolicy         	    | 备注 |
+| :-----                |  :-----        |  :-----                  |  :-----            |
+| ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
+| SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
+| ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
+| REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
+| ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
+| UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
+| REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
+| ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
+| REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
+
+### 系统内置Permission表
+| Permission      	    | 备注 |
+| :-----                |  :-----        |
+| DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
+| RS  			        | 系统节点初始化时RS节点拥有该Permission        |
+
+### 系统内置Policy表
+| Policy       	   		|投票方式            |决议方式            |备注               |
+| :-----           		|  :-----           |  :-----           |:-----           |
+|SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
+|ADD_RS    				|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_RS    			|  ASYNC            |FULL_VOTE          |  |
+|ADD_CA           		|	 ASYNC          |FULL_VOTE          |  |
+|UPDATE_CA        		|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_CA        		|  ASYNC            |FULL_VOTE          |  |
+|ADD_NODE         		|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_NODE      		|  ASYNC            |FULL_VOTE          |  |
+|SYNC_ONE_VOTE_DEFAULT  |  SYNC             |FULL_VOTE          |  |
+|ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
+|SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
 ## 接口规范
 
 ### HTTP请求头
 
-    *   `GET`：**无额外参数**
-    
-    *   `POST`:         
-        `Content-Type: application/json`  
-        `merchantId:{merchantId}`: CRS分配的
+*   `GET`：**无额外参数**
+
+*   `POST`:         
+    `Content-Type: application/json`  
+    `merchantId:{merchantId}`: CRS分配的
         
     
-### Http响应状态码 200
+### Http响应
+
+* 响应状态码 200
   
 ### 安全性
   
@@ -42,6 +79,21 @@
       | :----------: | -------- | ------------------------------------------------------------ |
       | requestParam | `string` | 请求数据，将原始请求数据采用{merchantAesKey}加密后使用BASE64编码, 加密可选 |
       |  signature   | `string` | 商户签名，将原始请求数据采用{merchantPriKey}签名后的HEX格式数据 |
+      
+    - <a id="requestParam">requestParam参数列表</a>
+      
+      |     属性     | 类型     | 说明                                                         |
+      | :----------: | -------- | ------------------------------------------------------------ |
+      | txData       | `string` | 请求原始数据                                                   |
+      | txSign       | `string` | 请求原始数据的签名(用户级)                                       |
+      
+      示例：
+      ```json 
+      {
+         "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionId":"ADD_BD","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
+             "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
+      }
+      ```
     
 - 响应数据格式
     
@@ -77,20 +129,6 @@
 	"respCode": "000000", // 返回代码， 000000为成功
 }
 ```
-### <a id="requestParam">requestParam参数列表</a>
-
-|     属性     | 类型     | 说明                                                         |
-| :----------: | -------- | ------------------------------------------------------------ |
-| txData       | `string` | 请求原始数据                                                   |
-| txSign       | `string` | 请求原始数据的签名(用户级)                                       |
-
-示例：
-```json 
-{
-   "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionId":"ADD_BD","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
-       "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
-}
-```
 
 ### 统一交易提交接口
 - [x] 开放
@@ -103,6 +141,23 @@
 | :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
 | txData      | `string`             |        | Y    | Y        | 交易数据，json格式，参见|
 | txSign      | `string`             |        | Y    | Y        | 交易签名                             |
+
+- <a id="COMMON_PRAMS_LIST">交易数据列表</a>
+
+|     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
+| :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
+| txId          | `string` | 64       | Y    |    Y     | 请求Id |
+| bdId        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode                                       |
+| templateId  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
+| type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
+| subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
+| sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
+| functionId  | `string` | 32          | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` |
+| submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
+| actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}，datas为Json格式数据，数据参见各交易接口|
+| version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
+|extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
+| submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |
 
 - 实例：
 
@@ -122,24 +177,6 @@
   }
 
 ```
-
-### <a id="COMMON_PRAMS_LIST">交易数据列表</a>
-
-|     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
-| :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
-| txId          | `string` | 64       | Y    |    Y     | 请求Id |
-| bdId        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode                                       |
-| templateId  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
-| type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
-| subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
-| sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
-| functionId  | `string` | 32          | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` |
-| submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
-| actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}，datas为Json格式数据，数据参见各交易接口|
-| version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
-|extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
-| submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |
-
 
 ###  签名
  交易签名值拼接方式 
@@ -186,7 +223,6 @@
   
 ```
 
-
 ### 接口索引
 
 #### 交易接口列表
@@ -219,41 +255,6 @@
 |[queryTxByTxId/{txId}][2]            |根据txId查询交易数据|
 |[queryContract][4]                   |合约数据状态查询|
 
-### 系统内置
-
-#### 系统内置function列表
-| functionidId      	| execPermission | execPolicy         	    | 备注 |
-| :-----                |  :-----        |  :-----                  |  :-----            |
-| ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
-| SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
-| ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
-| REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
-| ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
-| UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
-| REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
-| ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
-| REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
-
-#### 系统内置Permission表
-| Permission      	    | 备注 |
-| :-----                |  :-----        |
-| DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
-| RS  			        | 系统节点初始化时RS节点拥有该Permission        |
-
-#### 系统内置Policy表
-| Policy       	   		|投票方式            |决议方式            |备注               |
-| :-----           		|  :-----           |  :-----           |:-----           |
-|SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
-|ADD_RS    				|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_RS    			|  ASYNC            |FULL_VOTE          |  |
-|ADD_CA           		|	 ASYNC          |FULL_VOTE          |  |
-|UPDATE_CA        		|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_CA        		|  ASYNC            |FULL_VOTE          |  |
-|ADD_NODE         		|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_NODE      		|  ASYNC            |FULL_VOTE          |  |
-|SYNC_ONE_VOTE_DEFAULT  |  SYNC             |FULL_VOTE          |  |
-|ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
-|SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
 ### 快速接入
 更快接入参考SDK提供的`SubmitTransactionExample`实例
