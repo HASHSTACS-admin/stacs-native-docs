@@ -19,80 +19,9 @@
 - `{}`: 动态值表示符号
 
 
-## 接口索引
-
-### 交易接口列表
-| 接口type                                              | 说明 |
-| :-----                                                    | :-----    |
-|<a href="#SET_IDENTITY">SET_IDENTITY</a>                   |Identity设置|
-|<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>             |Identity冻结|
-|<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a>         |Identity解冻|
-|<a href="#ADD_BD">ADD_BD</a>                               |发布BD|
-|<a href="#SET_PERMISSION">SET_PERMISSION</a>     			|Permission设置|
-|<a href="#SET_POLICY">SET_POLICY</a>             			|设置Policy|
-|<a href="#ADD_RS">ADD_RS</a>                               |RS注册|
-|<a href="#REMOVE_RS">REMOVE_RS</a>                         |RS撤销|
-|<a href="#INIT_CA">INIT_CA</a>                             |CA初始化|
-|<a href="#ADD_CA">ADD_CA</a>                               |CA认证|
-|<a href="#UPDATE_CA">UPDATE_CA</a>                         |CA更新|
-|<a href="#REMOVE_CA">REMOVE_CA</a>                         |CA撤销|
-|<a href="#ADD_NODE">ADD_NODE</a>                           |节点加入|
-|<a href="#REMOVE_NODE">REMOVE_NODE</a>                     |退出节点|
-|<a href="#ADD_CONTRACT">ADD_CONTRACT</a>                   |合约创建|
-|<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>           |合约执行|
-|<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           	|存证|
-|<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>               |快照交易|
-
-
-### 查询接口列表
-| 接口地址                                                          | 说明 |
-| :-----                                                           | :-----    |
-|[queryMaxHeight][1]                  |查询当前最大区块高度|
-|[queryTxByTxId/{txId}][2]            |根据txId查询交易数据|
-|[queryContract][4]                   |合约数据状态查询|
-
-## 系统内置
-
-### 系统内置function列表
-| functionidId      	| execPermission | execPolicy         	    | 备注 |
-| :-----                |  :-----        |  :-----                  |  :-----            |
-| ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
-| SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
-| ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
-| REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
-| ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
-| UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
-| REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
-| ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
-| REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
-
-### 系统内置Permission表
-| Permission      	    | 备注 |
-| :-----                |  :-----        |
-| DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
-| RS  			        | 系统节点初始化时RS节点拥有该Permission        |
-
-### 系统内置Policy表
-| Policy       	   		|投票方式            |决议方式            |备注               |
-| :-----           		|  :-----           |  :-----           |:-----           |
-|SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
-|ADD_RS    				|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_RS    			|  ASYNC            |FULL_VOTE          |  |
-|ADD_CA           		|	 ASYNC          |FULL_VOTE          |  |
-|UPDATE_CA        		|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_CA        		|  ASYNC            |FULL_VOTE          |  |
-|ADD_NODE         		|  ASYNC            |FULL_VOTE          |  |
-|REMOVE_NODE      		|  ASYNC            |FULL_VOTE          |  |
-|SYNC_ONE_VOTE_DEFAULT  |  SYNC             |FULL_VOTE          |  |
-|ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
-|SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
-
-
-
-
 ## 接口规范
 
-- HTTP请求头
+### HTTP请求头
 
     *   `GET`：**无额外参数**
     
@@ -101,51 +30,20 @@
         `merchantId:{merchantId}`: CRS分配的
         
     
-- Http响应状态码 200
-
-- 交易提交接口
-- [x] 开放
-- 接口描述：  功能：发起交易
-   1. 所有类型的交易都需要指定`bdId`
-- 请求地址：`POST`: `/submitTx`
-- 请求参数：
-
-|    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
-| txData      | `string`             |        | Y    | Y        | json格式化的交易数据                      |
-| txSign      | `string`             |        | Y    | Y        | 交易签名                             |
-
-- 实例：
-
-```json tab="请求实例"
-    {
-    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
-    	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
-    }
-
-```
-
-```json tab="响应实例"
-  {
-     respCode='000000',
-     msg='Success', 
-     data=b81855f921bf87823a51c89457f136d242b67ef8d7c67c97f764ca05b8548b40
-  }
-
-```
+### Http响应状态码 200
   
-- 安全性
+### 安全性
   
-    所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
+所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
 
-    - 请求数据格式
+- 请求数据格式
     
       |     属性     | 类型     | 说明                                                         |
       | :----------: | -------- | ------------------------------------------------------------ |
-      | requestParam | `string` | 请求数据，将原始请求数据采用{merchantAesKey}加密后使用BASE64编码 |
+      | requestParam | `string` | 请求数据，将原始请求数据采用{merchantAesKey}加密后使用BASE64编码, 加密可选 |
       |  signature   | `string` | 商户签名，将原始请求数据采用{merchantPriKey}签名后的HEX格式数据 |
     
-    - 响应数据格式
+- 响应数据格式
     
       |   属性    | 类型     | 说明                                                         |
       | :-------: | -------- | ------------------------------------------------------------ |
@@ -154,6 +52,7 @@
       |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码-aesKey不配置时不做解密 |
       | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
     
+### 实例
 
 ```json tab="请求实例"
 {
@@ -192,7 +91,39 @@
        "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
 }
 ```
-### <a id="COMMON_PRAMS_LIST">通用参数列表</a>
+
+### 统一交易提交接口
+- [x] 开放
+- 接口描述：  功能：发起交易
+   1. 所有类型的交易都需要指定`bdId`
+- 请求地址：`POST`: `/submitTx`
+- 请求参数：
+
+|    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
+| txData      | `string`             |        | Y    | Y        | 交易数据，json格式，参见|
+| txSign      | `string`             |        | Y    | Y        | 交易签名                             |
+
+- 实例：
+
+```json tab="请求实例"
+    {
+    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
+    }
+
+```
+
+```json tab="响应实例"
+  {
+     respCode='000000',
+     msg='Success', 
+     data=b81855f921bf87823a51c89457f136d242b67ef8d7c67c97f764ca05b8548b40
+  }
+
+```
+
+### <a id="COMMON_PRAMS_LIST">交易数据列表</a>
 
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
@@ -204,13 +135,14 @@
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
 | functionId  | `string` | 32          | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
-| actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+| actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}，datas为Json格式数据，数据参见各交易接口|
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
 |extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
 | submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |
 
-###  签名方式
-#### 交易签名值拼接方式 
+
+###  签名
+ 交易签名值拼接方式 
 ``` java
 
     /**
@@ -253,6 +185,75 @@
     }
   
 ```
+
+
+### 接口索引
+
+#### 交易接口列表
+| 接口type                                              | 说明 |
+| :-----                                                    | :-----    |
+|<a href="#SET_IDENTITY">SET_IDENTITY</a>                   |Identity设置|
+|<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>             |Identity冻结|
+|<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a>         |Identity解冻|
+|<a href="#ADD_BD">ADD_BD</a>                               |发布BD|
+|<a href="#SET_PERMISSION">SET_PERMISSION</a>     			|Permission设置|
+|<a href="#SET_POLICY">SET_POLICY</a>             			|设置Policy|
+|<a href="#ADD_RS">ADD_RS</a>                               |RS注册|
+|<a href="#REMOVE_RS">REMOVE_RS</a>                         |RS撤销|
+|<a href="#INIT_CA">INIT_CA</a>                             |CA初始化|
+|<a href="#ADD_CA">ADD_CA</a>                               |CA认证|
+|<a href="#UPDATE_CA">UPDATE_CA</a>                         |CA更新|
+|<a href="#REMOVE_CA">REMOVE_CA</a>                         |CA撤销|
+|<a href="#ADD_NODE">ADD_NODE</a>                           |节点加入|
+|<a href="#REMOVE_NODE">REMOVE_NODE</a>                     |退出节点|
+|<a href="#ADD_CONTRACT">ADD_CONTRACT</a>                   |合约创建|
+|<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>           |合约执行|
+|<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           	|存证|
+|<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>               |快照交易|
+
+
+#### 查询接口列表
+| 接口地址                                                          | 说明 |
+| :-----                                                           | :-----    |
+|[queryMaxHeight][1]                  |查询当前最大区块高度|
+|[queryTxByTxId/{txId}][2]            |根据txId查询交易数据|
+|[queryContract][4]                   |合约数据状态查询|
+
+### 系统内置
+
+#### 系统内置function列表
+| functionidId      	| execPermission | execPolicy         	    | 备注 |
+| :-----                |  :-----        |  :-----                  |  :-----            |
+| ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
+| SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
+| ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
+| REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
+| ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
+| UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
+| REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
+| ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
+| REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
+
+#### 系统内置Permission表
+| Permission      	    | 备注 |
+| :-----                |  :-----        |
+| DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
+| RS  			        | 系统节点初始化时RS节点拥有该Permission        |
+
+#### 系统内置Policy表
+| Policy       	   		|投票方式            |决议方式            |备注               |
+| :-----           		|  :-----           |  :-----           |:-----           |
+|SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
+|ADD_RS    				|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_RS    			|  ASYNC            |FULL_VOTE          |  |
+|ADD_CA           		|	 ASYNC          |FULL_VOTE          |  |
+|UPDATE_CA        		|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_CA        		|  ASYNC            |FULL_VOTE          |  |
+|ADD_NODE         		|  ASYNC            |FULL_VOTE          |  |
+|REMOVE_NODE      		|  ASYNC            |FULL_VOTE          |  |
+|SYNC_ONE_VOTE_DEFAULT  |  SYNC             |FULL_VOTE          |  |
+|ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
+|SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
 ### 快速接入
 更快接入参考SDK提供的`SubmitTransactionExample`实例
