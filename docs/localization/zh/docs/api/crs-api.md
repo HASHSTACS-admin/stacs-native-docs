@@ -23,7 +23,7 @@
 
 ## 系统内置
 --- 
-### 系统内置function列表
+### 系统内置Function
 
 <style>
 table th:first-of-type {
@@ -43,13 +43,13 @@ table th:first-of-type {
 | ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
 | REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
 
-### 系统内置Permission表
+### 系统内置Permission
 | Permission      	    | 备注 |
 | :-----                |  :-----        |
 | DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
 | RS  			        | 系统节点初始化时RS节点拥有该Permission        |
 
-### 系统内置Policy表
+### 系统内置Policy
 | Policy       	   		|投票方式            |决议方式            |备注               |
 | :-----           		|  :-----           |  :-----           |:-----           |
 |SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
@@ -329,9 +329,10 @@ table th:first-of-type {
 | txId | `string` |  64    | Y    | Y        | 交易id                      |
 
 
-### CA
+### CA管理
 > 用于管理节点CA, 节点在加入集群前必须在链上有可信的CA
-#### <a id="ADD_CA"/>CA注册</a>
+
+#### <a id="ADD_CA"/> CA注册 </a>
 
 - [x] 开放
 - 接口描述： 将CA上链
@@ -631,7 +632,7 @@ table th:first-of-type {
 ## 非系统级接口
 ---
 ### <a id="ADD_BD">BD发布</a>
-- [x] 开放
+- [ ] 开放
 - 接口描述：  功能：发布自定义`BD`
    1. 所有类型的交易都需要指定`bdId`,系统内置`BD`参考()；
    2. 发布BD使用用到的`Policy`和`execPermission`，链上必须存在（参考`注册Permission`和`注册Policy`功能）
@@ -703,7 +704,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ### 快照
 #### <a id="ADD_SNAPSHOT">快照发布</a>
 
-- [x] 开放
+- [ ] 开放
 - 接口描述： 申请一个快照版本，入链后记录当前快照处理的区块高度，快照申请成功后，可以按区块高度查询到申请快照时的信息 
 （快照发布使用的是存证的execPolicyId和id）
 - type：`ADD_SNAPSHOT`
@@ -739,7 +740,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 #### 快照查询
 
-- [x] 开放
+- [ ] 开放
 - 接口描述：  
 - 请求地址：`GET`:`/snapshot/query?txId={txId}`
 - 请求参数： 
@@ -779,7 +780,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 #### <a id="ADD_CONTRACT">合约部署</a>
 
-- [x] 开放
+- [ ] 开放
 - 接口描述：用户发布自定义合约实现业务
 - type：`ADD_CONTRACT`
 - 请求参数：
@@ -831,7 +832,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```
 
 #### <a id="CONTRACT_INVOKE">合约执行</a>
-- [x] 开放
+- [ ] 开放
 - 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
 - type：`EXECUTE_CONTRACT`
 - 请求参数： 
@@ -877,7 +878,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 #### <a id="SET_PERMISSION"> 设置Permission </a>
 
-- [x] 开放
+- [ ] 开放
 - 接口描述：  添加permission,Identity被授予permission后才能执行该permission所定义交易
 - type：`SET_PERMISSION`
 - 请求参数： 
@@ -915,7 +916,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```
 
 #### 查询permission
-- [x] 开放
+- [ ] 开放
 - 接口描述：  
 - 请求地址：`GET`:`/permission/queryAll`
 - 请求参数： 
@@ -990,7 +991,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 #### <a id="SET_IDENTITY">Identity设置</a>
 
-- [x] 开放
+- [ ] 开放
 - 接口描述：  设置Identity(此接口可以设置KYC信息)
 - type：`SET_IDENTITY`
 - 请求参数： 
@@ -1032,7 +1033,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 #### <a id="FREEZE_IDENTITY">Identity冻结</a>
 
-- [x] 开放
+- [ ] 开放
 - 接口描述：  Identity冻结
 - type：`FREEZE_IDENTITY`
 - 请求参数： 
@@ -1068,7 +1069,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 #### <a id="UNFREEZE_IDENTITY">Identity解冻</a>
 
-- [x] 开放
+- [ ] 开放
 - 接口描述：  Identity解冻
 - type：`UNFREEZE_IDENTITY`
 - 请求参数： 
@@ -1104,7 +1105,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 
 #### Identity鉴权
-- [x] 开放
+- [ ] 开放
 - 接口描述：  检查用户是否有鉴别的权限
 - 请求地址：`POST`：`identity/checkPermission`
 - 请求参数：(无签名) 
@@ -1141,7 +1142,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 #### 查询Identity
 
-- [x] 开放
+- [ ] 开放
 - 接口描述：查询Identity的详细信息  
 - 请求地址：`GET`:`identity/query?address={address}`
 - 请求参数：
@@ -1188,10 +1189,12 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```
 
 
-### <a id="SET_ATTESTATION">存证</a>
+### 存证
+ 
+#### <a id="SET_ATTESTATION">设置存证</a>
 
-- [x] 开放
-- 接口描述：  保存存证信息入链
+- [ ] 开放
+- 接口描述：  保存存证信息入链，同一存证信息连续设置会进行覆盖处理
 - functionId：`SET_ATTESTATION`
 - 请求参数： 
 
@@ -1224,7 +1227,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ```
 
 ##### 存证查询
-- [x] 开放
+- [ ] 开放
 - 接口描述：  查询入链存证信息
 - 请求地址：`GET`:`queryAttestation/{id}`
 - 请求参数： 
@@ -1269,7 +1272,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ---
 #### DRS回调地址注册
 
--   [x] 开放
+-  [ ] 开放
 
 `POST`:`/callback/register`
 
