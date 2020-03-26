@@ -330,9 +330,10 @@ table th:first-of-type {
 
 
 ### CA管理
+
 > 用于管理节点CA, 节点在加入集群前必须在链上有可信的CA
 
-#### <a id="ADD_CA"/> CA注册 </a>
+#### <a id="ADD_CA"/>注册CA</a>
 
 - [x] 开放
 - 接口描述： 将CA上链
