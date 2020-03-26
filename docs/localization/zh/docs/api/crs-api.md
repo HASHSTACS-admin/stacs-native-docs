@@ -233,26 +233,25 @@
 
 1. 交易接口列表
 
-    | 接口type                                              | 说明 |
-    | :-----                                                    | :-----    |
-    |<a href="#SET_IDENTITY">SET_IDENTITY</a>                   |Identity设置|
-    |<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>             |Identity冻结|
-    |<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a>         |Identity解冻|
-    |<a href="#ADD_BD">ADD_BD</a>                               |发布BD|
-    |<a href="#SET_PERMISSION">SET_PERMISSION</a>     			|Permission设置|
-    |<a href="#SET_POLICY">SET_POLICY</a>             			|设置Policy|
-    |<a href="#ADD_RS">ADD_RS</a>                               |RS注册|
-    |<a href="#REMOVE_RS">REMOVE_RS</a>                         |RS撤销|
-    |<a href="#INIT_CA">INIT_CA</a>                             |CA初始化|
-    |<a href="#ADD_CA">ADD_CA</a>                               |CA认证|
-    |<a href="#UPDATE_CA">UPDATE_CA</a>                         |CA更新|
-    |<a href="#REMOVE_CA">REMOVE_CA</a>                         |CA撤销|
-    |<a href="#ADD_NODE">ADD_NODE</a>                           |节点加入|
-    |<a href="#REMOVE_NODE">REMOVE_NODE</a>                     |退出节点|
-    |<a href="#ADD_CONTRACT">ADD_CONTRACT</a>                   |合约创建|
-    |<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>           |合约执行|
-    |<a href="#SET_ATTESTATION">SET_ATTESTATION</a>           	|存证|
-    |<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>               |快照交易|
+    | 接口type                                             | 是否系统级 | 说明 |  
+    | :-----                                     |:---:              | :-----    |
+    |<a href="#ADD_RS">ADD_RS</a>                       |Y     |RS注册|
+    |<a href="#REMOVE_RS">REMOVE_RS</a>                 |Y     |RS撤销|
+    |<a href="#ADD_CA">ADD_CA</a>                       |Y     |CA认证|
+    |<a href="#UPDATE_CA">UPDATE_CA</a>                 |Y     |CA更新|
+    |<a href="#REMOVE_CA">REMOVE_CA</a>                 |Y     |CA撤销|
+    |<a href="#ADD_NODE">ADD_NODE</a>                   |Y     |节点加入|
+    |<a href="#REMOVE_NODE">REMOVE_NODE</a>             |Y     |退出节点|
+    |<a href="#ADD_BD">ADD_BD</a>                       |N      |发布BD|
+    |<a href="#SET_POLICY">SET_POLICY</a>             	|N      |设置Policy|
+    |<a href="#SET_PERMISSION">SET_PERMISSION</a>     	|N  	|Permission设置|
+    |<a href="#ADD_CONTRACT">ADD_CONTRACT</a>           |N      |合约创建|
+    |<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>   |N      |合约执行|
+    |<a href="#SET_IDENTITY">SET_IDENTITY</a>           |N      |Identity设置|
+    |<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>     |N      |Identity冻结|
+    |<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a> |N      |Identity解冻|
+    |<a href="#SET_ATTESTATION">SET_ATTESTATION</a>     |N    	|存证|
+    |<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>           |N  |快照交易|
 
 
 2. 查询接口列表
@@ -282,7 +281,7 @@
 !!! info "提示"
     系统级接口只能由`CRS`节点发起，并不对`DRS`和上层应用开放。
 
-### Domain & RS
+### `Domain & RS`
 >   `Domain`管理旗下`RS`节点的接口，让节点可以**注册**到`Domain`中参与交易处理，也可以**移除**`domain`下指定节点
 
 #### <a id="ADD_RS">注册RS</a>
