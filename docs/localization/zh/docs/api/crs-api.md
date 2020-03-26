@@ -5,7 +5,7 @@
 请求数据采用AES256加密，并会将加密数据采用ECC签名，具体参见接口规范
 
 
-## *术语*
+## **术语**
 ---
 - `merchantId`: 商户Id, 用于区分不同的接入方
 - `merchantPriKey`: 商户ECC私钥，用于签名请求数据
@@ -21,7 +21,7 @@
 - `{}`: 动态值表示符号
 
 
-## *系统内置*
+## **系统内置**
 --- 
 ### 系统内置Function
 
@@ -64,9 +64,9 @@ table th:first-of-type {
 |ASYNC_DEFAULT      	|  ASYNC            |FULL_VOTE          |  |
 |SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
-## *接口规范*
+## **接口规范**
 ---
-### HTTP请求头
+1. HTTP请求头
 
 *   `GET`：**无额外参数**
 
@@ -75,11 +75,11 @@ table th:first-of-type {
     `merchantId:{merchantId}`: CRS分配的
         
     
-### Http响应
+2. Http响应
 
 * 响应状态码 200
   
-### 安全性
+3. 安全性
   
 所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
 
@@ -114,7 +114,7 @@ table th:first-of-type {
       |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码-aesKey不配置时不做解密 |
       | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
     
-### 实例
+4. 实例
 
 ```json tab="请求实例"
 {
@@ -149,7 +149,7 @@ table th:first-of-type {
 
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
-| txData      | `string`             |        | Y    | Y        | 交易数据，json格式，参见|
+| txData      | `string`             |        | Y    | Y        | 交易数据，json格式，参见`交易数据列表`|
 | txSign      | `string`             |        | Y    | Y        | 交易签名                             |
 
 - <a id="COMMON_PRAMS_LIST">交易数据列表</a>
@@ -278,7 +278,7 @@ table th:first-of-type {
 
 ```
 
-## *系统级接口*
+## **系统级接口**
 ---
 
 !!! info "提示"
@@ -629,7 +629,7 @@ table th:first-of-type {
 ```
 
 
-## *非系统级接口*
+## **非系统级接口**
 ---
 ### <a id="ADD_BD">BD发布</a>
 - [ ] 开放
@@ -1268,7 +1268,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-## *普通接口*
+## **普通接口**
 ---
 #### DRS回调地址注册
 
