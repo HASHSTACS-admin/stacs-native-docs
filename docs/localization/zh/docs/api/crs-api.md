@@ -521,7 +521,7 @@
 
 
 
-#### <a id="REMOVE_NODE">节点退出</aa>
+#### <a id="REMOVE_NODE">节点退出</a>
 
 - [x] 开放
 - 接口描述： 节点退出
@@ -1225,7 +1225,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 }
 ```
 
-##### 存证查询
+#### 存证查询
 - [ ] 开放
 - 接口描述：  查询入链存证信息
 - 请求地址：`GET`:`queryAttestation/{id}`
