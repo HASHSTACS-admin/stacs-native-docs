@@ -68,52 +68,52 @@ table th:first-of-type {
 ---
 1. HTTP请求头
 
-*   `GET`：**无额外参数**
-
-*   `POST`:         
-    `Content-Type: application/json`  
-    `merchantId:{merchantId}`: CRS分配的
+    *   `GET`：**无额外参数**
+    
+    *   `POST`:         
+        `Content-Type: application/json`  
+        `merchantId:{merchantId}`: CRS分配的
         
     
 2. Http响应
 
-* 响应状态码 200
+    * 响应状态码 200
   
 3. 安全性
   
-所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
-
-- 请求数据格式
+    所有POST请求数据采用AES256加密，并会附上原始数据的签名; 响应数据也同样采用AES256加密，并附上CRS对原始响应数据的签名，加密并签名的数据格式如下：
     
-      |     属性     | 类型     | 说明                                                         |
-      | :----------: | -------- | ------------------------------------------------------------ |
-      | requestParam | `string` | 请求数据，将原始请求数据采用{merchantAesKey}加密后使用BASE64编码, 加密可选 |
-      |  signature   | `string` | 商户签名，将原始请求数据采用{merchantPriKey}签名后的HEX格式数据 |
-      
-    - <a id="requestParam">requestParam参数列表</a>
-      
-      |     属性     | 类型     | 说明                                                         |
-      | :----------: | -------- | ------------------------------------------------------------ |
-      | txData       | `string` | 请求原始数据                                                   |
-      | txSign       | `string` | 请求原始数据的签名(用户级)                                       |
-      
-      示例：
-      ```json 
-      {
-         "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionId":"ADD_BD","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
-             "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
-      }
-      ```
-    
-- 响应数据格式
-    
-      |   属性    | 类型     | 说明                                                         |
-      | :-------: | -------- | ------------------------------------------------------------ |
-      | respCode  | `string` | 返回状态码，000000为成功，其他为失败                         |
-      |    msg    | `string` | 返回状态描述                                                 |
-      |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码-aesKey不配置时不做解密 |
-      | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
-    
+    - 请求数据格式
+        
+          |     属性     | 类型     | 说明                                                         |
+          | :----------: | -------- | ------------------------------------------------------------ |
+          | requestParam | `string` | 请求数据，将原始请求数据采用{merchantAesKey}加密后使用BASE64编码, 加密可选 |
+          |  signature   | `string` | 商户签名，将原始请求数据采用{merchantPriKey}签名后的HEX格式数据 |
+          
+        - <a id="requestParam">requestParam参数列表</a>
+          
+          |     属性     | 类型     | 说明                                                         |
+          | :----------: | -------- | ------------------------------------------------------------ |
+          | txData       | `string` | 请求原始数据                                                   |
+          | txSign       | `string` | 请求原始数据的签名(用户级)                                       |
+          
+          示例：
+          ```json 
+          {
+             "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionId":"ADD_BD","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
+                 "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
+          }
+          ```
+        
+    - 响应数据格式
+        
+          |   属性    | 类型     | 说明                                                         |
+          | :-------: | -------- | ------------------------------------------------------------ |
+          | respCode  | `string` | 返回状态码，000000为成功，其他为失败                         |
+          |    msg    | `string` | 返回状态描述                                                 |
+          |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码-aesKey不配置时不做解密 |
+          | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
+        
 4. 实例
 
 ```json tab="请求实例"
