@@ -18,39 +18,10 @@
 - `Identity`:
 - `{}`: 动态值表示符号
 
-##交易统一接口
-####发起交易
-- [x] 开放
-- 接口描述：  功能：发起交易
-   1. 所有类型的交易都需要指定`bdId`
-- 请求地址：`POST`: `/submitTx`
-- 请求参数：
 
-|    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
-| txData      | `string`             |        | Y    | Y        | json格式化的交易数据                      |
-| txSign      | `string`             |        | Y    | Y        | 交易签名                             |
+## 接口索引
 
-- 实例：
-
-```json tab="请求实例-actionDatas"
-    {
-    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
-    	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
-    }
-
-```
-
-```json tab="响应实例"
-  {
-     respCode='000000',
-     msg='Success', 
-     data=b81855f921bf87823a51c89457f136d242b67ef8d7c67c97f764ca05b8548b40
-  }
-
-```
-
-## 交易接口列表
+### 交易接口列表
 | 接口type                                              | 说明 |
 | :-----                                                    | :-----    |
 |<a href="#SET_IDENTITY">SET_IDENTITY</a>                   |Identity设置|
@@ -73,14 +44,16 @@
 |<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>               |快照交易|
 
 
-## 查询接口列表
+### 查询接口列表
 | 接口地址                                                          | 说明 |
 | :-----                                                           | :-----    |
 |[queryMaxHeight][1]                  |查询当前最大区块高度|
 |[queryTxByTxId/{txId}][2]            |根据txId查询交易数据|
 |[queryContract][4]                   |合约数据状态查询|
 
-## 系统内置function表
+## 系统内置
+
+### 系统内置function列表
 | functionidId      	| execPermission | execPolicy         	    | 备注 |
 | :-----                |  :-----        |  :-----                  |  :-----            |
 | ADD_BD  			    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|发布BD      |
@@ -93,13 +66,13 @@
 | ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
 | REMOVE_NODE  			| RS        	 | REMOVE_NODE   	  	    |退出节点      |
 
-## 系统内置Permission表
+### 系统内置Permission表
 | Permission      	    | 备注 |
 | :-----                |  :-----        |
 | DEFAULT  	            | 系统默认所有地址都拥有DEFAULT的Permission       |
 | RS  			        | 系统节点初始化时RS节点拥有该Permission        |
 
-## 系统内置Policy表
+### 系统内置Policy表
 | Policy       	   		|投票方式            |决议方式            |备注               |
 | :-----           		|  :-----           |  :-----           |:-----           |
 |SET_POLICY        		|  ASYNC            |FULL_VOTE          |  |
@@ -115,19 +88,7 @@
 |SYNC_DEFAULT      		|  SYNC             |FULL_VOTE          |  |
 
 
-## SDK
-更快接入参考SDK提供的`SubmitTransactionExample`实例
-``` java
 
-<dependency>
-    <groupId>com.hashstacs</groupId>
-    <artifactId>stacs-client</artifactId>
-    <version>4.1.1-SNAPSHOT</version>
-</dependency>
-
-```
-
-> 
 
 ## 接口规范
 
@@ -141,6 +102,37 @@
         
     
 - Http响应状态码 200
+
+- 交易提交接口
+- [x] 开放
+- 接口描述：  功能：发起交易
+   1. 所有类型的交易都需要指定`bdId`
+- 请求地址：`POST`: `/submitTx`
+- 请求参数：
+
+|    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
+| txData      | `string`             |        | Y    | Y        | json格式化的交易数据                      |
+| txSign      | `string`             |        | Y    | Y        | 交易签名                             |
+
+- 实例：
+
+```json tab="请求实例"
+    {
+    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
+    }
+
+```
+
+```json tab="响应实例"
+  {
+     respCode='000000',
+     msg='Success', 
+     data=b81855f921bf87823a51c89457f136d242b67ef8d7c67c97f764ca05b8548b40
+  }
+
+```
   
 - 安全性
   
@@ -162,8 +154,6 @@
       |   data    | `string` | 响应数据，将原始响应数据采用{merchantAesKey}加密后使用BASE64编码-aesKey不配置时不做解密 |
       | signature | `string` | CRS签名，将原始响应数据采用{crsPriKey}签名后的HEX格式数据   |
     
-
-
 
 ```json tab="请求实例"
 {
@@ -262,6 +252,18 @@
         return "{" + str + "}";
     }
   
+```
+
+### 快速接入
+更快接入参考SDK提供的`SubmitTransactionExample`实例
+``` java
+
+<dependency>
+    <groupId>com.hashstacs</groupId>
+    <artifactId>stacs-client</artifactId>
+    <version>4.1.1-SNAPSHOT</version>
+</dependency>
+
 ```
 
 ## 系统级接口
