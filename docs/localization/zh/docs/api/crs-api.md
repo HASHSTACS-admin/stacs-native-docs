@@ -776,7 +776,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 #### <a id="ADD_CONTRACT">合约部署</a>
 
 - [ ] 开放
-- 接口描述：用户发布自定义合约实现业务
+- 接口描述：用户发布自定义合约实现业务(合约代码需要提前编译)
 - type：`ADD_CONTRACT`
 - 请求参数：
 
@@ -786,7 +786,9 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | id              | `string`   | 64       | Y    | Y        | 合约名称                   |
 | label           | `string`   | 64       | N    | Y        | 合约简称                   |
 | contractor      | `string`   | 1024     | Y    | Y        | 合约构造器(函数)名         |
-| sourceCode      | `string`   |          | Y    | Y        | 合约代码                   |
+| sourceCode      | `string`   | text       | Y    | Y      | 合约代码                   |
+| opCode          | `string`   | text     | Y    | Y        | 合约编译后的指令           |
+| abi             | `string`   | text        | Y    | Y     | 合约abi                   |
 | initArgs        | `object[]` |          | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
 
 - 响应参数：
@@ -794,6 +796,23 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | ---------------------|
 | txId | `string` |  64    | Y    | Y        | 交易id                      |
+
+- 编译合约代码示例
+```java
+        ContractCreateVO actionData = new ContractCreateVO();
+        /**
+         * 使用sdk中编译工具类
+         * 参数一：合约源代码
+         * 参数二：合约构造方法
+         * 参数三：合约构造方法参数
+         */
+        CompileContractResult contractResult = ContractCompileUtil
+            .buildContract(actionData.getSourceCode(), actionData.getContractor(), actionData.getInitArgs());
+        //将编译结果code设置到参数opCode
+        actionData.setOpCode(contractResult.getCode());
+        //将编译结果abi设置到参数abi
+        actionData.setAbi(contractResult.getAbi().toJson());
+```
 
 - 实例：
 ```json tab="请求实例"
