@@ -114,3 +114,17 @@ The most commonly used node commands are:
 <br>
 </code>
 </pre>
+
+## **merchant**
+用于管理商户信息
+<pre>
+<code>
+usage: node [-h | --help] COMMAND [ARGS] <br>
+The most commonly used node commands are:
+   add         添加商户信息
+   modify      修改商户信息
+   opt         对商户进行启停操作
+   query       查询该domain下所有商户信息
+<br>
+</code>
+</pre>
