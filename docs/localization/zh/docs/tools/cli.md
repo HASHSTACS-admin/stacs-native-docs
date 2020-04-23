@@ -33,7 +33,22 @@ The most commonly used failover commands are:
    autoSync         auto sync the batch blocks, get the blocks from other node and validate block by raft/b2p channel and execute it, this option will auto change the node state.(自动同步批处理块，从其他节点获取块，通过raft/b2p通道验证块并执行，此选项将自动更改节点状态)
    batch            sync batch blocks, get the blocks from other node and validate block by raft/b2p channel and execute it(同步批处理块，从其他节点获取块，通过raft/b2p通道验证块并执行它)
    genesis          sync the genesis block(同步创世块)
+   reset            reset block(快速恢复)
 <br></code></pre>
+
+## **failover reset 快速恢复步骤**
+<pre><code>
+    #第一步 状态切换为SelfChecking
+    node  changeState Running SelfChecking
+    #第二步 状态切换为ArtificialSync
+    node  changeState SelfChecking ArtificialSync 
+    #重置快速恢复的起始高度 包含startHeight 
+    failover reset {startHeight}
+    #开始同步 指定起始高度和size
+    failover batch {startHeight} {size}
+    #状态切换为Running
+    node  changeState  ArtificialSync Running
+</code></pre>
 
 ## **ca**
 用于管理CA
@@ -128,3 +143,4 @@ The most commonly used node commands are:
 <br>
 </code>
 </pre>
+
