@@ -13,11 +13,11 @@
 - `merchantAesKey`: 商户AES256格式密钥，用于加密请求数据或响应数据--不配置表示不加密(同时要求zuul也不要配置)
 - `crsPubKey`: CRS公钥，用户商户验证响应数据签名
 - `crsPriKey`: CRS公钥，用于CRS签名响应数据
-- `Permission`:
-- `Policy`:
-- `kyc`:
-- `BD`:
-- `Identity`:
+- `Permission`: 权限，用于交易鉴权
+- `Policy`: 投票策略，用于执行交易的投票策略
+- `kyc`: Know your customer，用于用户划线
+- `BD`: 业务规范，用于规范所有业务相关功能
+- `Identity`: 用户唯一标识，用于验证用户
 - `{}`: 动态值表示符号
 
 
@@ -96,7 +96,7 @@
           示例：
           ```json 
           {
-             "txData":"{"txId":"7c587484f89c91ab6481ea3ccaf581ac2543cf5fcd047816d9b3b7a0361ce28c","bdCode":"SystemBD","functionId":"ADD_BD","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
+             "txData":"{"txId":"000001719c1956965df6e0e2761359d30a827505","bdCode":"SystemBD","functionId":"ADD_BD","submitter":"b8da898d50712ea4695ade4b1de6926cbc4bcfb9","version":"4.0.0","actionDatas":{"datas":{"bdVersion":"4.0.0","code":"sto_code","contracts":[{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-1","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-1"},{"createPermission":"DEFAULT","createPolicy":"BD_PUBLISH","desc":"余额查询-2","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(uint256) balanceOf(address)","id":"balanceOf","type":"Contract"},{"desc":"转账","execPermission":"DEFAULT","execPolicy":"BD_PUBLISH","methodSign":"(bool) transfer(address,uint256)","id":"transfer","type":"Contract"}],"templateCode":"code-balanceOf-2"}],"label":"sto_code_name"},"version":"4.0.0"}}",
                  "txSign":"017ee57b7567039c214f0b27a186e567277731a95ad09baa84d8092cd8af125c29342a234ea67a0d095a36f63e92b49adb57d66e7909499992ee7eae12bc7451c3"}
           }
           ```
@@ -116,7 +116,7 @@
     {
         "requestParam": "{
             "txData":"{
-                "txId":"txId-123",
+                "txId":"000001719c1956965df6e0e2761359d30a827505",
                 "bdCode":"SystemBD",
                 "functionId":"BD_PUBLISH",
                 "type":"BD_PUBLISH",
@@ -138,38 +138,40 @@
 
 ### 统一交易提交接口
 - [x] 开放
-- 接口描述：  功能：发起交易
-   1. 所有类型的交易都需要指定`bdId`
+- 接口描述：发起交易（所有类型的交易都需要指定`bdId`）
 - 请求地址：`POST`: `/submitTx`
 - 请求参数：
 
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
-| txData      | `string`             |        | Y    | Y        | 交易数据，json格式，参见`交易数据列表`|
+| txData      | `string`             |        | Y    | Y        | 交易数据，json格式，参见`txData`|
 | txSign      | `string`             |        | Y    | Y        | 交易签名                             |
 
-- <a id="COMMON_PRAMS_LIST">交易数据列表</a>
+- `txData`
 
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
-| txId          | `string` | 64       | Y    |    Y     | 请求Id |
-| bdId        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode                                       |
-| templateId  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
+| txId          | `string` | 40       | Y    |    Y     | 请求Id |
+| bdId          | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode                                       |
+| templateId    | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
 | type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
-| functionId  | `string` | 32          | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` |
+| functionId    | `string` | 32       | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}，datas为Json格式数据，数据参见各交易接口|
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
 |extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
-| submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名                                                   |
+
+- `txSign`
+
+提交者`submitter`的`ECC`对交易`txData`签名后的值
 
 - 实例：
 
 ```json tab="请求实例"
     {
-    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
+    	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
     	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
     }
 
@@ -179,7 +181,7 @@
   {
      respCode='000000',
      msg='Success', 
-     data=b81855f921bf87823a51c89457f136d242b67ef8d7c67c97f764ca05b8548b40
+     data='000001719c1956965df6e0e2761359d30a827505'
   }
 
 ```
@@ -286,64 +288,68 @@
 
 #### <a id="ADD_RS">注册RS</a>
 - [x] 开放
-- 接口描述： 执行合约定义的方法，需确保交易提交者具备db定义的permission权限
+- 接口描述： 将普通节点注册为RS节点，需确保交易提交者具备db定义的permission权限
 - type：`ADD_RS`
 - 请求参数： 
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明             |
-| :---------: | -------- | -------- | ---- | :------: | ---------------- |
-|    rsId     | `string` | 32       | Y    |    Y     | RS id            |
-|    desc     | `string` | 128      | Y    |    Y     | RS 节点描述      |
-|  domainId   | `string` | 16       | Y    |    Y     | Domain ID        |
-| maxNodeSize | `int`    | 10         | N    |    Y     | 最大节点允许数量 |
-| domainDesc  | `string` | 1024         | N    |    Y     | domain 描述      |
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 |     说明             |
+| :---------: | -------- | -------- | ---- | :------: | ------------- |
+| nodeName     | `string` | 32      | Y    |    Y     | RS id            |
+|  desc     | `string` | 128      | N    |    Y     | RS 节点描述      |
+|  domainId   | `string` | 16      | Y    |    Y     | Domain ID        |
+| maxNodeSize | `int`    | 10      | N    |    Y     | 最大节点允许数量 |
+| domainDesc  | `string` | 1024     | N    |    Y     | domain 描述      |
   
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :-------------------------|
-| txId | `string` | 64     | Y    | Y        | 交易id                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 
 #### <a id="REMOVE_RS">移除RS</a>
 
 - [ ] 开放
 
-- 接口描述：  移除已注册的 RS
+- 接口描述：  移除已注册的 RS，将RS节点变更为普通节点
 
 - type：`REMOVE_RS`
 
 - 请求参数： 
 
-| 属性 | 类型     | 最大长度 | 必填 | 是否签名 | 说明 |
-| :---------: | -------- | -------- | ---- | -------- | :-------------------------|
-| rsId | `string` | 32       | Y    | Y        |      |
+| 属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明 |
+| :---------: | -------- | -------- | ---- | -------- | :--------|
+| nodeName     | `string` | 32      | Y    | Y        |  被移除的节点名称    |
   
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :-------------------------|
-| txId | `string` |  64    | Y    | Y        | 交易id                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 ### `CA`管理
 > 用于管理节点CA, 节点在加入集群前必须在链上有可信的CA
 
 #### <a id="ADD_CA">注册`CA`</a>
 - [x] 开放
-- 接口描述： 将CA上链
+- 接口描述： 将待加入节点的CA上链
 - type：`ADD_CA`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
-| caList        | `json[]` |1024        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
+| caList        | `string` |1024        | Y       | Y        | ca集合(签名拼接需要将caList中的每个ca拼接)                      |
 
 - `caList`
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                       |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------- |
-| version       | `string` |10       | Y       | Y        | 版本号   |
-| period        | `string` |20       | Y       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
+| version       | `string` |10       | N       | Y        | 版本号   |
+| period        | `string` |20       | N       | Y        |格式化格式"yyyy-MM-dd hh:mm:ss"北京时间需要减8个小时  |
 | pubKey        | `string` |131      | Y       | Y        | 公钥   |
 | user          | `string` |32        | Y       | Y        | 节点名称  |
 | domainId      | `string` |32        | Y       | Y        | domain  |
@@ -351,9 +357,9 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :-------------------------|
-| txId | `string` | 64     | Y    | Y        | 交易id                      |
+|    属性     | 类型     | 最大长度 |说明                          |
+| :---------: | -------- | -------- |-------------------------|
+| txId        | `string` | 40     | 交易id                      |
 
 - 实例：
 
@@ -395,7 +401,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| period | `string`   | 20     | Y    | Y        | 过期时间                      |
+| period | `string`   | 20     | N    | Y        | 过期时间                      |
 | pubKey | `string`   | 131    | Y    | Y        | 公钥                      |
 | user   | `string`   | 32     | Y    | Y        | 节点名称                      |
 | domainId | `string` | 32     | Y    | Y        | 域                      |
@@ -404,9 +410,9 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` |  64    | Y    | Y        | 交易id                      |
+|    属性     | 类型     | 最大长度 | 说明                          |
+| :---------: | -------- | -------- | :---------------------------- |
+| txId        | `string` |  40    | 交易id                      |
 
 - 实例：
 
@@ -422,7 +428,7 @@
 
 ```json tab="响应实例"
 {
-	"data":"\"8eb84689c2098ec00833fdb5ae0382cc8f6f35b8a19aace4573e1897fd1b511c\"",
+	"data":"\"000001719c1956965df6e0e2761359d30a827505\"",
 	"msg":"Success",
 	"respCode":"000000"
 } 
@@ -445,9 +451,9 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | 交易id                      |
+|    属性     | 类型     | 最大长度 | 说明                          |
+| :---------: | -------- | -------- | :---------------------------- |
+| txId         | `string` | 40     |  交易id                      |
 
 - 实例：
 
@@ -462,7 +468,7 @@
 
 ```json tab="响应实例"
 {
-	"data":"\"3865a759f1308b370074bf34a21f87016f23f566c428b80bf1b7afc5515b0703\"",
+	"data":"\"000001719c1956965df6e0e2761359d30a827505\"",
 	"msg":"Success",
 	"respCode":"000000"
 } 
@@ -489,9 +495,9 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------- |
-| 	| 	|	|	| | 		|
+|    属性     | 类型     | 最大长度 |说明           |
+| :---------: | -------- | -------- | :-------- |
+| txId         | `string` | 40     |  交易id      |
 
 
 - 实例：
@@ -508,9 +514,9 @@
 
 ```json tab="响应实例"
 {
-	"data":null,
-	"msg":"Success",
-	"respCode":"000000"
+	"data":"\"000001719c1956965df6e0e2761359d30a827505\"",
+    "msg":"Success",
+    "respCode":"000000"
 } 
 ```
 
@@ -535,9 +541,9 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :----------- |
-| 	|	|	|	|	|	|	|
+|    属性     | 类型     | 最大长度 | 说明       |
+| :---------:| --------| -------| :-------- |
+| txId       | `string` | 40     |  交易id    |
 
 
 - 实例：
@@ -570,7 +576,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册/修改的policyId                               |
-| label          | `string`       | 64       | Y    | Y        |                                              |
+| label          | `string`       | 64       | N    | Y        |  别名                                            |
 | votePattern    | `string`       | 10        | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
 | callbackType   | `string`       | 10         | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
 | decisionType   | `string`       | 10         | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
@@ -581,10 +587,10 @@
 - assignMeta结构
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| verifyNum | `int` |      10    | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要, the number to verify  |
-| expression | `string` |   256       | N    | Y        | 当decisionType=ASSIGN_NUM时签名需要,the expression for vote rule example: n/2+1 |
-| mustDomainIds | `list<string>` | 256         | N    | Y        |当decisionType=ASSIGN_NUM时签名需要  |
+| :---------: | --------| ------- | ---- | ----- | :---------------------------- |
+| verifyNum  | `int`    |   10    | N    | Y     |  赞成票的最少票数  |
+| expression | `string` |   256   | N    | Y     | 赞成票数的表达式，例如: n/2+1，其中n代表集群中的domain数 |
+| mustDomainIds | `list<string>`| 256 | N  | Y  |  必须投赞成票的domainId|
 
 
 - 响应参数：
@@ -637,21 +643,21 @@
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
 | id      | `string`                 |32       | Y    | Y        | BD编号（唯一）                      |
-| label      | `string`              |32       | Y    | Y        | BD名称                             |
+| label      | `string`              |32       | N    | Y        | BD名称                             |
 | desc      | `string`               |1024     | N    | Y        | 描述                      |
-| functions | `List<FunctionDefine>` |     | N    | Y        | bd定义function            |
-| contracts | `List<ContractDefine>` |     | N    | Y        | bd定义contract            |
-| bdVersion | `string`               | 16       | Y    | Y        | bd版本                    |
+| functions | `List<FunctionDefine>` |         | N    | Y        | bd定义function            |
+| contracts | `List<ContractDefine>` |         | N    | Y        | bd定义contract            |
+| bdVersion | `string`               | 16      | Y    | Y        | bd版本                    |
 
 `ContractDefine`定义:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :-----------:    | -------- | -------------- | ---- | -------- | :---------------------------- |
-| templateId   | `string` | 32             | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
-| desc             | `string` | 256            | N    | Y        | function描述                     |
-| createPermission | `string` | 64             | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
-| createPolicy     | `string` | 32             | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
-| functions        | `List<FunctionDefine>`    |      | Y        | Y        | 合约方法定义function            |
+| :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
+| templateId       | `string` | 32    | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
+| desc             | `string` | 256   | N    | Y        | function描述                     |
+| createPermission | `string` | 64     | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
+| createPolicy     | `string` | 32      | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
+| functions        | `List<FunctionDefine>`| | Y| Y        | 合约方法定义function            |
 
 `FunctionDefine`定义:
 
@@ -661,29 +667,29 @@
 | execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该permission已经存在于链上                   |
 | execPolicy     | `string` | 32     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
 | methodSign     | `string` | 256     | Y    | Y        | 如果发布的是合约则填写的合约方法签名
-| id           | `string` | 32     | Y    | Y        | function名称在同一个bd下不能重复                      |
+| id             | `string` | 32     | Y    | Y        | function名称在同一个bd下不能重复                      |
 | type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
 
 
 - <a id="FUNCTION_TYPE">function type类型</a>
 
-|    类型                         | 说明                         |
-| :-----------------------------:| --------                    |
-| SystemAction                   |系统内置function功能            |
-| Contract                       |该function属于合约方法           |
-| ContractQuery                  |该function属于合约查询类,可以通过<a href="query-api.md#queryContract">合约状态查询</a>调用该方法|
+|    类型            | 说明                         |
+| :----------------:| --------                    |
+| SystemAction      |系统内置function功能            |
+| Contract          |该function属于合约方法           |
+| ContractQuery      |该function属于合约查询类,可以通过<a href="query-api.md#queryContract">合约状态查询</a>调用该方法|
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | txId                      |
+|    属性     | 类型     | 最大长度 | 说明       |
+| :---------: | -------- | ------ | :-------- |
+| txId        | `string` | 40     | 交易Id      |
 
 - 实例：
 
 ```java tab="请求实例-actionDatas"
     {
-    	"txData":"{\"txId\":\"769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
+    	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
     	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
     }
 
@@ -714,21 +720,22 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | 交易id                      |
+| txId | `string` | 40     | Y    | Y        | 交易id                      |
 
 - 实例：
 
 ```json tab="请求实例"
 	{
-    	"txData":"{\"txId\":\"27f02fcbfcbdfb6659da0f3d870f11c969730efbb7a0ef769fd5ced4b7ed7a13\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_SNAPSHOT\",\"type\":\"ADD_SNAPSHOT\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"remark\":\"d01a7e41-184c-4a69-bc98-a9a9a2f5005f\"},\"version\":\"4.0.0\"}}",
-    	"txSign":"008fe95f4d816e93a14d46344c2140c20491d1d73bdeb7a6f2cae65d989fe9b84517fa1d04ea70e420990d2e1c32f9d69c539d40cf771d3fad42a4df3760fb8083"
+        "txData":"{"txId":"00000171a50d92e0270c98bfeacefa629027fb45","bdId":"SystemBD","functionId":"ADD_SNAPSHOT","type":"ADD_SNAPSHOT","submitter":"4f4ea1f5005f6988397716516af34e156ab70028","version":"4.2.0","actionDatas":{"datas":{"remark":"remark"},"version":"4.0.0"},"extensionDatas":{"remark":"remark"}}",
+        "txSign":"007712054b0f191ed2970fd7ea93b5a59aa0450d5fc2290a30d9d6ec24133b092436625079899b0266609cfb49d591f0f7f3848c645600de0de4a643893cfc5779"
     }
 ```
 
 ```json tab="响应实例"
 {
     "data":"27f02fcbfcbdfb6659da0f3d870f11c969730efbb7a0ef769fd5ced4b7ed7a13",
-    "msg":"Success","respCode":"000000",
+    "msg":"Success",
+    "respCode":"000000",
     "success":true
 }
 ```
@@ -742,7 +749,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | 交易id                      |
+| txId | `string` | 40     | Y    | Y        | 交易id                      |
 
 
 - 响应参数：
@@ -795,7 +802,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 | 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
 | --------------- | ---------- | -------- | ---- | -------- | ---------------------|
-| txId | `string` |  64    | Y    | Y        | 交易id                      |
+| txId | `string` |  40    | Y    | Y        | 交易id                      |
 
 - 编译合约代码示例
 ```java
@@ -860,7 +867,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` |   64   | Y    | Y        | 交易id                      |
+| txId | `string` |   40   | Y    | Y        | 交易id                      |
 
 - 实例：
 
@@ -914,7 +921,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 ```json tab="请求实例"
 {
-	"txData":"{\"txId\":\"b1269f6239121c98174d3f8e2ff64dba32d0b0b87062e103f811b0431541537d\",\"bdId\":\"SystemBD\",\"functionId\":\"SET_PERMISSION\",\"type\":\"SET_PERMISSION\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"authorizers\":[\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\"],\"datas\":\"{\\\"combineType\\\":\\\"AND\\\",\\\"propertyRule\\\":\\\"true\\\",\\\"kycRule\\\":\\\"true\\\"}\",\"id\":\"Permission1\",\"type\":\"IDENTITY\"},\"version\":\"4.0.0\"}}",
+	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"SystemBD\",\"functionId\":\"SET_PERMISSION\",\"type\":\"SET_PERMISSION\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"authorizers\":[\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\"],\"datas\":\"{\\\"combineType\\\":\\\"AND\\\",\\\"propertyRule\\\":\\\"true\\\",\\\"kycRule\\\":\\\"true\\\"}\",\"id\":\"Permission1\",\"type\":\"IDENTITY\"},\"version\":\"4.0.0\"}}",
 	"txSign":"001f0a1b4ee2a9723858f8e00a70b1d0be1d121d972bac1edf1478dd5c8fc410ee67ebe56ddd739786ceae717370530567b34534a93bc5f4e49f0408df765a43c1"
 }
 ```
@@ -926,78 +933,6 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
     msg='Success', 
     data=b1269f6239121c98174d3f8e2ff64dba32d0b0b87062e103f811b0431541537d
 }
-```
-
-#### 查询permission
-- [ ] 开放
-- 接口描述：  
-- 请求地址：`GET`:`/permission/queryAll`
-- 请求参数： 
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-|	|	|	|	|	|	|
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| id            | `string` | 64        | Y    | Y        | permission id（唯一）       |
-| label         | `string` | 64        | N    | Y        | 名称       |
-| type          | `string` | 64        | N    | Y        | 授权类型       |（ADDRESS/IDENTITY）
-| authorizers   | `string[]`|          | Y    | Y        | 被授予后期可以修改Permission的地址|
-| datas         | `json`    |          | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
-| preTxId       | `string`  |64        | Y    | Y        |上次操作的txId|
-| currentTxId   | `string`  |64        | Y    | Y        |最近操作的txId|
-
-- 实例：
-
-```json tab="请求实例"
-
-```
-
-```json tab="响应实例"
-{
-    "data":[
-        {
-            "authorizers":[
-                "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf"
-            ],
-            "currentTxId":null,
-            "datas":"["177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf"]",
-            "id":"RS",
-            "label":null,
-            "preTxId":null,
-            "type":"ADDRESS"
-        },
-        {
-            "authorizers":[
-                "b8da898d50712ea4695ade4b1de6926cbc4bcfb9"
-            ],
-            "currentTxId":"4e933250b076195dc50a525dbaae488dc31415c6174615377823d30ed499fb54",
-            "datas":"{"combineType":"AND","propertyRule":"true","kycRule":"true"}",
-            "id":"Permission1",
-            "label":null,
-            "preTxId":"e65940b9823a8895eb3d074cf2dcbb4432422d3481198de59cbfd635c078de8e",
-            "type":"IDENTITY"
-        },
-        {
-            "authorizers":[
-                "177f03aefabb6dfc07f189ddf6d0d48c2f60cdbf"
-            ],
-            "currentTxId":null,
-            "datas":"["ALL"]",
-            "id":"DEFAULT",
-            "label":null,
-            "preTxId":null,
-            "type":"ADDRESS"
-        }
-    ],
-    "msg":"Success",
-    "respCode":"000000",
-    "success":true
-}
- 
 ```
 
 ### Identity
@@ -1021,7 +956,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` |  64        | Y    | Y        | 交易id |                           |
+| txId | `string` |  40        | Y    | Y        | 交易id |                           |
 
 - 实例：
 
@@ -1060,13 +995,13 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` | 64         | Y    | Y        | 交易id |                           |
+| txId | `string` | 40         | Y    | Y        | 交易id |                           |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"txData":"{\"txId\":\"f008e6d5b5abab6c795dd8b8bf3dc57c61189b68ae5903d9272b2a53e5dc1f97\",\"bdId\":\"bd_id_3599\",\"functionId\":\"FREEZE_IDENTITY\",\"type\":\"FREEZE_IDENTITY\",\"submitter\":\"5342594ae09e2f8844464824e24e61334603bc49\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"5342594ae09e2f8844464824e24e61334603bc49\"},\"version\":\"4.0.0\"}}",
+	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"bd_id_3599\",\"functionId\":\"FREEZE_IDENTITY\",\"type\":\"FREEZE_IDENTITY\",\"submitter\":\"5342594ae09e2f8844464824e24e61334603bc49\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"5342594ae09e2f8844464824e24e61334603bc49\"},\"version\":\"4.0.0\"}}",
 	"txSign":"01f9cb708cc1674183aa1a06fcf0edd83be4367627e5715d772132b14b0a1855a11683b295cc1affe85d4d430635968d15486ac49594e3322eb9fbafa30fee8c55"
 }
 ```
@@ -1096,13 +1031,13 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
 | :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` |  64        | Y    | Y        | 交易id |                           |
+| txId | `string` |  40        | Y    | Y        | 交易id |                           |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"txData":"{\"txId\":\"ff8541db5d88596dcbc09c1e15159c87b92421c16d4dcf65e7fc650d8e4f4abc\",\"bdId\":\"bd_id_3599\",\"functionId\":\"UNFREEZE_IDENTITY\",\"type\":\"UNFREEZE_IDENTITY\",\"submitter\":\"5342594ae09e2f8844464824e24e61334603bc49\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"5342594ae09e2f8844464824e24e61334603bc49\"},\"version\":\"4.0.0\"}}",
+	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"bd_id_3599\",\"functionId\":\"UNFREEZE_IDENTITY\",\"type\":\"UNFREEZE_IDENTITY\",\"submitter\":\"5342594ae09e2f8844464824e24e61334603bc49\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"5342594ae09e2f8844464824e24e61334603bc49\"},\"version\":\"4.0.0\"}}",
 	"txSign":"0023d7044b83890d37147886bbaafdc828b5ee48a27e636d76832f1718ac86b7e82a1bb8ec637603dfec8a949fb5a2e3ee361bcd57fa960bf270fbc96b373759ba"
 }
 ```
@@ -1170,12 +1105,12 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | Y        | user identity 地址                      |
-| currentTxId | `string` | 64     | Y    | Y        |    user identity 改修改时的txId                   |
+| currentTxId | `string` | 40     | Y    | Y        |    user identity 改修改时的txId                   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
 | froze | `boolean` |  10    | Y    | Y        | true：冻结，false：未冻结                      |
 | identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
 | kyc | `string` |1024      | Y    | Y        | identity认证信息                      |
-| preTxId | `string` | 64     | Y    | Y        |  上次identity被修改时交易id                   |
+| preTxId | `string` | 40     | Y    | Y        |  上次identity被修改时交易id                   |
 | property | `string` | 1024     | Y    | Y        |  扩展属性                   |
 | version | `int` | 10     | Y    | Y        |  修改记录版本                   |
 
@@ -1191,10 +1126,10 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 		"bdId":"bd_id_3599",
 		"hidden":0,
 		"property":"",
-		"preTxId":"558d04f17c5ff0783a75644ffa87bdd21f59f6f21468a6370f2f4fb7731b5f43",
+		"preTxId":"000001719c1956965df6e0e2761359d30a827505",
 		"froze":false,
 		"version":1,
-		"currentTxId":"beeb4eaf7a27ed4c2be3a911f2f3a0d0bef08806426e9ce3ef8ea2ba85b7f42d"
+		"currentTxId":"000001719c1956965df6e0e2761359d30a827505"
 	},
 	"msg":"Success",
 	"respCode":"000000"
@@ -1220,13 +1155,13 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | txId                      |
+| txId | `string` | 40     | Y    | Y        | txId                      |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"txData":"{\"txId\":\"19d486684f268b79660875b45d70b81bff5052a08d8c3fe3188eec148936bda9\",\"bdId\":\"sto_code_token2256\",\"functionId\":\"SET_ATTESTATION\",\"type\":\"SET_ATTESTATION\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"attestation\":\"modify  xxxxxxxxxxx v2\",\"id\":\"cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f\"},\"version\":\"4.0.0\"}}",
+	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"sto_code_token2256\",\"functionId\":\"SET_ATTESTATION\",\"type\":\"SET_ATTESTATION\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"attestation\":\"modify  xxxxxxxxxxx v2\",\"id\":\"cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f\"},\"version\":\"4.0.0\"}}",
 	"txSign":"010bc1fecff8bbdc3418f57aaa04fc69c95f4ed0ff4193dcf079fba27d4141803c30657b0a4b448019048850f4a1aa27b49b98f83c5281a904c8754d0547069032"
 }
 ```
@@ -1255,8 +1190,8 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | :---------:   | -------- | -------- | ---- | -------- | :---------------------------- |
 | id            | `string` | 64       | Y    | Y        | 存证id                      |
 | attestation   | `string` | 4096     | Y    | N        | 存证内容                      |
-| preTxId       | `string` | 64       | Y     | N        | 上次一次修改`txId` |
-| currentTxId   | `string` | 64       | Y     | N        | 最近一次修改`txId` |
+| preTxId       | `string` | 40       | Y     | N        | 上次一次修改`txId` |
+| currentTxId   | `string` | 40       | Y     | N        | 最近一次修改`txId` |
 | version       | `int`    | 10       | Y     | N        | 版本号，系统自增 |
 | bdId          | `string` | 32       | Y     | N        | 设置存证时的`bdId` |
 
@@ -1272,9 +1207,9 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 		"attestation":"modify xxxxxxxxxxx",
 		"bdId":"sto_code_token1308",
 		"id":"cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f",
-		"preTxId":"9ae0f0c2fda16dafe6f86f71360aabbb58e2853599470d23314db559b95b887b",
+		"preTxId":"000001719c1956965df6e0e2761359d30a827505",
 		"version":2,
-		"currentTxId":"30d5f16f0a2808a96eabd0d71ae7cb218c4a7bb65bbd256bfeec64193bfa572b"
+		"currentTxId":"000001719c1956965df6e0e2761359d30a827505"
 	},
 	"msg":"Success",
 	"respCode":"000000"
