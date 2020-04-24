@@ -1309,7 +1309,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | result      | `boolean` | 交易的执行结果 |
 | errorCode   | `string` | 错误码 |
 | errorMessage| `string` | 错误信息 |
-| receiptData | `json`   | policy的Id |
+| receiptData | `json`   |交易执行结果信息|
 | version     | `string` | 交易的版本 |
 
 
