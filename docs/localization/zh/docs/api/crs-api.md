@@ -152,7 +152,7 @@
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
 | txId          | `string` | 40       | Y    |    Y     | 请求Id |
-| bdId          | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode                                       |
+| bdId          | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdId                                       |
 | templateId    | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
 | type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
@@ -272,7 +272,7 @@
 <dependency>
     <groupId>com.hashstacs</groupId>
     <artifactId>stacs-client</artifactId>
-    <version>4.1.1-SNAPSHOT</version>
+    <version>4.2.0-SNAPSHOT</version>
 </dependency>
 
 ```
@@ -641,8 +641,8 @@
 - 请求参数： 
 
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------------------- | -------- | ---- | -------- | :-------------------------------- |
-| id      | `string`                 |32       | Y    | Y        | BD编号（唯一）                      |
+| :---------:| -------------------- | -------- | ---- | -------- | :-------------------------------- |
+| id         | `string`               |32       | Y    | Y        | BD编号（唯一）                      |
 | label      | `string`              |32       | N    | Y        | BD名称                             |
 | desc      | `string`               |1024     | N    | Y        | 描述                      |
 | functions | `List<FunctionDefine>` |         | N    | Y        | bd定义function            |
@@ -1065,9 +1065,9 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| data | `boolean` | 64     | Y    | Y        | 检查结果，成功返回true,失败返回false                      |
+|    属性     | 类型     | 说明                          |
+| :---------: | -------- |  :---------------------------- |
+| data       | `boolean` |检查结果，成功返回true,失败返回false |
 
 - 实例：
 
@@ -1149,7 +1149,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | attestation | `string` | 4096     | Y    | Y        | 存证内容                      |
-| id   | `string` | 64       | Y    | N        | 存证Id（唯一）                      |
+| id   | `string` | 40       | Y    | N        | 存证Id（唯一）                      |
 
 - 响应参数：
 
@@ -1170,7 +1170,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 {
     respCode='000000',
     msg='Success', 
-    data=19d486684f268b79660875b45d70b81bff5052a08d8c3fe3188eec148936bda9
+    data=000001719c1956965df6e0e2761359d30a827505
 }
 ```
 
@@ -1229,6 +1229,91 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 |     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明          |
 | :----------: | -------- | -------- | ---- | -------- | ------------- |
 | callbackUrl | `string` |   1024    | Y    | Y        | 回调地址，URL |
+
+
+## **RS回调**
+---
+> 基于已经注册的回调地址，发送出块信息
+
+|     属性     | 类型     |  说明        |
+| :----------:| -------- |  -----------|
+| genesis     | `boolean` | 是否创世块 |
+| blockHeader | `json` | 区块头信息 |
+| transactionList | `json` | 区块头中的交易数据 |
+
+- `blockHeader`
+
+|     属性     | 类型     |  说明        |
+| :----------:| -------- |  -----------|
+| version     | `string` | 区块链版本 |
+| previousHash | `string` | 上一个区块的hash |
+| blockHash   | `string`  | 当前区块的hash |
+| height       | `string` | 当前区块的高度 |
+| stateRootHash| `json` | 账本数据的hash散列表 |
+| blockTime    | `string` | 出块时间 |
+| txNum        | `string` | 当前区块的交易数量 |
+| totalBlockSize | `string` | 区块链的总区块数量 |
+| totalTxNum    | `string` | 区块链的总交易数量 |
+
+- `stateRootHash`
+
+一个散列表，key：账本数据类型，value：账本数据的hash
+
+- `transactionList`
+
+ TransactionPO元素组成的数组
+
+- `TransactionPO`
+
+|     属性     | 类型     |  说明        |
+| :----------:| -------- |  -----------|
+| coreTx     | `string` | 交易原始信息 |
+| policyData | `json` | 交易的policy |
+| transactionReceipt   | `json`  | 交易执行信息 |
+| blockHeight   | `string`  | 区块高度 |
+| blockTime   | `string`  | 交易出块时间 |
+
+- `coreTx`
+
+|     属性     | 类型     |  说明        |
+| :----------:| -------- |  -----------|
+| txId     | `string` | 交易Id |
+| bdId     | `string` | 交易绑定的businessDefine的Id |
+| templateId  | `string` | 执行的智能合约templateId |
+| type     | `string` | 交易类型 |
+| subType     | `string` | 交易的子类型，由客户自定义 |
+| sessionId     | `string` | 长会话Id |
+| merchantId     | `string` | 商户Id |
+| merchantSign     | `string` | 商户签名 |
+| functionId     | `string` | 执行的bd或合约的functionId |
+| submitter     | `string` | 交易提交者 |
+| actionDatas     | `string` | 交易原始信息 |
+| version     | `string` | 交易版本 |
+| submitterSign     | `string` | 交易提交者的签名 |
+| extensionDatas     | `string` | 额外补充信息 |
+
+- `policyData`
+
+|     属性     | 类型     |  说明        |
+| :----------:| -------- |  -----------|
+| policyId     | `string` | policy的Id |
+| policyVersion | `string` | policy版本 |
+| sender       | `string` | 投票的发送节点名称 |
+| sendTime     | `string` | 投票的发送时间 |
+
+- `transactionReceipt`
+
+|     属性     | 类型     |  说明      |
+| :----------:| -------- |  ---------|
+| txId        | `string` | 交易的Id |
+| result      | `boolean` | 交易的执行结果 |
+| errorCode   | `string` | 错误码 |
+| errorMessage| `string` | 错误信息 |
+| receiptData | `json`   | policy的Id |
+| version     | `string` | 交易的版本 |
+
+
+
 
 [1]: query-api.md#queryMaxHeight 
 [2]: query-api.md#queryTxByTxId/{txId} 
