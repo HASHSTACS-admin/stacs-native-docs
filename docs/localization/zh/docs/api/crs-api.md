@@ -139,7 +139,7 @@
 ### 统一交易提交接口
 - [x] 开放
 - 接口描述：发起交易（所有类型的交易都需要指定`bdId`）
-- 请求地址：`POST`: `/submitTx`
+- 请求地址：`POST`: `/v4/submitTx`
 - 请求参数：
 
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -262,7 +262,7 @@
     |<a href="#FREEZE_IDENTITY">FREEZE_IDENTITY</a>     |N      |Identity冻结|
     |<a href="#UNFREEZE_IDENTITY">UNFREEZE_IDENTITY</a> |N      |Identity解冻|
     |<a href="#SET_ATTESTATION">SET_ATTESTATION</a>     |N    	|存证|
-    |<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>           |N  |快照交易|
+    |<a href="#ADD_SNAPSHOT">ADD_SNAPSHOT</a>           |N      |快照交易|
 
 
 2. 查询接口列表
@@ -366,9 +366,11 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 |说明                          |
-| :---------: | -------- | -------- |-------------------------|
-| txId        | `string` | 40     | 交易id                      |
+|    属性      | 类型       |  说明        |
+ | :---------: | -------    | :---------- |
+ | data        |   `string` |   交易id     |
+ | respCode    |   `string` |    状态码    |
+ | msg         |   `string` |    状态信息   |
 
 - 实例：
 
@@ -398,7 +400,7 @@
 ```
 
 ```json tab="响应实例"
-{"data":null,"msg":"Success","respCode":"000000","success":true}  
+{"data":"000001719c1956965df6e0e2761359d30a827505","msg":"Success","respCode":"000000","success":true}  
 ```
 
 #### <a id="UPDATE_CA">更新`CA`</a>
@@ -419,9 +421,11 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 说明                          |
-| :---------: | -------- | -------- | :---------------------------- |
-| txId        | `string` |  40    | 交易id                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
@@ -437,9 +441,10 @@
 
 ```json tab="响应实例"
 {
-	"data":"\"000001719c1956965df6e0e2761359d30a827505\"",
+	"data":"000001719c1956965df6e0e2761359d30a827505",
 	"msg":"Success",
-	"respCode":"000000"
+	"respCode":"000000",
+    "success":true
 } 
 ```
 
@@ -460,9 +465,11 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 说明                          |
-| :---------: | -------- | -------- | :---------------------------- |
-| txId         | `string` | 40     |  交易id                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
@@ -477,9 +484,10 @@
 
 ```json tab="响应实例"
 {
-	"data":"\"000001719c1956965df6e0e2761359d30a827505\"",
+	"data":"000001719c1956965df6e0e2761359d30a827505",
 	"msg":"Success",
-	"respCode":"000000"
+	"respCode":"000000",
+    "success":true
 } 
 ```
 
@@ -504,9 +512,11 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 |说明           |
-| :---------: | -------- | -------- | :-------- |
-| txId         | `string` | 40     |  交易id      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 
 - 实例：
@@ -523,9 +533,10 @@
 
 ```json tab="响应实例"
 {
-	"data":"\"000001719c1956965df6e0e2761359d30a827505\"",
+	"data":"000001719c1956965df6e0e2761359d30a827505",
     "msg":"Success",
-    "respCode":"000000"
+    "respCode":"000000",
+    "success":true
 } 
 ```
 
@@ -550,9 +561,11 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 说明       |
-| :---------:| --------| -------| :-------- |
-| txId       | `string` | 40     |  交易id    |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 
 - 实例：
@@ -569,9 +582,10 @@
 
 ```json tab="响应实例"
 {
-	"data":null,
+	"data":"000001719c1956965df6e0e2761359d30a827505",
 	"msg":"Success",
-	"respCode":"000000"
+	"respCode":"000000",
+    "success":true
 } 
 ```
 
@@ -604,38 +618,24 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :----------- |
-| 	|	|	|	|	|	|
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"assignMeta":{
-		"expression":"n/2+1",
-		"mustDomainIds":null,
-		"verifyNum":1
-	},
-	"callbackType":"ALL",
-	"decisionType":"FULL_VOTE",
-	"domainIds":[
-		"Domain"
-	],
-	"policyId":"P_",
-	"label":"P_-name",
-	"requireAuthIds":[],
-	"votePattern":"SYNC"
+	"txData":"{\"txId\":\"00000171b47c4fd2f9d0fc62e725906694d47ca1\",\"bdId\":\"SystemBD\",\"functionId\":\"SET_POLICY\",\"type\":\"SET_POLICY\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"callbackType\":\"ALL\",\"decisionType\":\"ONE_VOTE\",\"domainIds\":[\"STACS-Domain-A\",\"STACS-Domain-B\"],\"label\":\"biubiu\",\"policyId\":\"policy_demo_2\",\"requireAuthIds\":[\"STACS-Domain-A\"],\"votePattern\":\"SYNC\"},\"version\":\"4.0.0\"}}",
+    "txSign":"00c7804a67757f4e3a567d672ec85273f0c9e2ad5c1ef009c5f25c8a1eff9c2cd60edfdff9c1a5e2354f42fb47c423588a3f98ea554f55da42608048856ce90d34"
 } 
 ```
 
 ```json tab="响应实例"
-{
-	"data":null,
-	"msg":"Success",
-	"respCode":"000000"
-} 
+{"data":"00000171b47c4fd2f9d0fc62e725906694d47ca1","msg":"Success","respCode":"000000","success":true} 
 ```
 
 
@@ -690,25 +690,24 @@
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 说明       |
-| :---------: | -------- | ------ | :-------- |
-| txId        | `string` | 40     | 交易Id      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
 ```java tab="请求实例-actionDatas"
     {
-    	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"functions\":[{\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"methodSign\":\"SET_ATTESTATION\",\"id\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"sto_code_token5476\",\"label\":\"sto_code__token_name\"},\"version\":\"4.0.0\"}}",
-    	"txSign":"01b1eb09ff94d9d136597bb1b5665b5322203b0f56abee6c521bad91fa99b6bfb930520b74dab0e88e120e26a48d87e5e0dcaf5293bc0242e74b525f4eb9f8517b"
+    	"txData":"{\"txId\":\"00000171b4763a8688974ea47641ddcf0bf1724b\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_BD\",\"type\":\"ADD_BD\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"bdVersion\":\"4.0.0\",\"contracts\":[{\"createPermission\":\"DEFAULT\",\"createPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"desc\":\"test\",\"functions\":[{\"desc\":\"余额查询\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"balanceOf\",\"methodSign\":\"(uint256) balanceOf(address)\",\"type\":\"Contract\"},{\"desc\":\"转账\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"transfer\",\"methodSign\":\"(bool) transfer(address,uint256)\",\"type\":\"Contract\"}],\"templateId\":\"t-code-bond\"},{\"createPermission\":\"DEFAULT\",\"createPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"desc\":\"test\",\"functions\":[{\"desc\":\"已支付\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"payment\",\"methodSign\":\"(bool) payment(bytes32)\",\"type\":\"Contract\"},{\"desc\":\"确认白条已支付\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"confirm\",\"methodSign\":\"(bool) confirm(bytes32)\",\"type\":\"Contract\"},{\"desc\":\"回退\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"release\",\"methodSign\":\"(bool) release()\",\"type\":\"Contract\"},{\"desc\":\"提现\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"withdrawal\",\"methodSign\":\"(bool) withdrawal(address,address,uint256)\",\"type\":\"Contract\"},{\"desc\":\"检查kyc\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"checkKyc\",\"methodSign\":\"(bool) checkKyc(address,string)\",\"type\":\"Contract\"},{\"desc\":\"购买记录\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"buyHistory\",\"methodSign\":\"(bytes32,address,address,uint256,uint256,uint256) buyHistory()\",\"type\":\"Contract\"}],\"templateId\":\"t-code-dvp\"},{\"createPermission\":\"DEFAULT\",\"createPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"desc\":\"test\",\"functions\":[{\"desc\":\"余额查询\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"balanceOf\",\"methodSign\":\"(uint256) balanceOf(address)\",\"type\":\"Contract\"},{\"desc\":\"转账\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"transfer\",\"methodSign\":\"(bool) transfer(address,uint256)\",\"type\":\"Contract\"},{\"desc\":\"标的类型查询\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"benchmark\",\"methodSign\":\"(string) benchmark()\",\"type\":\"Contract\"},{\"desc\":\"花费\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"cost\",\"methodSign\":\"(bool) cost(address,uint256)\",\"type\":\"Contract\"},{\"desc\":\"购买\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"buy\",\"methodSign\":\"(bool) buy(address,uint256,uint256)\",\"type\":\"Contract\"}],\"templateId\":\"t-code-cert\"}],\"desc\":\"dvp_test_label\",\"functions\":[{\"desc\":\"这是一个测试2\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"SET_IDENTITY\",\"methodSign\":\"SET_IDENTITY\",\"type\":\"SystemAction\"},{\"desc\":\"这是一个测试2\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"FREEZE_IDENTITY\",\"methodSign\":\"FREEZE_IDENTITY\",\"type\":\"SystemAction\"},{\"desc\":\"Identity解冻\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"UNFREEZE_IDENTITY\",\"methodSign\":\"UNFREEZE_IDENTITY\",\"type\":\"SystemAction\"},{\"desc\":\"设置存证\",\"execPermission\":\"DEFAULT\",\"execPolicy\":\"SYNC_ONE_VOTE_DEFAULT\",\"id\":\"SET_ATTESTATION\",\"methodSign\":\"SET_ATTESTATION\",\"type\":\"SystemAction\"}],\"id\":\"bd_demo_5\",\"label\":\"dvp_test_label\"},\"version\":\"4.0.0\"}}",
+        "txSign":"006be9ac9bff3a006125ea5bdaff76d67b091acee356fef9f0365a8f05e84060613d7bb6ad454b950ae3f99893fd568093916088ef94fd4fd0fbe241c5b13eee8d"
     }
 
 ```
 
 ```json tab="响应实例"
-{
-respCode='000000', 
-msg='Success', 
-data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
+    {"data":"00000171b4763a8688974ea47641ddcf0bf1724b","msg":"Success","respCode":"000000","success":true} 
 ```
 
 ### 快照
@@ -727,25 +726,24 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 40     | Y    | Y        | 交易id                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
 ```json tab="请求实例"
 	{
-        "txData":"{"txId":"00000171a50d92e0270c98bfeacefa629027fb45","bdId":"SystemBD","functionId":"ADD_SNAPSHOT","type":"ADD_SNAPSHOT","submitter":"4f4ea1f5005f6988397716516af34e156ab70028","version":"4.2.0","actionDatas":{"datas":{"remark":"remark"},"version":"4.0.0"},"extensionDatas":{"remark":"remark"}}",
-        "txSign":"007712054b0f191ed2970fd7ea93b5a59aa0450d5fc2290a30d9d6ec24133b092436625079899b0266609cfb49d591f0f7f3848c645600de0de4a643893cfc5779"
+        "txData":"{\"txId\":\"00000171b51a09954629a8e0aa1c148d30ee8f3c\",\"bdId\":\"SystemBD\",\"functionId\":\"ADD_SNAPSHOT\",\"type\":\"ADD_SNAPSHOT\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"remark\":\"you see see you\"},\"version\":\"4.0.0\"}}",
+        "txSign":"01418b639f0fb79b578c29fea821b8dc88f390812e0c1ae8f879d7c9c8919c7fc30d1173bdffd5c24b79cc19f056e857c00c7ce79b7b5a8d1d39e5a2e5b974a687"
     }
 ```
 
 ```json tab="响应实例"
 {
-    "data":"27f02fcbfcbdfb6659da0f3d870f11c969730efbb7a0ef769fd5ced4b7ed7a13",
-    "msg":"Success",
-    "respCode":"000000",
-    "success":true
+    "data":"00000171b51a09954629a8e0aa1c148d30ee8f3c","msg":"Success","respCode":"000000","success":true
 }
 ```
 
@@ -753,37 +751,34 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - [ ] 开放
 - 接口描述：  
-- 请求地址：`GET`:`/snapshot/query?txId={txId}`
+- 请求地址：`GET`:`/v4/snapshot/query?txId={txId}`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | txId | `string` | 40     | Y    | Y        | 交易id                      |
 
-
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| blockHeight | `int` |   10   | Y    | Y        | 区块高度                      |
-| remark     | `string` |  1024    | Y    | Y        | 备注                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   快照信息     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
+
+- `data`
+
+|    属性     | 类型     |  说明                          |
+| :---------: | -------- | :---------------------------- |
+| snapshotId | `string`    |   快照Id                      |
+| blockHeight | `int`    |   区块高度                      |
+| remark     | `string` | 备注                      |
 
 - 实例：
 
-```json tab="请求实例"
-
-```
-
 ```json tab="响应实例"
 {
-    "data":{
-        "blockHeight":926,
-        "snapshotId":"68240",
-        "remark":"remark"
-    },
-    "msg":"Success",
-    "respCode":"000000",
-    "success":true
+    respCode='000000', msg='Success', data={"snapshotId":"00000171b5259d51cfee6d3384b66cb8baebf136","blockHeight":48,"remark":"you see see you"}}
 }
 ```
 
@@ -809,9 +804,11 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-| 属性            | 类型       | 最大长度 | 必填 | 是否签名 | 说明                       |
-| --------------- | ---------- | -------- | ---- | -------- | ---------------------|
-| txId | `string` |  40    | Y    | Y        | 交易id                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 编译合约代码示例
 ```java
@@ -833,30 +830,14 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 - 实例：
 ```json tab="请求实例"
 {
-	"datas":{
-    			"contractor":"Bonds_TypeA(uint256,address,string,address)",
-    			"sourceCode":"pragma solidity ^0.4.24;\n\ncontract Common {\n\n    bytes32 constant TX_ID = bytes32(0x00000000000000000000000000000000000000000000000000000074785f6964);\n    bytes32 constant STACS_KEY_ADDR = bytes32(0x5354414353000000000000000000000000000000000000000000000000000002);\n\n    event Transfer(address indexed from, address indexed to, uint256 value);\n    event AddressLog(address);\n\n    //assemble the given address bytecode. If bytecode exists then the _addr is a contract.\n    function isContract(address _addr) public view returns (bool is_contract) {\n        uint length;\n        assembly {\n        //retrieve the size of the code on target address, this needs assembly\n            length := extcodesize(_addr)\n        }\n        return (length > 0);\n    }\n}\n\ninterface TokenContract {\n    function batchTransfer(address[] toAdd, uint256[] amount) external returns (bool success);\n\n    function transfer(address _to, uint256 _value) external returns (bool success);\n}\n\ncontract Bonds_TypeA is Common {\n\n    uint16 constant MAX_NUMBER_OF_QUERY_PER_PAGE = 100;\n    uint256 total;\n    uint8 decimals = 8;\n    address issuer;\n    address owner;\n    string kycExp;\n    address disbursementToken;\n    bool buyBackFroze = false;\n\n    struct Balance {\n        uint256 balance;\n        bool exists;\n    }\n\n    mapping(address => Balance) balance;\n    address[] addresses;\n\n    constructor (\n        uint256 _total,\n        address _owner,\n        string _kycExp,\n        address _disbursementToken\n    ) public {\n        require(_owner != 0x0, \"owner address is 0x0\");\n        require(_total > 0, \"total is illegal\");\n        require(_disbursementToken != 0x0, \"_disbursementToken address is 0x0\");\n\n        total = _total;\n        issuer = msg.sender;\n        owner = _owner;\n        kycExp = _kycExp;\n        disbursementToken = _disbursementToken;\n        balance[owner].balance = total;\n        balance[owner].exists = true;\n        addresses.push(owner);\n    }\n\n    function balanceOf(address _owner) public view returns (uint256 balanceAmount){\n        balanceAmount = balance[_owner].balance;\n        return (balanceAmount);\n    }\n\n    function pagingQuery(uint32 currentPage, uint32 pageSize) public view returns (address[], uint256[], uint256){\n        require(currentPage >= 1 && pageSize >= 1);\n        if (pageSize > MAX_NUMBER_OF_QUERY_PER_PAGE) {\n            pageSize = MAX_NUMBER_OF_QUERY_PER_PAGE;\n        }\n        uint256 addressLength = addresses.length;\n        if (pageSize > addressLength) {\n            pageSize = uint32(addressLength);\n        }\n        address[] memory addrs;\n        uint256[] memory balanceResult;\n\n        uint32 start = (currentPage - 1) * pageSize;\n        if (start >= addressLength) {\n            return (addrs, balanceResult, addressLength);\n        }\n\n        uint32 arrayInitLength = calculateArrayInitLength(currentPage, pageSize, addressLength);\n        addrs = new address[](arrayInitLength);\n        balanceResult = new uint256[](arrayInitLength);\n\n        for (uint16 i = 0; i < arrayInitLength; i++) {\n            address tmpAddress = addresses[start];\n            addrs[i] = tmpAddress;\n            balanceResult[i] = balance[tmpAddress].balance;\n            start++;\n        }\n\n        return (addrs, balanceResult, addressLength);\n    }\n\n    function transfer(address _to, uint256 _value) public payable returns (bool success){\n\n        if (bytes(kycExp).length != 0 && !isContract(_to)) {\n            require(checkKyc(_to, kycExp), \"_to address kyc verify failed\");\n        }\n        require(!buyBackFroze, \"buyBackFroze is true\");\n        return transferFrom(msg.sender, _to, _value);\n    }\n\n    function batchTransfer(address[] _addrs, uint256[] _values) public returns (bool success){\n        require(_addrs.length == _values.length, \"addrs length must eq _values length\");\n        require(_addrs.length > 0, \"address array length is 0\");\n        require(!buyBackFroze, \"buyBackFroze is true\");\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            if (_values[i] != 0) {\n                if (bytes(kycExp).length != 0 && !isContract(_addrs[i])) {\n                    require(checkKyc(_addrs[i], kycExp), \"_to address kyc verify failed\");\n                }\n                transferFrom(msg.sender, _addrs[i], _values[i]);\n            }\n        }\n        return true;\n    }\n\n    function additionalIssue(uint256 num) public returns (bool){\n        require(num > 0, \"num is illegal\");\n        require(!buyBackFroze, \"buyBackFroze is true\");\n        total += num;\n        balance[owner].balance += num;\n        require(total > 0, \"The data of crossing the line\");\n        return true;\n    }\n\n    function interestSettle(address[] _addrs, uint256[] _values) public returns (bool success){\n        require(_addrs.length == _values.length);\n        require(_addrs.length > 0, \"address array length is 0\");\n        require(!buyBackFroze, \"buyBackFroze is true\");\n        TokenContract tokenContract = TokenContract(disbursementToken);\n        tokenContract.batchTransfer(_addrs, _values);\n        return true;\n    }\n\n    function buybackFroze() public returns (bool){\n        buyBackFroze = true;\n        return true;\n    }\n\n    function buyback(address[] _addrs, uint256[] _values, uint256[] payAmount) public returns (bool success){\n        require(_addrs.length == _values.length);\n        require(_values.length == payAmount.length);\n        require(_addrs.length > 0, \"address array length is 0\");\n        require(buyBackFroze, \"buyback must buyBackFroze is true\");\n        //buy back bonds\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            require(balance[_addrs[i]].balance == _values[i], \"address balance must eq value\");\n            require(transferFrom(_addrs[i], owner, _values[i]), \"transfer failed\");\n        }\n\n        //send usd\n        TokenContract tokenContract = TokenContract(disbursementToken);\n        require(tokenContract.batchTransfer(_addrs, payAmount), \"send usd failed\");\n\n        return true;\n    }\n\n    function withdrawal(address contractAddress, address to, uint256 amount) public returns (bool){\n        require(amount > 0, \"amount is 0\");\n        require(isContract(contractAddress), \"contractAddress is not contract\");\n        TokenContract tokenContract = TokenContract(contractAddress);\n        require(tokenContract.transfer(to, amount), \"withdrawal failed\");\n        return true;\n    }\n\n    function transferFrom(address _from, address _to, uint256 _value) internal returns (bool){\n        require(_to != 0x0, \"to address is 0x0\");\n        require(_value > 0, \"The value must be that is greater than zero.\");\n        emit AddressLog(_from);\n        emit AddressLog(_to);\n        require(balance[_from].balance >= _value, \"from address balance not enough\");\n        uint256 result = balance[_to].balance + _value;\n        require(result > 0, \"to address balance overflow\");\n        require(result > balance[_to].balance, \"to address balance overflow\");\n\n        uint previousBalance = balance[_from].balance + balance[_to].balance;\n        balance[_from].balance -= _value;\n        if (!balance[_to].exists) {\n            balance[_to].balance = _value;\n            balance[_to].exists = true;\n            addresses.push(_to);\n        }\n        else {\n            balance[_to].balance += _value;\n        }\n        emit Transfer(_from, _to, _value);\n        assert(balance[_from].balance + balance[_to].balance == previousBalance);\n        return true;\n    }\n\n    function totalSupply() public view returns (uint256){\n        return total;\n    }\n\n    function calculateArrayInitLength(uint32 currentPage, uint32 pageSize, uint256 arrayLength) private pure returns (uint32){\n        if (arrayLength % pageSize == 0) {\n            return pageSize;\n        }\n        uint allPageSize = arrayLength / pageSize + 1;\n        if (currentPage <= allPageSize - 1) {\n            return pageSize;\n        }\n        uint32 arrayInitLength = uint32(arrayLength - (currentPage - 1) * pageSize);\n        return arrayInitLength;\n    }\n\n    function checkKyc(address userAddress, string kyc) public returns (bool){\n\n        bytes memory input = abi.encode(userAddress, kyc);\n        bytes32[1] memory output;\n        uint inputSize = input.length + 32;\n        bytes32 callAddress = STACS_KEY_ADDR;\n        assembly{\n            let success := call(\n            0,\n            callAddress,\n            0,\n            input,\n            inputSize,\n            output,\n            32)\n        }\n        if (output[0] == bytes32(0x0000000000000000000000000000000000000000000000000000000000000001)) {\n            return true;\n        } else {\n            return false;\n        }\n\n    }\n}",
-    			"abi":"[{\"constant\":false,\"name\":\"withdrawal\",\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":true,\"name\":\"isContract\",\"inputs\":[{\"name\":\"_addr\",\"type\":\"address\"}],\"outputs\":[{\"name\":\"is_contract\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":true,\"name\":\"totalSupply\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"buyback\",\"inputs\":[{\"name\":\"_addrs\",\"type\":\"address[]\"},{\"name\":\"_values\",\"type\":\"uint256[]\"},{\"name\":\"payAmount\",\"type\":\"uint256[]\"}],\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":true,\"name\":\"balanceOf\",\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"outputs\":[{\"name\":\"balanceAmount\",\"type\":\"uint256\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"checkKyc\",\"inputs\":[{\"name\":\"userAddress\",\"type\":\"address\"},{\"name\":\"kyc\",\"type\":\"string\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"batchTransfer\",\"inputs\":[{\"name\":\"_addrs\",\"type\":\"address[]\"},{\"name\":\"_values\",\"type\":\"uint256[]\"}],\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"buybackFroze\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"transfer\",\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"}],\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":true},{\"constant\":false,\"name\":\"additionalIssue\",\"inputs\":[{\"name\":\"num\",\"type\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":true,\"name\":\"pagingQuery\",\"inputs\":[{\"name\":\"currentPage\",\"type\":\"uint32\"},{\"name\":\"pageSize\",\"type\":\"uint32\"}],\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"},{\"name\":\"\",\"type\":\"uint256[]\"},{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"interestSettle\",\"inputs\":[{\"name\":\"_addrs\",\"type\":\"address[]\"},{\"name\":\"_values\",\"type\":\"uint256[]\"}],\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"name\":\"\",\"inputs\":[{\"name\":\"_total\",\"type\":\"uint256\"},{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_kycExp\",\"type\":\"string\"},{\"name\":\"_disbursementToken\",\"type\":\"address\"}],\"type\":\"constructor\",\"payable\":false},{\"anonymous\":false,\"name\":\"Transfer\",\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"type\":\"event\",\"payable\":false},{\"anonymous\":false,\"name\":\"AddressLog\",\"inputs\":[{\"indexed\":false,\"name\":\"\",\"type\":\"address\"}],\"type\":\"event\",\"payable\":false},{\"constant\":false,\"name\":\"withdrawal\",\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":true,\"name\":\"isContract\",\"inputs\":[{\"name\":\"_addr\",\"type\":\"address\"}],\"outputs\":[{\"name\":\"is_contract\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":true,\"name\":\"totalSupply\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"buyback\",\"inputs\":[{\"name\":\"_addrs\",\"type\":\"address[]\"},{\"name\":\"_values\",\"type\":\"uint256[]\"},{\"name\":\"payAmount\",\"type\":\"uint256[]\"}],\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":true,\"name\":\"balanceOf\",\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"outputs\":[{\"name\":\"balanceAmount\",\"type\":\"uint256\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"checkKyc\",\"inputs\":[{\"name\":\"userAddress\",\"type\":\"address\"},{\"name\":\"kyc\",\"type\":\"string\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"batchTransfer\",\"inputs\":[{\"name\":\"_addrs\",\"type\":\"address[]\"},{\"name\":\"_values\",\"type\":\"uint256[]\"}],\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"buybackFroze\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"transfer\",\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"}],\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":true},{\"constant\":false,\"name\":\"additionalIssue\",\"inputs\":[{\"name\":\"num\",\"type\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false},{\"constant\":true,\"name\":\"pagingQuery\",\"inputs\":[{\"name\":\"currentPage\",\"type\":\"uint32\"},{\"name\":\"pageSize\",\"type\":\"uint32\"}],\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"},{\"name\":\"\",\"type\":\"uint256[]\"},{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\",\"payable\":false},{\"constant\":false,\"name\":\"interestSettle\",\"inputs\":[{\"name\":\"_addrs\",\"type\":\"address[]\"},{\"name\":\"_values\",\"type\":\"uint256[]\"}],\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"type\":\"function\",\"payable\":false}]",
-    			"contractAddress":"e32e955c77876a58d906547519a2333c338d8008",
-    			"initArgs":[
-    				1000000000000,
-    				"b8da898d50712ea4695ade4b1de6926cbc4bcfb9",
-    				"",
-    				"a4d7da26f66a347114faccb14c7ab2e7869ce27c"
-    			],
-    			"opCode":"60806040526008600160006101000a81548160ff021916908360ff1602179055506000600460146101000a81548160ff0219169083151502179055503480156200004857600080fd5b5060405162002a6438038062002a648339810180604052810190808051906020019092919080519060200190929190805182019291906020018051906020019092919050505060008373ffffffffffffffffffffffffffffffffffffffff16141515156200011e576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f6f776e657220616464726573732069732030783000000000000000000000000081525060200191505060405180910390fd5b60008411151562000197576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260108152602001807f746f74616c20697320696c6c6567616c0000000000000000000000000000000081525060200191505060405180910390fd5b60008173ffffffffffffffffffffffffffffffffffffffff16141515156200024d576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260218152602001807f5f64697362757273656d656e74546f6b656e206164647265737320697320307881526020017f300000000000000000000000000000000000000000000000000000000000000081525060400191505060405180910390fd5b83600081905550336001806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555082600260006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508160039080519060200190620002ed929190620004a9565b5080600460006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060005460056000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000181905550600160056000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060010160006101000a81548160ff0219169083151502179055506006600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690806001815401808255809150509060018203906000526020600020016000909192909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505050505062000558565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f10620004ec57805160ff19168380011785556200051d565b828001600101855582156200051d579182015b828111156200051c578251825591602001919060010190620004ff565b5b5090506200052c919062000530565b5090565b6200055591905b808211156200055157600081600090555060010162000537565b5090565b90565b6124fc80620005686000396000f3006080604052600436106100b9576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806229c0b4146100be578063162790551461014357806318160ddd1461019e57806349ce8cff146101c957806370a08231146102cd578063853076d11461032457806388d695b2146103c55780639be7f6de14610486578063a9059cbb146104b5578063b369f4231461050d578063de6d0e7a14610552578063f387b48114610639575b600080fd5b3480156100ca57600080fd5b50610129600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803590602001909291905050506106fa565b604051808215151515815260200191505060405180910390f35b34801561014f57600080fd5b50610184600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610953565b604051808215151515815260200191505060405180910390f35b3480156101aa57600080fd5b506101b3610966565b6040518082815260200191505060405180910390f35b3480156101d557600080fd5b506102b360048036038101908080359060200190820180359060200190808060200260200160405190810160405280939291908181526020018383602002808284378201915050505050509192919290803590602001908201803590602001908080602002602001604051908101604052809392919081815260200183836020028082843782019150505050505091929192908035906020019082018035906020019080806020026020016040519081016040528093929190818152602001838360200280828437820191505050505050919291929050505061096f565b604051808215151515815260200191505060405180910390f35b3480156102d957600080fd5b5061030e600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610e76565b6040518082815260200191505060405180910390f35b34801561033057600080fd5b506103ab600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610ec5565b604051808215151515815260200191505060405180910390f35b3480156103d157600080fd5b5061046c6004803603810190808035906020019082018035906020019080806020026020016040519081016040528093929190818152602001838360200280828437820191505050505050919291929080359060200190820180359060200190808060200260200160405190810160405280939291908181526020018383602002808284378201915050505050509192919290505050611006565b604051808215151515815260200191505060405180910390f35b34801561049257600080fd5b5061049b6113b9565b604051808215151515815260200191505060405180910390f35b6104f3600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803590602001909291905050506113dd565b604051808215151515815260200191505060405180910390f35b34801561051957600080fd5b50610538600480360381019080803590602001909291905050506115c1565b604051808215151515815260200191505060405180910390f35b34801561055e57600080fd5b50610593600480360381019080803563ffffffff169060200190929190803563ffffffff1690602001909291905050506117c2565b604051808060200180602001848152602001838103835286818151815260200191508051906020019060200280838360005b838110156105e05780820151818401526020810190506105c5565b50505050905001838103825285818151815260200191508051906020019060200280838360005b83811015610622578082015181840152602081019050610607565b505050509050019550505050505060405180910390f35b34801561064557600080fd5b506106e06004803603810190808035906020019082018035906020019080806020026020016040519081016040528093929190818152602001838360200280828437820191505050505050919291929080359060200190820180359060200190808060200260200160405190810160405280939291908181526020018383602002808284378201915050505050509192919290505050611a0a565b604051808215151515815260200191505060405180910390f35b600080600083111515610775576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600b8152602001807f616d6f756e74206973203000000000000000000000000000000000000000000081525060200191505060405180910390fd5b61077e85610953565b15156107f2576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601f8152602001807f636f6e747261637441646472657373206973206e6f7420636f6e74726163740081525060200191505060405180910390fd5b8490508073ffffffffffffffffffffffffffffffffffffffff1663a9059cbb85856040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050602060405180830381600087803b15801561089857600080fd5b505af11580156108ac573d6000803e3d6000fd5b505050506040513d60208110156108c257600080fd5b81019080805190602001909291905050501515610947576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f7769746864726177616c206661696c656400000000000000000000000000000081525060200191505060405180910390fd5b60019150509392505050565b600080823b905060008111915050919050565b60008054905090565b60008060008451865114151561098457600080fd5b8351855114151561099457600080fd5b60008651111515610a0d576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260198152602001807f61646472657373206172726179206c656e67746820697320300000000000000081525060200191505060405180910390fd5b600460149054906101000a900460ff161515610ab7576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260218152602001807f6275796261636b206d757374206275794261636b46726f7a652069732074727581526020017f650000000000000000000000000000000000000000000000000000000000000081525060400191505060405180910390fd5b600091505b85518261ffff161015610c9c57848261ffff16815181101515610adb57fe5b9060200190602002015160056000888561ffff16815181101515610afb57fe5b9060200190602002015173ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154141515610bb8576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601d8152602001807f616464726573732062616c616e6365206d7573742065712076616c756500000081525060200191505060405180910390fd5b610c1b868361ffff16815181101515610bcd57fe5b90602001906020020151600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16878561ffff16815181101515610c0c57fe5b90602001906020020151611c80565b1515610c8f576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600f8152602001807f7472616e73666572206661696c6564000000000000000000000000000000000081525060200191505060405180910390fd5b8180600101925050610abc565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff166388d695b287866040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808060200180602001838103835285818151815260200191508051906020019060200280838360005b83811015610d51578082015181840152602081019050610d36565b50505050905001838103825284818151815260200191508051906020019060200280838360005b83811015610d93578082015181840152602081019050610d78565b50505050905001945050505050602060405180830381600087803b158015610dba57600080fd5b505af1158015610dce573d6000803e3d6000fd5b505050506040513d6020811015610de457600080fd5b81019080805190602001909291905050501515610e69576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600f8152602001807f73656e6420757364206661696c6564000000000000000000000000000000000081525060200191505060405180910390fd5b6001925050509392505050565b6000600560008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001549050809050919050565b60006060610ed16124ad565b6000808686604051602001808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001828103825283818151815260200191508051906020019080838360005b83811015610f4b578082015181840152602081019050610f30565b50505050905090810190601f168015610f785780820380516001836020036101000a031916815260200191505b5093505050506040516020818303038152906040529350602084510191507f5354414353000000000000000000000000000000000000000000000000000002600102905060208383866000856000f1506001800260001916836000600181101515610fdf57fe5b6020020151600019161415610ff75760019450610ffc565b600094505b5050505092915050565b600080825184511415156110a8576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260238152602001807f6164647273206c656e677468206d757374206571205f76616c756573206c656e81526020017f677468000000000000000000000000000000000000000000000000000000000081525060400191505060405180910390fd5b60008451111515611121576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260198152602001807f61646472657373206172726179206c656e67746820697320300000000000000081525060200191505060405180910390fd5b600460149054906101000a900460ff161515156111a6576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f6275794261636b46726f7a65206973207472756500000000000000000000000081525060200191505060405180910390fd5b600090505b83518161ffff1610156113ae576000838261ffff168151811015156111cc57fe5b906020019060200201511415156113a15760006003805460018160011615610100020316600290049050141580156112255750611223848261ffff1681518110151561121457fe5b90602001906020020151610953565b155b1561135e576112e9848261ffff1681518110151561123f57fe5b9060200190602002015160038054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156112df5780601f106112b4576101008083540402835291602001916112df565b820191906000526020600020905b8154815290600101906020018083116112c257829003601f168201915b5050505050610ec5565b151561135d576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601d8152602001807f5f746f2061646472657373206b796320766572696679206661696c656400000081525060200191505060405180910390fd5b5b61139f33858361ffff1681518110151561137457fe5b90602001906020020151858461ffff1681518110151561139057fe5b90602001906020020151611c80565b505b80806001019150506111ab565b600191505092915050565b60006001600460146101000a81548160ff0219169083151502179055506001905090565b60008060038054600181600116156101000203166002900490501415801561140b575061140983610953565b155b15611529576114b48360038054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156114aa5780601f1061147f576101008083540402835291602001916114aa565b820191906000526020600020905b81548152906001019060200180831161148d57829003601f168201915b5050505050610ec5565b1515611528576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601d8152602001807f5f746f2061646472657373206b796320766572696679206661696c656400000081525060200191505060405180910390fd5b5b600460149054906101000a900460ff161515156115ae576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f6275794261636b46726f7a65206973207472756500000000000000000000000081525060200191505060405180910390fd5b6115b9338484611c80565b905092915050565b6000808211151561163a576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600e8152602001807f6e756d20697320696c6c6567616c00000000000000000000000000000000000081525060200191505060405180910390fd5b600460149054906101000a900460ff161515156116bf576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f6275794261636b46726f7a65206973207472756500000000000000000000000081525060200191505060405180910390fd5b8160008082825401925050819055508160056000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160008282540192505081905550600080541115156117b9576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601d8152602001807f5468652064617461206f662063726f7373696e6720746865206c696e6500000081525060200191505060405180910390fd5b60019050919050565b60608060008060608060008060008060018c63ffffffff16101580156117ef575060018b63ffffffff1610155b15156117fa57600080fd5b606461ffff168b63ffffffff16111561181657606461ffff169a505b6006805490509650868b63ffffffff16111561183057869a505b8a60018d03029350868463ffffffff16101515611855578585889950995099506119fc565b6118608c8c89612439565b92508263ffffffff166040519080825280602002602001820160405280156118975781602001602082028038833980820191505090505b5095508263ffffffff166040519080825280602002602001820160405280156118cf5781602001602082028038833980820191505090505b509450600091505b8263ffffffff168261ffff1610156119f25760068463ffffffff168154811015156118fe57fe5b9060005260206000200160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905080868361ffff1681518110151561193e57fe5b9060200190602002019073ffffffffffffffffffffffffffffffffffffffff16908173ffffffffffffffffffffffffffffffffffffffff1681525050600560008273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154858361ffff168151811015156119cf57fe5b9060200190602002018181525050838060010194505081806001019250506118d7565b8585889950995099505b505050505050509250925092565b60008082518451141515611a1d57600080fd5b60008451111515611a96576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260198152602001807f61646472657373206172726179206c656e67746820697320300000000000000081525060200191505060405180910390fd5b600460149054906101000a900460ff16151515611b1b576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f6275794261636b46726f7a65206973207472756500000000000000000000000081525060200191505060405180910390fd5b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff166388d695b285856040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808060200180602001838103835285818151815260200191508051906020019060200280838360005b83811015611bd0578082015181840152602081019050611bb5565b50505050905001838103825284818151815260200191508051906020019060200280838360005b83811015611c12578082015181840152602081019050611bf7565b50505050905001945050505050602060405180830381600087803b158015611c3957600080fd5b505af1158015611c4d573d6000803e3d6000fd5b505050506040513d6020811015611c6357600080fd5b810190808051906020019092919050505050600191505092915050565b6000806000808573ffffffffffffffffffffffffffffffffffffffff1614151515611d13576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f746f20616464726573732069732030783000000000000000000000000000000081525060200191505060405180910390fd5b600084111515611db1576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252602c8152602001807f5468652076616c7565206d75737420626520746861742069732067726561746581526020017f72207468616e207a65726f2e000000000000000000000000000000000000000081525060400191505060405180910390fd5b7f0bf07deb1c3fbf03980ee15c98791b07cdd7d1fc54ca3a39248f2cd40efe7aaa86604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a17f0bf07deb1c3fbf03980ee15c98791b07cdd7d1fc54ca3a39248f2cd40efe7aaa85604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a183600560008873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000015410151515611f31576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601f8152602001807f66726f6d20616464726573732062616c616e6365206e6f7420656e6f7567680081525060200191505060405180910390fd5b83600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154019150600082111515611ff0576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f746f20616464726573732062616c616e6365206f766572666c6f77000000000081525060200191505060405180910390fd5b600560008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154821115156120a9576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f746f20616464726573732062616c616e6365206f766572666c6f77000000000081525060200191505060405180910390fd5b600560008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154600560008873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000015401905083600560008873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160008282540392505081905550600560008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060010160009054906101000a900460ff1615156122e55783600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001819055506001600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060010160006101000a81548160ff02191690831515021790555060068590806001815401808255809150509060018203906000526020600020016000909192909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050612336565b83600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001600082825401925050819055505b8473ffffffffffffffffffffffffffffffffffffffff168673ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef866040518082815260200191505060405180910390a380600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154600560008973ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001540114151561242c57fe5b6001925050509392505050565b6000806000808563ffffffff168581151561245057fe5b06141561245f578492506124a4565b60018563ffffffff168581151561247257fe5b04019150600182038663ffffffff16111515612490578492506124a4565b84600187030263ffffffff16840390508092505b50509392505050565b6020604051908101604052806001906020820280388339808201915050905050905600a165627a7a723058201b6ca3438ad8c058c9f95b20d49d1aee05865d808f198e0a119e9d0f5b7a15070029000000000000000000000000000000000000000000000000000000e8d4a51000000000000000000000000000b8da898d50712ea4695ade4b1de6926cbc4bcfb90000000000000000000000000000000000000000000000000000000000000080000000000000000000000000a4d7da26f66a347114faccb14c7ab2e7869ce27c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    			"id":"Bonds7342",
-    			"label":"Bonds"
-    		},
-    		"version":"4.0.0"
+	"txData":"{\"txId\":\"00000171b50e98ac6817929db66d979c4e416e68\",\"bdId\":\"bd_demo_5\",\"functionId\":\"ADD_CONTRACT\",\"templateId\":\"t-code-cert\",\"type\":\"ADD_CONTRACT\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"abi\":\"[{\\\"constant\\\":false,\\\"name\\\":\\\"withdrawal\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"contractAddress\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"to\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"amount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"isContract\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_addr\\\",\\\"type\\\":\\\"address\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"is_contract\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"totalSupply\\\",\\\"inputs\\\":[],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"balanceOf\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_addr\\\",\\\"type\\\":\\\"address\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"balanceAmount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"batchTransfer\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_addrs\\\",\\\"type\\\":\\\"address[]\\\"},{\\\"name\\\":\\\"_values\\\",\\\"type\\\":\\\"uint256[]\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"success\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"benchmark\\\",\\\"inputs\\\":[],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"string\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"buy\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"orderAddr\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"amount\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"name\\\":\\\"payAmount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"success\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"invalidTotalSupply\\\",\\\"inputs\\\":[],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"transfer\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_to\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"_value\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"success\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":true},{\\\"constant\\\":false,\\\"name\\\":\\\"additionalIssue\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"num\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"invalidBalanceOf\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_addr\\\",\\\"type\\\":\\\"address\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"balanceAmount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"cost\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"addr\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"amount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"name\\\":\\\"\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_total\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"name\\\":\\\"_owner\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"_benchmark\\\",\\\"type\\\":\\\"string\\\"}],\\\"type\\\":\\\"constructor\\\",\\\"payable\\\":false},{\\\"anonymous\\\":false,\\\"name\\\":\\\"Transfer\\\",\\\"inputs\\\":[{\\\"indexed\\\":true,\\\"name\\\":\\\"from\\\",\\\"type\\\":\\\"address\\\"},{\\\"indexed\\\":true,\\\"name\\\":\\\"to\\\",\\\"type\\\":\\\"address\\\"},{\\\"indexed\\\":false,\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"event\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"withdrawal\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"contractAddress\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"to\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"amount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"isContract\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_addr\\\",\\\"type\\\":\\\"address\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"is_contract\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"totalSupply\\\",\\\"inputs\\\":[],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"balanceOf\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_addr\\\",\\\"type\\\":\\\"address\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"balanceAmount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"batchTransfer\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_addrs\\\",\\\"type\\\":\\\"address[]\\\"},{\\\"name\\\":\\\"_values\\\",\\\"type\\\":\\\"uint256[]\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"success\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"benchmark\\\",\\\"inputs\\\":[],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"string\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"buy\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"orderAddr\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"amount\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"name\\\":\\\"payAmount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"success\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"invalidTotalSupply\\\",\\\"inputs\\\":[],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"transfer\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_to\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"_value\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"success\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":true},{\\\"constant\\\":false,\\\"name\\\":\\\"additionalIssue\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"num\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":true,\\\"name\\\":\\\"invalidBalanceOf\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"_addr\\\",\\\"type\\\":\\\"address\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"balanceAmount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false},{\\\"constant\\\":false,\\\"name\\\":\\\"cost\\\",\\\"inputs\\\":[{\\\"name\\\":\\\"addr\\\",\\\"type\\\":\\\"address\\\"},{\\\"name\\\":\\\"amount\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"outputs\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"}],\\\"type\\\":\\\"function\\\",\\\"payable\\\":false}]\",\"contractAddress\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"contractor\":\"Certificate_TypeA(uint256,address,string)\",\"id\":\"certificate_demo_1\",\"initArgs\":[10000000000,\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"USD\"],\"label\":\"lalala\",\"opCode\":\"60806040526008600160006101000a81548160ff021916908360ff1602179055503480156200002d57600080fd5b5060405162001cd938038062001cd983398101806040528101908080519060200190929190805190602001909291908051820192919050505060008273ffffffffffffffffffffffffffffffffffffffff1614151515620000f6576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f6f776e657220616464726573732069732030783000000000000000000000000081525060200191505060405180910390fd5b6000831115156200016f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260108152602001807f746f74616c20697320696c6c6567616c0000000000000000000000000000000081525060200191505060405180910390fd5b6000815114151515620001ea576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260148152602001807f62656e63686d61726b20697320696c6c6567616c00000000000000000000000081525060200191505060405180910390fd5b82600081905550336001806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555081600260006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555080600390805190602001906200028a92919062000404565b5060005460056000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000181905550600160056000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060010160006101000a81548160ff0219169083151502179055506007600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690806001815401808255809150509060018203906000526020600020016000909192909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050505050620004b3565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106200044757805160ff191683800117855562000478565b8280016001018555821562000478579182015b82811115620004775782518255916020019190600101906200045a565b5b5090506200048791906200048b565b5090565b620004b091905b80821115620004ac57600081600090555060010162000492565b5090565b90565b61181680620004c36000396000f3006080604052600436106100b9576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806229c0b4146100be578063162790551461014357806318160ddd1461019e57806370a08231146101c957806388d695b2146102205780638903c5a2146102e1578063a59ac6dd14610371578063a80157a6146103e0578063a9059cbb1461040b578063b369f42314610463578063c71b622c146104a8578063f94d6dc7146104ff575b600080fd5b3480156100ca57600080fd5b50610129600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190505050610564565b604051808215151515815260200191505060405180910390f35b34801561014f57600080fd5b50610184600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506107bd565b604051808215151515815260200191505060405180910390f35b3480156101aa57600080fd5b506101b36107d0565b6040518082815260200191505060405180910390f35b3480156101d557600080fd5b5061020a600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506107d9565b6040518082815260200191505060405180910390f35b34801561022c57600080fd5b506102c76004803603810190808035906020019082018035906020019080806020026020016040519081016040528093929190818152602001838360200280828437820191505050505050919291929080359060200190820180359060200190808060200260200160405190810160405280939291908181526020018383602002808284378201915050505050509192919290505050610828565b604051808215151515815260200191505060405180910390f35b3480156102ed57600080fd5b506102f6610946565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561033657808201518184015260208101905061031b565b50505050905090810190601f1680156103635780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34801561037d57600080fd5b506103c6600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190803590602001909291905050506109e8565b604051808215151515815260200191505060405180910390f35b3480156103ec57600080fd5b506103f5610bda565b6040518082815260200191505060405180910390f35b610449600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190505050610be4565b604051808215151515815260200191505060405180910390f35b34801561046f57600080fd5b5061048e60048036038101908080359060200190929190505050610bf9565b604051808215151515815260200191505060405180910390f35b3480156104b457600080fd5b506104e9600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610d76565b6040518082815260200191505060405180910390f35b34801561050b57600080fd5b5061054a600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190505050610dc5565b604051808215151515815260200191505060405180910390f35b6000806000831115156105df576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600b8152602001807f616d6f756e74206973203000000000000000000000000000000000000000000081525060200191505060405180910390fd5b6105e8856107bd565b151561065c576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601f8152602001807f636f6e747261637441646472657373206973206e6f7420636f6e74726163740081525060200191505060405180910390fd5b8490508073ffffffffffffffffffffffffffffffffffffffff1663a9059cbb85856040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050602060405180830381600087803b15801561070257600080fd5b505af1158015610716573d6000803e3d6000fd5b505050506040513d602081101561072c57600080fd5b810190808051906020019092919050505015156107b1576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f7769746864726177616c206661696c656400000000000000000000000000000081525060200191505060405180910390fd5b60019150509392505050565b600080823b905060008111915050919050565b60008054905090565b6000600560008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001549050809050919050565b6000808251845114151561083b57600080fd5b600084511115156108b4576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260198152602001807f61646472657373206172726179206c656e67746820697320300000000000000081525060200191505060405180910390fd5b600090505b83518161ffff16101561093b576000838261ffff168151811015156108da57fe5b9060200190602002015114151561092e5761092c33858361ffff1681518110151561090157fe5b90602001906020020151858461ffff1681518110151561091d57fe5b906020019060200201516110f7565b505b80806001019150506108b9565b600191505092915050565b606060038054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156109de5780601f106109b3576101008083540402835291602001916109de565b820191906000526020600020905b8154815290600101906020018083116109c157829003601f168201915b5050505050905090565b6000806109f4856107bd565b1515610a68576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260198152602001807f6f7264657241646472206973206e6f7420636f6e74726163740000000000000081525060200191505060405180910390fd5b610a733386856110f7565b1515610ae7576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600f8152602001807f7472616e73666572206661696c6564000000000000000000000000000000000081525060200191505060405180910390fd5b8490508073ffffffffffffffffffffffffffffffffffffffff1663a59ac6dd3386866040518463ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018381526020018281526020019350505050602060405180830381600087803b158015610b9557600080fd5b505af1158015610ba9573d6000803e3d6000fd5b505050506040513d6020811015610bbf57600080fd5b81019080805190602001909291905050509150509392505050565b6000600454905090565b6000610bf13384846110f7565b905092915050565b60008082111515610c72576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600e8152602001807f6e756d20697320696c6c6567616c00000000000000000000000000000000000081525060200191505060405180910390fd5b8160008082825401925050819055508160056000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001600082825401925050819055506000805410151515610d6d576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601d8152602001807f5468652064617461206f662063726f7373696e6720746865206c696e6500000081525060200191505060405180910390fd5b60019050919050565b6000600660008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001549050809050919050565b6000808260005410151515610e42576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252600f8152602001807f616d6f756e7420677420746f74616c000000000000000000000000000000000081525060200191505060405180910390fd5b6000805410151515610ebc576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260138152602001807f746f74616c496e76616c6964206661696c65640000000000000000000000000081525060200191505060405180910390fd5b82600560003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000015410151515610f76576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f62616c616e6365206c7420616d6f756e7400000000000000000000000000000081525060200191505060405180910390fd5b826000540360008190555082600560003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160008282540392505081905550600660008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154905082600660008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000016000828254019250508190555082600454016004819055506000600454101515156110ec576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260138152602001807f746f74616c496e76616c6964206661696c65640000000000000000000000000081525060200191505060405180910390fd5b600191505092915050565b6000806000808573ffffffffffffffffffffffffffffffffffffffff161415151561118a576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f746f20616464726573732069732030783000000000000000000000000000000081525060200191505060405180910390fd5b600084111515611228576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252602c8152602001807f5468652076616c7565206d75737420626520746861742069732067726561746581526020017f72207468616e207a65726f2e000000000000000000000000000000000000000081525060400191505060405180910390fd5b83600560008873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154101515156112e2576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601f8152602001807f66726f6d20616464726573732062616c616e6365206e6f7420656e6f7567680081525060200191505060405180910390fd5b83600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001540191506000821115156113a1576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f746f20616464726573732062616c616e6365206f766572666c6f77000000000081525060200191505060405180910390fd5b600560008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001548211151561145a576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f746f20616464726573732062616c616e6365206f766572666c6f77000000000081525060200191505060405180910390fd5b600560008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154600560008873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000015401905083600560008873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160008282540392505081905550600560008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060010160009054906101000a900460ff1615156116965783600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001819055506001600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060010160006101000a81548160ff02191690831515021790555060078590806001815401808255809150509060018203906000526020600020016000909192909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550506116e7565b83600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001600082825401925050819055505b8473ffffffffffffffffffffffffffffffffffffffff168673ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef866040518082815260200191505060405180910390a380600560008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154600560008973ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000154011415156117dd57fe5b60019250505093925050505600a165627a7a723058200237125711ea4e316b66ff3a6994e6ef7d0ffd7e4ff10c7fe63e42706d2befe6002900000000000000000000000000000000000000000000000000000002540be4000000000000000000000000002a4060d480ebf0b601294b1f9f9599936681de61000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000035553440000000000000000000000000000000000000000000000000000000000\",\"sourceCode\":\"pragma solidity ^0.4.24;\\n\\ncontract Common {\\n\\n\\n    bytes32 constant TX_ID = bytes32(0x00000000000000000000000000000000000000000000000000000074785f6964);\\n    bytes32 constant STACS_KEY_ADDR = bytes32(0x5354414353000000000000000000000000000000000000000000000000000002);\\n\\n    event Transfer(address indexed from, address indexed to, uint256 value);\\n\\n    //assemble the given address bytecode. If bytecode exists then the _addr is a contract.\\n    function isContract(address _addr) public view returns (bool is_contract) {\\n        uint length;\\n        assembly {\\n        //retrieve the size of the code on target address, this needs assembly\\n            length := extcodesize(_addr)\\n        }\\n        return (length > 0);\\n    }\\n\\n}\\n\\ninterface OrderContract {\\n    function buy(address buyer, uint256 amount, uint256 payAmount) external returns (bool success);\\n}\\n\\ninterface TokenContract {\\n    function transfer(address _to, uint256 _value) external returns (bool success);\\n}\\n\\ncontract Certificate_TypeA is Common {\\n    uint16 constant MAX_NUMBER_OF_QUERY_PER_PAGE = 100;\\n    uint256 total;\\n    uint8 decimals = 8;\\n    address issuer;\\n    address owner;\\n    string  supportBenchmark;\\n    uint256 totalInvalid;\\n\\n    struct Balance {\\n        uint256 balance;\\n        bool exists;\\n    }\\n\\n    mapping(address => Balance) balance;\\n    mapping(address => Balance) invalidBalance;\\n\\n    address[] addresses;\\n\\n    constructor (\\n        uint256 _total,\\n        address _owner,\\n        string _benchmark\\n    ) public {\\n        require(_owner != 0x0, \\\"owner address is 0x0\\\");\\n        require(_total > 0, \\\"total is illegal\\\");\\n        require(bytes(_benchmark).length != 0, \\\"benchmark is illegal\\\");\\n\\n        total = _total;\\n        issuer = msg.sender;\\n        owner = _owner;\\n        supportBenchmark = _benchmark;\\n        balance[owner].balance = total;\\n        balance[owner].exists = true;\\n        addresses.push(owner);\\n    }\\n\\n    function benchmark() public view returns (string){\\n        return supportBenchmark;\\n    }\\n\\n    function totalSupply() public view returns (uint256){\\n        return total;\\n    }\\n\\n    function invalidTotalSupply() public view returns (uint256){\\n        return totalInvalid;\\n    }\\n\\n    function balanceOf(address _addr) public view returns (uint256 balanceAmount){\\n        balanceAmount = balance[_addr].balance;\\n        return (balanceAmount);\\n    }\\n\\n    function invalidBalanceOf(address _addr) public view returns (uint256 balanceAmount){\\n        balanceAmount = invalidBalance[_addr].balance;\\n        return (balanceAmount);\\n    }\\n\\n    function transfer(address _to, uint256 _value) public payable returns (bool success){\\n        return transferFrom(msg.sender, _to, _value);\\n    }\\n\\n    function batchTransfer(address[] _addrs, uint256[] _values) public returns (bool success){\\n        require(_addrs.length == _values.length);\\n        require(_addrs.length > 0, \\\"address array length is 0\\\");\\n        for (uint16 i = 0; i < _addrs.length; i++) {\\n            if (_values[i] != 0) {\\n                transferFrom(msg.sender, _addrs[i], _values[i]);\\n            }\\n        }\\n        return true;\\n    }\\n\\n    /**\\n    *1:transfer USD to orderAddr(PFC contract addresss)\\n    *2:call PFC buy function,add buy history\\n    */\\n    function buy(address orderAddr, uint256 amount, uint256 payAmount) public returns (bool success){\\n        require(isContract(orderAddr), \\\"orderAddr is not contract\\\");\\n        require(transferFrom(msg.sender, orderAddr, payAmount), \\\"transfer failed\\\");\\n\\n        OrderContract orderContract = OrderContract(orderAddr);\\n        return orderContract.buy(msg.sender, amount, payAmount);\\n    }\\n\\n    function cost(address addr, uint256 amount) public returns (bool){\\n\\n        require((total >= amount), \\\"amount gt total\\\");\\n        require(total >= 0, \\\"totalInvalid failed\\\");\\n        //买方的白条余额需要扣减\\n        require(balance[msg.sender].balance >= amount, \\\"balance lt amount\\\");\\n\\n        total = total - amount;\\n        balance[msg.sender].balance -= amount;\\n        //给卖方增加白条余额\\n        uint256 before = invalidBalance[addr].balance;\\n        invalidBalance[addr].balance += amount;\\n        totalInvalid = totalInvalid + amount;\\n        require(totalInvalid >= 0, \\\"totalInvalid failed\\\");\\n\\n        return true;\\n    }\\n\\n    function additionalIssue(uint256 num) public returns (bool){\\n        require(num > 0, \\\"num is illegal\\\");\\n        total += num;\\n        balance[owner].balance += num;\\n        require(total >= 0, \\\"The data of crossing the line\\\");\\n        return true;\\n    }\\n\\n    function withdrawal(address contractAddress, address to, uint256 amount) public returns (bool){\\n        require(amount > 0, \\\"amount is 0\\\");\\n        require(isContract(contractAddress), \\\"contractAddress is not contract\\\");\\n        TokenContract tokenContract = TokenContract(contractAddress);\\n        require(tokenContract.transfer(to, amount), \\\"withdrawal failed\\\");\\n        return true;\\n    }\\n\\n    function transferFrom(address _from, address _to, uint256 _value) internal returns (bool){\\n        require(_to != 0x0, \\\"to address is 0x0\\\");\\n        require(_value > 0, \\\"The value must be that is greater than zero.\\\");\\n        require(balance[_from].balance >= _value, \\\"from address balance not enough\\\");\\n        uint256 result = balance[_to].balance + _value;\\n        require(result > 0, \\\"to address balance overflow\\\");\\n        require(result > balance[_to].balance, \\\"to address balance overflow\\\");\\n\\n        uint previousBalance = balance[_from].balance + balance[_to].balance;\\n        balance[_from].balance -= _value;\\n        if (!balance[_to].exists) {\\n            balance[_to].balance = _value;\\n            balance[_to].exists = true;\\n            addresses.push(_to);\\n        }\\n        else {\\n            balance[_to].balance += _value;\\n        }\\n        emit Transfer(_from, _to, _value);\\n        assert(balance[_from].balance + balance[_to].balance == previousBalance);\\n        return true;\\n    }\\n\\n\\n}\"},\"version\":\"4.0.0\"}}",
+    "txSign":"01eaafc401958c80e998cabc70a8d5fabb8ad835865421b952f1fa7d34a65418400ee94ce789a17b304ed0ee441f20e1ad9033fb11232823a5662fbae7db7f0c3f"
 } 
 ```
 
 ```json tab="响应实例"
 {
-	"data":"\"14d4b73d830fa399e8285113d71965ca8befe72a591be9d3730ba20d2f519c48\"",
-	"msg":"Success",
-	"respCode":"000000"
+	"data":"00000171b50e98ac6817929db66d979c4e416e68","msg":"Success","respCode":"000000","success":true
 } 
 ```
 
@@ -874,32 +855,24 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` |   40   | Y    | Y        | 交易id                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"datas":
-	    {
-            "args":[
-                "e966fe88795f4ff5b772475efea405631e644f59",
-                20
-            ],
-            "methodSignature":"(bool) transfer(address,uint256)",
-            "contractAddress":"becb1870d5a0a6ea0e9d8cceafb58c40292f04bb"
-        },
-    "version":"4.0.0"   
+	"txData":"{\"txId\":\"00000171b510d9a42b7f529d411cb865888d8df7\",\"bdId\":\"bd_demo_5\",\"functionId\":\"transfer\",\"templateId\":\"t-code-cert\",\"type\":\"EXECUTE_CONTRACT\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"args\":[\"f1cc1d4385d0e3ed1b909e793506f2fb9d81db3d\",10000000000],\"contractAddress\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"methodSignature\":\"transfer(address,uint256)\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"0080a391ae13e0e7b31ed93e79d90d78a7ee583e3e1e86062d3477b5e8e4c7b53b1dfda6ea52445cc9f86f53f1455499c1ad21f5daf50ffe8cce07ba9995732950" 
 } 
 ```
 
 ```json tab="响应实例"
 {
-	"data":"\"9584564d326e9cd0a1fe161257c49d2edc973feb43335de54a7ae198d42602a4\"",
-	"msg":"Success",
-	"respCode":"000000"
+	"data":"00000171b510d9a42b7f529d411cb865888d8df7","msg":"Success","respCode":"000000","success":true
 } 
 ```
 
@@ -922,25 +895,25 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------:| -------- | -------- | ---- | -------- | :---------------------------- |
-| data       | `string` | 64        | Y    | Y        | 返回交易ID       |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"SystemBD\",\"functionId\":\"SET_PERMISSION\",\"type\":\"SET_PERMISSION\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"authorizers\":[\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\"],\"datas\":\"{\\\"combineType\\\":\\\"AND\\\",\\\"propertyRule\\\":\\\"true\\\",\\\"kycRule\\\":\\\"true\\\"}\",\"id\":\"Permission1\",\"type\":\"IDENTITY\"},\"version\":\"4.0.0\"}}",
-	"txSign":"001f0a1b4ee2a9723858f8e00a70b1d0be1d121d972bac1edf1478dd5c8fc410ee67ebe56ddd739786ceae717370530567b34534a93bc5f4e49f0408df765a43c1"
+	"txData":"{\"txId\":\"00000171b50c928edb1aa9dd43080b94484f1eb7\",\"bdId\":\"SystemBD\",\"functionId\":\"SET_PERMISSION\",\"type\":\"SET_PERMISSION\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"authorizers\":[\"2a4060d480ebf0b601294b1f9f9599936681de61\"],\"datas\":\"[\\\"2a4060d480ebf0b601294b1f9f9599936681de61\\\"]\",\"id\":\"permission_demo_1\",\"label\":\"dududu\",\"type\":\"ADDRESS\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"00b42baf90e2aca01c48b981fcb75b53e36bdb90a93cce503a662c808dc48ce8bc0c246b0d590104dc6219a1378eda77ae5b89619011aba6198bca9f8bf61b8ac9"
 }
 ```
 
 ```json tab="响应实例"
 
 {
-    respCode='000000', 
-    msg='Success', 
-    data=b1269f6239121c98174d3f8e2ff64dba32d0b0b87062e103f811b0431541537d
+    "data":"00000171b50c928edb1aa9dd43080b94484f1eb7","msg":"Success","respCode":"000000","success":true
 }
 ```
 
@@ -963,28 +936,24 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
-| :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` |  40        | Y    | Y        | 交易id |                           |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |                          |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-   "datas":
-    	    {
-	          "address":"5342594ae09e2f8844464824e24e61334603bc49",
-	          "property":""
-            },
-    "version":"4.0.0"   
+   "txData":"{\"txId\":\"00000171b513a81ed25f61b1da423e8b2a61aced\",\"bdId\":\"bd_demo_5\",\"functionId\":\"SET_IDENTITY\",\"type\":\"SET_IDENTITY\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"2671ea4b3c863cb5fc059889b7b37673369c073f\",\"identityType\":\"\",\"kyc\":\"\\\"country\\\":\\\"china\\\"\",\"property\":\"\\\"name\\\":\\\"luojianbo\\\"\"},\"version\":\"4.0.0\"}}",
+   	"txSign":"0149849f25d4eeb9021518494ab50dbd3219294072138ba65d9ee2a9f89747aec054f0aaebac4e93d46b646ce1002932e2f46b4615133d10b152106523b7f755fc"
 }
 ```
 
 ```json tab="响应实例"
 {
-	"data":"1573c09b4d38a9ec914cca57b950db35e1142b63396c0a238c9e4f656c7509c6",
-	"msg":"Success",
-	"respCode":"000000"
+	"data":"00000171b513a81ed25f61b1da423e8b2a61aced","msg":"Success","respCode":"000000","success":true
 } 
 ```
 
@@ -1002,25 +971,24 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
-| :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` | 40         | Y    | Y        | 交易id |                           |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |                         |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"bd_id_3599\",\"functionId\":\"FREEZE_IDENTITY\",\"type\":\"FREEZE_IDENTITY\",\"submitter\":\"5342594ae09e2f8844464824e24e61334603bc49\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"5342594ae09e2f8844464824e24e61334603bc49\"},\"version\":\"4.0.0\"}}",
-	"txSign":"01f9cb708cc1674183aa1a06fcf0edd83be4367627e5715d772132b14b0a1855a11683b295cc1affe85d4d430635968d15486ac49594e3322eb9fbafa30fee8c55"
+	"txData":"{\"txId\":\"00000171b51585ff2d96adf9c3cdbad7d3180a18\",\"bdId\":\"bd_demo_5\",\"functionId\":\"FREEZE_IDENTITY\",\"type\":\"FREEZE_IDENTITY\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"2671ea4b3c863cb5fc059889b7b37673369c073f\"},\"version\":\"4.0.0\"}}",
+    "txSign":"00a40c9fe26cdef423193847ea67680330df13ce3b083a2aebd8cbb6b450b39a637e587cba9dde08be9a6403fbfea90b6500bdc403d99ac588720d12f2202c25e1"
 }
 ```
 
 ```json tab="响应实例"
 {
-    "data":"f008e6d5b5abab6c795dd8b8bf3dc57c61189b68ae5903d9272b2a53e5dc1f97",
-    "msg":"Success",
-    "respCode":"000000"
-    ,"success":true
+    "data":"00000171b51585ff2d96adf9c3cdbad7d3180a18","msg":"Success","respCode":"000000","success":true
 }
 ```
 
@@ -1038,25 +1006,24 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|     属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                              |
-| :----------: | -------- | -------- | ---- | -------- | ------------------------------------------------- |
-| txId | `string` |  40        | Y    | Y        | 交易id |                           |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"bd_id_3599\",\"functionId\":\"UNFREEZE_IDENTITY\",\"type\":\"UNFREEZE_IDENTITY\",\"submitter\":\"5342594ae09e2f8844464824e24e61334603bc49\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"5342594ae09e2f8844464824e24e61334603bc49\"},\"version\":\"4.0.0\"}}",
-	"txSign":"0023d7044b83890d37147886bbaafdc828b5ee48a27e636d76832f1718ac86b7e82a1bb8ec637603dfec8a949fb5a2e3ee361bcd57fa960bf270fbc96b373759ba"
+	"txData":"{\"txId\":\"00000171b51729e48060ee75879a059b451a43d2\",\"bdId\":\"bd_demo_5\",\"functionId\":\"UNFREEZE_IDENTITY\",\"type\":\"UNFREEZE_IDENTITY\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"address\":\"2671ea4b3c863cb5fc059889b7b37673369c073f\"},\"version\":\"4.0.0\"}}",
+    "txSign":"014d0756a50d8f860df7cbfd945058677bd5ba635d1c2d46844c3c5840ea9648815eb84387520697a5ebf4f3fbb43e8dcb11d8ce9dc5cbb6ba2d559d28af4ef881"
 }
 ```
 
 ```json tab="响应实例"
 {
-    "data":"ff8541db5d88596dcbc09c1e15159c87b92421c16d4dcf65e7fc650d8e4f4abc",
-    "msg":"Success",
-    "respCode":"000000",
-    "success":true
+    "data":"00000171b51729e48060ee75879a059b451a43d2","msg":"Success","respCode":"000000","success":true
 }
 ```
 
@@ -1064,7 +1031,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 #### Identity鉴权
 - [ ] 开放
 - 接口描述：  检查用户是否有鉴别的权限
-- 请求地址：`POST`：`identity/checkPermission`
+- 请求地址：`POST`：`v4/identity/checkPermission`
 - 请求参数：(无签名) 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -1074,9 +1041,11 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|    属性     | 类型     | 说明                          |
-| :---------: | -------- |  :---------------------------- |
-| data       | `boolean` |检查结果，成功返回true,失败返回false |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `boolean` |   检查结果   |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
@@ -1091,9 +1060,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 ```json tab="响应实例"
 {
-    "data":"true",
-    "msg":"Success",
-    "respCode":"000000"
+    respCode='000000', msg='Success', data=false
 }
 ```
 
@@ -1101,12 +1068,12 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - [ ] 开放
 - 接口描述：查询Identity的详细信息  
-- 请求地址：`GET`:`identity/query?address={address}`
+- 请求地址：`GET`:`/v4/identity/query?address={address}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| address | `string`   | 40       | Y    | Y        | identity地址              |
+| address       | `string`   | 40       | Y    | Y        | identity地址              |
 
 
 - 响应参数：
@@ -1124,24 +1091,23 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | version | `int` | 10     | Y    | Y        |  修改记录版本                   |
 
 - 实例：
-```json tab="请求实例"
-
-```
 
 ```json tab="响应实例"
 {
-	"data":{
-		"address":"5342594ae09e2f8844464824e24e61334603bc49",
-		"bdId":"bd_id_3599",
-		"hidden":0,
-		"property":"",
-		"preTxId":"000001719c1956965df6e0e2761359d30a827505",
-		"froze":false,
-		"version":1,
-		"currentTxId":"000001719c1956965df6e0e2761359d30a827505"
-	},
-	"msg":"Success",
-	"respCode":"000000"
+	respCode='000000',
+    msg='Success', 
+    data={
+        "address":"2671ea4b3c863cb5fc059889b7b37673369c073f",
+        "bdId":"bd_demo_5",
+        "hidden":0,
+        "kyc":"\"country\":\"china\"",
+        "identityType":"",
+        "property":"\"name\":\"luojianbo\"",
+        "preTxId":"00000171b55f3daf1c818e557dac3def738e3c67",
+        "froze":false,
+        "version":1,
+        "currentTxId":"00000171b55f3daf1c818e557dac3def738e3c67"
+    }
 }
 ```
 
@@ -1162,42 +1128,42 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 40     | Y    | Y        | txId                      |
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 - 实例：
 
 ```json tab="请求实例"
 {
-	"txData":"{\"txId\":\"000001719c1956965df6e0e2761359d30a827505\",\"bdId\":\"sto_code_token2256\",\"functionId\":\"SET_ATTESTATION\",\"type\":\"SET_ATTESTATION\",\"submitter\":\"b8da898d50712ea4695ade4b1de6926cbc4bcfb9\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"attestation\":\"modify  xxxxxxxxxxx v2\",\"id\":\"cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f\"},\"version\":\"4.0.0\"}}",
-	"txSign":"010bc1fecff8bbdc3418f57aaa04fc69c95f4ed0ff4193dcf079fba27d4141803c30657b0a4b448019048850f4a1aa27b49b98f83c5281a904c8754d0547069032"
+	"txData":"{\"txId\":\"00000171b518d70461d63a39d06c4f8efb2899f2\",\"bdId\":\"bd_demo_5\",\"functionId\":\"SET_ATTESTATION\",\"type\":\"SET_ATTESTATION\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"attestation\":\"存证的内容\",\"id\":\"00000171b518d6a65df6e0e2761359d30a827505\"},\"version\":\"4.0.0\"}}",
+    "txSign":"00e35830840c00f6c443f43494425382c88b871ccc72e40a42b56fe465ec76f6c04a7569361ea0b2c1f351ae7e1dcf49d1047ac52709d817ffb936ba6bef42f80a"
 }
 ```
 
 ```json tab="响应实例"
 {
-    respCode='000000',
-    msg='Success', 
-    data=000001719c1956965df6e0e2761359d30a827505
+    "data":"00000171b518d70461d63a39d06c4f8efb2899f2","msg":"Success","respCode":"000000","success":true
 }
 ```
 
 #### 存证查询
 - [ ] 开放
 - 接口描述：  查询入链存证信息
-- 请求地址：`GET`:`queryAttestation/{id}`
+- 请求地址：`GET`:`/v4/queryAttestation/{id}`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:| -------- | -------| ---- | -------| :---------------------------- |
-|      id    | `string` | 64     | Y    | Y      | 存证id                      |
+|      id    | `string` | 40     | Y    | Y      | 存证id                      |
 
 - 响应参数：
 
 |    属性        | 类型     | 最大长度   | 必填 | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ---- | -------- | :---------------------------- |
-| id            | `string` | 64       | Y    | Y        | 存证id                      |
+| id            | `string` | 40       | Y    | Y        | 存证id                      |
 | attestation   | `string` | 4096     | Y    | N        | 存证内容                      |
 | preTxId       | `string` | 40       | Y     | N        | 上次一次修改`txId` |
 | currentTxId   | `string` | 40       | Y     | N        | 最近一次修改`txId` |
@@ -1206,22 +1172,9 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - 实例：
 
-```json tab="请求实例"
-/queryAttestation/cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f
-```
-
 ```json tab="响应实例"
 {
-	"data":{
-		"attestation":"modify xxxxxxxxxxx",
-		"bdId":"sto_code_token1308",
-		"id":"cc41355f8fe4100337ded5ddad0df2f1d651c7da3ecc7c79ce1161c8ecd9400f",
-		"preTxId":"000001719c1956965df6e0e2761359d30a827505",
-		"version":2,
-		"currentTxId":"000001719c1956965df6e0e2761359d30a827505"
-	},
-	"msg":"Success",
-	"respCode":"000000"
+	respCode='000000', msg='Success', data={"attestation":"存证的内容","bdId":"bd_demo_5","id":"00000171b5664ea85df6e0e2761359d30a827505","version":1,"currentTxId":"00000171b5664ef3c6cb718e7130f80c4faea8c3"}
 }
 ```
 
@@ -1231,7 +1184,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 -  [ ] 开放
 
-`POST`:`/callback/register`
+`POST`:`/v4/callback/register`
 
 >   (通常是)`DRS`向`CRS`注册交易完成时通知交易完成的回调地址
 
@@ -1243,6 +1196,8 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 ## **RS回调**
 ---
 > 基于已经注册的回调地址，发送出块信息
+
+- 回调实例
 
 |     属性     | 类型     |  说明        |
 | :----------:| -------- |  -----------|
@@ -1258,7 +1213,7 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 | previousHash | `string` | 上一个区块的hash |
 | blockHash   | `string`  | 当前区块的hash |
 | height       | `string` | 当前区块的高度 |
-| stateRootHash| `json` | 账本数据的hash散列表 |
+| stateRootHash| `StateRootHash` | 账本数据的hash散列表 |
 | blockTime    | `string` | 出块时间 |
 | txNum        | `string` | 当前区块的交易数量 |
 | totalBlockSize | `string` | 区块链的总区块数量 |
@@ -1266,7 +1221,20 @@ data=769b222dec0c49f39a2c80cb14a3da6470a92397fec8b164f20c56a2eaa2d8af}
 
 - `stateRootHash`
 
-一个散列表，key：账本数据类型，value：账本数据的hash
+|    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
+| :-----------------: | ----------------- | ------- | ---- |  :---------------------------- |
+| attestation          | `string`          | 64      | Y    |  存证信息的MPT根hash                    |
+| domainInfo     | `string`               | 64      | Y    |  domain信息的存储(MPT)树根hash              |
+| stacsConfig   | `string`                | 64      | Y    |  系统属性的存储(MPT)树根hash         |
+| contract          | `string`            | 64      | Y    |  合约数据的存储(MPT)树根hash                |
+| permission      | `string`              | 64      | Y    |  perimission的存储(MPT)树根hash                 |
+| domainMerchant    | `string`            | 64      | Y    |  商户信息的存储(MPT)树根hash                    |
+| businessDefine          | `string`      | 64      | Y    |  businessDefine的存储(MPT)树根hash                    |
+| identity           | `string`           | 64      | Y    |  identity的存储(MPT)树根hash               |
+| ca           | `string`                 | 64      | Y    |  ca的存储(MPT)树根hash                |
+| transaction           | `string`         | 64      | Y    |  交易数据的存储(MPT)树根hash                |
+| policy           | `string`              | 64      | Y    |  policy的存储(MPT)树根hash                 |
+
 
 - `transactionList`
 

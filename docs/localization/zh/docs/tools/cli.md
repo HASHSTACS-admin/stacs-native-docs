@@ -109,7 +109,7 @@ The most commonly used vote commands are:
 <pre><code>
 usage: block [-h | --help] COMMAND [ARGS] <br>
 The most commonly used block commands are:
-   info             get the block info(获取高度信息)
+   info             get the block info(获取当前最大高度区块信息)
    height           get the current block height(获取当前节点高度)
 <br></code></pre>
 

@@ -4,16 +4,17 @@
 - [x] 开放
 - 接口描述：  查询当前最大的区块高度
 - 请求地址：`GET`:`/queryMaxHeight`
-- 请求参数： 
+- 请求参数： 无
  
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| height | `long` | 19     | Y    | Y        | 当前链的最大高度                      |
+|    属性     | 类型     | 说明                   |
+| :---------: | -------- | :------------------ |
+| height       | `long` | 当前链的最大高度         |
+
+```json tab='响应实例'
+   {"height":18}
+```
 
 ##### <a id="/queryTxByTxId/{txId}">根据txId查询交易数据</a>
 - [x] 开放
@@ -22,29 +23,29 @@
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| txId | `string` | 64     | Y    | Y        | 当前链的最大高度                      |
+| :---------: | -------- | -------- | ---- | -------- | :----------------- |
+| txId | `string` | 40     | Y    | Y        | txId                      |
 
 - 响应参数：
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| <a href="#coreTx">coreTx</a>             | `json`     | 64       | Y    |        | 交易原始内容                      |
-| policyData         | `json`     | 64       | N    |        | policy投票内容(交易未上链，返回为null)                    |
-| transactionReceipt | `json`     | 64       | N    |        | 交易执行结果(交易未上链，返回为null)                      |
-| blockHeight        | `string`   | 64       | N    |        | 区块高度 (交易未上链，返回为null)                     |
-| blockTime          | `string`   | 64       | N    |        | 区块时间(交易未上链，返回为null)                      |
+|    属性     | 类型     |  说明                          |
+| :---------: | -------- |  :---------------------------- |
+| <a href="#coreTx">coreTx</a>   | `json`          | 交易原始内容                      |
+| policyData         | `json`      | policy投票内容(交易未上链，返回为null)                    |
+| transactionReceipt | `json`      | 交易执行结果(交易未上链，返回为null)                      |
+| blockHeight        | `string`   | 区块高度 (交易未上链，返回为null)                     |
+| blockTime          | `string`    | 区块时间(交易未上链，返回为null)                      |
 
 - <a id="coreTx">coreTx</a>:
 
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
-| txId          | `string` | 64       | Y    |    Y     | 请求Id |
+| txId          | `string` | 40       | Y    |    Y     | txId |
 | bdId        | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdCode  |
 | templateId  | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode|
 | functionId  | `string` | 32       | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`CONTRACT_CREATION` |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
-| actionDatas   | `string` | text        | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
+| actionDatas   | `string` | ...      | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |会话id                                            |
@@ -113,7 +114,7 @@
 
 ##### <a id="/block/queryBlockVO">根据高度查询区块内所有交易数据</a>
 - [x] 开放
-- 接口描述：  根据高度查询区块内所有交易数据
+- 接口描述：  根据高度查询区块内所有已经被所有domain确认的交易数据
 - 请求地址：`GET`:`/queryBlockVO`
 - 请求参数： 
 
@@ -158,12 +159,15 @@
 - StateRootHash对象属性：
 
 |    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
-| :-----------------: | --------------------- | ------- | ---- |  :---------------------------- |
-| txRootHash          | `string`              | 64      | Y    |  交易hash                    |
-| accountRootHash     | `string`              | 64      | Y    |  余额模型的账户               |
-| txReceiptRootHash   | `string`              | 64      | Y    |  交易执行结果的hash           |
-| rsRootHash          | `string`              | 64      | Y    |  rs信息的hash                |
-| policyRootHash      | `string`              | 64      | Y    |  policyHash                 |
-| contractRootHash    | `string`              | 64      | Y    |  合约hash                    |
-| caRootHash          | `string`              | 64      | Y    |  ca的hash                    |
-| stateRoot           | `string`              | 64      | Y    |  state hash                 |
+| :-----------------: | ----------------- | ------- | ---- |  :---------------------------- |
+| attestation          | `string`          | 64      | Y    |  存证信息的MPT根hash                    |
+| domainInfo     | `string`               | 64      | Y    |  domain信息的存储(MPT)树根hash              |
+| stacsConfig   | `string`                | 64      | Y    |  系统属性的存储(MPT)树根hash         |
+| contract          | `string`            | 64      | Y    |  合约数据的存储(MPT)树根hash                |
+| permission      | `string`              | 64      | Y    |  perimission的存储(MPT)树根hash                 |
+| domainMerchant    | `string`            | 64      | Y    |  商户信息的存储(MPT)树根hash                    |
+| businessDefine          | `string`      | 64      | Y    |  businessDefine的存储(MPT)树根hash                    |
+| identity           | `string`           | 64      | Y    |  identity的存储(MPT)树根hash               |
+| ca           | `string`                 | 64      | Y    |  ca的存储(MPT)树根hash                |
+| transaction           | `string`         | 64      | Y    |  交易数据的存储(MPT)树根hash                |
+| policy           | `string`              | 64      | Y    |  policy的存储(MPT)树根hash                 |
