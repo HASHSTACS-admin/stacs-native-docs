@@ -33,6 +33,7 @@ The most commonly used failover commands are:
    autoSync         auto sync the batch blocks, get the blocks from other node and validate block by raft/b2p channel and execute it, this option will auto change the node state.(自动同步批处理块，从其他节点获取块，通过raft/b2p通道验证块并执行，此选项将自动更改节点状态)
    batch            sync batch blocks, get the blocks from other node and validate block by raft/b2p channel and execute it(同步批处理块，从其他节点获取块，通过raft/b2p通道验证块并执行它)
    genesis          sync the genesis block(同步创世块)
+   reset            sync reset blocks
 <br></code></pre>
 
 ## **failover reset 快速恢复步骤**
@@ -130,16 +131,29 @@ The most commonly used node commands are:
 </code>
 </pre>
 
+
+## **RS**
+用于查看和管理RS节点信息
+<pre>
+<code>
+usage: rs [-h | --help] COMMAND [ARGS] <br>
+The most commonly used rs commands are:
+   add         add current node to rs node(注册当前普通节点为RS节点)
+   remove      remove current rs node(注销当前RS节点围为普通节点)
+<br>
+</code>
+</pre>
+
 ## **merchant**
 用于管理商户信息
 <pre>
 <code>
 usage: node [-h | --help] COMMAND [ARGS] <br>
 The most commonly used node commands are:
-   add         添加商户信息
-   modify      修改商户信息
-   opt         对商户进行启停操作
-   query       查询该domain下所有商户信息
+   add         add merchant info(添加商户信息)
+   modify      modify merchant info(修改商户信息)
+   opt         start and stop merchants(对商户进行启停操作)
+   query       query all merchant information under this domain(查询该domain下所有商户信息)
 <br>
 </code>
 </pre>
