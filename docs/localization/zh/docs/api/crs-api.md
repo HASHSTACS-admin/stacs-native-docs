@@ -34,8 +34,11 @@
     | ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
     | UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
     | REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
-    | ADD_NODE  			| DEFAULT        |  ADD_NODE   	  		    |加入节点      |
-    | REMOVE_NODE  			| DEFAULT     | REMOVE_NODE   	  	    |退出节点      |
+    | ADD_NODE  			| DEFAULT        | ADD_NODE   	  		    |加入节点      |
+    | REMOVE_NODE  			| DEFAULT        | REMOVE_NODE   	        |退出节点      |
+    | UPGRADE_VERSION		| DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|版本升级      |
+    | SET_DOMAIN		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置domain信息  |
+    | ADD_SNAPSHOT		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|打快照  |
 
 2. 系统内置Permission
     
