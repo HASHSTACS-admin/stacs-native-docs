@@ -2,7 +2,7 @@
 
 下载路径：
 
-- 对应区块链版本v4.2.0 [stacs-native-deploy-generator-v4.0](hhttp://maven.primeledger.cn:8081/repository/maven-snapshots/com/hashstacs/stacs-native-deploy-generator/4.2-SNAPSHOT/stacs-native-deploy-generator-4.2-20200427.070148-1.jar)
+- 对应区块链版本v4.2.0 [stacs-native-deploy-generator-v4.2.0](hhttp://maven.primeledger.cn:8081/repository/maven-snapshots/com/hashstacs/stacs-native-deploy-generator/4.2-SNAPSHOT/stacs-native-deploy-generator-4.2-20200427.070148-1.jar)
 
 ## **生成公私钥及地址**
 ```shell
