@@ -3,7 +3,7 @@
 ##### <a id="/queryMaxHeight">查询当前最大区块高度</a>
 - [x] 开放
 - 接口描述：  查询当前最大的区块高度
-- 请求地址：`GET`:`/queryMaxHeight`
+- 请求地址：`GET`:`/v4/queryMaxHeight`
 - 请求参数： 无
  
 - 响应参数：
@@ -19,7 +19,7 @@
 ##### <a id="/queryTxByTxId/{txId}">根据txId查询交易数据</a>
 - [x] 开放
 - 接口描述：  根据txId查询交易数据
-- 请求地址：`GET`:`/queryTxByTxId/{txId}`
+- 请求地址：`GET`:`/v4/queryTxByTxId/{txId}`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -60,7 +60,7 @@
     1. blockHeight传0或null返回当前最新区块高度的合约状态;
     2. 如果链查询时区块链高度为1返回查询结果为`合约不存在`错误信息;
     3. 传的高度大于实际链的最大高度返回`the block is not exist`错误信息
-- 请求地址：`POST`:`/queryContract`
+- 请求地址：`POST`:`/v4/queryContract`
 - 请求参数： 
 
 |    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
@@ -115,7 +115,7 @@
 ##### <a id="/block/queryBlockVO">根据高度查询区块内所有交易数据</a>
 - [x] 开放
 - 接口描述：  根据高度查询区块内所有已经被所有domain确认的交易数据
-- 请求地址：`GET`:`/queryBlockVO`
+- 请求地址：`GET`:`/v4/queryBlockVO`
 - 请求参数： 
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                        |
