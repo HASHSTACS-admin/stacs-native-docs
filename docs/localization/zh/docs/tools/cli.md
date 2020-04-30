@@ -72,6 +72,18 @@ The most commonly used cluster commands are:
    joinConsensus    join consensus layer(加点加入共识)
 <br></code></pre> 
 
+## **noderocksdb**
+用于对noderocksdb进行增删改查
+<pre><code>
+usage: rocksdb [-h | --help] COMMAND [ARGS] <br>
+The most commonly used rocksdb commands are:
+   put              put the value(设置value )
+   showTables       show all table names(显示所有的表)
+   queryByPrefix    query by prefix and limit size(按key前缀查询)
+   queryByKey       query by tableName and key  (查单一数据)
+   queryByCount     query by tableName、count and order(查分页数据)
+<br></code></pre>
+
 ## **rocksdb**
 用于对rocksdb进行增删改查
 <pre><code>
@@ -80,10 +92,9 @@ The most commonly used rocksdb commands are:
    put              put the value(设置value)
    count            count by(统计数据)
    clear            clear tables(清除表)
-   queryByPrefix    query by prefix and limit size(按key前缀查询)
    showTables       show all table names(显示所有的表)
-   queryByKey       query by key(按key查询)
-   queryByCount     query by count and order(查询分页数据)
+   queryByKey       query by key and height (查单一数据 height 可选值 )
+   queryByCount     query by count、order and height(查分页数据 height 可选值 )
    clearAll         clear all tables allow ignored(清除所有表，慎用)
 <br></code></pre>
 
