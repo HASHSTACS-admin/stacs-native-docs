@@ -39,6 +39,8 @@
     | UPGRADE_VERSION		| DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|版本升级      |
     | SET_DOMAIN		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置domain信息  |
     | ADD_SNAPSHOT		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|打快照  |
+    | PERMISSION_ADD_ADDR   | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|添加permission的address  |
+    | PERMISSION_REMOVE_ADDR| DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|删除permission的address  |
 
 2. 系统内置Permission
     
@@ -259,6 +261,8 @@
     |<a href="#ADD_BD">ADD_BD</a>                       |N      |发布BD|
     |<a href="#SET_POLICY">SET_POLICY</a>             	|N      |设置Policy|
     |<a href="#SET_PERMISSION">SET_PERMISSION</a>     	|N  	|Permission设置|
+    |<a href="#PERMISSION_ADD_ADDR">PERMISSION_ADD_ADDR</a>|N  |添加permission的address|
+    |<a href="#PERMISSION_REMOVE_ADDR">PERMISSION_REMOVE_ADDR</a>|N  |删除permission的address|
     |<a href="#ADD_CONTRACT">ADD_CONTRACT</a>           |N      |合约创建|
     |<a href="#EXECUTE_CONTRACT">EXECUTE_CONTRACT</a>   |N      |合约执行|
     |<a href="#SET_IDENTITY">SET_IDENTITY</a>           |N      |Identity设置|
@@ -905,6 +909,74 @@
 | msg         |   `string` |    状态信息   |
 
 - 实例：
+
+```json tab="请求实例"
+{
+	"txData":"{\"txId\":\"00000171b50c928edb1aa9dd43080b94484f1eb7\",\"bdId\":\"SystemBD\",\"functionId\":\"SET_PERMISSION\",\"type\":\"SET_PERMISSION\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"authorizers\":[\"2a4060d480ebf0b601294b1f9f9599936681de61\"],\"datas\":\"[\\\"2a4060d480ebf0b601294b1f9f9599936681de61\\\"]\",\"id\":\"permission_demo_1\",\"label\":\"dududu\",\"type\":\"ADDRESS\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"00b42baf90e2aca01c48b981fcb75b53e36bdb90a93cce503a662c808dc48ce8bc0c246b0d590104dc6219a1378eda77ae5b89619011aba6198bca9f8bf61b8ac9"
+}
+```
+
+```json tab="响应实例"
+
+{
+    "data":"00000171b50c928edb1aa9dd43080b94484f1eb7","msg":"Success","respCode":"000000","success":true
+}
+```
+
+#### <a id="PERMISSION_ADD_ADDR"> 添加permission的address </a>
+
+- [ ] 开放
+- 接口描述：  添加指定permission的address,指定的permission的type必须是address
+- type：`PERMISSION_ADD_ADDR`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| permissionId| `string`  | 32        | Y    | Y        | permission id（唯一）       |
+| addAddress  | `List<string>`| 32    | Y    | Y       | 需要添加的address       |
+
+- 响应参数：
+
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
+
+```json tab="请求实例"
+{
+	"txData":"{\"txId\":\"00000171b50c928edb1aa9dd43080b94484f1eb7\",\"bdId\":\"SystemBD\",\"functionId\":\"SET_PERMISSION\",\"type\":\"SET_PERMISSION\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"authorizers\":[\"2a4060d480ebf0b601294b1f9f9599936681de61\"],\"datas\":\"[\\\"2a4060d480ebf0b601294b1f9f9599936681de61\\\"]\",\"id\":\"permission_demo_1\",\"label\":\"dududu\",\"type\":\"ADDRESS\"},\"version\":\"4.0.0\"}}",
+    	"txSign":"00b42baf90e2aca01c48b981fcb75b53e36bdb90a93cce503a662c808dc48ce8bc0c246b0d590104dc6219a1378eda77ae5b89619011aba6198bca9f8bf61b8ac9"
+}
+```
+
+```json tab="响应实例"
+
+{
+    "data":"00000171b50c928edb1aa9dd43080b94484f1eb7","msg":"Success","respCode":"000000","success":true
+}
+```
+
+#### <a id="PERMISSION_REMOVE_ADDR"> 删除permission的address </a>
+
+- [ ] 开放
+- 接口描述：  删除指定permission的address,指定的permission的type必须是address
+- type：`PERMISSION_REMOVE_ADDR`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| permissionId| `string`  | 32        | Y    | Y        | permission id（唯一）       |
+| removeAddress  | `List<string>`| 32    | Y    | Y       | 需要删除的address       |
+
+- 响应参数：
+
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
 
 ```json tab="请求实例"
 {

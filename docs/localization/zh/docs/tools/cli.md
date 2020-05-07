@@ -104,6 +104,7 @@ The most commonly used rocksdb commands are:
 usage: tx [-h | --help] COMMAND [ARGS] <br>
 The most commonly used tx commands are:
    info             get the tx info(查看交易详情)
+   verify           quick verify ledger data(账本数据快速校验,定位出数据不一致的最小区块高度的具体txId)
 <br></code></pre>
 
 ## **vote**
