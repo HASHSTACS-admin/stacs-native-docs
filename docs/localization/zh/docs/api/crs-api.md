@@ -934,7 +934,8 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | permissionId| `string`  | 32        | Y    | Y        | permission id（唯一）       |
-| addAddress  | `List<string>`| 32    | Y    | Y       | 需要添加的address       |
+| addAddress  | `List<string>`| 32    | N    | Y       | 需要添加的address(addAddress与addAuthorizers至少填一个)       |
+| addAuthorizers  | `List<string>`| 32| N    | Y       | 需要添加的authorizers(addAddress与addAuthorizers至少填一个)       |
 
 - 响应参数：
 
@@ -968,7 +969,8 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | permissionId| `string`  | 32        | Y    | Y        | permission id（唯一）       |
-| removeAddress  | `List<string>`| 32    | Y    | Y       | 需要删除的address       |
+| removeAddress  | `List<string>`| 32    | N    | Y       | 需要删除的address(removeAddress与removeAuthorizers至少填一个)       |
+| removeAuthorizers  | `List<string>`| 32| N    | Y       | 需要删除的Authorizers(removeAddress与removeAuthorizers至少填一个)      |
 
 - 响应参数：
 
