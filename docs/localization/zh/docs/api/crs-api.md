@@ -157,12 +157,12 @@
 |     属性      | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                                         |
 | :-----------: | -------- | -------- | ---- | :------: | ------------------------------------------------------------ |
 | txId          | `string` | 40       | Y    |    Y     | 请求Id |
-| bdId          | `string` | 32       | Y    |    Y     | 所有业务交易都需要指定bdId                                       |
-| templateId    | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode                           |
+| bdId          | `string` | 32       | N    |    Y     | 所有业务交易都需要指定bdId(合约执行可为空)                                       |
+| templateId    | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode(合约执行可为空)                           |
 | type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
-| functionId    | `string` | 32       | Y    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` |
+| functionId    | `string` | 32       | N    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` (合约执行可为空) |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` | text     | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}，datas为Json格式数据，数据参见各交易接口|
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
@@ -806,7 +806,7 @@
 | contractor      | `string`   | 1024     | Y    | Y        | 合约构造器(函数)名         |
 | sourceCode      | `string`   | text       | Y    | Y      | 合约代码                   |
 | opCode          | `string`   | text     | Y    | Y        | 合约编译后的指令           |
-| abi             | `string`   | text        | Y    | Y     | 合约abi                   |
+| abi             | `string`   | text        | N    | Y     | 合约abi(系统BD发布合约时不校验)                   |
 | initArgs        | `object[]` |          | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
 
 - 响应参数：
