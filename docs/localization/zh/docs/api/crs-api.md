@@ -159,7 +159,7 @@
 | txId          | `string` | 40       | Y    |    Y     | 请求Id |
 | bdId          | `string` | 32       | N    |    Y     | 所有业务交易都需要指定bdId(合约执行可为空)                                       |
 | templateId    | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode(合约执行可为空)                           |
-| type          | `string` | 32       | N    |    Y     |系统级actionType                                                  |
+| type          | `string` | 32       | Y    |    Y     |系统级actionType                                                  |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
 | functionId    | `string` | 32       | N    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` (合约执行可为空) |
