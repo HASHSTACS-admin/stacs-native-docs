@@ -70,6 +70,18 @@ functions:
     methodSign: SET_PERMISSION
     execPermission: DEFAULT
     execPolicy: SYNC_ONE_VOTE_DEFAULT
+  - id: PERMISSION_ADD_ADDR
+    type: SystemAction
+    desc: Add Permission Address
+    methodSign: PERMISSION_ADD_ADDR
+    execPermission: DEFAULT
+    execPolicy: SYNC_ONE_VOTE_DEFAULT
+  - id: PERMISSION_REMOVE_ADDR
+    type: SystemAction
+    desc: Remove Permission Address
+    methodSign: PERMISSION_REMOVE_ADDR
+    execPermission: DEFAULT
+    execPolicy: SYNC_ONE_VOTE_DEFAULT
   - name: SET_POLICY
     type: SystemAction
     desc: Register Policy
