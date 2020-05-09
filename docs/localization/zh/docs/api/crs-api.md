@@ -806,7 +806,7 @@
 | contractor      | `string`   | 1024     | Y    | Y        | 合约构造器(函数)名         |
 | sourceCode      | `string`   | text       | Y    | Y      | 合约代码                   |
 | opCode          | `string`   | text     | Y    | Y        | 合约编译后的指令           |
-| abi             | `string`   | text        | N    | Y     | 合约abi(系统BD发布合约时不校验)                   |
+| abi             | `string`   | text     | Y    | Y     | 合约abi(系统BD发布合约时不校验)                   |
 | initArgs        | `object[]` |          | N    | Y        | 合约构造入参（签名时需使用逗号分隔拼接(参见StringUtils.join(args,",")),如果参数中包含数组，数组请使用JSONArray来装）              |
 
 - 响应参数：
