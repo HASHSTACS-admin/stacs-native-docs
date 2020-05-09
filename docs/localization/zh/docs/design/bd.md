@@ -29,6 +29,8 @@ functions: # 功能列表
         - `FREEZE_IDENTITY` : Identity冻结
         - `UNFREEZE_IDENTITY` : Identity解冻
         - `SET_PERMISSION` : Permission设置
+        - `PERMISSION_ADD_ADDR` : 添加Permission的address
+        - `PERMISSION_REMOVE_ADDR` : 删除Permission的address
         - `SET_POLICY` : 设置Policy
         - `ADD_RS` : RS注册
         - `REMOVE_RS` : RS撤销

@@ -937,6 +937,9 @@
 | addAddress  | `List<string>`| 32    | N    | Y       | 需要添加的address(addAddress与addAuthorizers至少填一个)       |
 | addAuthorizers  | `List<string>`| 32| N    | Y       | 需要添加的authorizers(addAddress与addAuthorizers至少填一个)       |
 
+!!! info "提示"
+    Permission验证类型为非ADDRESS时,不能添加address，即addAddress参数必须为空
+
 - 响应参数：
 
 |    属性      | 类型       |  说明        |
@@ -971,6 +974,9 @@
 | permissionId| `string`  | 32        | Y    | Y        | permission id（唯一）       |
 | removeAddress  | `List<string>`| 32    | N    | Y       | 需要删除的address(removeAddress与removeAuthorizers至少填一个)       |
 | removeAuthorizers  | `List<string>`| 32| N    | Y       | 需要删除的Authorizers(removeAddress与removeAuthorizers至少填一个)      |
+
+!!! info "提示"
+    Permission验证类型为非ADDRESS时不能删除address，即addAddress参数必须为空
 
 - 响应参数：
 
