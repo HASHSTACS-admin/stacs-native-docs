@@ -70,7 +70,12 @@
 
 
 
+### **如何操作**
 
+#### **代码中修改版本号**
+
+1.  修改Stacs.Native系统中的NodeProperties类中的NODE_VERSION字段的取值即可。
+2.  VersionEnum对应具体的版本name和codeValue,要求codeValue的取值大于之前已存在的值。
 
 
 
