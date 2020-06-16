@@ -11,7 +11,6 @@
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
 | address       | `string`   | 40       | Y    | Y        | identity地址              |
 
-
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -25,7 +24,7 @@
 | preTxId | `string` | 40     | Y    | Y        |  上次identity被修改时交易id                   |
 | property | `string` | 1024     | Y    | Y        |  扩展属性                   |
 | version | `string`  | 10     | Y    | Y        |  修改记录版本                   |
-| blockHeight | `int` |     | Y    | Y        | 区块高度                     |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
 
 - 实例：
 
@@ -43,7 +42,7 @@
         "preTxId":"00000171b55f3daf1c818e557dac3def738e3c67",
         "froze":false,
         "version":1,
-        "blockHeight":"8"，
+        "currentBlockHeight": 6，
         "currentTxId":"00000171b55f3daf1c818e557dac3def738e3c67"
     }
 }
@@ -58,7 +57,7 @@
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| permissionId       | `string`   |        | Y    |        | 权限ID              |
+| permissionId       | `string`   |        | Y    |   Y     | 权限ID              |
 
 
 - 响应参数：
@@ -71,8 +70,7 @@
 | authorizers   | `string[]`|           | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas | `string` |      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式                      |
 | version | `string`  | 10     | Y    | Y        |  修改记录版本                   |
-| blockHeight | `string` |     | Y    | Y        | 区块高度                     |
-
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
 
 - 实例：
 
@@ -90,7 +88,7 @@
         "label":"jicaowu666",
         "preTxId":null,
         "type":"ADDRESS"，
-        "blockHeight":"8"，
+        "currentBlockHeight": 6，
         "version":"4.2.0"
     }
 }
@@ -105,7 +103,7 @@
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| policyId       | `string`   |        | Y    |        | policyID            |
+| policyId       | `string`   |     32   | Y    |    Y    | policyID            |
 
 
 - 响应参数：
@@ -121,7 +119,7 @@
 | requireAuthIds | `list<string>` | 256         | Y    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
 | assignMeta     | `json` | 1024         | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 | version | `string` | 10     | Y    | Y        |  修改记录版本                   |
-| blockHeight | `string` |     | Y    | Y        | 区块高度                     |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
 
 - 实例：
 
@@ -139,7 +137,7 @@
         "requireAuthIds":"["STACS-Domain-A","STACS-Domain-C","STACS-Domain-D"]",
         "version":0,
         "votePattern":"SYNC"，
-        "blockHeight":"8"，
+        "currentBlockHeight": 6，
         "version":"4.2.0"
     }
 }
@@ -149,7 +147,7 @@
 
 - [ ] 开放
 - 接口描述：查询BD发布时的详细信息  
-- 请求地址：`GET`:`/v4/BD/query?bdId={bdId}`
+- 请求地址：`GET`:`/v4/BD/query?bdid={bdid}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -161,13 +159,24 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| bdid       | `string`       | 32       | Y    | Y        | BD编号                              |
+| id       | `string`       | 32       | Y    | Y        | BD编号                              |
 | label   | `string`       | 32         | Y    | Y        | 标签       |
 | contracts          | `List<FunctionDefine>`       |        | Y    | Y        |  BD定义的版本                                            |
 | desc    | `string`       | 1024       | Y    | Y        | BD描述                   |
 | functions   | `List<FunctionDefine>`       |          | Y    | Y        | BD定义function                    |
 | bdVersion | `string`  | 10     | Y    | Y        |  修改记录版本                   |
-| blockHeight | `string` |     | Y    | Y        | 区块高度                     |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
+
+`FunctionDefine`定义:
+
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
+| desc           | `string` | 256     | N    | Y        | function描述                     |
+| execPermission | `string` | 64     | Y    | Y        | 执行function权限,发布bd时，该permission已经存在于链上                   |
+| execPolicy     | `string` | 32     | Y    | Y        | 执行function policy,发布bd时，该policy已经存在于链上                      |
+| methodSign     | `string` | 256     | Y    | Y        | 如果发布的是合约则填写的合约方法签名
+| id             | `string` | 32     | Y    | Y        | function名称在同一个bd下不能重复                      |
+| type           | `string` | 64     | Y    | Y        |function功能类型<a href="FUNCTION_TYPE">FUNCTION_TYPE</a>        |
 
 - 实例：
 
@@ -177,7 +186,7 @@
     msg='Success', 
     data={
         "bdVersion":"4.2.0",
-        "blockHeight":"8"，
+        "currentBlockHeight": 6，
         "contracts":"[{"createPermission":"DEFAULT","createPolicy":"SYNC_ONE_VOTE_DEFAULT","desc":"test","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"SYNC_ONE_VOTE_DEFAULT","id":"balanceOf","methodSign":"(uint256) balanceOf(address)","type":"Contract"}]",
         "desc":"dvp_test_label",
         "functions":"[{"desc":"Identity解冻","execPermission":"DEFAULT","execPolicy":"SYNC_ONE_VOTE_DEFAULT","id":"UNFREEZE_IDENTITY","methodSign":"UNFREEZE_IDENTITY","type":"SystemAction"}]",
@@ -191,21 +200,20 @@
 
 - [ ] 开放
 - 接口描述：查询合约发布时的详细信息  
-- 请求地址：`GET`:`/v4/contract/query?Address={Address}`
+- 请求地址：`GET`:`/v4/contract/query?address={address}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| Address      | `string`   |    40    | Y    |    Y    | 合约地址            |
+| address      | `string`   |    40    | Y    |    Y    | 合约地址            |
 
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| actionIndex    | `string`       | 32       | Y    | Y        | actionIndex                             |
 | address   | `string`       | 40         | Y    | Y        | 合约地址       |
-| bdCodeVersion  | `string`        |     32   | Y    | Y        | BD版本                                           |
+| bdCodeVersion  | `string`        |     32   | Y    | Y        | BD版本     |
 | bdId    | `string`       | 32       | Y    | Y        | BD编号                   |
 | code   | `string`        |     text     | Y    | Y        | 合约源码                    |
 | extension   | `string`        |     1024     | Y    | Y        | 扩展字段                   |
@@ -216,7 +224,8 @@
 | templateId   | `string`        |     32     | Y    | Y        | 合约模板名称                   |
 | txId   | `string`        |     40     | Y    | Y        | 交易id                   |
 | version | `string`  | 10     | Y    | Y        |  修改记录版本                   |
-| blockHeight | `string` |     | Y    | Y        | 区块高度                     |
+| blockHeight | `long` |     | Y    | Y        | 发布合约时区块高度                     |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
 
 - 实例：
 
@@ -225,11 +234,11 @@
 	respCode='000000',
     msg='Success', 
     data={
-        "actionIndex":0,
+        "blockHeight": 3,
+        "currentBlockHeight": 6,
         "address":"6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4",
         "bdCodeVersion":"4.0.0",
         "bdId":"bd_demo_5",
-        "blockHeight":6,
         "code":"~~~",
         "extension":null,
         "id":"certificate_demo_1",
@@ -247,19 +256,19 @@
 
 - [ ] 开放
 - 接口描述：检查该地址是否为合约地址  
-- 请求地址：`GET`:`/v4/isContract/query?Address={Address}`
+- 请求地址：`GET`:`/v4/contract/checkContractAddress?address={address}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| Address      | `string`   |    40    | Y    |    Y    | 地址            |
+| address      | `string`   |    40    | Y    |    Y    | 地址            |
 
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| isContract    | `Boolean`       |        | Y    | Y        | true/false                             |
+| checkResult    | `Boolean` |        | Y    | Y        | true/false       |
 
 
 - 实例：
@@ -269,7 +278,7 @@
 	respCode='000000',
     msg='Success', 
     data={
-        "isContract": true
+        "checkResult": true
     }
 }
 ```
@@ -278,23 +287,33 @@
 
 - [ ] 开放
 - 接口描述：检查该地址是否为合约地址  
-- 请求地址：`GET`:`/v4/chain/query`
-- 请求参数：
-
-|     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-|       |   |        |   |       |            |
-
+- 请求地址：`GET`:`/v4/stacs/info/query`
+- 请求参数：无
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| domainIds    | `list<string>`       | 1024      | Y    | Y        | 集群所有的domain信息                             |
-| nodeIds    | `list<string>`       | 1024      | Y    | Y        | domain下包含的所有节点信息                    |
-| currentBlockHeight    | `string`      | 10      | Y    | Y        | 节点的当前区块高度                |
-| p2pBlockHeight   | `string`      | 10      | Y    | Y        |   节点的p2p业务共识高度             |
-| datas   | `string`      | 1024      | Y    | Y        |   区块详情            |
+| nodeInfos    | `list<domainId>` | text      | Y    | Y        | 总数据         |
+
+
+`domainId` 定义:
+
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
+| domainId       | `string` | 32    | Y    | Y        | domain域                     |
+| nodeInfos      | `list<NodeInfoVO>` | 256   | N    | Y        | 节点集合           |
+
+`NodeInfoVO`定义:
+
+###### NodeInfoVO
+| 属性          | 类型          | 最大长度 | 必填 | 说明                           |
+| ------------- | ------------- | -------- | ---- | ------------------------------ |
+| nodeName         | `String`      |          | Y    | 当前节点名称
+| domainId         | `String`      |          | Y    | 所属domain Id
+| height           | `Long`        |          | Y    | 区块高度
+| master           | `Boolean`     |          | Y    | 是否为master
+| nodeState        | `String`      |          | Y    | 节点状态
 
 - 实例：
 
@@ -302,14 +321,16 @@
 {
 	respCode='000000',
     msg='Success', 
-    data={
-        "domainIds":"["STACS-Domain-A"："["STACS-node-E":["currentBlockHeight":"8","p2pBlockHeight":6,"datas":{~~~}],
-                    "STACS-node-F":["currentBlockHeight":"8","p2pBlockHeight":6,"datas":{~~~}]]",
-                    "STACS-Domain-b":"STACS-node-G":["currentBlockHeight":"8","p2pBlockHeight":6,"datas":{~~~}]]",
-    }
+    "data":
+        {"caAuth":false,"domainId":"GSX-GROUP","height":1,"joinedConsensus":false,"master":false,"masterName":"N/A",
+            "nodeInfos":[
+                {"domainId":"GSX-GROUP","nodeInfos":[{"domainId":"GSX-GROUP","height":1,"master":false,"nodeName":"GSX-GROUP-RS-B","nodeState":"Starting"},
+                {"domainId":"GSX-GROUP","height":1,"master":false,"nodeName":"GSX-GROUP-RS-A","nodeState":"StartingConsensus"}]},
+                {"domainId":"GSX-Slave","nodeInfos":[{"domainId":"GSX-Slave","height":0,"master":false,"nodeName":"GSX-Slave","nodeState":"N/A"}]},
+                {"domainId":"JNUO","nodeInfos":[{"domainId":"JNUO","height":1,"master":false,"nodeName":"Jnuo-Slave","nodeState":"StartingConsensus"}]}],"nodeName":"GSX-GROUP-RS-A","nodeState":"Starting"},
+    "msg":"Success","respCode":"000000","success":true
 }
 ```
-
 
 ##### <a id="/queryMaxHeight">查询当前最大区块高度</a>
 - [x] 开放
