@@ -319,17 +319,17 @@
 
 ```json tab="响应实例"
 {
-	respCode='000000',
-    msg='Success', 
-    "data":
-        {"caAuth":false,"domainId":"GSX-GROUP","height":1,"joinedConsensus":false,"master":false,"masterName":"N/A",
-            "nodeInfos":[
+        respCode='000000',
+        msg='Success', 
+        "data":
+        {
+           "nodeInfos":[
                 {"domainId":"GSX-GROUP","nodeInfos":[{"domainId":"GSX-GROUP","height":1,"master":false,"nodeName":"GSX-GROUP-RS-B","nodeState":"Starting"},
                 {"domainId":"GSX-GROUP","height":1,"master":false,"nodeName":"GSX-GROUP-RS-A","nodeState":"StartingConsensus"}]},
                 {"domainId":"GSX-Slave","nodeInfos":[{"domainId":"GSX-Slave","height":0,"master":false,"nodeName":"GSX-Slave","nodeState":"N/A"}]},
                 {"domainId":"JNUO","nodeInfos":[{"domainId":"JNUO","height":1,"master":false,"nodeName":"Jnuo-Slave","nodeState":"StartingConsensus"}]}],"nodeName":"GSX-GROUP-RS-A","nodeState":"Starting"},
-    "msg":"Success","respCode":"000000","success":true
-}
+            "msg":"Success","respCode":"000000","success":true
+        }
 ```
 
 ##### <a id="/queryMaxHeight">查询当前最大区块高度</a>
