@@ -75,7 +75,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     | 
-| permissionInfo | `permissionInfo` | 40     | Y    | Y        | permissionInfo对象       |
+| permissionInfo | `permissionInfo` | 40     | Y    | Y        | permission对象       |
 
 
 `permissionInfo`定义:
@@ -232,7 +232,7 @@
 {
 	"data":{
 		"currentBlockHeight":655,
-		"policyInfo":{
+		"bdinfo":{
 			"bdVersion":"4.0",
 			"functions":[
 				{
@@ -452,9 +452,10 @@
 | ------------- | ------------- | -------- | ---- | ------------------------------ |
 | nodeName         | `String`      |          | Y    | 当前节点名称
 | domainId         | `String`      |          | Y    | 所属domain Id
-| height           | `Long`        |          | Y    | 区块高度
+| height           | `Long`        |          | Y    | 当前区块高度
 | master           | `Boolean`     |          | Y    | 是否为master
 | nodeState        | `String`      |          | Y    | 节点状态
+| p2pHeight        | `String`      |          | Y    | P2P数据共识高度
 
 - 实例：
 
