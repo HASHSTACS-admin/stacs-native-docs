@@ -15,6 +15,13 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     | 
+| identityInfo | `identityInfo` | 40     | Y    | Y        | identity对象                |
+
+`identityInfo`定义:
+
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
 | address | `string` | 40     | Y    | Y        | user identity 地址                      |
 | currentTxId | `string` | 40     | Y    | Y        |    user identity 改修改时的txId                   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
@@ -24,73 +31,83 @@
 | preTxId | `string` | 40     | Y    | Y        |  上次identity被修改时交易id                   |
 | property | `string` | 1024     | Y    | Y        |  扩展属性                   |
 | version | `string`  | 10     | Y    | Y        |  修改记录版本                   |
-| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
 
 - 实例：
 
 ```json tab="响应实例"
 {
-	respCode='000000',
-    msg='Success', 
-    data={
-        "address":"2671ea4b3c863cb5fc059889b7b37673369c073f",
-        "bdId":"bd_demo_5",
-        "hidden":0,
-        "kyc":"\"country\":\"china\"",
-        "identityType":"",
-        "property":"\"name\":\"luojianbo\"",
-        "preTxId":"00000171b55f3daf1c818e557dac3def738e3c67",
-        "froze":false,
-        "version":1,
-        "currentBlockHeight": 6，
-        "currentTxId":"00000171b55f3daf1c818e557dac3def738e3c67"
-    }
-}
+	"data":{
+		"identityInfo":{
+			"msg":"Success",
+			"data":{
+				"address":"42473da8cfb880f9e0df4874bb54b12b2efcde69",
+				"hidden":1,
+				"identityType":"node",
+				"preTxId":"",
+				"froze":false,
+				"version":0,
+				"currentTxId":""
+			},
+			"success":true,
+			"respCode":"000000"
+		},
+		"currentBlockHeight":655
+	},
+	"msg":"Success",
+	"respCode":"000000"
+} 
 ```
 
-#### 查询perimission
+#### 查询Permission 
 
 - [ ] 开放
-- 接口描述：查询perimission的详细信息  
-- 请求地址：`GET`:`/v4/perimission/query?permissionId={permissionId}`
+- 接口描述：查询Permission的详细信息  
+- 请求地址：`GET`:`/v4/upper/perimission/query?permissionId={permissionId}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| permissionId       | `string`   |        | Y    |   Y     | 权限ID              |
+| permissionId       | `string`   |   32    | Y    |   Y     | 权限ID              |
 
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     | 
+| permissionInfo | `permissionInfo` | 40     | Y    | Y        | permissionInfo对象       |
+
+
+`permissionInfo`定义:
+
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
 | id | `string` | 40     | Y    | Y        | 权限ID                      |
 | label | `string` |  32    |     | Y        |   标签                 |
 | type          | `string`  | 64        | Y    | Y        | 授权类型（ADDRESS/IDENTITY）       |
 | authorizers   | `string[]`|           | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas | `string` |      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式                      |
 | version | `string`  | 10     | Y    | Y        |  修改记录版本                   |
-| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
 
 - 实例：
 
 ```json tab="响应实例"
 {
-	respCode='000000',
-    msg='Success', 
-    data={
-        "authorizers":[
-            "6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4"
-        ],
-        "currentTxId":"00000172bc02cfc6e9a727a7e1643cc48fbb211f",
-        "datas":"["6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4"]",
-        "id":"permission_demo_1",
-        "label":"jicaowu666",
-        "preTxId":null,
-        "type":"ADDRESS"，
-        "currentBlockHeight": 6，
-        "version":"4.2.0"
-    }
+	"data":{
+		"currentBlockHeight":655,
+		"permissionInfo":{
+			"datas":"[\"6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4\"]",
+			"authorizers":[
+				"6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4"
+			],
+			"id":"permission_demo_1",
+			"label":"jicaowu666",
+			"type":"ADDRESS",
+			"currentTxId":"00000172bc02cfc6e9a727a7e1643cc48fbb211f"
+		}
+	},
+	"msg":"Success",
+	"respCode":"000000"
 }
 ```
 
@@ -98,7 +115,7 @@
 
 - [ ] 开放
 - 接口描述：查询policy的详细信息  
-- 请求地址：`GET`:`/v4/policy/query?policyId={policyId}`
+- 请求地址：`GET`:`/v4/upper/policy/query?policyId={policyId}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -110,6 +127,13 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     | 
+| policyInfo | `policyInfo` | 40     | Y    | Y        | policy对象       |
+
+`policyInfo`定义:
+
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册/修改的policyId                               |
 | label          | `string`       | 64       | N    | Y        |  标签                                            |
 | votePattern    | `string`       | 10        | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
@@ -119,35 +143,43 @@
 | requireAuthIds | `list<string>` | 256         | Y    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
 | assignMeta     | `json` | 1024         | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 | version | `string` | 10     | Y    | Y        |  修改记录版本                   |
-| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
 
 - 实例：
 
 ```json tab="响应实例"
 {
-	respCode='000000',
-    msg='Success', 
-    data={
-        "assignMeta":null,
-        "callbackType":"ALL",
-        "decisionType":"FULL_VOTE",
-        "domainIds":"["STACS-Domain-A","STACS-Domain-C","STACS-Domain-D"]",
-        "label":"SYNC_DEFAULT",
-        "policyId":"SYNC_DEFAULT",
-        "requireAuthIds":"["STACS-Domain-A","STACS-Domain-C","STACS-Domain-D"]",
-        "version":0,
-        "votePattern":"SYNC"，
-        "currentBlockHeight": 6，
-        "version":"4.2.0"
-    }
-}
+	"data":{
+		"currentBlockHeight":655,
+		"policyInfo":{
+			"domainIds":[
+				"STACS-Domain-A",
+				"STACS-Domain-C",
+				"STACS-Domain-D"
+			],
+			"policyId":"ASYNC_DEFAULT",
+			"uniqKey":"ASYNC_DEFAULT",
+			"requireAuthIds":[
+				"STACS-Domain-A",
+				"STACS-Domain-C",
+				"STACS-Domain-D"
+			],
+			"decisionType":"FULL_VOTE",
+			"votePattern":"ASYNC",
+			"label":"ASYNC_DEFAULT",
+			"version":0,
+			"callbackType":"ALL"
+		}
+	},
+	"msg":"Success",
+	"respCode":"000000"
+} 
 ```
 
 #### 查询BD
 
 - [ ] 开放
 - 接口描述：查询BD发布时的详细信息  
-- 请求地址：`GET`:`/v4/BD/query?bdid={bdid}`
+- 请求地址：`GET`:`/v4/upper/BD/query?bdid={bdid}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -159,13 +191,29 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
+| bdInfo | `bdInfo` |     | Y    | Y        | bd对象                     |
+
+`bdInfo`定义:
+
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
 | id       | `string`       | 32       | Y    | Y        | BD编号                              |
 | label   | `string`       | 32         | Y    | Y        | 标签       |
-| contracts          | `List<FunctionDefine>`       |        | Y    | Y        |  BD定义的版本                                            |
+| contracts          | `List<ContractDefine>`      |        | Y    | Y        |  bd定义contract                                             |
 | desc    | `string`       | 1024       | Y    | Y        | BD描述                   |
 | functions   | `List<FunctionDefine>`       |          | Y    | Y        | BD定义function                    |
 | bdVersion | `string`  | 10     | Y    | Y        |  修改记录版本                   |
-| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
+
+`ContractDefine`定义:
+
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
+| templateId       | `string` | 32    | Y    | Y        | 合约模板名称，在同一个bd下不能重复                      |
+| desc             | `string` | 256   | N    | Y        | function描述                     |
+| createPermission | `string` | 64     | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
+| createPolicy     | `string` | 32      | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
+| functions        | `List<FunctionDefine>`| | Y| Y        | 合约方法定义function            |
 
 `FunctionDefine`定义:
 
@@ -182,17 +230,103 @@
 
 ```json tab="响应实例"
 {
-	respCode='000000',
-    msg='Success', 
-    data={
-        "bdVersion":"4.2.0",
-        "currentBlockHeight": 6，
-        "contracts":"[{"createPermission":"DEFAULT","createPolicy":"SYNC_ONE_VOTE_DEFAULT","desc":"test","functions":[{"desc":"余额查询","execPermission":"DEFAULT","execPolicy":"SYNC_ONE_VOTE_DEFAULT","id":"balanceOf","methodSign":"(uint256) balanceOf(address)","type":"Contract"}]",
-        "desc":"dvp_test_label",
-        "functions":"[{"desc":"Identity解冻","execPermission":"DEFAULT","execPolicy":"SYNC_ONE_VOTE_DEFAULT","id":"UNFREEZE_IDENTITY","methodSign":"UNFREEZE_IDENTITY","type":"SystemAction"}]",
-        "id":"bd_demo_5",
-        "label":"dvp_test_label"
-    }
+	"data":{
+		"currentBlockHeight":655,
+		"policyInfo":{
+			"bdVersion":"4.0",
+			"functions":[
+				{
+					"methodSign":"ADD_BD",
+					"execPermission":"DEFAULT",
+					"id":"ADD_BD",
+					"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
+					"type":"SystemAction",
+					"desc":"发布BD"
+				},
+				{
+					"methodSign":"ADD_SNAPSHOT",
+					"execPermission":"DEFAULT",
+					"id":"ADD_SNAPSHOT",
+					"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
+					"type":"SystemAction",
+					"desc":"发布快照"
+				}
+			],
+			"index":0,
+			"id":"BD1",
+			"label":"BD1",
+			"contracts":[
+				{
+					"functions":[
+						{
+							"methodSign":"(uint256) balanceOf(address)",
+							"execPermission":"DEFAULT",
+							"id":"balanceOf",
+							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
+							"type":"Contract",
+							"desc":"余额查询"
+						},
+						{
+							"methodSign":"(bool) transfer(address,uint256)",
+							"execPermission":"DEFAULT",
+							"id":"transfer",
+							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
+							"type":"Contract",
+							"desc":"转账"
+						}
+					],
+					"createPolicy":"SYNC_ONE_VOTE_DEFAULT",
+					"templateId":"bond",
+					"createPermission":"DEFAULT",
+					"desc":"test"
+				},
+				{
+					"functions":[
+						{
+							"methodSign":"(uint256) balanceOf(address)",
+							"execPermission":"DEFAULT",
+							"id":"balanceOf",
+							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
+							"type":"Contract",
+							"desc":"余额查询"
+						},
+						{
+							"methodSign":"(bool) transfer(address,uint256)",
+							"execPermission":"DEFAULT",
+							"id":"transfer",
+							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
+							"type":"Contract",
+							"desc":"转账"
+						},
+						{
+							"methodSign":"(string) benchmark()",
+							"execPermission":"DEFAULT",
+							"id":"benchmark",
+							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
+							"type":"Contract",
+							"desc":"标的类型查询"
+						},
+						{
+							"methodSign":"(bool) buy(address,uint256,uint256)",
+							"execPermission":"DEFAULT",
+							"id":"buy",
+							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
+							"type":"Contract",
+							"desc":"购买"
+						}
+					],
+					"createPolicy":"SYNC_ONE_VOTE_DEFAULT",
+					"templateId":"certificate",
+					"createPermission":"DEFAULT",
+					"desc":"test"
+				}
+			],
+			"version":"4.0.0",
+			"desc":"BD描述"
+		}
+	},
+	"msg":"Success",
+	"respCode":"000000"
 }
 ```
 
@@ -200,7 +334,7 @@
 
 - [ ] 开放
 - 接口描述：查询合约发布时的详细信息  
-- 请求地址：`GET`:`/v4/contract/query?address={address}`
+- 请求地址：`GET`:`/v4/upper/contract/query?address={address}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -212,6 +346,13 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
+| contractInfo | `contractInfo` |     | Y    | Y        | contract对象                     |
+
+`contractInfo`定义:
+
+|    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
 | address   | `string`       | 40         | Y    | Y        | 合约地址       |
 | bdCodeVersion  | `string`        |     32   | Y    | Y        | BD版本     |
 | bdId    | `string`       | 32       | Y    | Y        | BD编号                   |
@@ -225,38 +366,39 @@
 | txId   | `string`        |     40     | Y    | Y        | 交易id                   |
 | version | `string`  | 10     | Y    | Y        |  修改记录版本                   |
 | blockHeight | `long` |     | Y    | Y        | 发布合约时区块高度                     |
-| currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
 
 - 实例：
 
 ```json tab="响应实例"
 {
-	respCode='000000',
-    msg='Success', 
-    data={
-        "blockHeight": 3,
-        "currentBlockHeight": 6,
-        "address":"6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4",
-        "bdCodeVersion":"4.0.0",
-        "bdId":"bd_demo_5",
-        "code":"~~~",
-        "extension":null,
-        "id":"certificate_demo_1",
-        "label":"lalala",
-        "language":"JAVA",
-        "status":"ENABLED",
-        "templateId":"t-code-cert",
-        "txId":"00000172bbe389b1a09d504cfeefe02da623679e",
-        "version":"4.2.0"
-    }
-}
+	"data":{
+		"contractInfo":{
+			"address":"6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4",
+			"code":"pragma solidity ^0.4.24;\n\ncontract Common {\n\n\n    bytes32 constant TX_ID = bytes32(0x00000000000000000000000000000000000000000000000000000074785f6964);\n    bytes32 constant STACS_KEY_ADDR = bytes32(0x5354414353000000000000000000000000000000000000000000000000000002);\n\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n    //assemble the given address bytecode. If bytecode exists then the _addr is a contract.\n    function isContract(address _addr) public view returns (bool is_contract) {\n        uint length;\n        assembly {\n        //retrieve the size of the code on target address, this needs assembly\n            length := extcodesize(_addr)\n        }\n        return (length > 0);\n    }\n\n}\n\ninterface OrderContract {\n    function buy(address buyer, uint256 amount, uint256 payAmount) external returns (bool success);\n}\n\ninterface TokenContract {\n    function transfer(address _to, uint256 _value) external returns (bool success);\n}\n\ncontract Certificate_TypeA is Common {\n    uint16 constant MAX_NUMBER_OF_QUERY_PER_PAGE = 100;\n    uint256 total;\n    uint8 decimals = 8;\n    address issuer;\n    address owner;\n    string  supportBenchmark;\n    uint256 totalInvalid;\n\n    struct Balance {\n        uint256 balance;\n        bool exists;\n    }\n\n    mapping(address => Balance) balance;\n    mapping(address => Balance) invalidBalance;\n\n    address[] addresses;\n\n    constructor (\n        uint256 _total,\n        address _owner,\n        string _benchmark\n    ) public {\n        require(_owner != 0x0, \"owner address is 0x0\");\n        require(_total > 0, \"total is illegal\");\n        require(bytes(_benchmark).length != 0, \"benchmark is illegal\");\n\n        total = _total;\n        issuer = msg.sender;\n        owner = _owner;\n        supportBenchmark = _benchmark;\n        balance[owner].balance = total;\n        balance[owner].exists = true;\n        addresses.push(owner);\n    }\n\n    function benchmark() public view returns (string){\n        return supportBenchmark;\n    }\n\n    function totalSupply() public view returns (uint256){\n        return total;\n    }\n\n    function invalidTotalSupply() public view returns (uint256){\n        return totalInvalid;\n    }\n\n    function balanceOf(address _addr) public view returns (uint256 balanceAmount){\n        balanceAmount = balance[_addr].balance;\n        return (balanceAmount);\n    }\n\n    function invalidBalanceOf(address _addr) public view returns (uint256 balanceAmount){\n        balanceAmount = invalidBalance[_addr].balance;\n        return (balanceAmount);\n    }\n\n    function transfer(address _to, uint256 _value) public payable returns (bool success){\n        return transferFrom(msg.sender, _to, _value);\n    }\n\n    function batchTransfer(address[] _addrs, uint256[] _values) public returns (bool success){\n        require(_addrs.length == _values.length);\n        require(_addrs.length > 0, \"address array length is 0\");\n        for (uint16 i = 0; i < _addrs.length; i++) {\n            if (_values[i] != 0) {\n                transferFrom(msg.sender, _addrs[i], _values[i]);\n            }\n        }\n        return true;\n    }\n\n    /**\n    *1:transfer USD to orderAddr(PFC contract addresss)\n    *2:call PFC buy function,add buy history\n    */\n    function buy(address orderAddr, uint256 amount, uint256 payAmount) public returns (bool success){\n        require(isContract(orderAddr), \"orderAddr is not contract\");\n        require(transferFrom(msg.sender, orderAddr, payAmount), \"transfer failed\");\n\n        OrderContract orderContract = OrderContract(orderAddr);\n        return orderContract.buy(msg.sender, amount, payAmount);\n    }\n\n    function cost(address addr, uint256 amount) public returns (bool){\n\n        require((total >= amount), \"amount gt total\");\n        require(total >= 0, \"totalInvalid failed\");\n        //买方的白条余额需要扣减\n        require(balance[msg.sender].balance >= amount, \"balance lt amount\");\n\n        total = total - amount;\n        balance[msg.sender].balance -= amount;\n        //给卖方增加白条余额\n        uint256 before = invalidBalance[addr].balance;\n        invalidBalance[addr].balance += amount;\n        totalInvalid = totalInvalid + amount;\n        require(totalInvalid >= 0, \"totalInvalid failed\");\n\n        return true;\n    }\n\n    function additionalIssue(uint256 num) public returns (bool){\n        require(num > 0, \"num is illegal\");\n        total += num;\n        balance[owner].balance += num;\n        require(total >= 0, \"The data of crossing the line\");\n        return true;\n    }\n\n    function withdrawal(address contractAddress, address to, uint256 amount) public returns (bool){\n        require(amount > 0, \"amount is 0\");\n        require(isContract(contractAddress), \"contractAddress is not contract\");\n        TokenContract tokenContract = TokenContract(contractAddress);\n        require(tokenContract.transfer(to, amount), \"withdrawal failed\");\n        return true;\n    }\n\n    function transferFrom(address _from, address _to, uint256 _value) internal returns (bool){\n        require(_to != 0x0, \"to address is 0x0\");\n        require(_value > 0, \"The value must be that is greater than zero.\");\n        require(balance[_from].balance >= _value, \"from address balance not enough\");\n        uint256 result = balance[_to].balance + _value;\n        require(result > 0, \"to address balance overflow\");\n        require(result > balance[_to].balance, \"to address balance overflow\");\n\n        uint previousBalance = balance[_from].balance + balance[_to].balance;\n        balance[_from].balance -= _value;\n        if (!balance[_to].exists) {\n            balance[_to].balance = _value;\n            balance[_to].exists = true;\n            addresses.push(_to);\n        }\n        else {\n            balance[_to].balance += _value;\n        }\n        emit Transfer(_from, _to, _value);\n        assert(balance[_from].balance + balance[_to].balance == previousBalance);\n        return true;\n    }\n\n\n}",
+			"txId":"00000172bbe389b1a09d504cfeefe02da623679e",
+			"language":"JAVA",
+			"label":"lalala",
+			"templateId":"t-code-cert",
+			"version":"1.0",
+			"actionIndex":0,
+			"bdId":"bd_demo_5",
+			"blockHeight":6,
+			"bdCodeVersion":"4.0.0",
+			"id":"certificate_demo_1",
+			"status":"ENABLED"
+		},
+		"currentBlockHeight":655
+	},
+	"msg":"Success",
+	"respCode":"000000"
+} 
 ```
 
 #### 检查合约查询接口
 
 - [ ] 开放
 - 接口描述：检查该地址是否为合约地址  
-- 请求地址：`GET`:`/v4/contract/checkContractAddress?address={address}`
+- 请求地址：`GET`:`/v4/upper/contract/checkContractAddress?address={address}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -268,33 +410,31 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| checkResult    | `Boolean` |        | Y    | Y        | true/false       |
+| data    | `Boolean` |     10   | Y    | Y        | true/false       |
 
 
 - 实例：
 
 ```json tab="响应实例"
 {
-	respCode='000000',
-    msg='Success', 
-    data={
-        "checkResult": true
-    }
-}
+	"data":true,
+	"msg":"Success",
+	"respCode":"000000"
+} 
 ```
 
 #### 区块链状态查询接口
 
 - [ ] 开放
 - 接口描述：检查该地址是否为合约地址  
-- 请求地址：`GET`:`/v4/stacs/info/query`
+- 请求地址：`GET`:`/v4/upper/stacs/info/query`
 - 请求参数：无
 
 - 响应参数：
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| nodeInfos    | `list<domainId>` | text      | Y    | Y        | 总数据         |
+| data    | `list<domainId>` | text      | Y    | Y        | 总数据         |
 
 
 `domainId` 定义:
@@ -307,6 +447,7 @@
 `NodeInfoVO`定义:
 
 ###### NodeInfoVO
+
 | 属性          | 类型          | 最大长度 | 必填 | 说明                           |
 | ------------- | ------------- | -------- | ---- | ------------------------------ |
 | nodeName         | `String`      |          | Y    | 当前节点名称
@@ -319,17 +460,58 @@
 
 ```json tab="响应实例"
 {
-        respCode='000000',
-        msg='Success', 
-        "data":
-        {
-           "nodeInfos":[
-                {"domainId":"GSX-GROUP","nodeInfos":[{"domainId":"GSX-GROUP","height":1,"master":false,"nodeName":"GSX-GROUP-RS-B","nodeState":"Starting"},
-                {"domainId":"GSX-GROUP","height":1,"master":false,"nodeName":"GSX-GROUP-RS-A","nodeState":"StartingConsensus"}]},
-                {"domainId":"GSX-Slave","nodeInfos":[{"domainId":"GSX-Slave","height":0,"master":false,"nodeName":"GSX-Slave","nodeState":"N/A"}]},
-                {"domainId":"JNUO","nodeInfos":[{"domainId":"JNUO","height":1,"master":false,"nodeName":"Jnuo-Slave","nodeState":"StartingConsensus"}]}],"nodeName":"GSX-GROUP-RS-A","nodeState":"Starting"},
-            "msg":"Success","respCode":"000000","success":true
-        }
+	"data":[
+		{
+			"nodeInfos":[
+				{
+					"nodeName":"STACS-node-D",
+					"nodeState":"Running",
+					"p2pHeight":655,
+					"domainId":"STACS-Domain-D",
+					"height":655,
+					"master":false
+				}
+			],
+			"domainId":"STACS-Domain-D"
+		},
+		{
+			"nodeInfos":[
+				{
+					"nodeName":"STACS-node-C",
+					"nodeState":"Running",
+					"p2pHeight":655,
+					"domainId":"STACS-Domain-C",
+					"height":655,
+					"master":false
+				}
+			],
+			"domainId":"STACS-Domain-C"
+		},
+		{
+			"nodeInfos":[
+				{
+					"nodeName":"STACS-node-B",
+					"nodeState":"Running",
+					"p2pHeight":655,
+					"domainId":"STACS-Domain-A",
+					"height":655,
+					"master":true
+				},
+				{
+					"nodeName":"STACS-node-A",
+					"nodeState":"Running",
+					"p2pHeight":655,
+					"domainId":"STACS-Domain-A",
+					"height":655,
+					"master":false
+				}
+			],
+			"domainId":"STACS-Domain-A"
+		}
+	],
+	"msg":"Success",
+	"respCode":"000000"
+} 
 ```
 
 ##### <a id="/queryMaxHeight">查询当前最大区块高度</a>
