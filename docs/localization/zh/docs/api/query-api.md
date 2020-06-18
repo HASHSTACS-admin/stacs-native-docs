@@ -39,18 +39,14 @@
 {
 	"data":{
 		"identityInfo":{
-			"msg":"Success",
-			"data":{
-				"address":"42473da8cfb880f9e0df4874bb54b12b2efcde69",
-				"hidden":1,
-				"identityType":"node",
-				"preTxId":"",
-				"froze":false,
-				"version":0,
-				"currentTxId":""
-			},
-			"success":true,
-			"respCode":"000000"
+			"address":"42473da8cfb880f9e0df4874bb54b12b2efcde69",
+			"hidden":1,
+			"identityType":"node",
+			"preTxId":"",
+			"froze":false,
+			"version":0,
+			"currentTxId":"",
+            "bdId":"BD1"
 		},
 		"currentBlockHeight":655
 	},
@@ -418,7 +414,9 @@
 
 ```json tab="响应实例"
 {
-	"isContract":true,
+	"data":{
+		"isContract":true
+	},
 	"msg":"Success",
 	"respCode":"000000"
 } 
