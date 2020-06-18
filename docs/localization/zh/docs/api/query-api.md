@@ -22,6 +22,7 @@
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
+| bdId    | `string`       | 32       | Y    | Y        | BD编号                   |
 | address | `string` | 40     | Y    | Y        | user identity 地址                      |
 | currentTxId | `string` | 40     | Y    | Y        |    user identity 改修改时的txId                   |
 | hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
@@ -513,7 +514,7 @@
 } 
 ```
 
-##### 查询当前最大区块高度
+#### 查询当前最大区块高度
 - [x] 开放
 - 接口描述：  查询当前最大的区块高度
 - 请求地址：`GET`:`/v4/queryMaxHeight`
@@ -529,7 +530,7 @@
    {"height":18}
 ```
 
-##### 根据txId查询交易数据
+#### 根据txId查询交易数据
 - [x] 开放
 - 接口描述：  根据txId查询交易数据
 - 请求地址：`GET`:`/v4/queryTxByTxId/{txId}`
@@ -567,7 +568,7 @@
 |extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
 | submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名 
 
-##### 合约状态查询
+#### 合约状态查询
 - [x] 开放
 - 接口描述：  合约状态查询
     1. blockHeight传0或null返回当前最新区块高度的合约状态;
@@ -625,7 +626,7 @@
 | receiptData        | `json`     | 64       | Y    |        | action回执                      |
 | version            | `string`   | 64       | Y    |        | 交易版本号                      |
 
-##### 根据高度查询区块内所有交易数据
+#### 根据高度查询区块内所有交易数据
 - [x] 开放
 - 接口描述：  根据高度查询区块内所有已经被所有domain确认的交易数据
 - 请求地址：`GET`:`/v4/queryBlockVO`
