@@ -62,7 +62,7 @@
 
 - [ ] 开放
 - 接口描述：查询Permission的详细信息  
-- 请求地址：`GET`:`/v4/upper/perimission/query?permissionId={permissionId}`
+- 请求地址：`GET`:`/v4/perimission/query?permissionId={permissionId}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -87,7 +87,7 @@
 | type          | `string`  | 64        | Y    | Y        | 授权类型（ADDRESS/IDENTITY）       |
 | authorizers   | `string[]`|           | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas | `string` |      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式                      |
-| version | `string`  | 10     | Y    | Y        |  修改记录版本                   |
+| currentTxId | `string`  | 40     | Y    | Y        |  交易ID                  |
 
 - 实例：
 
@@ -115,7 +115,7 @@
 
 - [ ] 开放
 - 接口描述：查询policy的详细信息  
-- 请求地址：`GET`:`/v4/upper/policy/query?policyId={policyId}`
+- 请求地址：`GET`:`/v4/policy/query?policyId={policyId}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -179,7 +179,7 @@
 
 - [ ] 开放
 - 接口描述：查询BD发布时的详细信息  
-- 请求地址：`GET`:`/v4/upper/BD/query?bdid={bdid}`
+- 请求地址：`GET`:`/v4/BD/query?bdid={bdid}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -334,7 +334,7 @@
 
 - [ ] 开放
 - 接口描述：查询合约发布时的详细信息  
-- 请求地址：`GET`:`/v4/upper/contract/query?address={address}`
+- 请求地址：`GET`:`/v4/contract/query?address={address}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -398,7 +398,7 @@
 
 - [ ] 开放
 - 接口描述：检查该地址是否为合约地址  
-- 请求地址：`GET`:`/v4/upper/contract/checkContractAddress?address={address}`
+- 请求地址：`GET`:`/v4/contract/checkContractAddress?address={address}`
 - 请求参数：
 
 |     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
@@ -410,14 +410,14 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| data    | `Boolean` |     10   | Y    | Y        | true/false       |
+| isContract    | `Boolean` |        | Y    | Y        | true/false       |
 
 
 - 实例：
 
 ```json tab="响应实例"
 {
-	"data":true,
+	"isContract":true,
 	"msg":"Success",
 	"respCode":"000000"
 } 
@@ -427,7 +427,7 @@
 
 - [ ] 开放
 - 接口描述：检查该地址是否为合约地址  
-- 请求地址：`GET`:`/v4/upper/stacs/info/query`
+- 请求地址：`GET`:`/v4/stacs/info`
 - 请求参数：无
 
 - 响应参数：
@@ -445,8 +445,6 @@
 | nodeInfos      | `list<NodeInfoVO>` | 256   | N    | Y        | 节点集合           |
 
 `NodeInfoVO`定义:
-
-###### NodeInfoVO
 
 | 属性          | 类型          | 最大长度 | 必填 | 说明                           |
 | ------------- | ------------- | -------- | ---- | ------------------------------ |
@@ -515,7 +513,7 @@
 } 
 ```
 
-##### <a id="/queryMaxHeight">查询当前最大区块高度</a>
+##### 查询当前最大区块高度
 - [x] 开放
 - 接口描述：  查询当前最大的区块高度
 - 请求地址：`GET`:`/v4/queryMaxHeight`
@@ -531,7 +529,7 @@
    {"height":18}
 ```
 
-##### <a id="/queryTxByTxId/{txId}">根据txId查询交易数据</a>
+##### 根据txId查询交易数据
 - [x] 开放
 - 接口描述：  根据txId查询交易数据
 - 请求地址：`GET`:`/v4/queryTxByTxId/{txId}`
@@ -569,7 +567,7 @@
 |extensionDatas | `string` | 1024     | N    |    Y     | 交易存证新消息                                               |
 | submitterSign | `string` | 64       | Y    |    N     | 提交者`submitter`的`ECC`对交易的签名,该字段不参与签名 
 
-##### <a id="/queryContract">合约状态查询</a>
+##### 合约状态查询
 - [x] 开放
 - 接口描述：  合约状态查询
     1. blockHeight传0或null返回当前最新区块高度的合约状态;
@@ -627,7 +625,7 @@
 | receiptData        | `json`     | 64       | Y    |        | action回执                      |
 | version            | `string`   | 64       | Y    |        | 交易版本号                      |
 
-##### <a id="/block/queryBlockVO">根据高度查询区块内所有交易数据</a>
+##### 根据高度查询区块内所有交易数据
 - [x] 开放
 - 接口描述：  根据高度查询区块内所有已经被所有domain确认的交易数据
 - 请求地址：`GET`:`/v4/queryBlockVO`
