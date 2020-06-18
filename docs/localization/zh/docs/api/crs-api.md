@@ -610,7 +610,7 @@
 | votePattern    | `string`       | 10        | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
 | callbackType   | `string`       | 10         | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
 | decisionType   | `string`       | 10         | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-| domainIds      | `list<string>` | 256         | N    | Y        | 参与投票的domainId列表                       |
+| domainIds      | `list<string>` | 256         | N    | Y        | 收到投票的domainId列表(如果为空，则全部的domainId)                       |
 | requireAuthIds | `list<string>` | 256         | Y    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
 | assignMeta     | `json` | 1024         | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 
@@ -1147,54 +1147,6 @@
 }
 ```
 
-#### 查询Identity
-
-- [ ] 开放
-- 接口描述：查询Identity的详细信息  
-- 请求地址：`GET`:`/v4/identity/query?address={address}`
-- 请求参数：
-
-|     属性      | 类型       | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :-----------: | ---------- | -------- | ---- | -------- | ----------------------------- |
-| address       | `string`   | 40       | Y    | Y        | identity地址              |
-
-
-- 响应参数：
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| address | `string` | 40     | Y    | Y        | user identity 地址                      |
-| currentTxId | `string` | 40     | Y    | Y        |    user identity 改修改时的txId                   |
-| hidden | `string` | 1     | Y    | Y        | 1：显示，0：隐藏                      |
-| froze | `boolean` |  10    | Y    | Y        | true：冻结，false：未冻结                      |
-| identityType | `string` | 64     | Y    | Y        | identity类型(user/node/domain)                      |
-| kyc | `string` |1024      | Y    | Y        | identity认证信息                      |
-| preTxId | `string` | 40     | Y    | Y        |  上次identity被修改时交易id                   |
-| property | `string` | 1024     | Y    | Y        |  扩展属性                   |
-| version | `int` | 10     | Y    | Y        |  修改记录版本                   |
-
-- 实例：
-
-```json tab="响应实例"
-{
-	respCode='000000',
-    msg='Success', 
-    data={
-        "address":"2671ea4b3c863cb5fc059889b7b37673369c073f",
-        "bdId":"bd_demo_5",
-        "hidden":0,
-        "kyc":"\"country\":\"china\"",
-        "identityType":"",
-        "property":"\"name\":\"luojianbo\"",
-        "preTxId":"00000171b55f3daf1c818e557dac3def738e3c67",
-        "froze":false,
-        "version":1,
-        "currentTxId":"00000171b55f3daf1c818e557dac3def738e3c67"
-    }
-}
-```
-
-
 ### 存证
  
 #### <a id="SET_ATTESTATION">设置存证</a>
@@ -1229,35 +1181,6 @@
 ```json tab="响应实例"
 {
     "data":"00000171b518d70461d63a39d06c4f8efb2899f2","msg":"Success","respCode":"000000","success":true
-}
-```
-
-#### 存证查询
-- [ ] 开放
-- 接口描述：  查询入链存证信息
-- 请求地址：`GET`:`/v4/queryAttestation/{id}`
-- 请求参数： 
-
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
-| :---------:| -------- | -------| ---- | -------| :---------------------------- |
-|      id    | `string` | 40     | Y    | Y      | 存证id                      |
-
-- 响应参数：
-
-|    属性        | 类型     | 最大长度   | 必填 | 是否签名 | 说明                          |
-| :---------:   | -------- | -------- | ---- | -------- | :---------------------------- |
-| id            | `string` | 40       | Y    | Y        | 存证id                      |
-| attestation   | `string` | 4096     | Y    | N        | 存证内容                      |
-| preTxId       | `string` | 40       | Y     | N        | 上次一次修改`txId` |
-| currentTxId   | `string` | 40       | Y     | N        | 最近一次修改`txId` |
-| version       | `int`    | 10       | Y     | N        | 版本号，系统自增 |
-| bdId          | `string` | 32       | Y     | N        | 设置存证时的`bdId` |
-
-- 实例：
-
-```json tab="响应实例"
-{
-	respCode='000000', msg='Success', data={"attestation":"存证的内容","bdId":"bd_demo_5","id":"00000171b5664ea85df6e0e2761359d30a827505","version":1,"currentTxId":"00000171b5664ef3c6cb718e7130f80c4faea8c3"}
 }
 ```
 

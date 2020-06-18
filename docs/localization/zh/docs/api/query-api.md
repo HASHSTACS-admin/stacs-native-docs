@@ -1,5 +1,33 @@
 ### 查询接口
 
+#### 存证查询
+- [ ] 开放
+- 接口描述：  查询入链存证信息
+- 请求地址：`GET`:`/v4/queryAttestation/{id}`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------:| -------- | -------| ---- | -------| :---------------------------- |
+|      id    | `string` | 40     | Y    | Y      | 存证id                      |
+
+- 响应参数：
+
+|    属性        | 类型     | 最大长度   | 必填 | 是否签名 | 说明                          |
+| :---------:   | -------- | -------- | ---- | -------- | :---------------------------- |
+| id            | `string` | 40       | Y    | Y        | 存证id                      |
+| attestation   | `string` | 4096     | Y    | N        | 存证内容                      |
+| preTxId       | `string` | 40       | Y     | N        | 上次一次修改`txId` |
+| currentTxId   | `string` | 40       | Y     | N        | 最近一次修改`txId` |
+| version       | `int`    | 10       | Y     | N        | 版本号，系统自增 |
+| bdId          | `string` | 32       | Y     | N        | 设置存证时的`bdId` |
+
+- 实例：
+
+```json tab="响应实例"
+{
+	respCode='000000', msg='Success', data={"attestation":"存证的内容","bdId":"bd_demo_5","id":"00000171b5664ea85df6e0e2761359d30a827505","version":1,"currentTxId":"00000171b5664ef3c6cb718e7130f80c4faea8c3"}
+}
+```
 #### 查询Identity
 
 - [ ] 开放
@@ -85,6 +113,7 @@
 | authorizers   | `string[]`|           | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas | `string` |      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式                      |
 | currentTxId | `string`  | 40     | Y    | Y        |  交易ID                  |
+| preTxId | `string`  | 40     | Y    | Y        |  上一个交易ID                  |
 
 - 实例：
 
@@ -136,10 +165,18 @@
 | votePattern    | `string`       | 10        | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
 | callbackType   | `string`       | 10         | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
 | decisionType   | `string`       | 10         | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
-| domainIds      | `list<string>` | 256         | N    | Y        | 参与投票的domainId列表                       |
-| requireAuthIds | `list<string>` | 256         | Y    | Y        | 需要通过该集合对应的domain授权才能修改当前policy |
+| domainIds      | `list<string>` | 256         | N    | Y        | 收到投票的domainId列表(如果为空，则全部的domainId) |
+| requireAuthIds | `list<string>` | 256         | Y    | Y        | 需要通过该集合对应的domain授权才能修改当前policy  |
 | assignMeta     | `json` | 1024         | N    | Y        | 当decisionType=ASSIGN_NUM,assignMeta属性值需要签名 |
 | version | `string` | 10     | Y    | Y        |  修改记录版本                   |
+
+- assignMeta结构
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | --------| ------- | ---- | ----- | :---------------------------- |
+| verifyNum  | `int`    |   10    | N    | Y     |  赞成票的最少票数  |
+| expression | `string` |   256   | N    | Y     | 赞成票数的表达式，例如: n/2+1，其中n代表集群中的domain数 |
+| mustDomainIds | `list<string>`| 256 | N  | Y  |  必须投赞成票的domainId|
 
 - 实例：
 
@@ -200,7 +237,8 @@
 | contracts          | `List<ContractDefine>`      |        | Y    | Y        |  bd定义contract                                             |
 | desc    | `string`       | 1024       | Y    | Y        | BD描述                   |
 | functions   | `List<FunctionDefine>`       |          | Y    | Y        | BD定义function                    |
-| bdVersion | `string`  | 10     | Y    | Y        |  修改记录版本                   |
+| version | `string`  | 10     | Y    | Y        |  交易版本                   |
+| bdVersion | `string`  | 10     | Y    | Y        |  BD版本                   |
 
 `ContractDefine`定义:
 
