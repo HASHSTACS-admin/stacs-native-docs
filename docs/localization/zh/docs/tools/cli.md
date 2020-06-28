@@ -169,3 +169,16 @@ The most commonly used node commands are:
 <br>
 </code>
 </pre>
+
+## **domain**
+用于管理domain
+<pre>
+<code>
+usage: node [-h | --help] COMMAND [ARGS] <br>
+The most commonly used node commands are:
+   set         add or update domain info
+   remove      remove domain info,note:also remove node of domain`s
+   query       query all domain info
+<br>
+</code>
+</pre>
