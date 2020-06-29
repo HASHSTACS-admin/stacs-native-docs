@@ -65,21 +65,24 @@
 
 ```json tab="响应实例"
 {
-	"data":{
-		"identityInfo":{
-			"address":"42473da8cfb880f9e0df4874bb54b12b2efcde69",
-			"hidden":1,
-			"identityType":"node",
-			"preTxId":"",
-			"froze":false,
-			"version":0,
-			"currentTxId":"",
-            "bdId":"BD1"
-		},
-		"currentBlockHeight":655
-	},
-	"msg":"Success",
-	"respCode":"000000"
+  "respCode": "000000",
+  "msg": "Success",
+  "data": {
+    "identityInfo": {
+      "id": null,
+      "identityType": "node",
+      "bdId": null,
+      "property": null,
+      "kyc": null,
+      "hidden": 1,
+      "address": "42473da8cfb880f9e0df4874bb54b12b2efcde69",
+      "preTxId": "",
+      "currentTxId": "",
+      "froze": false,
+      "version": 0
+    },
+    "currentBlockHeight": "4"
+  }
 } 
 ```
 
@@ -119,22 +122,23 @@
 
 ```json tab="响应实例"
 {
-	"data":{
-		"currentBlockHeight":655,
-		"permissionInfo":{
-			"datas":"[\"6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4\"]",
-			"authorizers":[
-				"6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4"
-			],
-			"id":"permission_demo_1",
-			"label":"jicaowu666",
-			"type":"ADDRESS",
-			"currentTxId":"00000172bc02cfc6e9a727a7e1643cc48fbb211f"
-		}
-	},
-	"msg":"Success",
-	"respCode":"000000"
-}
+  "respCode": "000000",
+  "msg": "Success",
+  "data": {
+    "permissionInfo": {
+      "id": "permission_demo_1",
+      "label": "jicaowu666",
+      "type": "ADDRESS",
+      "authorizers": [
+        "6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4"
+      ],
+      "datas": "[\"6cab3f4122dd3bc9850e445d0eb3ef105d6a40e4\"]",
+      "preTxId": null,
+      "currentTxId": "00000172fecc7ad057f394699d871febe5f5cc29"
+    },
+    "currentBlockHeight": "4"
+  }
+} 
 ```
 
 #### 查询policy
@@ -182,30 +186,30 @@
 
 ```json tab="响应实例"
 {
-	"data":{
-		"currentBlockHeight":655,
-		"policyInfo":{
-			"domainIds":[
-				"STACS-Domain-A",
-				"STACS-Domain-C",
-				"STACS-Domain-D"
-			],
-			"policyId":"ASYNC_DEFAULT",
-			"uniqKey":"ASYNC_DEFAULT",
-			"requireAuthIds":[
-				"STACS-Domain-A",
-				"STACS-Domain-C",
-				"STACS-Domain-D"
-			],
-			"decisionType":"FULL_VOTE",
-			"votePattern":"ASYNC",
-			"label":"ASYNC_DEFAULT",
-			"version":0,
-			"callbackType":"ALL"
-		}
-	},
-	"msg":"Success",
-	"respCode":"000000"
+  "respCode": "000000",
+  "msg": "Success",
+  "data": {
+    "policyInfo": {
+      "policyId": "ASYNC_DEFAULT",
+      "label": "ASYNC_DEFAULT",
+      "domainIds": [
+        "STACS-Domain-A",
+        "STACS-Domain-C",
+        "STACS-Domain-D"
+      ],
+      "decisionType": "FULL_VOTE",
+      "votePattern": "ASYNC",
+      "callbackType": "ALL",
+      "assignMeta": null,
+      "requireAuthIds": [
+        "STACS-Domain-A",
+        "STACS-Domain-C",
+        "STACS-Domain-D"
+      ],
+      "version": 0
+    },
+    "currentBlockHeight": "4"
+  }
 } 
 ```
 
@@ -265,103 +269,181 @@
 
 ```json tab="响应实例"
 {
-	"data":{
-		"currentBlockHeight":655,
-		"bdinfo":{
-			"bdVersion":"4.0",
-			"functions":[
-				{
-					"methodSign":"ADD_BD",
-					"execPermission":"DEFAULT",
-					"id":"ADD_BD",
-					"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
-					"type":"SystemAction",
-					"desc":"发布BD"
-				},
-				{
-					"methodSign":"ADD_SNAPSHOT",
-					"execPermission":"DEFAULT",
-					"id":"ADD_SNAPSHOT",
-					"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
-					"type":"SystemAction",
-					"desc":"发布快照"
-				}
-			],
-			"index":0,
-			"id":"BD1",
-			"label":"BD1",
-			"contracts":[
-				{
-					"functions":[
-						{
-							"methodSign":"(uint256) balanceOf(address)",
-							"execPermission":"DEFAULT",
-							"id":"balanceOf",
-							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
-							"type":"Contract",
-							"desc":"余额查询"
-						},
-						{
-							"methodSign":"(bool) transfer(address,uint256)",
-							"execPermission":"DEFAULT",
-							"id":"transfer",
-							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
-							"type":"Contract",
-							"desc":"转账"
-						}
-					],
-					"createPolicy":"SYNC_ONE_VOTE_DEFAULT",
-					"templateId":"bond",
-					"createPermission":"DEFAULT",
-					"desc":"test"
-				},
-				{
-					"functions":[
-						{
-							"methodSign":"(uint256) balanceOf(address)",
-							"execPermission":"DEFAULT",
-							"id":"balanceOf",
-							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
-							"type":"Contract",
-							"desc":"余额查询"
-						},
-						{
-							"methodSign":"(bool) transfer(address,uint256)",
-							"execPermission":"DEFAULT",
-							"id":"transfer",
-							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
-							"type":"Contract",
-							"desc":"转账"
-						},
-						{
-							"methodSign":"(string) benchmark()",
-							"execPermission":"DEFAULT",
-							"id":"benchmark",
-							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
-							"type":"Contract",
-							"desc":"标的类型查询"
-						},
-						{
-							"methodSign":"(bool) buy(address,uint256,uint256)",
-							"execPermission":"DEFAULT",
-							"id":"buy",
-							"execPolicy":"SYNC_ONE_VOTE_DEFAULT",
-							"type":"Contract",
-							"desc":"购买"
-						}
-					],
-					"createPolicy":"SYNC_ONE_VOTE_DEFAULT",
-					"templateId":"certificate",
-					"createPermission":"DEFAULT",
-					"desc":"test"
-				}
-			],
-			"version":"4.0.0",
-			"desc":"BD描述"
-		}
-	},
-	"msg":"Success",
-	"respCode":"000000"
+  "respCode": "000000",
+  "msg": "Success",
+  "data": {
+    "bdInfo": {
+      "id": "bd_demo_21",
+      "label": "dvp_test_label",
+      "desc": "dvp_test_label",
+      "contracts": [
+        {
+          "templateId": "t-code-bond",
+          "desc": "test",
+          "createPermission": "DEFAULT",
+          "createPolicy": "SYNC_ONE_VOTE_DEFAULT",
+          "functions": [
+            {
+              "id": "balanceOf",
+              "type": "Contract",
+              "desc": "余额查询",
+              "methodSign": "(uint256) balanceOf(address)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "transfer",
+              "type": "Contract",
+              "desc": "转账",
+              "methodSign": "(bool) transfer(address,uint256)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            }
+          ]
+        },
+        {
+          "templateId": "t-code-dvp",
+          "desc": "test",
+          "createPermission": "DEFAULT",
+          "createPolicy": "SYNC_ONE_VOTE_DEFAULT",
+          "functions": [
+            {
+              "id": "payment",
+              "type": "Contract",
+              "desc": "已支付",
+              "methodSign": "(bool) payment(bytes32)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "confirm",
+              "type": "Contract",
+              "desc": "确认白条已支付",
+              "methodSign": "(bool) confirm(bytes32)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "release",
+              "type": "Contract",
+              "desc": "回退",
+              "methodSign": "(bool) release()",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "withdrawal",
+              "type": "Contract",
+              "desc": "提现",
+              "methodSign": "(bool) withdrawal(address,address,uint256)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "checkKyc",
+              "type": "Contract",
+              "desc": "检查kyc",
+              "methodSign": "(bool) checkKyc(address,string)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "buyHistory",
+              "type": "Contract",
+              "desc": "购买记录",
+              "methodSign": "(bytes32,address,address,uint256,uint256,uint256) buyHistory()",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            }
+          ]
+        },
+        {
+          "templateId": "t-code-cert",
+          "desc": "test",
+          "createPermission": "DEFAULT",
+          "createPolicy": "SYNC_ONE_VOTE_DEFAULT",
+          "functions": [
+            {
+              "id": "balanceOf",
+              "type": "Contract",
+              "desc": "余额查询",
+              "methodSign": "(uint256) balanceOf(address)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "transfer",
+              "type": "Contract",
+              "desc": "转账",
+              "methodSign": "(bool) transfer(address,uint256)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "benchmark",
+              "type": "Contract",
+              "desc": "标的类型查询",
+              "methodSign": "(string) benchmark()",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "cost",
+              "type": "Contract",
+              "desc": "花费",
+              "methodSign": "(bool) cost(address,uint256)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            },
+            {
+              "id": "buy",
+              "type": "Contract",
+              "desc": "购买",
+              "methodSign": "(bool) buy(address,uint256,uint256)",
+              "execPermission": "DEFAULT",
+              "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "id": "SET_IDENTITY",
+          "type": "SystemAction",
+          "desc": "这是一个测试2",
+          "methodSign": "SET_IDENTITY",
+          "execPermission": "DEFAULT",
+          "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+        },
+        {
+          "id": "FREEZE_IDENTITY",
+          "type": "SystemAction",
+          "desc": "这是一个测试2",
+          "methodSign": "FREEZE_IDENTITY",
+          "execPermission": "DEFAULT",
+          "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+        },
+        {
+          "id": "UNFREEZE_IDENTITY",
+          "type": "SystemAction",
+          "desc": "Identity解冻",
+          "methodSign": "UNFREEZE_IDENTITY",
+          "execPermission": "DEFAULT",
+          "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+        },
+        {
+          "id": "SET_ATTESTATION",
+          "type": "SystemAction",
+          "desc": "设置存证",
+          "methodSign": "SET_ATTESTATION",
+          "execPermission": "DEFAULT",
+          "execPolicy": "SYNC_ONE_VOTE_DEFAULT"
+        }
+      ],
+      "bdVersion": "4.0.0"
+    },
+    "currentBlockHeight": "5"
+  }
 }
 ```
 
@@ -471,10 +553,10 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| data    | `list<domainId>` | text      | Y    | Y        | 总数据         |
+| chainInfo    | `list<NodeTreeVO>` | text      | Y    | Y        | chain对象         |
 
 
-`domainId` 定义:
+`NodeTreeVO` 定义:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
@@ -496,58 +578,60 @@
 
 ```json tab="响应实例"
 {
-	"data":[
-		{
-			"nodeInfos":[
-				{
-					"nodeName":"STACS-node-D",
-					"nodeState":"Running",
-					"p2pHeight":655,
-					"domainId":"STACS-Domain-D",
-					"height":655,
-					"master":false
-				}
-			],
-			"domainId":"STACS-Domain-D"
-		},
-		{
-			"nodeInfos":[
-				{
-					"nodeName":"STACS-node-C",
-					"nodeState":"Running",
-					"p2pHeight":655,
-					"domainId":"STACS-Domain-C",
-					"height":655,
-					"master":false
-				}
-			],
-			"domainId":"STACS-Domain-C"
-		},
-		{
-			"nodeInfos":[
-				{
-					"nodeName":"STACS-node-B",
-					"nodeState":"Running",
-					"p2pHeight":655,
-					"domainId":"STACS-Domain-A",
-					"height":655,
-					"master":true
-				},
-				{
-					"nodeName":"STACS-node-A",
-					"nodeState":"Running",
-					"p2pHeight":655,
-					"domainId":"STACS-Domain-A",
-					"height":655,
-					"master":false
-				}
-			],
-			"domainId":"STACS-Domain-A"
-		}
-	],
-	"msg":"Success",
-	"respCode":"000000"
-} 
+  "respCode": "000000",
+  "msg": "Success",
+  "data": {
+    "chainInfo": [
+      {
+        "domainId": "STACS-Domain-D",
+        "nodeInfos": [
+          {
+            "domainId": "STACS-Domain-D",
+            "nodeName": "STACS-node-D",
+            "height": "6",
+            "p2pHeight": "6",
+            "master": false,
+            "nodeState": "Running"
+          }
+        ]
+      },
+      {
+        "domainId": "STACS-Domain-C",
+        "nodeInfos": [
+          {
+            "domainId": "STACS-Domain-C",
+            "nodeName": "STACS-node-C",
+            "height": "6",
+            "p2pHeight": "6",
+            "master": true,
+            "nodeState": "Running"
+          }
+        ]
+      },
+      {
+        "domainId": "STACS-Domain-A",
+        "nodeInfos": [
+          {
+            "domainId": "STACS-Domain-A",
+            "nodeName": "STACS-node-B",
+            "height": "6",
+            "p2pHeight": "6",
+            "master": false,
+            "nodeState": "Running"
+          },
+          {
+            "domainId": "STACS-Domain-A",
+            "nodeName": "STACS-node-A",
+            "height": "6",
+            "p2pHeight": "6",
+            "master": false,
+            "nodeState": "Running"
+          }
+        ]
+      }
+    ]
+  }
+}  
 ```
 
 #### 查询当前最大区块高度
