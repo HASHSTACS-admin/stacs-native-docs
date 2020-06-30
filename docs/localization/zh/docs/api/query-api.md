@@ -239,7 +239,7 @@
 | label   | `string`       | 32         | Y    | Y        | 标签       |
 | contracts          | `List<`<a href="#ContractDefine">ContractDefine</a>`>`      |        | Y    | Y        |  bd定义contract                                             |
 | desc    | `string`       | 1024       | Y    | Y        | BD描述                   |
-| functions   | `List<FunctionDefine>`       |          | Y    | Y        | BD定义function                    |
+| functions   | `List<`<a href="#FunctionDefine">FunctionDefine</a>`>`       |          | Y    | Y        | BD定义function                    |
 | version | `string`  | 10     | Y    | Y        |  交易版本                   |
 | bdVersion | `string`  | 10     | Y    | Y        |  BD版本                   |
 
@@ -792,7 +792,7 @@
 | totalBlockSize   | `BigDecimal`          | 64      | Y    |  区块大小                     |
 | totalTxNum       | `long`                | 64      | Y    |  到此区块时，总的交易数量       |
 
-<a href="#StateRootHash">StateRootHash</a>
+- <a id="#StateRootHash">`StateRootHash`</a>:
 
 |    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
 | :-----------------: | ----------------- | ------- | ---- |  :---------------------------- |
