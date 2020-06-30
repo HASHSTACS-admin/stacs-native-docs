@@ -786,19 +786,19 @@
 | previousHash     | `string`              | 64      | Y    |  上个区块的hash               |
 | blockHash        | `string`              | 64      | Y    |  当前区块的hash               |
 | height           | `long`                | 64      | Y    |  区块高度                     |
-| stateRootHash    |  <a href="#StateRootHash">StateRootHash</a>     | 64      | Y    |  StateRootHash对象                |
+| stateRootHash    | `StateRootHash`     | 64      | Y    |  StateRootHash对象                |
 | blockTime        | `long`                | 64      | Y    |  区块时间                     |
 | txNum            | `int`                 | 8       | Y    |  当前区块内交易数量            |
 | totalBlockSize   | `BigDecimal`          | 64      | Y    |  区块大小                     |
 | totalTxNum       | `long`                | 64      | Y    |  到此区块时，总的交易数量       |
 
-- <a id="#StateRootHash">`StateRootHash`</a>:
+- `StateRootHash`:
 
 |    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
 | :-----------------: | ----------------- | ------- | ---- |  :---------------------------- |
 | rootHashMap          | `Map`          | 64      | Y    |  (MPT)树根hash的集合                  |
 
-- rootHashMap属性：
+- `rootHashMap`：
 
 |    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
 | :-----------------: | ----------------- | ------- | ---- |  :---------------------------- |
