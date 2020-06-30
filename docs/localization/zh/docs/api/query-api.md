@@ -808,8 +808,10 @@
 | contract          | `RootHash`            | 64      | Y    |  合约数据的存储(MPT)树根hash                |
 | permission      | `RootHash`              | 64      | Y    |  perimission的存储(MPT)树根hash                 |
 | domainMerchant    | `RootHash`            | 64      | Y    |  商户信息的存储(MPT)树根hash                    |
-| businessDefine          | `RootHash`      | 64      | Y    |  businessDefine的存储(MPT)树根hash                    |
+| contractState          | `RootHash`      | 64      | Y    |  合约状态的存储(MPT)树根hash             |
+| businessDefine          | `RootHash`      | 64      | Y    |  businessDefine的存储(MPT)树根hash             |
 | identity           | `RootHash`           | 64      | Y    |  identity的存储(MPT)树根hash               |
+| nodeInfo           | `RootHash`           | 64      | Y    |  节点数据的存储(MPT)树根hash               |
 | ca           | `RootHash`                 | 64      | Y    |  ca的存储(MPT)树根hash                |
 | transaction           | `RootHash`         | 64      | Y    |  交易数据的存储(MPT)树根hash                |
 | policy           | `RootHash`              | 64      | Y    |  policy的存储(MPT)树根hash                 |
