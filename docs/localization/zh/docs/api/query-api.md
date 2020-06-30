@@ -44,9 +44,9 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     | 
-| identityInfo | `identityInfo` | 40     | Y    | Y        | identity对象                |
+| <a href="#identityInfo">identityInfo</a> | `identityInfo` |      | Y    | Y        | identity对象                |
 
-`identityInfo`定义:
+- <a id="identityInfo">`identityInfo`</a>:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
@@ -103,10 +103,9 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     | 
-| permissionInfo | `permissionInfo` | 40     | Y    | Y        | permission对象       |
+| <a href="#permissionInfo">permissionInfo</a> | `permissionInfo` |      | Y    | Y        | permission对象       |
 
-
-`permissionInfo`定义:
+- <a id="permissionInfo">`permissionInfo`</a>:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
@@ -158,9 +157,9 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     | 
-| policyInfo | `policyInfo` | 40     | Y    | Y        | policy对象       |
+| <a href="#policyInfo">policyInfo</a> | `policyInfo` |     | Y    | Y        | policy对象       |
 
-`policyInfo`定义:
+- <a id="policyInfo">`policyInfo`</a>:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
@@ -230,21 +229,21 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
-| bdInfo | `bdInfo` |     | Y    | Y        | bd对象                     |
+| <a href="#bdInfo">bdInfo</a> | `bdInfo` |     | Y    | Y        | bd对象                     |
 
-`bdInfo`定义:
+- <a id="bdInfo">`bdInfo`</a>:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
 | id       | `string`       | 32       | Y    | Y        | BD编号                              |
 | label   | `string`       | 32         | Y    | Y        | 标签       |
-| contracts          | `List<ContractDefine>`      |        | Y    | Y        |  bd定义contract                                             |
+| contracts          | `List<`<a href="#ContractDefine">ContractDefine</a>`>`      |        | Y    | Y        |  bd定义contract                                             |
 | desc    | `string`       | 1024       | Y    | Y        | BD描述                   |
 | functions   | `List<FunctionDefine>`       |          | Y    | Y        | BD定义function                    |
 | version | `string`  | 10     | Y    | Y        |  交易版本                   |
 | bdVersion | `string`  | 10     | Y    | Y        |  BD版本                   |
 
-`ContractDefine`定义:
+- <a id="ContractDefine">`ContractDefine`</a>:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
@@ -252,9 +251,9 @@
 | desc             | `string` | 256   | N    | Y        | function描述                     |
 | createPermission | `string` | 64     | Y    | Y        | 合约发布时的权限,,发布bd时，该permission已经存在于链上 |
 | createPolicy     | `string` | 32      | Y    | Y        | 合约发布时的 policy,发布bd时，该policy已经存在于链上                |
-| functions        | `List<FunctionDefine>`| | Y| Y        | 合约方法定义function            |
+| functions        | `List<`<a href="#FunctionDefine">FunctionDefine</a>`>`| | Y| Y        | 合约方法定义function            |
 
-`FunctionDefine`定义:
+- <a id="FunctionDefine">`FunctionDefine`</a>:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -464,9 +463,9 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | currentBlockHeight | `long` |     | Y    | Y        | 当前的区块高度                     |
-| contractInfo | `contractInfo` |     | Y    | Y        | contract对象                     |
+| <a href="#contractInfo">contractInfo</a> | `contractInfo` |     | Y    | Y        | contract对象                     |
 
-`contractInfo`定义:
+- <a id="contractInfo">`contractInfo`</a>:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:    | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -553,17 +552,16 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| chainInfo    | `list<NodeTreeVO>` | text      | Y    | Y        | chain对象         |
+| chainInfo    | `list<`<a href="#NodeTreeVO">NodeTreeVO</a>`>` | text      | Y    | Y        | chain对象         |
 
-
-`NodeTreeVO` 定义:
+- <a id="NodeTreeVO">`NodeTreeVO`</a>:
 
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
 | domainId       | `string` | 32    | Y    | Y        | domain域                     |
-| nodeInfos      | `list<NodeInfoVO>` | 256   | N    | Y        | 节点集合           |
+| nodeInfos      | `list<`<a href="#NodeInfoVO">NodeInfoVO</a>`>` |    | N    | Y        | 节点集合           |
 
-`NodeInfoVO`定义:
+- <a id="NodeInfoVO">`NodeInfoVO`</a>:
 
 | 属性          | 类型          | 最大长度 | 必填 | 说明                           |
 | ------------- | ------------- | -------- | ---- | ------------------------------ |
@@ -681,6 +679,7 @@
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
 | actionDatas   | `string` | ...      | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
+| type       | `string` | 32       | Y    |    Y     |交易类型                                            |
 | subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |会话id                                            |
 | merchantId    | `string` | 32       | N    |    Y     |商户id                                            |
@@ -717,15 +716,13 @@
 |    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId           | `string`   | 64       | Y    |        | policy id(唯一)                      |
-| label             | `string`   | 64       | N    |          | policy 名称                      |
 | policyVersion      | `string`   | 64       | Y    |        | policy投票内容                    |
-| actionType         | `string`   | 64       | Y    |        | methodSign                      |
 | sender             | `string`   | 64       | Y    |        | 区块高度                      |
 | sendTime           | `date`     | 64       | Y    |        | 区块时间                      |
-| voteInfos          | `json[]`   | 64       | Y    |        | 投票信息                      |
+| voteInfos          | `List<`<a href="#VoteInfo">VoteInfo</a>`>`   | 64       | Y    |        | 投票信息                      |
 | decision           | `string`   | 64       | Y    |        | 决议                      |
 
-- voteInfos结构
+- <a id="VoteInfo">`VoteInfo`</a>:
 
 |    属性             | 类型     | 最大长度 | 必填    | 是否签名   | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
@@ -752,30 +749,36 @@
 - 请求地址：`GET`:`/v4/queryBlockVO`
 - 请求参数： 
 
-|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                                        |
-| :---------: | -------- | -------- | ---- | -------- | :-------------------------------------- |
-| startHeight | `long`     | 64       | Y    |        | 要查询的起始高度(startHeight必须大于等于1)                          |
-| size        | `int`     | 8       | Y    |          | 起始高度后的多少个(size必须在1-10之间)            |
+|    属性     | 类型     | 最小长度| 最大长度 | 必填 | 是否签名 | 说明                                        |
+| :---------: | -------- | -------- | --------| ---- | -------- | :-------------------------------------- |
+| startHeight | `long`   |     1    | 64       | Y    |        | 要查询的起始高度(startHeight必须大于等于1)                          |
+| size        | `int`    |     1    | 10       | Y    |          | 起始高度后的多少个(size必须在1-10之间)            |
 
-- 响应参数(数组中单个对象属性)：
+- 响应参数：
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| data    | `list<`<a href="#BlockVO">BlockVO</a>`>` | text      | Y    | Y        | BlockVO集合对象         |
+
+- <a id="BlockVO">`BlockVO`</a>:
 
 |    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
 | :--------------: | --------------------- | ------- | ---- |  :---------------------------- |
 | genesis          | `boolean`             | 6       | Y    |  是否为创世块                   |
-| blockHeader      | `BlockHeader`         | 64      | Y    |  BlockHeader对象               |
-| transactionList  | `JSONArray<Transaction>` | 64      | Y    |  含有<a href="#Transaction">Transaction</a>的集合        |
+| blockHeader      | <a href="#BlockHeader">BlockHeader</a>    | 64      | Y    |  BlockHeader对象               |
+| transactionList  | `List<`<a href="#TransactionPO">TransactionPO</a>`>` |      | Y    |  含有TransactionPO的集合        |
 
-- <a id="Transaction">Transaction</a>:
+- <a id="TransactionPO">`TransactionPO`</a>:
 
 |    属性                     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:                | -------- | -------- | ---- | -------- | :---------------------------- |
-| <a href="coreTx">coreTx</a>| `json`     | 64       | Y    |        | 交易原始内容                      |
+| <a href="#coreTx">coreTx</a> | `json`     | 64       | Y    |        | 交易原始内容                      |
 | policyData                 | `json`     | 64       | Y    |        | policy投票内容                    |
 | transactionReceipt         | `json`     | 64       | Y    |        | 交易执行结果                     |
 | blockHeight                | `string`   | 64       | Y    |        | 区块高度                     |
 | blockTime                  | `string`   | 64       | Y    |        | 区块时间                  |
 
-- BlockHeader对象属性：
+- <a id="BlockHeader">`BlockHeader`</a>:
 
 |    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
 | :--------------: | --------------------- | ------- | ---- |  :---------------------------- |
@@ -783,25 +786,171 @@
 | previousHash     | `string`              | 64      | Y    |  上个区块的hash               |
 | blockHash        | `string`              | 64      | Y    |  当前区块的hash               |
 | height           | `long`                | 64      | Y    |  区块高度                     |
-| stateRootHash    | `StateRootHash`       | 64      | Y    |  rootHash对象                |
+| stateRootHash    |  <a href="#StateRootHash">StateRootHash</a>     | 64      | Y    |  StateRootHash对象                |
 | blockTime        | `long`                | 64      | Y    |  区块时间                     |
 | txNum            | `int`                 | 8       | Y    |  当前区块内交易数量            |
 | totalBlockSize   | `BigDecimal`          | 64      | Y    |  区块大小                     |
 | totalTxNum       | `long`                | 64      | Y    |  到此区块时，总的交易数量       |
 
-
-- StateRootHash对象属性：
+<a href="#StateRootHash">StateRootHash</a>
 
 |    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
 | :-----------------: | ----------------- | ------- | ---- |  :---------------------------- |
-| attestation          | `string`          | 64      | Y    |  存证信息的MPT根hash                    |
-| domainInfo     | `string`               | 64      | Y    |  domain信息的存储(MPT)树根hash              |
-| stacsConfig   | `string`                | 64      | Y    |  系统属性的存储(MPT)树根hash         |
-| contract          | `string`            | 64      | Y    |  合约数据的存储(MPT)树根hash                |
-| permission      | `string`              | 64      | Y    |  perimission的存储(MPT)树根hash                 |
-| domainMerchant    | `string`            | 64      | Y    |  商户信息的存储(MPT)树根hash                    |
-| businessDefine          | `string`      | 64      | Y    |  businessDefine的存储(MPT)树根hash                    |
-| identity           | `string`           | 64      | Y    |  identity的存储(MPT)树根hash               |
-| ca           | `string`                 | 64      | Y    |  ca的存储(MPT)树根hash                |
-| transaction           | `string`         | 64      | Y    |  交易数据的存储(MPT)树根hash                |
-| policy           | `string`              | 64      | Y    |  policy的存储(MPT)树根hash                 |
+| rootHashMap          | `Map`          | 64      | Y    |  (MPT)树根hash的集合                  |
+
+- rootHashMap属性：
+
+|    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
+| :-----------------: | ----------------- | ------- | ---- |  :---------------------------- |
+| attestation          | `RootHash`          | 64      | Y    |  存证信息的MPT根hash                    |
+| domainInfo     | `RootHash`               | 64      | Y    |  domain信息的存储(MPT)树根hash              |
+| stacsConfig   | `RootHash`                | 64      | Y    |  系统属性的存储(MPT)树根hash         |
+| contract          | `RootHash`            | 64      | Y    |  合约数据的存储(MPT)树根hash                |
+| permission      | `RootHash`              | 64      | Y    |  perimission的存储(MPT)树根hash                 |
+| domainMerchant    | `RootHash`            | 64      | Y    |  商户信息的存储(MPT)树根hash                    |
+| businessDefine          | `RootHash`      | 64      | Y    |  businessDefine的存储(MPT)树根hash                    |
+| identity           | `RootHash`           | 64      | Y    |  identity的存储(MPT)树根hash               |
+| ca           | `RootHash`                 | 64      | Y    |  ca的存储(MPT)树根hash                |
+| transaction           | `RootHash`         | 64      | Y    |  交易数据的存储(MPT)树根hash                |
+| policy           | `RootHash`              | 64      | Y    |  policy的存储(MPT)树根hash                 |
+
+- RootHash属性：
+
+|    属性           | 类型                  | 最大长度 | 必填 |  说明                          |
+| :-----------------: | ----------------- | ------- | ---- |  :---------------------------- |
+| continuous          | `long`          |       | Y    |  未出现变化的连续区块数量                    |
+| hash     | `String`               | 64      | Y    |  某种数据的存储(MPT)树根hash              |
+
+- 实例：
+
+```json tab="响应实例"
+{
+  "respCode": "000000",
+  "msg": "Success",
+  "data": [
+    {
+      "genesis": false,
+      "blockHeader": {
+        "version": "4.2.0",
+        "previousHash": "b173e9272a0176618e811b0dcee8d396556fbb0aad8eedda67ea05a11426fe5f",
+        "blockHash": "4315ebb3706c3b250cc785d6a797b01749f69d457223101783e4570434108eba",
+        "height": "2",
+        "stateRootHash": {
+          "rootHashMap": {
+            "attestation": {
+              "continuous": "1",
+              "hash": "56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+            },
+            "domainInfo": {
+              "continuous": "1",
+              "hash": "5a82a9579f16f608880364d9a58a1b66f8c6c6f6ca7ed14d2678ac220caf74c2"
+            },
+            "stacsConfig": {
+              "continuous": "0",
+              "hash": "dd8f14af1d325f951a2991a8bc20e55a1f693245fc1636d0999760e2d53cd07d"
+            },
+            "contract": {
+              "continuous": "1",
+              "hash": "56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+            },
+            "permission": {
+              "continuous": "1",
+              "hash": "c85701089d5159838fe9cdc7a6d8e6055e426338b407b65dcd100a186d40c24a"
+            },
+            "domainMerchant": {
+              "continuous": "1",
+              "hash": "56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+            },
+            "contractState": {
+              "continuous": "0",
+              "hash": "56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+            },
+            "businessDefine": {
+              "continuous": "1",
+              "hash": "351502013ed17accf27106bf01f37141ecf8ae6c1d77c823cc0491afbdc2c753"
+            },
+            "identity": {
+              "continuous": "1",
+              "hash": "18b8351e02d1295eeb47414708a7fbd9effe3288365ecc992ef95becc7ca021b"
+            },
+            "nodeInfo": {
+              "continuous": "1",
+              "hash": "0b28d181b5b2140eb330c8989ab134dd6dc8e00162db1b2bc06c9481a0139145"
+            },
+            "ca": {
+              "continuous": "1",
+              "hash": "3b2ffa173036891b9a83128bae92a8349d9e7cf24159c9bc3ea0784928f2e448"
+            },
+            "transaction": {
+              "continuous": "0",
+              "hash": "4762a6fb76d111c0a3f358a36601474548ae0b91254e27c93af490979d0c5262"
+            },
+            "policy": {
+              "continuous": "1",
+              "hash": "0cecf9b7cd79a6e98d92ab3b3b6c9d5b5f8b105c228aa3d2ae8505a4ebf5f8eb"
+            }
+          }
+        },
+        "blockTime": "1593485532161",
+        "txNum": 1.0,
+        "totalBlockSize": 2.25,
+        "totalTxNum": "7"
+      },
+      "transactionList": [
+        {
+          "coreTx": {
+            "txId": "0000017303239b2cad1f76f8d2927c78cef344b3",
+            "bdId": "SystemBD",
+            "templateId": null,
+            "type": "UPGRADE_VERSION",
+            "subType": null,
+            "sessionId": null,
+            "merchantId": null,
+            "merchantSign": null,
+            "functionId": "UPGRADE_VERSION",
+            "submitter": "42473da8cfb880f9e0df4874bb54b12b2efcde69",
+            "actionDatas": "{\n  \"version\": \"4.2.1\",\n  \"datas\": {\n    \"chainVersion\": \"4.2.1\",\n    \"clusterNodeVersion\": [\n      {\n        \"nodeName\": \"STACS-node-B\",\n        \"nodeVersion\": \"4.2.1\",\n        \"sign\": \"01a686498a4125d4377a0864353ab0a35a22e10646fd8000a83010c39d79b7f58f5f5724bbd3dd30c9fcae4f640c0508d06d150b41c4ac6dff932be2282e6e35ad\"\n      },\n      {\n        \"nodeName\": \"STACS-node-C\",\n        \"nodeVersion\": \"4.2.1\",\n        \"sign\": \"0186fdba135a60a9eafc9e0cfd07de498d2f00f9f5e387ba65cd413834375a69237df76f56aa0f03c7ddf56ec0ef78ad15a4b25340f0e03faf5f52ca0d8e7dfff3\"\n      },\n      {\n        \"nodeName\": \"STACS-node-D\",\n        \"nodeVersion\": \"4.2.1\",\n        \"sign\": \"001d756da20844c453b51b2358c9eabd9ca7b38f157bb34e72cf4ac3a14d3a6f99088be3c9812fa18a1ddcd219820137e98ae3de8376ce9022a050341c351a9881\"\n      },\n      {\n        \"nodeName\": \"STACS-node-A\",\n        \"nodeVersion\": \"4.2.1\",\n        \"sign\": \"0183a63aa91609cb2fcef57a19c6987094c8b99e151b7e11570d9e11a6298e49c67d23046c40a46c708b32462f16a008a46da468f00fc61143e4b7ca54cf4a7041\"\n      }\n    ],\n    \"index\": 0,\n    \"version\": \"4.0.0\"\n  }\n}",
+            "version": "4.2.1",
+            "submitterSign": "00f9166dbd63c889c7669fff837917ed6aac1a75daabcef7b69dc1aa0e1eb2e3a11ac80c20b039a70ebd1c5cc7cf9b12e64a61c11069f3a8444eed3d1be2bd78f1",
+            "extensionDatas": null
+          },
+          "policyData": {
+            "policyId": "SYNC_ONE_VOTE_DEFAULT",
+            "policyVersion": 0.0,
+            "sender": "STACS-node-D",
+            "sendTime": 1.593485531954E12,
+            "voteInfos": [
+              {
+                "domainId": "STACS-Domain-D",
+                "owner": "STACS-node-D",
+                "decision": true,
+                "signType": "BIZ",
+                "sign": "0132a27ac8755a59efe824718af1cb76d4c77583b60a14c56b120940fa06630d17541540b6be26a7236add4e3f024a72b0afb4d9bcd04bd41d61345062d7d25284"
+              }
+            ],
+            "decision": true
+          },
+          "transactionReceipt": {
+            "txId": "0000017303239b2cad1f76f8d2927c78cef344b3",
+            "result": true,
+            "errorCode": null,
+            "errorMessage": null,
+            "receiptData": {
+              "actionResults": [
+                null
+              ]
+            },
+            "version": "4.2.1"
+          },
+          "blockHeight": "2",
+          "blockTime": 1.593485532161E12
+        }
+      ],
+      "callbackTime": "0",
+      "createTime": null,
+      "packSendTime": null,
+      "packReceivedTime": null
+    }
+  ]
+}  
+```
