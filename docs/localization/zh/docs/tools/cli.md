@@ -208,7 +208,8 @@ The most commonly used node commands are:
   * 手动加入：
      
      CLI中执行：``` cluster joinRequest ``` 命令
-     若该节点所属domain下还有其他节点，则需要其他任意节点投票，否则需要运营者投票
+     
+     注：自动或手动加入时，若该节点所属domain下还有其他节点，则只需要该domain下其他任意节点投票即可，否则需要运营者投票
 
 ### 节点退出：
 1.运营者主动移除domain(该domain下所有节点均会被退出)
