@@ -857,7 +857,7 @@
 |    属性         | 类型          | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :------------:  | --------     | -------- | ---- | -------- | :---------------------------- |
 | methodSignature | `string`     | 256     | Y    | Y        | 方法执行的方法abi((uint) balanceOf(address))   |
-| args            | `object[]`   |         | N    | Y        | 方法执行入参参数      |
+| args            | `object[]`   |         | N    | Y        | 方法执行入参参数,当evm参数是byte32时，需要用：EvmArgs.byte32("xx")  |
 | contractAddress | `string`     | 40     | Y    | Y        | 执行的合约地址                     |
 
 - 响应参数：
