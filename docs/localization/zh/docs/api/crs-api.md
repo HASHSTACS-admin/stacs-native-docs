@@ -1184,6 +1184,116 @@
 }
 ```
 
+
+### domain信息查询
+ 
+#### <a id="domainQuery">domain信息查询</a>
+
+- [ ] 开放
+- 接口描述：  查询domain信息
+- 请求地址：`POST`：`domain/queryDomains`
+- 请求参数： 无
+- 响应参数：
+
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `List` |    List<DomainInfo>     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
+
+- 实例：
+
+```json tab="请求实例"
+[
+{
+	"domainId":"domainA",
+	"maxNodeSize":3,
+	"desc":"for test"
+},
+{
+	"domainId":"domainB",
+	"maxNodeSize":2,
+	"desc":"for test"
+}
+]
+```
+ 
+
+### 设置Domain
+ 
+#### <a id="SET_DOMAIN">设置Domain</a>
+
+- [ ] 开放
+- 接口描述：  设置domain信息
+- functionId：`SET_DOMAIN`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| domainId | `string` | 64     | Y    | Y        | 要设置的domainId                      |
+| maxNodeSize   | `int` | 8    | Y    | Y        | 该domain下最大节点数                      |
+| desc   | `string` | 128    | N    | Y        | 描述信息                      |
+
+- 响应参数：
+
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"txData":"{\"txId\":\"00000171b518d70461d63a39d06c4f8efb2899f2\",\"bdId\":\"bd_demo_5\",\"functionId\":\"SET_DOMAIN\",\"type\":\"SET_DOMAIN\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"domainId\":\"domainA\",\"maxNodeSize\":3"},\"desc\":\"test\"}}",
+    "txSign":"00e35830840c00f6c443f43494425382c88b871ccc72e40a42b56fe465ec76f6c04a7569361ea0b2c1f351ae7e1dcf49d1047ac52709d817ffb936ba6bef42f80a"
+}
+```
+
+```json tab="响应实例"
+{
+    "data":"00000171b518d70461d63a39d06c4f8efb2899f2","msg":"Success","respCode":"000000","success":true
+}
+``` 
+
+
+### 移除Domain
+ 
+#### <a id="REMOVER_DOMAIN">移除Domain</a>
+
+- [ ] 开放
+- 接口描述：  移除domain
+- functionId：`REMOVER_DOMAIN`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| domainId | `string` | 64     | Y    | Y        | 要删除的domainId                      |
+
+- 响应参数：
+
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   交易id     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
+
+- 实例：
+
+```json tab="请求实例"
+{
+	"txData":"{\"txId\":\"00000171b518d70461d63a39d06c4f8efb2899f2\",\"bdId\":\"bd_demo_5\",\"functionId\":\"REMOVE_DOMAIN\",\"type\":\"REMOVE_DOMAIN\",\"submitter\":\"2a4060d480ebf0b601294b1f9f9599936681de61\",\"version\":\"4.0.0\",\"actionDatas\":{\"datas\":{\"domainId\":\"domainA\"},\"desc\":\"test\"}}",
+    "txSign":"00e35830840c00f6c443f43494425382c88b871ccc72e40a42b56fe465ec76f6c04a7569361ea0b2c1f351ae7e1dcf49d1047ac52709d817ffb936ba6bef42f80a"
+}
+```
+
+```json tab="响应实例"
+{
+    "data":"00000171b518d70461d63a39d06c4f8efb2899f2","msg":"Success","respCode":"000000","success":true
+}
+``` 
+
 ## **普通接口**
 ---
 #### DRS回调地址注册(需要定时上报，Stacs-Native区块链不会存储)
