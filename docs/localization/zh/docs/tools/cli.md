@@ -201,13 +201,13 @@ The most commonly used node commands are:
    
      注：
     
-    1.运营者投票通过后，新节点需等待5分钟左右方可可用，检测方式：ssh -p2000 user@localhost 密码:pwd ,执行：node state -a 命令，若能看到其他节点及本节点信息即表示加入成功。
+    1.运营者投票通过后，新节点需等待5分钟左右方可可用，检测方式：``` ssh -p2000 user@localhost ``` 密码:pwd ,执行：``` node state -a ``` 命令，若能看到其他节点及本节点信息即表示加入成功。
      
      2.自动加入仅限节点第一次启动时，若第一次加入失败，则以后再加入需要手动发起
      
   * 手动加入：
      
-     CLI中执行：cluster joinRequest 命令
+     CLI中执行：``` cluster joinRequest ``` 命令
      若该节点所属domain下还有其他节点，则需要其他任意节点投票，否则需要运营者投票
 
 ### 节点退出：
