@@ -171,16 +171,20 @@ The most commonly used node commands are:
 ## 节点加入/退出说明
 ### 前置步骤
 1. 原始集群创世块中需要配置具体的运营者信息，必须为现有domain中的一个或多个
-  ``` management:
+```
+ management:
         domains: STACS-A    #运营者domainId,支持多个，逗号连接
         voteType: ONE_VOTE  #投票方式，ONE_VOTE-一票通过 FULL_VOTE-全票通过
-  ```
+          
+```
 2. 在运营者节点的CLI命令中执行新加入节点所属Domain信息的配置
    
-   ``` 
+``` 
+   
    domain set ${domainId} ${maxNodeSize} ${descrition} 
    domain query
-   ```
+   
+```
 3. domain 配置命令提交后，需要domain运营者来投票
 
 ### 新节点配置：
@@ -190,6 +194,7 @@ The most commonly used node commands are:
 4. stacs.native.domainId = FORT-CAPITAL       #domainId,需要与运营者分配的domainId一致
 
 ### 节点加入：
+
   * 自动加入：
    
      新节点启动后会自动发起请求到现有集群，需要运营者domain来投票确定是否允许该节点的加入，如果投票通过，该节点就会加入集群中，无需在做操作。 
@@ -199,6 +204,7 @@ The most commonly used node commands are:
     1.运营者投票通过后，新节点需等待5分钟左右方可可用，检测方式：ssh -p2000 user@localhost 密码:pwd ,执行：node state -a 命令，若能看到其他节点及本节点信息即表示加入成功。
      
      2.自动加入仅限节点第一次启动时，若第一次加入失败，则以后再加入需要手动发起
+     
   * 手动加入：
      
      CLI中执行：cluster joinRequest 命令
