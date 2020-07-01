@@ -1,16 +1,5 @@
 # **常用命令** 
 
-## consensus
-
-用于节点处理共识协议：加入共识协议，退出共识协议等
-
-<pre><code>
-usage: consensus [-h | --help] COMMAND [ARGS] <br>
-The most commonly used consensus commands are:
-   leaveConsensus   leave a consensus cluster(节点离开共识)
-   joinConsensus    join a consensus cluster(节点加入共识)
-<br></code></pre>
-
 ## **term**
 
 用于管理集群选主
@@ -56,9 +45,6 @@ The most commonly used failover commands are:
 <pre><code>
 usage: ca [-h | --help] COMMAND [ARGS] <br>
 The most commonly used ca commands are:
-   authCA           auth CA (申请CA)
-   updateCA         update CA(更新CA)
-   removeCA         remove CA(删除CA)
    listCA           list CA (显示所有CA)
 <br></code></pre> 
 
@@ -67,9 +53,8 @@ The most commonly used ca commands are:
 <pre><code>
 usage: cluster [-h | --help] COMMAND [ARGS] <br>
 The most commonly used cluster commands are:
-   leaveConsensus   leave consensus layer(节点离开)
    joinRequest      join consensus request layer(节点加入)
-   joinConsensus    join consensus layer(加点加入共识)
+   leaveRequest   leave consensus layer(节点离开)
 <br></code></pre> 
 
 ## **noderocksdb**
