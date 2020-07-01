@@ -212,7 +212,8 @@ The most commonly used node commands are:
 
 ### 节点退出：
 1.运营者主动移除domain(该domain下所有节点均会被退出)
-运营者domain可以在CLI命令行中执行：domain remove ${domainId} 并且投票。被执行的domain下所有节点就会退出并Offline。
+运营者domain可以在CLI命令行中执行：
+```domain remove ${domainId} ``` 并且投票。被执行的domain下所有节点就会退出并Offline。
 
 2.某节点主动退出
-节点CLI中执行：cluster leaveRequest 若该节点所属domain下还有其他节点，则需要其他任意节点投票，否则需要运营者投票
+节点CLI中执行：``` cluster leaveRequest ``` 若该节点所属domain下还有其他节点，则需要其他任意节点投票，否则需要运营者投票
