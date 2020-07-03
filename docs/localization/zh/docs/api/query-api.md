@@ -1,5 +1,70 @@
 ### 查询接口
 
+#### domain信息查询
+
+- [ ] 开放
+- 接口描述：  查询domain信息
+- 请求地址：`POST`：`domain/queryDomains`
+- 请求参数： 无
+- 响应参数：
+
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `List` |    List<DomainInfo>     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
+
+- 实例：
+
+```json tab="请求实例"
+[
+{
+	"domainId":"domainA",
+	"maxNodeSize":3,
+	"desc":"for test"
+},
+{
+	"domainId":"domainB",
+	"maxNodeSize":2,
+	"desc":"for test"
+}
+]
+```
+
+#### 快照查询
+
+- [ ] 开放
+- 接口描述：  
+- 请求地址：`GET`:`/v4/snapshot/query?txId={txId}`
+- 请求参数： 
+
+|    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
+| :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
+| txId | `string` | 40     | Y    | Y        | 交易id                      |
+
+- 响应参数：
+
+|    属性      | 类型       |  说明        |
+| :---------: | -------    | :---------- |
+| data        |   `string` |   快照信息     |
+| respCode    |   `string` |    状态码    |
+| msg         |   `string` |    状态信息   |
+
+- `data`
+
+|    属性     | 类型     |  说明                          |
+| :---------: | -------- | :---------------------------- |
+| snapshotId | `string`    |   快照Id                      |
+| blockHeight | `int`    |   区块高度                      |
+| remark     | `string` | 备注                      |
+
+- 实例：
+
+```json tab="响应实例"
+{
+    respCode='000000', msg='Success', data={"snapshotId":"00000171b5259d51cfee6d3384b66cb8baebf136","blockHeight":48,"remark":"you see see you"}}
+}
+```
 #### 存证查询
 - [ ] 开放
 - 接口描述：  查询入链存证信息
