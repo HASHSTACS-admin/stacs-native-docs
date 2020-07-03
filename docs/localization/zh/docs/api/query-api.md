@@ -1,6 +1,6 @@
 ### 查询接口
 
-#### domain信息查询
+#### 查询domain信息
 
 - [ ] 开放
 - 接口描述：  查询domain信息
@@ -31,7 +31,7 @@
 ]
 ```
 
-#### 快照查询
+#### 查询快照
 
 - [ ] 开放
 - 接口描述：  
@@ -65,7 +65,7 @@
     respCode='000000', msg='Success', data={"snapshotId":"00000171b5259d51cfee6d3384b66cb8baebf136","blockHeight":48,"remark":"you see see you"}}
 }
 ```
-#### 存证查询
+#### 查询存证
 - [ ] 开放
 - 接口描述：  查询入链存证信息
 - 请求地址：`GET`:`/v4/queryAttestation/{id}`
