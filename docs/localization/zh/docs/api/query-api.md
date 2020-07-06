@@ -1,36 +1,5 @@
 ### 查询接口
 
-#### 查询domain信息
-
-- [ ] 开放
-- 接口描述：  查询domain信息
-- 请求地址：`POST`：`domain/queryDomains`
-- 请求参数： 无
-- 响应参数：
-
-|    属性      | 类型       |  说明        |
-| :---------: | -------    | :---------- |
-| data        |   `List` |    List<DomainInfo>     |
-| respCode    |   `string` |    状态码    |
-| msg         |   `string` |    状态信息   |
-
-- 实例：
-
-```json tab="请求实例"
-[
-{
-	"domainId":"domainA",
-	"maxNodeSize":3,
-	"desc":"for test"
-},
-{
-	"domainId":"domainB",
-	"maxNodeSize":2,
-	"desc":"for test"
-}
-]
-```
-
 #### 查询快照
 
 - [ ] 开放
