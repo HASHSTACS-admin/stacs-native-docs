@@ -31,16 +31,18 @@
     | SET_POLICY  		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置Policy      |
     | ADD_RS  			    | DEFAULT        | ADD_RS   	            |RS注册      |
     | REMOVE_RS  			| RS        	 | REMOVE_RS   	  		    |RS撤销      |
-    | ADD_CA  				| DEFAULT        | ADD_CA   	  		    |CA认证      |
-    | UPDATE_CA  			| RS             | UPDATE_CA   	  		    |CA更新      |
-    | REMOVE_CA  			| RS        	 | REMOVE_CA   	  		    |CA撤销      |
-    | ADD_NODE  			| DEFAULT        | ADD_NODE   	  		    |加入节点      |
-    | REMOVE_NODE  			| DEFAULT        | REMOVE_NODE   	        |退出节点      |
+    | ADD_CA  				| DEFAULT        | MANAGEMENT_DOMAIN  	    |CA认证      |
+    | UPDATE_CA  			| DEFAULT        | MANAGEMENT_DOMAIN  	    |CA更新      |
+    | REMOVE_CA  			| DEFAULT      	 | MANAGEMENT_DOMAIN  	    |CA撤销      |
+    | ADD_NODE  			| DEFAULT        | MANAGEMENT_DOMAIN  	    |加入节点      |
+    | REMOVE_NODE  			| DEFAULT        | MANAGEMENT_DOMAIN        |退出节点      |
     | UPGRADE_VERSION		| DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|版本升级      |
-    | SET_DOMAIN		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置domain信息  |
+    | SET_MERCHANT		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|设置商户信息  |
     | ADD_SNAPSHOT		    | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|打快照  |
     | PERMISSION_ADD_ADDR   | DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|添加permission的address  |
     | PERMISSION_REMOVE_ADDR| DEFAULT        | SYNC_ONE_VOTE_DEFAULT   	|删除permission的address  |
+    | SET_DOMAIN		    | DEFAULT        | MANAGEMENT_DOMAIN   	    |设置domain信息  |
+    | REMOVE_DOMAIN		    | DEFAULT        | MANAGEMENT_DOMAIN   	    |移除domain信息  |
 
 2. 系统内置Permission
     
