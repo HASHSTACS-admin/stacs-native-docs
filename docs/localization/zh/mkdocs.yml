@@ -41,6 +41,7 @@ nav:
   - CRS参考:
       - CRS命令参考: tools/cli.md
       - CRS接口参考: api/crs-api.md
+      - 协调网关接口参考: api/coordinator-api.md
       - CRS查询接口参考: api/query-api.md
   - 工具:
       - 秘钥工具: tools/generator.md   
