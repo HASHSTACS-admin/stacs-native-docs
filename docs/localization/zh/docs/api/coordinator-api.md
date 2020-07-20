@@ -77,10 +77,7 @@
   "packReceivedTime": null
 }
 
-```
-```
-1
-```
+``` 
 
 
 #### 协调网关/主网 接收请求接口
@@ -103,7 +100,7 @@
 
 - 实例：
 
-```$xslt
+``` 
 {
   "coreTx": {
     "txId": "000001735c4c4ec23fad168dd08d7f4c5e933d7e",
@@ -126,7 +123,10 @@
   "to": "STCS",
   "sign": "STCS-signature"
 }
+
 ```
+
+
 
 #### 协调网关接收发送数据接口
 
@@ -151,7 +151,7 @@
 
 - 实例：
 
-```json tab="请求实例"
+``` 
 {
   "coreTx": {
     "txId": "000001735c4993abbbdb426bec7ba3796f0e53e3",
@@ -197,7 +197,7 @@
 
 - 实例：
 
-```json tab="请求实例"
+``` 
 [
   {
     "nodeName": "node-a",
