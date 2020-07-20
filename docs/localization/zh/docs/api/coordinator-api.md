@@ -18,8 +18,7 @@
 | respCode    |   `string` |    状态码,000000为成功    |
 | msg         |   `string` |    状态信息   |
 
-```$xslt
-
+``` 
 {
   "genesis": false,
   "blockHeader": {
