@@ -168,20 +168,6 @@ The most commonly used node commands are:
 </code>
 </pre>
 
-## **chain**
-用于管理chain
-<pre>
-<code>
-usage: chain [-h | --help] COMMAND [ARGS] <br>
-The most commonly used node commands are:
-   set         set chain config
-   add         add pn
-   remove      remove pn
-   changeState change chain type 
-<br>
-</code>
-</pre>
-
 ## 节点加入/退出说明
 ### 前置步骤
 1. 原始集群创世块中需要配置具体的运营者信息，必须为现有domain中的一个或多个
