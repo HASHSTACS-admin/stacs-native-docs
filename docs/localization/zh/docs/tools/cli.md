@@ -173,7 +173,7 @@ The most commonly used node commands are:
 <pre>
 <code>
 usage: chain [-h | --help] COMMAND [ARGS] <br>
-The most commonly used node commands are:
+The most commonly used chain commands are:
    set         set chain config
    add         add pn
    remove      remove pn
