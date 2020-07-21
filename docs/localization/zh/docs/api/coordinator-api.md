@@ -178,7 +178,7 @@
 #### 获取主网所有节点信息(host+pubKey)接口
 
 - 接口描述： 获取主网所有节点信息(host+pubKey)接口
-- 请求地址：`POST`: `/node/peers`
+- 请求地址：`GET`: `/node/peers`
 - 请求参数： 
 
 - 请求参数：
