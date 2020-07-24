@@ -608,7 +608,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | policyId       | `string`       | 32       | Y    | Y        | 注册/修改的policyId                               |
-| label          | `string`       | 64       | N    | Y        |  别名                                            |
+| label          | `string`       | 64       | Y    | Y        |  别名                                            |
 | votePattern    | `string`       | 10        | Y    | Y        | 投票模式，1. SYNC 2. ASYNC                   |
 | callbackType   | `string`       | 10         | Y    | Y        | 回调类型，1. ALL 2. SELF                     |
 | decisionType   | `string`       | 10         | Y    | Y        | 1. FULL_VOTE 2. ONE_VOTE 3. ASSIGN_NUM       |
