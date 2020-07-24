@@ -162,7 +162,7 @@
 | bdId          | `string` | 32       | N    |    Y     | 所有业务交易都需要指定bdId(合约执行可为空)                                       |
 | templateId    | `string` | 32       | N    |    Y     |发布合约或执行合约方法时的合约templateCode(合约执行可为空)                           |
 | type          | `string` | 32       | Y    |    Y     |系统级actionType                                                  |
-| subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
+| subType       | `string` | 192       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |订单id                                            |
 | functionId    | `string` | 32       | N    |    Y     | BD的functionId，如果是BD的初始化或者合约的发布：`ADD_CONTRACT` (合约执行可为空) |
 | submitter     | `string` | 40       | Y    |    Y     | 操作提交者地址                                               |
@@ -661,7 +661,7 @@
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:| -------------------- | -------- | ---- | -------- | :-------------------------------- |
 | id         | `string`               |32       | Y    | Y        | BD编号（唯一）                      |
-| label      | `string`              |32       | N    | Y        | BD名称                             |
+| label      | `string`              |64       | N    | Y        | BD名称                             |
 | desc      | `string`               |1024     | N    | Y        | 描述                      |
 | functions | `List<FunctionDefine>` |         | N    | Y        | bd定义function            |
 | contracts | `List<ContractDefine>` |         | N    | Y        | bd定义contract            |
@@ -862,7 +862,7 @@
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
 | id            | `string`  | 32        | Y    | Y        | permission id（唯一）       |
-| label         | `string`  | 32        | N    | Y        | 名称       |
+| label         | `string`  | 64       | N    | Y        | 名称       |
 | type          | `string`  | 64        | Y    | Y        | 授权类型（ADDRESS/IDENTITY）       |
 | authorizers   | `string[]`|           | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas         | `json`    |           | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式|
