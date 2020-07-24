@@ -144,7 +144,7 @@
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
 | id | `string` | 40     | Y    | Y        | 权限ID                      |
-| label | `string` |  32    |     | Y        |   标签                 |
+| label | `string` |  64    |     | Y        |   标签                 |
 | type          | `string`  | 64        | Y    | Y        | 授权类型（ADDRESS/IDENTITY）       |
 | authorizers   | `string[]`|           | Y    | Y        | 被授予后期可以修改Permission的地址|
 | datas | `string` |      | Y    | Y        | 当type为ADDRESS时，datas为地址数组；type为IDENTITY时，datas为验证Identity表达式                      |
@@ -270,7 +270,7 @@
 |    属性         | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :-----------:    | -------- | -----| ---- | -------- | :---------------------------- |
 | id       | `string`       | 32       | Y    | Y        | BD编号                              |
-| label   | `string`       | 32         | Y    | Y        | 标签       |
+| label   | `string`       | 64         | Y    | Y        | 标签       |
 | contracts          | `List<`<a href="#ContractDefine">ContractDefine</a>`>`      |        | Y    | Y        |  bd定义contract                                             |
 | desc    | `string`       | 1024       | Y    | Y        | BD描述                   |
 | functions   | `List<`<a href="#FunctionDefine">FunctionDefine</a>`>`       |          | Y    | Y        | BD定义function                    |
@@ -509,7 +509,7 @@
 | code   | `string`        |     text     | Y    | Y        | 合约源码                    |
 | extension   | `string`        |     1024     | Y    | Y        | 扩展字段                   |
 | id   | `string`        |     32     | Y    | Y        | 合约ID                    |
-| label   | `string`       | 32         | Y    | Y        | 标签/合约简称       |
+| label   | `string`       | 64         | Y    | Y        | 标签/合约简称       |
 | language   | `string`        |     32     | Y    | Y        | 合约编程语言类型                    |
 | status   | `string`        |     32     | Y    | Y        | 状态                   |
 | templateId   | `string`        |     32     | Y    | Y        | 合约模板名称                   |
@@ -714,7 +714,7 @@
 | actionDatas   | `string` | ...      | Y    |    Y     | 业务参数JSON格式化数据，json数据包含{"version":"4.0.0","datas":{}}                                               |
 | version       | `string` | 40       | Y    |    Y     | 交易版本号                                               |
 | type       | `string` | 32       | Y    |    Y     |交易类型                                            |
-| subType       | `string` | 32       | N    |    Y     |子业务类型                                             |
+| subType       | `string` | 192       | N    |    Y     |子业务类型                                             |
 | sessionId     | `string` | 64       | N    |    Y     |会话id                                            |
 | merchantId    | `string` | 32       | N    |    Y     |商户id                                            |
 | merchantSign  | `string` | 128      | N    |    Y     |商户签名     
