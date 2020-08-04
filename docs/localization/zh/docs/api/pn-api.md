@@ -8,9 +8,9 @@
 
 |    属性     | 类型                  | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------------------- | --------| ---- | -------- | :-------------------------------- |
-| <a href="#ProprietaryNetworkVO">ProprietaryNetworkVO</a>      | `ProprietaryNetworkVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProprietaryNetworkVO`|
+| <a href="#ProfessionalNetworkVO">ProfessionalNetworkVO</a>      | `ProfessionalNetworkVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProfessionalNetworkVO`|
 
-- <a id="ProprietaryNetworkVO">ProprietaryNetworkVO</a>:
+- <a id="ProfessionalNetworkVO">ProfessionalNetworkVO</a>:
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | --------| ------- | ---- | ----- | :---------------------------- |
@@ -74,7 +74,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------:   | -------- | -------- | ----  | -------- | :---------------------------- |
-| <a href="#ProprietaryNetworkVO">ProprietaryNetworkVO</a>       | `ProprietaryNetworkVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProprietaryNetworkVO`|
+| <a href="#ProfessionalNetworkVO">ProfessionalNetworkVO</a>       | `ProfessionalNetworkVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProfessionalNetworkVO`|
 
 - 响应参数：
 
@@ -104,7 +104,7 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| <a href="#ProprietaryNetworkVO">ProprietaryNetworkVO</a>       | `ProprietaryNetworkVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProprietaryNetworkVO`|
+| <a href="#ProfessionalNetworkVO">ProfessionalNetworkVO</a>       | `ProfessionalNetworkVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProfessionalNetworkVO`|
 
 - 响应参数：
 
@@ -135,9 +135,9 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| <a href="#ProprietaryNetworkManageVO">ProprietaryNetworkManageVO</a>       | `ProprietaryNetworkManageVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProprietaryNetworkManageVO`|
+| <a href="#ProfessionalNetworkManageVO">ProfessionalNetworkManageVO</a>       | `ProfessionalNetworkManageVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProfessionalNetworkManageVO`|
 
-- <a id="ProprietaryNetworkManageVO">ProprietaryNetworkManageVO</a>:
+- <a id="ProfessionalNetworkManageVO">ProfessionalNetworkManageVO</a>:
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | --------| ------- | ---- | ----- | :---------------------------- |
@@ -173,9 +173,9 @@
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | -------- | -------- | ---- | -------- | :---------------------------- |
-| <a href="#ProprietaryNetworkManageVO">ProprietaryNetworkManageVO</a>       | `ProprietaryNetworkManageVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProprietaryNetworkManageVO`|
+| <a href="#ProfessionalNetworkManageVO">ProfessionalNetworkManageVO</a>       | `ProfessionalNetworkManageVO`             |        | Y    | Y        | 交易数据，json格式，参见`ProfessionalNetworkManageVO`|
 
-- <a id="ProprietaryNetworkManageVO">ProprietaryNetworkManageVO</a>:
+- <a id="ProfessionalNetworkManageVO">ProfessionalNetworkManageVO</a>:
 
 |    属性     | 类型     | 最大长度 | 必填 | 是否签名 | 说明                          |
 | :---------: | --------| ------- | ---- | ----- | :---------------------------- |
