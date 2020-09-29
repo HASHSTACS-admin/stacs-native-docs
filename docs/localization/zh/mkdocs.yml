@@ -58,7 +58,7 @@ theme:
 #    code: 'Source Sans Pro'
 
 # Copyright
-copyright: 'Copyright &copy; 2019 - 2020 STACS'
+copyright: 'Copyright &copy; 2019 - 2020 STACS(Securities Trading Asset Clearing & Settlement)'
 extra_css:
   - 'stylesheets/extra.css'
 extra:
