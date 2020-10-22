@@ -1182,6 +1182,18 @@
 | pubKey               | `string` | 链上该节点公钥 |
 | nodeId               | `string` | 链上节点id |
 
+ 区块密文数据解密过程：
+ ```
+   String json = blockEventVO.getEncryptBlockInfo();//收到的区块密文数据
+   String sign = blockEventVO.getSignature();//收到的签名信息
+   //解密参数解释：收到的签名信息、系统级私钥、回调过来的公钥、收到的区块密文数据、加密类型
+   json = StacsCryptoHelper.decryptMessage(sign, systemPriKey, blockEventVO.getPubKey(), json,cryptoTypeEnum);
+   //讲解密后的json字符串转正block对象
+   BlockVO vo = JsonUtil.selector().toBean(json, BlockVO.class);
+   //##如上解密代码流程已经封装到StacsClient中的getBlockVO方法中了。
+   
+ ```
+  
 - `BlockVO` 
 
 |     属性     | 类型     |  说明        |
