@@ -39,6 +39,22 @@ The most commonly used failover commands are:
     node  changeState  ArtificialSync Running
 </code></pre>
 
+## **failover reset 恢复集群数据步骤**
+<pre><code>
+    1.在每个节点执行reset到同一高度
+      #第一步 状态切换为SelfChecking
+      node  changeState Running SelfChecking
+      #第二步 状态切换为ArtificialSync
+      node  changeState SelfChecking ArtificialSync 
+      #重置快速恢复的起始高度 包含startHeight 
+      failover reset {startHeight}
+    2.刷新views，在每个节点都需要执行
+      node refreshView -e
+    3.new  term,注意：只在一个节点执行
+      term startNewTerm ${termId} ${currenctMaxHeight+1}
+    4.注意各节点不要重新启动，必须重新启动时，启动后需要重新执行2、3步骤
+    
+</code></pre>
 
 ## **ca**
 用于管理CA
